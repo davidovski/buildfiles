@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(perl expat)
+
+SOURCE=https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.46.tar.gz
+DESC="A perl interface for the expat XML parser"
+
+build () {
+    perl Makefile.PL
+    make
+    make test
+    make DESTDIR=$PKG_DEST install 
+}

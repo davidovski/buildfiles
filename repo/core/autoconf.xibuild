@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(awk m4 diffutils perl sh)
+
+SOURCE=https://ftp.gnu.org/gnu/autoconf/autoconf-2.71.tar.xz
+DESC="GNU programs for producing shell scripts that can automatically configure source code"
+
+build () {
+    ./configure --prefix=/usr --sysconfdir=/etc
+    make
+    make check
+    make DESTDIR=$PKG_DEST install 
+}

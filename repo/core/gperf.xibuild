@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(glibc) 
+
+SOURCE=http://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz
+DESC="Perfect hash functoin generator"
+
+build () {
+    ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.1
+    make
+    make -j1 check
+
+    make DESTDIR=$PKG_DEST install 
+}

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(perl-xml-parser)
+
+SOURCE=https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+DESC="The internationalization tool collection"
+
+build () {
+    ./configure --prefix=/usr 
+    make
+    make check
+    make DESTDIR=$PKG_DEST install 
+    install -v -Dm644 doc/I18N-HOWTO $PKG_DEST/usr/share/doc/intltool-0.51.0/I18N-HOWTO
+}

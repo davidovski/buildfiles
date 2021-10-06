@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(glibc sh readline)
+
+SOURCE=https://ftp.gnu.org/gnu/gdbm/gdbm-1.21.tar.gz
+DESC="GNU database library"
+
+build () {
+    ./configure --prefix=/usr --disable-static --enable-libgdm-compat
+    make
+    make -k check
+
+    make DESTDIR=$PKG_DEST install 
+}

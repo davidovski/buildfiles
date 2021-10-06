@@ -1,0 +1,26 @@
+#!/bin/bash
+
+DEPS=(pam libcap readline ncurses libxcrypt)
+
+SOURCE=https://ftp.gnu.org/gnu/inetutils/inetutils-2.2.tar.xz
+DESC="A collection of common programs for basic networking"
+
+build () {
+    ./configure --prefix=/usr        \
+            --bindir=/usr/bin    \
+            --localstatedir=/var \
+            --disable-logger     \
+            --disable-whois      \
+            --disable-rcp        \
+            --disable-rexec      \
+            --disable-rlogin     \
+            --disable-rsh        \
+    make
+    make check
+
+    make DESTDIR=$PKG_DEST install 
+}
+
+package () {
+    mv -v /usr/{,s}bin/ifconfig
+}

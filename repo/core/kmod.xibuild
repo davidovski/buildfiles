@@ -1,0 +1,28 @@
+#!/bin/bash
+
+DEPS=(glibc zlib openssl xz zstd)
+
+SOURCE=https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git
+DESC="Libraries and utilities for managing kernel modules"
+
+build () {
+    ./configure --prefix=/usr          \
+            --sysconfdir=/etc      \
+            --with-xz              \
+            --with-zstd            \
+            --with-zlib
+
+    make
+    make DESTDIR=$PKG_DEST install 
+}
+
+package () {
+    mkdir -p /usr/sbin
+    mkdir -p /usr/bin
+
+    for target in depmod insmod modinfo modprobe rmmod; do
+        ln -sfv ../bin/kmod $PKG_DERT/usr/sbin/$target
+    done
+
+    ln -sfv kmod $PKG_DEST/usr/bin/lsmod
+}

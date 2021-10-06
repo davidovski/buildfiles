@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(perl bash)
+
+SOURCE=https://ftp.gnu.org/gnu/automake/automake-1.16.5.tar.xz
+DESC="A GNU tool for automatically creating Makefiles"
+
+build () {
+    ./configure --prefix=/usr -docdir=/usr/share/doc/automake-1.16.5
+    make
+    make -j4 check
+    make DESTDIR=$PKG_DEST install 
+}

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc ncurses pcre2)
+
+SOURCE=https://www.greenwoodsoftware.com/less/less-590.tar.gz
+DESC="A terminal based program for viewing text files"
+
+build () {
+    ./configure --prefix=/usr --sysconfdir=/etc
+    make
+    make DESTDIR=$PKG_DEST install 
+}
