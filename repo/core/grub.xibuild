@@ -12,5 +12,6 @@ build () {
 }
 
 package () {
+    mkdir -pv $PKG_DEST/usr/share/bash-completion/completions
     mv -v $PKG_DEST/etc/bash_completion.d/grub $PKG_DEST/usr/share/bash-completion/completions
 }
