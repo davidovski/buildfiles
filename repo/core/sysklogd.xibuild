@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=https://github.com/troglobit/sysklogd
+DESC="Programs for logging system messages"
+
+build () {
+    ./autogen.sh
+    ./configure && make
+    make DESTDIR=$PKG_DEST install 
+}

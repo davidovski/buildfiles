@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(sh glibc)
+
+SOURCE=http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-3.00.tar.xz
+DESC="The sysvinit system for controlling startup, running and shutdown of the system"
+
+build () {
+    make
+    make DESTDIR=$PKG_DEST install 
+}

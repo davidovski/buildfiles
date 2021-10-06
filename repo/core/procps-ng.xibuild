@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DEPS=(glibc ncurses)
+
+SOURCE=https://gitlab.com/procps-ng/procps
+BRANCH=v3.3.17
+DESC="Utilities for monitoring your system and its processes"
+
+build () {
+    ./configure --prefix=/usr                        \
+            --docdir=/usr/share/doc/procps-ng-3.3.17 \
+            --disable-static                         \
+            --disable-kill
+    make
+    make DESTDIR=$PKG_DEST install 
+}

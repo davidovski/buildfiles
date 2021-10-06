@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=git://github.com/ninja-build/ninja.git
+BRANCH=release
+DESC="Small build system with a focus on speed"
+
+build () {
+    python configure.py --bootstrap
+    ./ninja ninja_test
+}
+
+package () {
+    install -vm755 ninja $PKG_DEST/usr/bin/
+    install -vDm644 misc/bash-completion $PKG_DEST/usr/share/bash-completion/completions/ninja
+    install -vDm644 misc/zsh-completion  $PKG_DEST/usr/share/zsh/site-functions/_ninja
+}

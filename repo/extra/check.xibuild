@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(awk)
+
+SOURCE=https://github.com/libcheck/check/releases/download/0.15.2/check-0.15.2.tar.gz
+DESC="A unit testing framework for C"
+
+build () {
+    ./configure --prefix=/usr --disable-static
+    make
+    make DESTDIR=$PKG_DEST install 
+}

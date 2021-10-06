@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc sh)
+
+SOURCE=https://ftp.gnu.org/gnu/findutils/findutils-4.8.0.tar.xz
+DESC="GNU utilities to locate files"
+
+build () {
+    ./configure --prefix=/usr --localstatedir=/var/lib/locate
+    make
+    make DESTDIR=$PKG_DEST install 
+}

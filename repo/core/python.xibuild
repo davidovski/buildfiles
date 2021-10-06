@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib)
+
+SOURCE=https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+DESC="The Python development environment"
+
+build () {
+    ./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes --enable-optimizations
+    make
+    make DESTDIR=$PKG_DEST install 
+}

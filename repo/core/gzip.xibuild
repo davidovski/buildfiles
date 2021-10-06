@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc bash less)
+
+SOURCE=https://ftp.gnu.org/gnu/gzip/gzip-1.11.zip
+DESC="GNU compression utilities"
+
+build () {
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}

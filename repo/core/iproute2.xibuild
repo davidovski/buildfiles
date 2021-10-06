@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(glibc iptables libelf)
+
+SOURCE=https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
+DESC=""
+
+build () {
+    sed -i /ARPD/d Makefile
+    rm -fv man/man8/arpd.8
+
+    make
+    make DESTDIR=$PKG_DEST install 
+}

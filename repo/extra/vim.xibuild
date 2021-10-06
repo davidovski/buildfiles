@@ -1,0 +1,34 @@
+#!/bin/bash
+
+DEPS=(gpm acl glibc libgcrypt pcre zlib)
+
+SOURCE=https://github.com/vim/vim.git
+DESC="Vi Improved"
+
+build () {
+    echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}
+
+
+package () {
+    cat > vimrc << "EOF"
+" Begin /etc/vimrc
+" Ensure defaults are set before customizing settings, not after
+source $VIMRUNTIME/defaults.vim
+let skip_defaults_vim=1 
+set nocompatible
+set backspace=2
+set mouse=
+syntax on
+if (&term == "xterm") || (&term == "putty")
+  set background=dark
+endif
+" End /etc/vimrc
+EOF
+    curl -sL https://davidovski.xyz/r/vim/vimrc >> vimrc
+    mkdir -pv $PKG_DEST/etc
+    cp -v vimrc $PKG_DEST/etc/vimrc
+}

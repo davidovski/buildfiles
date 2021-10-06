@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=https://github.com/libffi/libffi/releases/download/v3.4.2/libffi-3.4.2.tar.gz
+DESC="Portable foreign function interface library"
+
+build () {
+    ./configure --prefix=/usr --disable-static --with-gcc-arch=native --disable-exec-static-tramp
+    make
+    make DESTDIR=$PKG_DEST install 
+}

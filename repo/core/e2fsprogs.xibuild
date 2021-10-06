@@ -1,0 +1,27 @@
+#!/bin/bash
+
+DEPS=(sh util-linux)
+
+SOURCE=https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.46.4/e2fsprogs-1.46.4.tar.xz
+DESC="GNU's awk"
+
+build () {
+    mkdir -v build
+    cd  build
+    ../configure --prefix=/usr       \
+             --sysconfdir=/etc       \
+             --enable-elf-shlibs     \
+             --disable-libblkid      \
+             --disable-libuuid       \
+             --disable-uuidd         \
+             --disable-fsck
+    make
+    make DESTDIR=$PKG_DEST install 
+}
+
+
+package () {
+    rm -fv $PKG_DEST/usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
+    gunzip -v $PKG_DEST/usr/share/info/libext2fs.info.gz
+    install-info --dir-file=$PKG_DEST/usr/share/info/dir $PKG_DEST/usr/share/info/libext2fs.info
+}

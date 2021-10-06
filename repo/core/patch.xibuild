@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc attr)
+
+SOURCE=https://ftp.gnu.org/gnu/patch/patch-2.7.tar.xz
+DESC="A utility to apply patch files to a file"
+
+build () {
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}

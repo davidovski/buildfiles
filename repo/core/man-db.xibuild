@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DEPS=(bash gdbm zlib groff libpipeline less)
+
+SOURCE=http://download.savannah.nongnu.org/releases/man-db/man-db-2.9.4.tar.xz
+DESC="A utility for reading man pages"
+
+build () {
+    ./configure --prefix=/usr
+    ./configure --prefix=/usr                        \
+            --docdir=/usr/share/doc/man-db-2.9.4 \
+            --sysconfdir=/etc                    \
+            --disable-setuid                     \
+            --enable-cache-owner=bin             \
+            --with-browser=/usr/bin/lynx         \
+            --with-vgrind=/usr/bin/vgrind        \
+            --with-grap=/usr/bin/grap            \
+            --with-systemdtmpfilesdir=           \
+            --with-systemdsystemunitdir=
+    make
+    make DESTDIR=$PKG_DEST install 
+}

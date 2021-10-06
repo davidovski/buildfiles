@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc bash)
+
+SOURCE=https://ftp.gnu.org/gnu/diffutils/diffutils-3.8.tar.xz
+DESC="Utility programs for creating patch files"
+
+build () {
+    ./configure --prefix=/usr 
+    make
+    make DESTDIR=$PKG_DEST install 
+}

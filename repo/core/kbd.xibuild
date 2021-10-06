@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(glibc pam)
+
+SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-2.4.0.tar.xz
+DESC="Keytable files and keyboard utilities"
+
+build () {
+    ./configure --prefix=/usr --disable-vlock
+    make
+    make DESTDIR=$PKG_DEST install 
+}
