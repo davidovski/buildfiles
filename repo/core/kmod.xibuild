@@ -6,6 +6,7 @@ SOURCE=https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git
 DESC="Libraries and utilities for managing kernel modules"
 
 build () {
+    ./autogen.sh
     ./configure --prefix=/usr          \
             --sysconfdir=/etc      \
             --with-xz              \
