@@ -19,6 +19,4 @@ package () {
     mkdir -pv $PKG_DEST/usr/share/man/man8/chroot.8
     mkdir -pv $PKG_DEST/usr/sbin
     mv -v $PKG_DEST/usr/bin/chroot $PKG_DEST/usr/sbin
-    mv -v $PKG_DEST/usr/share/man/man1/chroot.1 $PKG_DEST/usr/share/man/man8/chroot.8
-    sed -i 's/"1"/"8"/' $PKG_DEST/usr/share/man/man8/chroot.8
 }
