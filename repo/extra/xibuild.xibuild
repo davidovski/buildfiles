@@ -2,9 +2,11 @@
 
 DEPS=(bash tar)
 
-SOURCE=https://git.davidovski.xyz/xibuild.git
+SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
+DESC="The build system for xilinux used to build packages and maintain repositories"
 
 package () {
+    return 1
     mkdir -pv $PKG_DEST/usr/bin
     cp -v xibuild $PKG_DEST/usr/bin/
     cp xibuild $PKG_DEST/usr/bin/

@@ -3,6 +3,7 @@
 DEPS=(glibc)
 
 SOURCE=https://git.savannah.gnu.org/git/tar.git
+DESC="Utility used to store, backup and transport files"
 
 build () {
     ./bootstrap
