@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DEPS=(bash tar)
+
+SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
+DESC="The xilinux package manager"
+
+build () {
+    make
+}
+
+package () {
+    mkdir -pv $PKG_DEST/usr/bin
+    cp -v ./bin/xi $PKG_DEST/usr/bin/
+}
+
