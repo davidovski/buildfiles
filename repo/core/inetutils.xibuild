@@ -10,7 +10,3 @@ build () {
     make
     make DESTDIR=$PKG_DEST install 
 }
-
-package () {
-    mv -v /usr/{,s}bin/ifconfig
-}
