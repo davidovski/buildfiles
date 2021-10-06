@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DEPS=(sh tar glibc)
+
+SOURCE=https://ftpmirror.gnu.org/libtool/libtool-2.4.6.tar.gz
+DESC="A generic library support script"
+
+build () {
+    ./configure --prefix=/usr
+    make
+    make check
+
+    make DESTDIR=$PKG_DEST install 
+}
+
+package () {
+    rm -fv $PKG_DEST/usr/lib/libltdl.a
+}

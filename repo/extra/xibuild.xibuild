@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(bash tar)
+
+SOURCE=https://git.davidovski.xyz/xibuild.git
+
+package () {
+    mkdir -pv $PKG_DEST/usr/bin
+    cp -v xibuild $PKG_DEST/usr/bin/
+    cp xibuild $PKG_DEST/usr/bin/
+}
+

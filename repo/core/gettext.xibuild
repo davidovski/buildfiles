@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DEPS=(acl sh glib2)
+
+SOURCE=https://ftp.gnu.org/pub/gnu/gettext/gettext-0.21.tar.gz
+DESC="GNU internationalization library"
+
+build () {
+    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/gettext-0.21
+    make
+    make check
+    make DESTDIR=$PKG_DEST install 
+}
+
+package () {
+    chmod -v 0755 $PKG_DEST/usr/lib/preloadable_libintl.so
+}

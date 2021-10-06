@@ -1,0 +1,19 @@
+#!/bin/bash
+
+DEPS=(ncurses)
+
+SOURCE=https://gitlab.com/psmisc/psmisc.git
+DESC="Miscellaneous procfs tools"
+
+build () {
+    ./autogen.sh
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}
+
+package () {
+    mkdir -vp $PKG_DEST/bin
+    mv -v $PKG_DEST/usr/bin/fuser $PKG_DEST/bin
+    mv -v $PKG_DEST/usr/bin/killall $PKG_DEST/bin
+}

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DEPS=(glibc)
+SOURCE=https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+
+DESC="a tool for passing the include path to build tools during configure and make phases of package installations"
+
+build () {
+    ./configure --help
+    ./configure --prefix=/usr --disable-host-tool --mandir=/usr/share/doc/pkg-config
+
+    make
+    make check
+
+    make DESTDIR=$PKG_DEST install
+}
