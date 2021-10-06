@@ -6,7 +6,7 @@ SOURCE=https://github.com/openssl/openssl
 DESC="The open source management tools and libraries for cryptography"
 
 build () {
-    ./configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
+    ./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
 }

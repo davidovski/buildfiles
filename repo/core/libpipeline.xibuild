@@ -6,6 +6,7 @@ SOURCE=https://gitlab.com/cjwatson/libpipeline
 DESC="A library for manipulating pipelines of subprocesses in a flexible and convenient way"
 
 build () {
+    ./bootstrap
     ./configure --prefix=/usr
     make
     make DESTDIR=$PKG_DEST install 

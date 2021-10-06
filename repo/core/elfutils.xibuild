@@ -1,12 +1,8 @@
-#!/bin/bash
-
-DEPS=(glibc)
-
-SOURCE=git://sourceware.org/git/elfutils.git
-DESC="Handle ELF object files and DWARF debugging information"
 
 build () {
+    autoreconf -i -f
     ./configure --prefix=/usr --disable-debuginfod --enable-libdebuginfod=dummy
     make
+    make check
     make DESTDIR=$PKG_DEST install 
 }

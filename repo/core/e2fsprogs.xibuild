@@ -3,7 +3,7 @@
 DEPS=(sh util-linux)
 
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.46.4/e2fsprogs-1.46.4.tar.xz
-DESC="GNU's awk"
+DESC="Ext2/3/4 filesystem utils"
 
 build () {
     mkdir -v build
