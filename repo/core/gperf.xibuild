@@ -3,7 +3,7 @@
 DEPS=(glibc) 
 
 SOURCE=http://ftp.gnu.org/pub/gnu/gperf/gperf-3.1.tar.gz
-DESC="Perfect hash functoin generator"
+DESC="Perfect hash function generator"
 
 build () {
     ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.1
