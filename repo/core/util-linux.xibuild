@@ -2,7 +2,7 @@
 
 DEPS=(shadow coreutils libcap libxcrypt readline)
 
-SOURCE=https://github.com/karelzak/util-linux
+SOURCE=git://git.kernel.org/pub/scm/utils/util-linux/util-linux.git
 BRANCH=stable/v2.20
 DESC="System Utilities for Linux"
 
@@ -22,6 +22,7 @@ build () {
             --without-python     \
             --without-systemd    \
             --without-systemdsystemunitdir \
+            --disable-werror \
             runstatedir=/run
     make
     make DESTDIR=$PKG_DEST install 
