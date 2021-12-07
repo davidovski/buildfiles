@@ -10,3 +10,8 @@ build () {
     make
     make DESTDIR=$PKG_DEST install 
 }
+
+package () {
+    ln $PKG_DEST/usr/bin/python3 $PKG_DEST/usr/bin/python
+    ln $PKG_DEST/usr/bin/python3 $PKG_DEST/usr/bin/py
+}
