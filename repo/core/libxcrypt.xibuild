@@ -11,4 +11,9 @@ build () {
     make DESTDIR=$PKG_DEST install
 }
 
+package () {
+    # this is probably wrong
+    ln $PKG_DEST/usr/lib/libcrypt.so $PKG_DEST/usr/lib/libcrypt.so.2
+}
+
 
