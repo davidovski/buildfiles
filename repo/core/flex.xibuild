@@ -14,7 +14,7 @@ build () {
 }
 
 package () {
-    ln -sv $PKG_DEST/usr/bin/flex $PKG_DEST/usr/bin/lex
+    ln -v $PKG_DEST/usr/bin/flex $PKG_DEST/usr/bin/lex
 }
 
 
