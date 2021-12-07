@@ -7,7 +7,7 @@ DESC="Vi Improved"
 
 build () {
     echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
-    ./configure --prefix=/usr --disable-gtk-check --disable-motif-check --disable-athena-check --disable-gui --disable-xsmp --without-x -disable-canberra --disable-libsodium
+    ./configure --prefix=/usr --disable-gtk-check --disable-motif-check --disable-athena-check --disable-gui --disable-xsmp --without-x -disable-canberra --disable-libsodium --disable-gpm --disable-libsodium
     make
     make DESTDIR=$PKG_DEST install 
 }
