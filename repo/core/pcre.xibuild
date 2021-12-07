@@ -11,4 +11,9 @@ build () {
     make DESTDIR=$PKG_DEST install
 }
 
+package () {
+    # this probably is not right but it works for now
+    ln $PKG_DEST/usr/lib/libpcre2-8.so $PKG_DEST/usr/lib/libpcre.so.1
+}
+
 
