@@ -3,7 +3,7 @@
 DEPS=(glibc iptables libelf)
 
 SOURCE=https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
-DESC=""
+DESC="IP Routing Utilities"
 
 build () {
     sed -i /ARPD/d Makefile
