@@ -21,7 +21,8 @@ build () {
 }
 
 package () {
-    cp -f tclsh8.6 $PKG_DEST/usr/bin/tclsh
+    ln $PKG_DEST/usr/bin/tclsh* $PKG_DEST/usr/bin/tclsh
+    cp -f tclsh9 $PKG_DEST/usr/bin/tclsh
     mv $PKG_DEST/usr/share/man/man3/{Thread,Tcl_Thread}.3
 
 }
