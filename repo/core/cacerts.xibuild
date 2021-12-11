@@ -1,0 +1,96 @@
+#!/bin/bash
+
+DEPS=()
+
+SOURCE=https://hg.mozilla.org/projects/nss
+DESC="Root certificates needed by ssl"
+
+build () {
+    mkdir -p certs
+    ln -srft certs lib/ckfw/builtins/{certdata.txt,nssckbi.h}
+
+    cd certs
+
+    # wholesome curling into python. Thanks for the script jan
+    curl -SsL https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/nss/trunk/certdata2pem.py | python
+
+    cd ..
+    
+    (
+      cat <<EOF
+    # This is a bundle of X.509 certificates of public Certificate
+    # Authorities.  It was generated from the Mozilla root CA list.
+    # These certificates and trust/distrust attributes use the file format accepted
+    # by the p11-kit-trust module.
+    #
+    # Source: nss/lib/ckfw/builtins/certdata.txt
+    # Source: nss/lib/ckfw/builtins/nssckbi.h
+    #
+    # Generated from:
+EOF
+      cat certs/nssckbi.h | grep -w NSS_BUILTINS_LIBRARY_VERSION | awk '{print "# " $2 " " $3}'
+      echo '#'
+    ) > ca-bundle.trust.p11-kit
+
+    for p in certs/*.tmp-p11-kit; do 
+      cat "$p" >> ca-bundle.trust.p11-kit
+    done
+
+    ./build.sh \
+        --target x64 \
+        --opt \
+        --system-sqlite \
+        --system-nspr \
+        --enable-libpkix \
+        --disable-tests
+
+}
+
+package () {
+
+    # more copied from arch
+    local libdir=/usr/lib
+    local nsprver="unknown"
+
+    sed pkg/pkg-config/nss.pc.in \
+    -e "s,%libdir%,$libdir,g" \
+    -e "s,%prefix%,/usr,g" \
+    -e "s,%exec_prefix%,/usr/bin,g" \
+    -e "s,%includedir%,/usr/include/nss,g" \
+    -e "s,%NSPR_VERSION%,$nsprver,g" \
+    -e "s,%NSS_VERSION%,$VER_HASH,g" |
+    install -Dm644 /dev/stdin "$PKG_DEST$libdir/pkgconfig/nss.pc"
+
+    ln -s nss.pc "$PKG_DEST/usr/lib/pkgconfig/mozilla-nss.pc"
+
+    install -Dt "$PKG_DEST$libdir" ../dist/Release/lib/*.so
+    install -Dt "$PKG_DEST$libdir" ../dist/Release/lib/*.so
+
+    local vmajor vminor vpatch
+  { read vmajor; read vminor; read vpatch; } \
+    < <(awk '/#define.*NSS_V(MAJOR|MINOR|PATCH)/ {print $3}' lib/nss/nss.h)
+
+  sed pkg/pkg-config/nss-config.in \
+    -e "s,@libdir@,$libdir,g" \
+    -e "s,@prefix@,/usr/bin,g" \
+    -e "s,@exec_prefix@,/usr/bin,g" \
+    -e "s,@includedir@,/usr/include/nss,g" \
+    -e "s,@MOD_MAJOR_VERSION@,$vmajor,g" \
+    -e "s,@MOD_MINOR_VERSION@,$vminor,g" \
+    -e "s,@MOD_PATCH_VERSION@,$vpatch,g" |
+    install -D /dev/stdin "$PKG_DEST/usr/bin/nss-config"
+
+    install -Dt "$PKG_DEST/usr/bin" \
+      ../dist/Release/bin/{*util,shlibsign,signtool,signver,ssltap}
+
+    install -Dt "$PKG_DEST/usr/include/nss" -m644 ../dist/public/nss/*.h
+
+    install -Dt "$PKG_DEST/usr/share/man/man1" -m644 \
+      doc/nroff/{*util,signtool,signver,ssltap}.1
+
+    # Replace built-in trust with p11-kit connection
+    ln -s pkcs11/p11-kit-trust.so "$PKG_DEST$libdir/p11-kit-trust.so"
+    ln -sf p11-kit-trust.so "$PKG_DEST$libdir/libnssckbi.so"
+
+}
+
