@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(glic)
+DEPS=(glibc)
 
 SOURCE=https://github.com/openssl/openssl
 DESC="The open source management tools and libraries for cryptography"
