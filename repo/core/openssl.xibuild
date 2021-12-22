@@ -7,7 +7,7 @@ DESC="The open source management tools and libraries for cryptography"
 BRANCH="OpenSSL_1_1_1-stable"
 
 build () {
-    ./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
+    ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
 }
