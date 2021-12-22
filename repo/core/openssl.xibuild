@@ -4,6 +4,7 @@ DEPS=(glic)
 
 SOURCE=https://github.com/openssl/openssl
 DESC="The open source management tools and libraries for cryptography"
+BRANCH="OpenSSL_1_1_1-stable"
 
 build () {
     ./Configure --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
