@@ -10,8 +10,3 @@ build () {
     make DESTDIR=$PKG_DEST install
 }
 
-package () {
-    mkdir -pv $PKG_DEST/usr/bin
-    cp -v ./bin/xi $PKG_DEST/usr/bin/
-}
-
