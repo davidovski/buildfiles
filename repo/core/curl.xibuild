@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DEPS=(cacerts openssl zlib zstd )
+
+SOURCE=https://curl.se/download/curl-7.80.0.tar.xz
+DESC="A utility for transfering files with URL syntax"
+
+build () {
+    ./configure --prefix=/usr                           \
+            --disable-static                        \
+            --with-openssl                          \
+            --enable-threaded-resolver              \
+            --with-ca-path=/etc/ssl/certs &&
+    make
+
+    make DESTDIR=$PKG_DEST install
+}
