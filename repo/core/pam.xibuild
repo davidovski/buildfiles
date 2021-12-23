@@ -30,7 +30,6 @@ package () {
     account  required       pam_deny.so
     password required       pam_deny.so
     session  required       pam_deny.so
-    EOF
-
+EOF
 
 }

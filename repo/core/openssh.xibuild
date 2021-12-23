@@ -16,7 +16,7 @@ build () {
     make
     make DESTDIR=$PKG_DEST install
 
-    install -v -m755    contrib/ssh-copy-id /usr/bin     &&
+    install -v -m755    contrib/ssh-copy-id $PKG_DSET/usr/bin     &&
 
     install -v -m644    contrib/ssh-copy-id.1 \
                         $PKG_DEST/usr/share/man/man1              &&
