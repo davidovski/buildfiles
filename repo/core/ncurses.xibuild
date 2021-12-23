@@ -2,7 +2,7 @@
 
 DEPS=(glibc)
 
-SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-6.2.tar.gz
+SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-6.3.tar.gz
 
 DESC="curses emulation library"
 
@@ -28,6 +28,6 @@ package () {
 #
 
     #rm -fv $PKG_DEST/usr/lib/libncurses++w.a
-    mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-6.2
-    cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-6.2
+    mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-6.3
+    cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-6.3
 }
