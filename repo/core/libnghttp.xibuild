@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=https://github.com/nghttp2/nghttp2/releases/download/v1.46.0/nghttp2-1.46.0.tar.xz
+DESC="Framing layer of HTTP implemented as a C library"
+
+
+build () {
+    ./configure --prefix=/usr     \
+            --disable-static  \
+            --enable-lib-only \
+            --docdir=/usr/share/doc/nghttp2-1.46.0 &&
+    make
+    make DESTDIR=$PKG_DEST install
+}
