@@ -12,6 +12,6 @@ build () {
 
     find doc -name "Makefile*" -delete            &&
     rm -rf -v doc/{gdoc,idn.1,stamp-vti,man,texi} &&
-    mkdir -v       $PKG_DEST/usr/share/doc/libidn-1.36     &&
+    mkdir -pv       $PKG_DEST/usr/share/doc/libidn-1.36     &&
     cp -r -v doc/* $PKG_DEST/usr/share/doc/libidn-1.36
 }
