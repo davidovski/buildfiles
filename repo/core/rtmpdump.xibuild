@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(glibc gnutls zlib)
+
+SOURCE=git://git.ffmpeg.org/rtmpdump
+DESC="Tool to download rtmp streams"
+
+build () {
+    make SYS=posix
+    make DESTDIR=$PKG_DEST install
+}
