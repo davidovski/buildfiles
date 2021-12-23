@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DEPS=(zlib readline ncurses xz icu)
+
+SOURCE=http://xmlsoft.org/sources/libxml2-2.9.12.tar.gz
+DESC="XML parsing library"
+
+build () {
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --with-history   \
+            --with-python=/usr/bin/python3 &&
+    make
+    make DESTDIR=$PKG_DEST install
+}

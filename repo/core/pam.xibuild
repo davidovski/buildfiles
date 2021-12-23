@@ -1,0 +1,36 @@
+#!/bin/bash
+
+DEPS=(glibc libtirpc pambase audit libxcrypt)
+
+SOURCE=https://github.com/linux-pam/linux-pam/releases/download/v1.5.2/Linux-PAM-1.5.2.tar.xz
+DESC="PAM (Pluggable Authentication Modules) library"
+
+build () {
+    # prevent install of an uneeded systemd file
+    sed -e /service_DATA/d \
+        -i modules/pam_namespace/Makefile.am &&
+    autoreconf
+
+    ./configure --prefix=/usr                        \
+            --sbindir=/usr/sbin                  \
+            --sysconfdir=/etc                    \
+            --libdir=/usr/lib                    \
+            --enable-securedir=/usr/lib/security \
+            --docdir=/usr/share/doc/Linux-PAM-1.5.2 &&
+    make
+
+    make DESTDIR=$PKG_DEST install
+}
+
+package () {
+    install -v -m755 -d $PKG_DEST/etc/pam.d &&
+
+    cat > $PKG_DEST/etc/pam.d/other << "EOF"
+    auth     required       pam_deny.so
+    account  required       pam_deny.so
+    password required       pam_deny.so
+    session  required       pam_deny.so
+    EOF
+
+
+}
