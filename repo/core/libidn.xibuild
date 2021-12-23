@@ -2,7 +2,7 @@
 
 DEPS=(glibc)
 
-SOURCE=https://ftp.gnu.org/gnu/libidn/libidn-1.36.tar.gz
+SOURCE=https://ftp.gnu.org/gnu/libidn/libidn2-2.3.2.tar.gz
 DESC="Free software implementation of IDNA2008, Punycode and TR46"
 
 build () {
@@ -12,6 +12,6 @@ build () {
 
     find doc -name "Makefile*" -delete            &&
     rm -rf -v doc/{gdoc,idn.1,stamp-vti,man,texi} &&
-    mkdir -pv       $PKG_DEST/usr/share/doc/libidn-1.36     &&
-    cp -r -v doc/* $PKG_DEST/usr/share/doc/libidn-1.36
+    mkdir -pv       $PKG_DEST/usr/share/doc/libidn-2.3.2     &&
+    cp -r -v doc/* $PKG_DEST/usr/share/doc/libidn-2.3.2
 }
