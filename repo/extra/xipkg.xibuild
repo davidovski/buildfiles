@@ -12,5 +12,5 @@ build () {
 
 postinstall () {
     echo "TESTING POSTINSTALL"
-    pip3 install requests
+    pip3 install --root $ROOT requests
 }
