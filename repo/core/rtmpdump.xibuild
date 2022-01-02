@@ -3,6 +3,7 @@
 DEPS=(glibc gnutls zlib)
 
 SOURCE=git://git.ffmpeg.org/rtmpdump
+BRANCH="fa8646d"
 DESC="Tool to download rtmp streams"
 
 build () {
