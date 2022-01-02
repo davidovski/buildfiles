@@ -10,3 +10,6 @@ build () {
     make DESTDIR=$PKG_DEST install
 }
 
+postinstall () {
+    echo "TESTING POSTINSTALL"
+}
