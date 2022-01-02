@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(python)
+
+SOURCE=git://github.com/psf/requests.git
+DESC="the requests module for python"
+
+build () {
+    mkdir -p $PKG_DEST/usr/lib/python3.10/site-packages/
+    pip install -t $PKG_DEST/usr/lib/python3.10/site-packages/ .
+}

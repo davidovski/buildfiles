@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(bash tar)
+DEPS=(tar python python-requests)
 
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
 DESC="The xilinux package manager"
@@ -8,9 +8,4 @@ DESC="The xilinux package manager"
 build () {
     make
     make DESTDIR=$PKG_DEST install
-}
-
-postinstall () {
-    echo "TESTING POSTINSTALL"
-    pip3 install --root $ROOT requests
 }
