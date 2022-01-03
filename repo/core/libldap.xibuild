@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(libidn)
+
+SOURCE=http://repository.linagora.org/OpenLDAP/openldap-release/openldap-2.6.0.tgz
+DESC="An open source implementation of the Lightweight Directory Access Protocol"
+
+build () {
+    ./configure prefix="/usr"
+    make 
+    make DESTDIR=$PKG_DEST install
+}
