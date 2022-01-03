@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=https://github.com/google/brotli
+DESC="A generic-purpose lossless compression algorithm"
+
+build () {
+    mkdir out && cd out
+    ../configure-cmake
+    make 
+    make test
+    make DESTDIR=$PKG_DEST install
+}
