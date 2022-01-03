@@ -12,3 +12,7 @@ build () {
     make test
     make DESTDIR=$PKG_DEST install
 }
+
+package () {
+    mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
+}
