@@ -1,0 +1,17 @@
+#!/bin/bash
+
+DEPS=(gmp)
+
+SOURCE=https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.27/cyrus-sasl-2.1.27.tar.gz
+DESC="A library for Simple Authentication and Security Layer"
+
+build () {
+    ./configure \
+            --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}
+
+#package () {
+    #mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
+#}

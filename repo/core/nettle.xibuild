@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(gmp)
+
+SOURCE=https://ftp.gnu.org/gnu/nettle/nettle-3.7.tar.gz
+DESC="A low-level cryptographic library"
+
+build () {
+
+    ./configure \
+            --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}

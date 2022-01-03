@@ -1,0 +1,18 @@
+#!/bin/bash
+
+DEPS=(glibc bash)
+
+SOURCE=https://archive.mozilla.org/pub/nspr/releases/v4.33/src/nspr-4.33.tar.gz
+DESC="Netscape Portable Runtime"
+
+build () {
+    sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in 
+    sed -i 's#$(LIBRARY) ##'   config/rules.mk         
+
+
+    cd nspr
+    ./configure \
+            --prefix=/usr --with-mozilla --with-pthreads --enable-64bit
+    make
+    make DESTDIR=$PKG_DEST install 
+}

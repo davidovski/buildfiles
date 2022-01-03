@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(libtasn readline zlib nettle p11-kit libidn2 libunistring)
+
+SOURCE=https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.16.tar.xz
+DESC="Library which provides a secure layer over a transport layer"
+
+build () {
+
+    ./configure \
+            --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install 
+}
