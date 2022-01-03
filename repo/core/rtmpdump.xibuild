@@ -7,6 +7,11 @@ BRANCH="fa8646d"
 DESC="Tool to download rtmp streams"
 
 build () {
+
     make SYS=posix
-    make DESTDIR=$PKG_DEST install
+    make \
+        prefix='/usr' \
+        sbindir='/usr/bin' \
+        mandir='/usr/share/man' \
+        DESTDIR=$PKG_DEST install
 }
