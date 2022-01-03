@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(libidn)
+
+SOURCE=https://github.com/rockdaboot/libpsl
+DESC="C library to handle the Public Suffix List"
+
+build () {
+	./autogen.sh
+    ./configure prefix="/usr"
+    make 
+    make DESTDIR=$PKG_DEST install
+}
