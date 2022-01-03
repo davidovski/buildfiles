@@ -7,6 +7,7 @@ DESC="the Zstandard real-time compression algorithm"
 
 build () {
     make
+    make -C contrib/pzstd
     make prefix=/usr check
     make DESTDIR=$PKG_DEST install
 }
