@@ -11,3 +11,7 @@ build () {
     make prefix=/usr check
     make DESTDIR=$PKG_DEST install
 }
+
+package () {
+    mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
+}
