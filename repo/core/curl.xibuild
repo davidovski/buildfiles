@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(cacerts openssl zlib zstd libnghttp)
+DEPS=(cacerts openssl zlib zstd libnghttp libpsl)
 
 SOURCE=https://curl.se/download/curl-7.80.0.tar.xz
 DESC="A utility for transfering files with URL syntax"
