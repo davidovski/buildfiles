@@ -10,19 +10,8 @@ build () {
     ./autogen.sh
     ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime   \
             --libdir=/usr/lib    \
-            --docdir=/usr/share/doc/util-linux-2.37.2 \
-            --disable-chfn-chsh  \
-            --disable-login      \
-            --disable-nologin    \
-            --disable-su         \
-            --disable-setpriv    \
-            --disable-runuser    \
-            --disable-pylibmount \
+            --docdir=/usr/share/doc/util-linux-2.20 \
             --disable-static     \
-            --without-python     \
-            --without-systemd    \
-            --without-systemdsystemunitdir \
-            --disable-werror \
             runstatedir=/run
     make
     make DESTDIR=$PKG_DEST install 

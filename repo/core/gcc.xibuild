@@ -19,7 +19,7 @@ esac
 
     mkdir -v build
     cd build
-    ../configure --prefix=/usr --disable-multilib --disable-bootstrap
+    ../configure --prefix=/usr --disable-multilib
     make
     make DESTDIR=$PKG_DEST install
 }

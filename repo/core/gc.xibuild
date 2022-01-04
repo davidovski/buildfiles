@@ -1,0 +1,12 @@
+#!/bin/bash
+
+DEPS=(gcc-libs)
+
+SOURCE=https://www.hboehm.info/gc/gc_source/gc-8.2.0.tar.gz
+DESC="A garbage collector for C and C++"
+
+build () {
+    ./configure --prefix=/usr --disable-static
+    make
+    make DESTDIR=$PKG_DEST install
+}

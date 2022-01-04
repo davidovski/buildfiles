@@ -2,7 +2,7 @@
 
 DEPS=(glib zlib elfutils)
 
-SOURCE=git://sourceware.org/git/binutils.git
+SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz
 DESC="tools for handling object files"
 
 build () {
