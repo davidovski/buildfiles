@@ -2,12 +2,10 @@
 
 DEPS=(shadow coreutils libcap libxcrypt readline)
 
-SOURCE=git://git.kernel.org/pub/scm/utils/util-linux/util-linux.git
-BRANCH=stable/v2.20
+SOURCE=https://cdn.kernel.org/pub/linux/utils/util-linux/v2.37/util-linux-2.37.2.tar.xz
 DESC="System Utilities for Linux"
 
 build () {
-    ./autogen.sh
     ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime   \
             --libdir=/usr/lib    \
             --docdir=/usr/share/doc/util-linux-2.20 \

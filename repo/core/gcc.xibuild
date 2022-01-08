@@ -24,3 +24,7 @@ esac
     make DESTDIR=$PKG_DEST install
 }
 
+
+package () {
+    ln -sv /usr/bin/gcc $PKG_DEST/lib/cpp
+}
