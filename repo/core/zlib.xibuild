@@ -2,7 +2,7 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/madler/zlib
+SOURCE=https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz
 DESC="compression and decompression routines used by some programs"
 
 
