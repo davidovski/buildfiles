@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(sh)
+
+SOURCE=https://github.com/Cyan4973/xxHash/archive/refs/tags/v0.8.1.tar.gz
+DESC="xxHash is an Extremely fast Hash algorithm"
+
+
+build () {
+    make
+    make DESTDIR=$PKG_DEST install
+}
+
