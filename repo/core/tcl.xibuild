@@ -2,7 +2,7 @@
 
 DEPS=(zlib)
 
-SOURCE=https://github.com/tcltk/tcl
+SOURCE=https://github.com/tcltk/tcl/archive/refs/tags/core-8-6-11.tar.gz
 DESC="the Tool Command language, a robust general purpose scripting language"
 
 
