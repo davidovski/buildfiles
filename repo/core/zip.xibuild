@@ -7,5 +7,5 @@ DESC="Compressor/archiver for creating and modifying zipfiles"
 
 build () {
     make -f unix/Makefile generic_gcc
-    make DESTDIR=$PKG_DEST prefix=/usr -f unix/Makefile install
+    make prefix=$PKG_DIR/usr -f unix/Makefile install
 }
