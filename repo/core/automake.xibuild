@@ -11,3 +11,8 @@ build () {
     make -j4 check
     make DESTDIR=$PKG_DEST install 
 }
+
+package () {
+    # backwards compatibility?
+    ln -s /usr/bin/aclocal $PKG_DEST/aclocal-1.15
+}
