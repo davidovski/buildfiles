@@ -12,6 +12,6 @@ build () {
 }
 
 package () {
-    ln $PKG_DEST/usr/bin/python3 $PKG_DEST/usr/bin/python
-    ln $PKG_DEST/usr/bin/pip3 $PKG_DEST/usr/bin/pip
+    ln -s /usr/bin/python3 $PKG_DEST/usr/bin/python
+    ln -s /usr/bin/pip3 $PKG_DEST/usr/bin/pip
 }
