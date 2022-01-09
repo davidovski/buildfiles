@@ -7,7 +7,7 @@ DESC="A utility that provides fast incremental file transfer"
 
 
 build () {
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr --disable-md2man
     make
     make DESTDIR=$PKG_DEST install
 }
