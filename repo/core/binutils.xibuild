@@ -6,8 +6,28 @@ SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz
 DESC="tools for handling object files"
 
 build () {
-    ./configure --prefix=/usr --disable-nls --disable-werror 
-    make
-    make DESTDIR=$PKG_DEST install
+    # An error in the building system causes the shipped man pages to be empty. Workaround the issue and remove the shipped man pages, so the man pages will be regenerated correctly:
+
+    sed -i '63d' etc/texi2pod.pl
+    find -name \*.1 -delete
+
+    mkdir -v build
+    cd       build
+    ../configure --prefix=/usr       \
+             --enable-gold       \
+             --enable-ld=default \
+             --enable-plugins    \
+             --enable-shared     \
+             --disable-werror    \
+             --enable-64-bit-bfd \
+             --with-system-zlib
+
+    make tooldir=/usr
+    make -k check
+    make -j1 DESTDIR=$PKG_DEST install
 }
 
+package() {
+    rm -fv $PKG_DEST/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
+
+}
