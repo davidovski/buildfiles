@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DEPS=(sh)
+
+SOURCE=https://github.com/WayneD/rsync/archive/refs/tags/v3.2.3.tar.gz
+DESC="A utility that provides fast incremental file transfer"
+
+
+build () {
+    ./configure --prefix=/usr
+    make
+    make check
+    make DESTDIR=$PKG_DEST install
+}
+
