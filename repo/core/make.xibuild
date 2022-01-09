@@ -2,7 +2,7 @@
 
 DEPS=(glibc)
 
-SOURCE=https://ftp.gnu.org/gnu/make/make-4.3.tar.lz
+SOURCE=https://ftp.gnu.org/gnu/make/make-4.3.tar.gz
 DESC="GNU make utility"
 
 build () {
