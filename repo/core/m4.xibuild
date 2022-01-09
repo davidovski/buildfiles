@@ -3,11 +3,11 @@
 DEPS=(glibc bash)
 
 SOURCE=git://git.sv.gnu.org/m4
+BRANCH=branch-1.4
 DESC="the gnu m4 macro processor"
 
 
 build () {
-    git checkout branch-1.4
     ./bootstrap
 
     ./configure --prefix=/usr 
