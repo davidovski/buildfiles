@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(libxml2 libgcrypt)
+
+SOURCE=https://gitlab.gnome.org/GNOME/libxslt.git
+BRANCH=v1.1.34
+DESC="XML stylesheet transformation library"
+
+
+build () {
+    ./autogen.sh --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(libxslt)
+
+SOURCE=https://pagure.io/xmlto
+BRANCH=
+DESC="Convert xml to many other formats"
+
+
+build () {
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install
+}
