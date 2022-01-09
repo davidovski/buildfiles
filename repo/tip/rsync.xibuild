@@ -2,7 +2,7 @@
 
 DEPS=(sh)
 
-SOURCE=https://github.com/WayneD/rsync/archive/refs/tags/v3.2.3.tar.gz
+SOURCE=https://www.samba.org/ftp/rsync/src/rsync-3.2.3.tar.gz
 DESC="A utility that provides fast incremental file transfer"
 
 
