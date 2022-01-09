@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(bash tar)
+DEPS=(bash tar git hg curl openssl )
 
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
 DESC="The build system for xilinux used to build packages and maintain repositories"
