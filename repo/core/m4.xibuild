@@ -2,14 +2,11 @@
 
 DEPS=(glibc bash)
 
-SOURCE=git://git.sv.gnu.org/m4
-BRANCH=branch-1.4
-DESC="the gnu m4 macro processor"
+SOURCE=https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz
+DESC="The gnu m4 macro processor"
 
 
 build () {
-    ./bootstrap
-
     ./configure --prefix=/usr 
     make
     make DESTDIR=$PKG_DEST install
