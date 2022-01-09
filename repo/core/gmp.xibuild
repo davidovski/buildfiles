@@ -6,6 +6,8 @@ SOURCE=https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz
 DESC="a collection of mathematical libraries"
 
 build () {
+    cp -v configfsf.guess config.guess
+    cp -v configfsf.sub   config.sub
 
     ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp
 
