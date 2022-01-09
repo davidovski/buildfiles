@@ -6,8 +6,7 @@ SOURCE=https://ftp.gnu.org/gnu/tar/tar-1.34.tar.xz
 DESC="Utility used to store, backup and transport files"
 
 build () {
-    FORCE_UNSAFE_CONFIGURE=1
-    ./configure --prefix=/usr
+    FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr
     make
     make DESTDIR=$PKG_DEST install
 }
