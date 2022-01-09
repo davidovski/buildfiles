@@ -6,8 +6,7 @@ SOURCE=https://github.com/asciidoc-py/asciidoc-py/releases/download/10.1.1/ascii
 DESC="Text document format for short documents, articles, books and UNIX man pages"
 
 
-build () {
-    make
-    make DESTDIR=$PKG_DEST install
-}
 
+package () {
+    pip install -t $PKG_DEST/usr/lib/python3.10/site-packages/ asciidoc
+}
