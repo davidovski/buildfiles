@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DEPS=(sh)
+
+SOURCE=http://mirror.koddos.net/gnu/help2man/help2man-1.48.5.tar.xz
+DESC="A tool for automatically generating simple manual pages from program output"
+
+
+build () {
+    ./configure --prefix=/usr 
+    make
+    make DESTDIR=$PKG_DEST install
+}
+
