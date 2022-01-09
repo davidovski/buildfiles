@@ -7,5 +7,5 @@ DESC="Root certificates needed by ssl built using make-ca"
 
 package () {
     bash make-ca -g --force -D $PKG_DEST
-    chmod -R 777 $PKG_DEST
+    chmod -R 777 $PKG_DEST || echo "couldnt change permissions for $PKG_DEST"
 }

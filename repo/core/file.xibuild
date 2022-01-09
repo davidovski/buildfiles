@@ -3,7 +3,7 @@
 DEPS=(glibc zlib xz bzip2)
 
 SOURCE=http://ftp.astron.com/pub/file/file-5.40.tar.gz
-DESC="a utility for determining the type of a given file or files"
+DESC="A utility for determining the type of a given file or files"
 
 build () {
     ./configure --prefix=/usr 
