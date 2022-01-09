@@ -3,6 +3,7 @@
 DEPS=(sh)
 
 SOURCE=https://git.tukaani.org/xz.git
+BRANCH=v5.2.5
 DESC="a selection of programs for compressing and decompressing files with the lzma and xz compression formats"
 
 
