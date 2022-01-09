@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(python libxslt docbook-xsl)
+
+SOURCE=https://github.com/asciidoc-py/asciidoc-py/releases/download/10.1.1/asciidoc-10.1.1.tar.gz
+DESC="Text document format for short documents, articles, books and UNIX man pages"
+
+
+build () {
+    make
+    make DESTDIR=$PKG_DEST install
+}
+

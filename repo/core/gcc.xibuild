@@ -33,7 +33,7 @@ build () {
              --with-system-zlib
 
     make
-
+    # TODO put tests here, quite important
     make DESTDIR=$PKG_DEST install
 }
 

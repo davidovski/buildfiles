@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(glibc bzip2)
+
+SOURCE=https://sourceforge.net/projects/infozip/files/Zip%203.x%20%28latest%29/3.0/zip30.tar.gz/download
+DESC="Compressor/archiver for creating and modifying zipfiles"
+
+build () {
+    make -f unix/Makefile generic
+    make DESTDIR=$PKG_DEST -f unix/Makefile install
+}
