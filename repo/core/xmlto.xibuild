@@ -2,8 +2,7 @@
 
 DEPS=(libxslt)
 
-SOURCE=https://pagure.io/xmlto
-BRANCH=
+SOURCE=https://releases.pagure.org/xmlto/xmlto-0.0.28.tar.bz2
 DESC="Convert xml to many other formats"
 
 
