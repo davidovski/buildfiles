@@ -9,6 +9,7 @@ DESC="Text document format for short documents, articles, books and UNIX man pag
 
 package () {
     pip install -t $PKG_DEST/usr/lib/python3.10/site-packages/ asciidoc
+    mkdir -pv $PKG_DEST/usr/bin
     ln -s /usr/lib/python3.10/site-packages/bin/asciidoc $PKG_DEST/usr/bin/asciidoc
     ln -s /usr/lib/python3.10/site-packages/bin/a2x $PKG_DEST/usr/bin/a2x
 }
