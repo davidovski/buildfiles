@@ -2,7 +2,7 @@
 
 DEPS=(gcc-libs sh)
 
-SOURCE=https://gmplib.org/download/gmp/gmp-6.2.1.tar.lz
+SOURCE=https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz
 DESC="a collection of mathematical libraries"
 
 build () {
