@@ -14,5 +14,5 @@ build () {
 
 package () {
     # backwards compatibility?
-    ln -s /usr/bin/aclocal $PKG_DEST/aclocal-1.15
+    ln -s /usr/bin/aclocal $PKG_DEST/usr/bin/aclocal-1.15
 }
