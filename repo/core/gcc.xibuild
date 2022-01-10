@@ -34,10 +34,44 @@ build () {
 
     make
     # TODO put tests here, quite important
+
+    ulimit -s 32768
+
+    chown -Rv tester .
+    su tester -c "PATH=$PATH make -k check"
+    ../contrib/test_summary
+
+
     make DESTDIR=$PKG_DEST install
+
+
+    # no build libstdc++
 }
 
 
 package () {
+    rm -rf $PKG_DEST/usr/lib/gcc/$(gcc -dumpmachine)/11.2.0/include-fixed/bits/
+
+    chown -v -R root:root \
+    $PKG_DEST/usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
     ln -svr /usr/bin/cpp $PKG_DEST/usr/lib
+
+    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
+        $PKG_DEST/usr/lib/bfd-plugins/
+
+
+    # sanity checks
+    echo 'int main(){}' > dummy.c
+    cc dummy.c -v -Wl,--verbose &> dummy.log
+    readelf -l a.out | grep ': /lib'
+
+    grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
+    grep -B4 '^ /usr/include' dummy.log
+    grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+    grep "/lib.*/libc.so.6 " dummy.log
+    grep found dummy.log
+
+    # move a misplaced file
+    mkdir -pv $PKG_DEST/usr/share/gdb/auto-load/usr/lib
+    mv -v $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib
 }
