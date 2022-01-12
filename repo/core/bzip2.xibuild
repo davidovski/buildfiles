@@ -16,7 +16,6 @@ build () {
     make clean
 
     make
-
     make PREFIX=$PKG_DEST/usr install
 
 }
@@ -35,5 +34,8 @@ package () {
     for i in $PKG_DEST/usr/bin/{bzcat,bunzip2}; do
      ln -sfv bzip2 $i
     done
+
+    rm -fv $PKG_DEST/usr/lib/libbz2.a
+
 }
 

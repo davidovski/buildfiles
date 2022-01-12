@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DEPS=()
+
+SOURCE=https://dev.gentoo.org/~blueness/eudev/eudev-3.2.10.tar.gz
+DESC="Programs for dynamic creation of device nodes"
+
+build () {
+    ./configure --prefix=/usr           \
+            --bindir=/usr/sbin      \
+            --sysconfdir=/etc       \
+            --enable-manpages       \
+            --disable-static
+    make
+}
+
+package () {
+    mkdir -pv $PKG_DEST/usr/lib/udev/rules.d
+    mkdir -pv $PKG_DEST/etc/udev/rules.d
+
+    make DESTDIR=$PKG_DEST install
+
+}

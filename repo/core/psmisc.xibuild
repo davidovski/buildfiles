@@ -2,18 +2,11 @@
 
 DEPS=(ncurses)
 
-SOURCE=https://gitlab.com/psmisc/psmisc.git
+SOURCE=https://gitlab.com/psmisc/psmisc/-/archive/v23.4/psmisc-v23.4.tar.gz
 DESC="Miscellaneous procfs tools"
 
 build () {
-    ./autogen.sh
     ./configure --prefix=/usr
     make
     make DESTDIR=$PKG_DEST install 
-}
-
-package () {
-    mkdir -vp $PKG_DEST/bin
-    mv -v $PKG_DEST/usr/bin/fuser $PKG_DEST/bin
-    mv -v $PKG_DEST/usr/bin/killall $PKG_DEST/bin
 }

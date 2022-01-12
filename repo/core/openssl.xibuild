@@ -9,6 +9,7 @@ BRANCH="OpenSSL_1_1_1-stable"
 build () {
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make
+    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
 }
 

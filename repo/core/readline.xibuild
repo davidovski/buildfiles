@@ -7,6 +7,9 @@ DESC="a set of libraries that offer command line editing and history capabilitie
 
 
 build () {
+    sed -i '/MV.*old/d' Makefile.in
+    sed -i '/{OLDSUFF}/c:' support/shlib-install
+
     ./configure --prefix=/usr \
  --disable-static \
  --with-curses \

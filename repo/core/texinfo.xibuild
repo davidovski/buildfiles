@@ -6,6 +6,7 @@ SOURCE=https://ftp.gnu.org/gnu/texinfo/texinfo-6.8.tar.xz
 DESC="GNU documentation system for reading, writing and converting info pages"
 
 build () {
+    # fix an issue when building with glibc-2.34 or later
     sed -e 's/__attribute_nonnull__/__nonnull/' \
     -i gnulib/lib/malloc/dynarray-skeleton.c
 

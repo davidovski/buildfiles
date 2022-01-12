@@ -16,18 +16,18 @@ build () {
 
 
 package () {
-    #for lib in ncurses form panel menu ; do
-        #rm -vf                    $PKG_DEST/usr/lib/lib${lib}.so
-        #echo "INPUT(-l${lib}w)" > $PKG_DEST/usr/lib/lib${lib}.so
-        #ln -sfv ${lib}w.pc        $PKG_DEST/usr/lib/pkgconfig/${lib}.pc
-        #rm -vf                     /usr/lib/libcursesw.so
-    #done
-#
-    #echo "INPUT(-lncursesw)" > $PKG_DEST/usr/lib/libcursesw.so
-    ##ln -sfv libncurses.so      $PKG_DEST/usr/lib/libcurses.so
-#
 
-    #rm -fv $PKG_DEST/usr/lib/libncurses++w.a
+    for lib in ncurses form panel menu ; do
+        rm -vf                    $PKG_DEST/usr/lib/lib${lib}.so
+        echo "INPUT(-l${lib}w)" > $PKG_DEST/usr/lib/lib${lib}.so
+        ln -sfv ${lib}w.pc        $PKG_DEST/usr/lib/pkgconfig/${lib}.pc
+    done
+
+    rm -vf                     $PKG_DEST/usr/lib/libcursesw.so
+    echo "INPUT(-lncursesw)" > $PKG_DEST/usr/lib/libcursesw.so
+    ln -sfv libncurses.so      $PKG_DEST/usr/lib/libcurses.so
+
+    # install docs
     mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-6.3
     cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-6.3
 }

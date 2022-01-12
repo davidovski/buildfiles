@@ -2,11 +2,10 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/troglobit/sysklogd
+SOURCE=https://github.com/troglobit/sysklogd/releases/download/v2.3.0/sysklogd-2.3.0.tar.gz
 DESC="Programs for logging system messages"
 
 build () {
-    ./autogen.sh
     ./configure && make
     make DESTDIR=$PKG_DEST install 
 }
