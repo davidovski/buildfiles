@@ -54,7 +54,7 @@ package () {
 
     chown -v -R root:root \
     $PKG_DEST/usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
-    ln -svr /usr/bin/cpp $PKG_DEST/usr/lib
+    ln -sv /usr/bin/cpp $PKG_DEST/usr/lib
 
     ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
         $PKG_DEST/usr/lib/bfd-plugins/
