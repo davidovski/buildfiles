@@ -9,7 +9,7 @@ build () {
     #export BUILD_ZLIB=False
     #export BUILD_BZIP2=0
 
-    sh Configure -des -Dprefix=/tools -Dlibs=-lm -Uloclibpth -Ulocincpth
+    sh Configure -des -Dprefix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
 
     make
     make test
