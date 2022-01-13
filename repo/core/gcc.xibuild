@@ -36,9 +36,11 @@ build () {
 
     ulimit -s 32768
 
-    chown -Rv tester .
-    su tester -c "PATH=$PATH make $MAKEFLAGS -k check"
-    ../contrib/test_summary | grep -A7 Summ
+    if id -u tester; then
+        chown -Rv tester .
+        su tester -c "PATH=$PATH make $MAKEFLAGS -k check"
+        ../contrib/test_summary | grep -A7 Summ
+    fi
 
 }
 

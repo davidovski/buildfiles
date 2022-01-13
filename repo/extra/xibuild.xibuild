@@ -9,5 +9,9 @@ package () {
     mkdir -pv $PKG_DEST/usr/bin
     cp -v xibuild $PKG_DEST/usr/bin/
     cp xibuild $PKG_DEST/usr/bin/
+
+    mkdir -pv $PKG_DEST/home/xibuild
+    cp -r * $PKG_DEST/home/xibuild
 }
+
 
