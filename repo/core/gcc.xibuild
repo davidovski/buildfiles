@@ -38,22 +38,19 @@ build () {
 
     chown -Rv tester .
     su tester -c "PATH=$PATH make $MAKEFLAGS -k check"
-    ../contrib/test_summary
+    ../contrib/test_summary | grep -A7 Summ
 
-
-    make DESTDIR=$PKG_DEST install
-
-
-    # no build libstdc++
 }
 
 
 package () {
+    make DESTDIR=$PKG_DEST install
+
     rm -rf $PKG_DEST/usr/lib/gcc/$(gcc -dumpmachine)/11.2.0/include-fixed/bits/
 
     chown -v -R root:root \
     $PKG_DEST/usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
-    ln -sv /usr/bin/cpp $PKG_DEST/usr/lib/cpp
+    ln -sv cpp $PKG_DEST/usr/lib/cpp
 
     ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
         $PKG_DEST/usr/lib/bfd-plugins/

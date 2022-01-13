@@ -8,9 +8,15 @@ DESC="a selection of programs for compressing and decompressing bzip2 files"
 
 
 build () {
+    curl https://www.linuxfromscratch.org/patches/lfs/development/bzip2-1.0.8-install_docs-1.patch > bzip2-1.0.8-install_docs-1.patch
+
+    patch -Np1 -i bzip2-1.0.8-install_docs-1.patch
+    
 
     # ensure symbolic links are relative
     sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+
+    sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 
     make -f Makefile-libbz2_so
     make clean
@@ -26,16 +32,10 @@ package () {
 
     cp -v bzip2-shared $PKG_DEST/usr/bin/bzip2
     for i in $PKG_DEST/usr/bin/{bzcat,bunzip2}; do
-     cp -afv bzip2 $i
-    done
-    
-    # remove a useless static library 
-    cp -v bzip2-shared $PKG_DEST/usr/bin/bzip2
-    for i in $PKG_DEST/usr/bin/{bzcat,bunzip2}; do
      ln -sfv bzip2 $i
     done
 
+    # remove a useless static library 
     rm -fv $PKG_DEST/usr/lib/libbz2.a
-
 }
 

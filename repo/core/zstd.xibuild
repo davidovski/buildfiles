@@ -2,14 +2,13 @@
 
 DEPS=(glibc gcc-libs zlib xz lz4)
 
-SOURCE=https://github.com/facebook/zstd
+SOURCE=https://github.com/facebook/zstd/releases/download/v1.5.1/zstd-1.5.1.tar.gz
 DESC="the Zstandard real-time compression algorithm"
 
 build () {
     make
-    make -C contrib/pzstd
-    make prefix=/usr check
-    make DESTDIR=$PKG_DEST install
+    make check
+    make prefix=$PKG_DEST/usr install
 }
 
 package () {

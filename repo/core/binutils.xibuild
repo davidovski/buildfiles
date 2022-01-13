@@ -6,6 +6,9 @@ SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz
 DESC="tools for handling object files"
 
 build () {
+    curl https://www.linuxfromscratch.org/patches/lfs/development/binutils-2.37-upstream_fix-1.patch > binutils-2.37-upstream_fix-1.patch
+    patch -Np1 -i binutils-2.37-upstream_fix-1.patch
+
     # An error in the building system causes the shipped man pages to be empty. Workaround the issue and remove the shipped man pages, so the man pages will be regenerated correctly:
 
     sed -i '63d' etc/texi2pod.pl
@@ -23,11 +26,11 @@ build () {
              --with-system-zlib
 
     make tooldir=/usr
-    make -k check
-    make -j1 DESTDIR=$PKG_DEST install
+    make -k check || true
 }
 
 package() {
+    make -j1 DESTDIR=$PKG_DEST -j1 install
     rm -fv $PKG_DEST/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
 
 }

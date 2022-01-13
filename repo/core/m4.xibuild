@@ -9,5 +9,6 @@ DESC="The gnu m4 macro processor"
 build () {
     ./configure --prefix=/usr 
     make
+    make check
     make DESTDIR=$PKG_DEST install
 }

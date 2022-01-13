@@ -12,7 +12,9 @@ build () {
     make html
 
     make check
+}
 
+package () {
     make DESTDIR=$PKG_DEST install
     make DESTDIR=$PKG_DEST install-html
 }
