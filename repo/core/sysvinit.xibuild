@@ -10,5 +10,5 @@ build () {
     patch -Np1 -i ysvinit-3.01-consolidated-1.patch
 
     make
-    make DESTDIR=$PKG_DEST install 
+    make ROOT=$PKG_DEST install 
 }
