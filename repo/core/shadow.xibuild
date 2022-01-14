@@ -2,7 +2,7 @@
 
 DEPS=(pam acl audit libcap libxcrypt)
 
-SOURCE=https://github.com/shadow-maint/shadow/releases/download/v4.9/shadow-4.9.tar.xz
+SOURCE=https://github.com/shadow-maint/shadow/releases/download/v4.10/shadow-4.10.tar.xz
 DESC="Password and account management tool suite with support for shadow files and PAM"
 
 build () {
