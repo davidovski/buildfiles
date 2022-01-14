@@ -12,7 +12,3 @@ build () {
     #make check
     make prefix=$PKG_DEST/usr install
 }
-
-package () {
-    mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
-}
