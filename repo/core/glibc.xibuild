@@ -29,17 +29,17 @@ build () {
     make
 
     # some check failures are 'expected'
-    make check || true
+    #make check || true
 
 }
 
 package () {
+    mkdir -pv $PKG_DEST/etc
     touch $PKG_DEST/etc/ld.so.conf
 
     sed '/test-installation/s@$(PERL)@echo not running@' -i ../Makefile
     make DESTDIR=$PKG_DEST install
     
-
     # fix hardcoded path to the excutable in ldd script
     sed '/RTLDLIST=/s@/usr@@g' -i $PKG_DEST/usr/bin/ldd
 
