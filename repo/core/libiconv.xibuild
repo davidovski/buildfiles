@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+SOURCE=https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.16.tar.gz
+
+DESC="GNU charset conversion library"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+    make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
+}
