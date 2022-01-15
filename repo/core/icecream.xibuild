@@ -2,7 +2,7 @@
 
 DEPS=(gcc python)
 
-SOURCE=https://github.com/icecc/icecream/archive/1.3.1.tar.gz
+SOURCE=https://github.com/icecc/icecream/releases/download/1.3.1/icecc-1.3.1.tar.xz
 
 DESC="A build distribution service based on distcc"
 
