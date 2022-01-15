@@ -7,6 +7,8 @@ SOURCE=https://github.com/stevegrubb/libcap-ng/archive/refs/tags/v0.8.2.tar.gz
 DESC="A library for linux that makes posix capabilities easy"
 
 build () {
+    ./autogen.sh
+    ./configure --prefix=/usr
     make prefix=/usr lib=lib
 }
 
