@@ -19,6 +19,7 @@ build () {
     ../configure --prefix=/usr       \
              --enable-gold       \
              --enable-ld=default \
+             --enable-install-libiberty \
              --enable-plugins    \
              --enable-shared     \
              --disable-werror    \
@@ -31,6 +32,7 @@ build () {
 
 package() {
     make -j1 DESTDIR=$PKG_DEST -j1 install
+    cp ../include/libiberty.h $PKG_DEST/usr/include
     rm -fv $PKG_DEST/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
 
 }
