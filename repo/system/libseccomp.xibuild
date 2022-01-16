@@ -12,9 +12,9 @@ build () {
     make
 }
 
-check () {
-    make check
-}
+#check () {
+    #make check
+#}
 
 package () {
     make prefix=/usr lib=lib DESTDIR=$PKG_DEST install

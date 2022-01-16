@@ -8,8 +8,8 @@ SOURCE=https://archive.mozilla.org/pub/nspr/releases/v$PKG_VER/src/nspr-$PKG_VER
 DESC="Netscape Portable Runtime"
 
 prepare () {
-    sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in 
-    sed -i 's#$(LIBRARY) ##'   config/rules.mk         
+    #sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in 
+    #sed -i 's#$(LIBRARY) ##'   config/rules.mk         
 }
 
 build () {

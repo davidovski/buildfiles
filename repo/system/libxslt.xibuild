@@ -9,7 +9,7 @@ DESC="XML stylesheet transformation library"
 
 prepare () {
     sed -i s/3000/5000/ libxslt/transform.c doc/xsltproc.{1,xml} &&
-    sed -i -r '/max(Parser)?Depth/d' ./tests/fuzz/fuzz.c &&
+    sed -i -r '/max(Parser)?Depth/d' ./tests/fuzz/fuzz.c 
 }
 
 build () {
@@ -19,6 +19,7 @@ build () {
     -e 's@\$Date\$@31 October 2019@' -i doc/xsltproc.xml &&
         xsltproc/xsltproc --nonet doc/xsltproc.xml -o doc/xsltproc.1
 }
+
 package () {
     make DESTDIR=$PKG_DEST install
 }
