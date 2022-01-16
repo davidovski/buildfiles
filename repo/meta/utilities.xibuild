@@ -2,7 +2,7 @@ repo=util
 
 DEPS=()
 
-for i in $(ls -1 $(echo /home/david/docs/proj/xilinux/buildfiles/repo/meta/build.xibuild | rev | cut -d/ -f3- | rev)/$repo); do
+for i in $(ls -1 $(echo $BUILD_FILE_PATH | rev | cut -d/ -f3- | rev)/$repo); do
     name=$(basename -s .xibuild $i)
     DEPS=(${DEPS[@]} $name)
 done
