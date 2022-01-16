@@ -2,8 +2,8 @@
 
 DEPS=(glibc)
 
-PKG_VER=2.4.1
-SOURCE=https://github.com/libexpat/libexpat/releases/download/R_$PKG_VER/expat-$PKG_VER.tar.xz
+PKG_VER=2.4.2
+SOURCE=https://github.com/libexpat/libexpat/releases/download/R_$(echo $PKG_VER | sed "s|\.|_|g")/expat-$PKG_VER.tar.xz
 DESC="An XML parser library"
 
 build () {
