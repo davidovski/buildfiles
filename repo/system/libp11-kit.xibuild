@@ -5,8 +5,7 @@ DEPS=(glibc libtasn1 libffi)
 SOURCE=https://github.com/p11-glue/p11-kit
 DESC="Loads and enumerates PKCS#11 modules"
 
-patch () {
-
+prepare () {
     sed '20,$ d' -i trust/trust-extract-compat &&
     cat >> trust/trust-extract-compat << "EOF"
 # Copy existing anchor modifications to /etc/ssl/local

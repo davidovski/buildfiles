@@ -7,7 +7,7 @@ PKG_VER=4.33
 SOURCE=https://archive.mozilla.org/pub/nspr/releases/v$PKG_VER/src/nspr-$PKG_VER.tar.gz
 DESC="Netscape Portable Runtime"
 
-patch () {
+prepare () {
     sed -ri '/^RELEASE/s/^/#/' pr/src/misc/Makefile.in 
     sed -i 's#$(LIBRARY) ##'   config/rules.mk         
 }

@@ -8,7 +8,7 @@ BRANCH=bzip2-$PKG_VER
 DESC="a selection of programs for compressing and decompressing bzip2 files"
 
 
-patch () {
+prepare () {
     #curl https://www.linuxfromscratch.org/patches/lfs/development/bzip2-$PKG_VER-install_docs-1.patch > bzip2-$PKG_VER-install_docs-1.patch
 
     #patch -Np1 -i bzip2-$PKG_VER-install_docs-1.patch

@@ -7,7 +7,7 @@ SOURCE=https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-$PK
 
 DESC="POSIX 1003.1e capabilities"
 
-patch () {
+prepare () {
     sed -i '/install -m.*STA/d' libcap/Makefile
 }
 

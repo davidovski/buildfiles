@@ -8,7 +8,7 @@ SOURCE=https://ftp.gnu.org/gnu/readline/readline-$PKG_VER.tar.gz
 DESC="a set of libraries that offer command line editing and history capabilities"
 
 
-patch () {
+prepare () {
     sed -i '/MV.*old/d' Makefile.in
     sed -i '/{OLDSUFF}/c:' support/shlib-install
 }

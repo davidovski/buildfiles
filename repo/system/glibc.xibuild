@@ -6,7 +6,7 @@ PKG_VER=2.34
 SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-$PKG_VER.tar.xz
 DESC="The main gnu C library providing basic routines and procedures"
 
-patch () {
+prepare () {
     # patches as recommended by lfs
     sed -e '/NOTIFY_REMOVED)/s/)/ \&\& data.attr != NULL)/' -i sysdeps/unix/sysv/linux/mq_notify.c
 

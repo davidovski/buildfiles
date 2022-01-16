@@ -7,7 +7,7 @@ SOURCE=https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-$PKG_
 
 DESC="The GNU Compiler Collection - C and C++ frontends"
 
-patch () {
+prepare () {
     #fix an issue breaking libasan.a
 
     sed -e '/static.*SIGSTKSZ/d' \

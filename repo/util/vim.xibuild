@@ -5,7 +5,7 @@ DEPS=(gpm acl glibc libgcrypt pcre zlib)
 SOURCE=https://github.com/vim/vim.git
 DESC="Vi Improved"
 
-patch () {
+prepare () {
     echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
 }
 
