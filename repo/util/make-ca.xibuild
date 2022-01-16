@@ -7,7 +7,7 @@ SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$P
 DESC="A utility to deliver and manage a complete PKI configuration"
 
 build () {
-    make DESTDIR=$PKG_DEST install &&
+    make DESTDIR=$PKG_DEST install
 }
 
 package () {
