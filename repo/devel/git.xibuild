@@ -11,7 +11,8 @@ build () {
             --with-gitconfig=/etc/gitconfig \
             --with-python=python3 &&
     make
-    make man
+}
+
+package () {
     make perllibdir=/usr/lib/perl5/5.34/site_perl DESTDIR=$PKG_DEST install
-    make DESTDIR=$PKG_DEST install-man
 }
