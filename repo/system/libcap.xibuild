@@ -7,16 +7,19 @@ SOURCE=https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-$PK
 
 DESC="POSIX 1003.1e capabilities"
 
-build () {
+patch () {
     sed -i '/install -m.*STA/d' libcap/Makefile
+}
 
+build () {
     make prefix=/usr lib=lib
+}
 
+check () {
     make test
-    make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
-
 }
 
 package() {
+    make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
     chmod -v 755 $PKG_DEST/usr/lib/lib{cap,psx}.so.*
 }

@@ -9,6 +9,12 @@ DESC="The GNU general-purpose parser generator"
 build () {
     ./configure --prefix=/usr --docdir=/usr/share/doc/bison-$PKG_VER
     make
+}
+
+check () {
     make check 
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

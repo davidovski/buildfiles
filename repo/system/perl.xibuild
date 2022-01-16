@@ -7,13 +7,19 @@ SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
 DESC="The Practical Extraction and Report Language"
 
 build () {
-    #export BUILD_ZLIB=False
-    #export BUILD_BZIP2=0
+    export BUILD_ZLIB=False
+    export BUILD_BZIP2=0
 
     sh Configure -des -Dprefix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
 
     make
+}
+
+check () {
     make test
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
     unset BUILD_ZLIB BUILD_BZIP2
 }

@@ -9,12 +9,12 @@ DESC="A library that implements regular expressions in a perl style"
 build () {
     CC=gcc ./configure --prefix=/usr 
     make
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
     # this probably is not right but it works for now
-    ln $PKG_DEST/usr/lib/libpcre2-8.so $PKG_DEST/usr/lib/libpcre.so.1
+    ln /usr/lib/libpcre2-8.so $PKG_DEST/usr/lib/libpcre.so.1
 }
 
 

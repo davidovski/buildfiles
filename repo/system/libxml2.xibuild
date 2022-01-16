@@ -12,5 +12,8 @@ build () {
             --with-history   \
             --with-python=/usr/bin/python3 &&
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

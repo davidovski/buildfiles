@@ -9,6 +9,9 @@ DESC="Utility used to store, backup and transport files"
 build () {
     FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }
 

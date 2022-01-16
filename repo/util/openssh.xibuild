@@ -2,7 +2,8 @@
 
 DEPS=(glibc krb5 openssl libedit ldns libxcrypt zlib pam)
 
-SOURCE=https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-8.8p1.tar.gz
+PKG_VER=8.8p1
+SOURCE=https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-$PKG_VER.tar.gz
 DESC="Premier connectivity tool for remote login with the SSH protocol"
 
 build () {
@@ -14,17 +15,17 @@ build () {
             --with-superuser-path=/usr/sbin:/usr/bin \
             --with-pid-dir=/run
     make
-    make DESTDIR=$PKG_DEST install
 }
 
 
 package () {
+    make DESTDIR=$PKG_DEST install
     install -v -m755    contrib/ssh-copy-id $PKG_DEST/usr/bin     
 
     install -v -m644    contrib/ssh-copy-id.1 \
                         $PKG_DEST/usr/share/man/man1              
-    install -v -m755 -d $PKG_DEST/usr/share/doc/openssh-8.8p1     
+    install -v -m755 -d $PKG_DEST/usr/share/doc/openssh-$PKG_VER
     install -v -m644    INSTALL LICENCE OVERVIEW README* \
-                        $PKG_DEST/usr/share/doc/openssh-8.8p1
+                        $PKG_DEST/usr/share/doc/openssh-$PKG_VER
 
 }

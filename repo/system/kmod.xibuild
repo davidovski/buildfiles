@@ -15,10 +15,10 @@ build () {
             --with-zlib
 
     make
-    make DESTDIR=$PKG_DEST install 
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install 
     mkdir -p /usr/sbin
     mkdir -p /usr/bin
 

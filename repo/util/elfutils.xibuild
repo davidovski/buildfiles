@@ -8,6 +8,12 @@ DESC="Handle ELF object files and DWARF debugging information"
 build () {
     ./configure --prefix=/usr --disable-debuginfod --enable-libdebuginfod=dummy
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

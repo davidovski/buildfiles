@@ -9,6 +9,9 @@ DESC="GNU internationalization library"
 build () {
     ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/gettext-$PKG_VER
     make
+}
+
+check () {
     make check
 }
 

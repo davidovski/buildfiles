@@ -9,11 +9,11 @@ DESC="The open source management tools and libraries for cryptography"
 build () {
     ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make
-    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
-    make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
 }
 
 package () {
+    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
+    make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
     mkdir -pv $PKG_DEST/usr/share/doc/openssl
     cp -vfr doc/* $PKG_DEST/usr/share/doc/openssl
 }

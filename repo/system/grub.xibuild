@@ -9,10 +9,10 @@ DESC="GNU GRand Unified Bootloader v2"
 build () {
     ./configure --prefix=/usr --sysconfdir=/etc --disable-werror
     make 
-    make DESTDIR=$PKG_DEST install 
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install 
     mkdir -pv $PKG_DEST/usr/share/bash-completion/completions
     mv -v $PKG_DEST/etc/bash_completion.d/grub $PKG_DEST/usr/share/bash-completion/completions
 }

@@ -2,7 +2,8 @@
 
 DEPS=()
 
-SOURCE=https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.14.tar.xz
+PKG_VER=5.15.14
+SOURCE=https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$PKG_VER.tar.xz
 DESC="Linux kernel headers"
 
 

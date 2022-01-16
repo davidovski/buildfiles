@@ -9,10 +9,12 @@ build () {
     mkdir out && cd out
     ../configure-cmake
     make 
+}
+check () {
     make test
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
     mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
 }

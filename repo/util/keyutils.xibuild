@@ -2,10 +2,14 @@
 
 DEPS=(glibc sh)
 
-SOURCE=https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-1.6.3.tar.gz
+PKG_VER=1.6.3
+SOURCE=https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-$PKG_VER.tar.gz
 DESC="Linux Key Management Utils"
 
 build () {
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

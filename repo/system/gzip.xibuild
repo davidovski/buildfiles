@@ -9,5 +9,8 @@ DESC="GNU compression utilities"
 build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

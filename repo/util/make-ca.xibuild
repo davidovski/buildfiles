@@ -2,11 +2,14 @@
 
 DEPS=(p11-kit nss)
 
-SOURCE=https://github.com/djlucas/make-ca/releases/download/v1.7/make-ca-1.7.tar.xz
+PKG_VER=1.7
+SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz
 DESC="A utility to deliver and manage a complete PKI configuration"
 
 build () {
-
     make DESTDIR=$PKG_DEST install &&
+}
+
+package () {
     install -vdm755 $PKG_DEST/etc/ssl/local
 }

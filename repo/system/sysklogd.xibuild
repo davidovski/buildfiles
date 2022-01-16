@@ -8,5 +8,8 @@ DESC="Programs for logging system messages"
 
 build () {
     ./configure && make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

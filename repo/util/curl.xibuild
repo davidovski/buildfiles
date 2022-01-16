@@ -2,7 +2,8 @@
 
 DEPS=(cacerts openssl zlib zstd libnghttp libpsl)
 
-SOURCE=https://curl.se/download/curl-7.80.0.tar.xz
+PKG_VER=7.80.0
+SOURCE=https://curl.se/download/curl-$PKG_VER.tar.xz
 DESC="A utility for transfering files with URL syntax"
 
 build () {
@@ -12,6 +13,8 @@ build () {
             --enable-threaded-resolver              \
             --with-ca-path=/etc/ssl/certs &&
     make
+}
 
+package () {
     make DESTDIR=$PKG_DEST install
 }

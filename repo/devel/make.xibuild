@@ -2,11 +2,15 @@
 
 DEPS=(glibc)
 
-SOURCE=https://ftp.gnu.org/gnu/make/make-4.3.tar.gz
+PKG_VER=4.3
+SOURCE=https://ftp.gnu.org/gnu/make/make-$PKG_VER.tar.gz
 DESC="GNU make utility"
 
 build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

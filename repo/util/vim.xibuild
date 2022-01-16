@@ -5,15 +5,19 @@ DEPS=(gpm acl glibc libgcrypt pcre zlib)
 SOURCE=https://github.com/vim/vim.git
 DESC="Vi Improved"
 
-build () {
+patch () {
     echo '#define SYS_VIMRC_FILE "/etc/vimrc"' >> src/feature.h
+}
+
+build () {
     ./configure --prefix=/usr --disable-gtk-check --disable-motif-check --disable-athena-check --disable-gui --disable-xsmp --without-x -disable-canberra --disable-libsodium --disable-gpm --disable-libsodium
     make
-    make DESTDIR=$PKG_DEST install 
 }
 
 
 package () {
+make DESTDIR=$PKG_DEST install 
+
     cat > vimrc << "EOF"
 " Begin /etc/vimrc
 " Ensure defaults are set before customizing settings, not after

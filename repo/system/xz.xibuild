@@ -12,7 +12,12 @@ build () {
     ./autogen.sh
     ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/xz-$PKG_VER
     make
-    make check
-    make DESTDIR=$PKG_DEST install
 }
 
+check () {
+    make check
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

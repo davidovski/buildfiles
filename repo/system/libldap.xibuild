@@ -9,5 +9,8 @@ DESC="An open source implementation of the Lightweight Directory Access Protocol
 build () {
     ./configure prefix="/usr"
     make 
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

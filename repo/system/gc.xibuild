@@ -9,5 +9,8 @@ DESC="A garbage collector for C and C++"
 build () {
     ./configure --prefix=/usr --disable-static
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

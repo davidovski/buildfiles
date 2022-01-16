@@ -10,5 +10,8 @@ build () {
     rm -fv man/man8/arpd.8
 
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

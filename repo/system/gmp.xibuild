@@ -6,18 +6,22 @@ PKG_VER=6.2.1
 SOURCE=https://gmplib.org/download/gmp/gmp-$PKG_VER.tar.xz
 DESC="a collection of mathematical libraries"
 
-build () {
+patch () {
     cp -v configfsf.guess config.guess
     cp -v configfsf.sub   config.sub
+}
+
+build () {
 
     ./configure --prefix=/usr --enable-cxx --disable-static --docdir=/usr/share/doc/gmp
 
     make
     make html
+}
 
+check () {
     make check 2>&1 | tee gmp-check-log
     awk '/# PASS:/{total+=$3} ; END{print total}' gmp-check-log
-
 }
 
 package() {

@@ -2,11 +2,15 @@
 
 DEPS=(perl)
 
-SOURCE=https://ftp.gnu.org/gnu/groff/groff-1.22.4.tar.gz
+PKG_VER=1.22.4
+SOURCE=https://ftp.gnu.org/gnu/groff/groff-$PKG_VER.tar.gz
 DESC="GNU troff text-formatting system"
 
 build () {
     PAGE=A4 ./configure --prefix=/usr
     make -j1
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

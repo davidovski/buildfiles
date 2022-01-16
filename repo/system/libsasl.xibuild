@@ -10,9 +10,8 @@ build () {
     ./configure \
             --prefix=/usr
     make
-    make DESTDIR=$PKG_DEST install 
 }
 
-#package () {
-    #mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
-#}
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

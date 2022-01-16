@@ -9,10 +9,11 @@ DESC="A modern library for one-way hashing of passwords"
 build () {
     CC=gcc ./configure --prefix=/usr 
     make
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
+    
     # this is probably wrong
     ln $PKG_DEST/usr/lib/libcrypt.so $PKG_DEST/usr/lib/libcrypt.so.2
 }

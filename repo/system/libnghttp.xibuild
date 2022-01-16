@@ -14,5 +14,7 @@ build () {
             --enable-lib-only \
             --docdir=/usr/share/doc/nghttp2-$PKG_VER &&
     make
+}
+package () {
     make DESTDIR=$PKG_DEST install
 }

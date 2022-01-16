@@ -2,11 +2,15 @@
 
 DEPS=(curl libarchive jsoncpp libuv rhash)
 
-SOURCE=https://github.com/Kitware/CMake/releases/download/v3.22.1/cmake-3.22.1.tar.gz
+PKG_VER=3.22.1
+SOURCE=https://github.com/Kitware/CMake/releases/download/v$PKG_VER/cmake-$PKG_VER.tar.gz
 DESC="A cross-platform open-source make system"
 
 build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

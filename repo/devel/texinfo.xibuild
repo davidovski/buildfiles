@@ -2,16 +2,22 @@
 
 DEPS=(ncurses gzip perl sh)
 
-SOURCE=https://ftp.gnu.org/gnu/texinfo/texinfo-6.8.tar.xz
+PKG_VER=6.8
+SOURCE=https://ftp.gnu.org/gnu/texinfo/texinfo-$PKG_VER.tar.xz
 DESC="GNU documentation system for reading, writing and converting info pages"
 
-build () {
+patch () {
     # fix an issue when building with glibc-2.34 or later
     sed -e 's/__attribute_nonnull__/__nonnull/' \
     -i gnulib/lib/malloc/dynarray-skeleton.c
+}
 
+build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
     make TEXMF=$PKG_DEST/usr/share/texmf install-tex
 }

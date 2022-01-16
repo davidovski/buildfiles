@@ -9,6 +9,12 @@ DESC="A perl interface for the expat XML parser"
 build () {
     perl Makefile.PL
     make
+}
+
+check () {
     make test
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

@@ -6,7 +6,7 @@ PKG_VER=2.37
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
 DESC="tools for handling object files"
 
-build () {
+patch () {
     curl https://www.linuxfromscratch.org/patches/lfs/development/binutils-$PKG_VER-upstream_fix-1.patch > binutils-$PKG_VER-upstream_fix-1.patch
     patch -Np1 -i binutils-$PKG_VER-upstream_fix-1.patch
 
@@ -14,7 +14,9 @@ build () {
 
     sed -i '63d' etc/texi2pod.pl
     find -name \*.1 -delete
+}
 
+build () {
     mkdir -v build
     cd       build
     ../configure --prefix=/usr       \
@@ -28,6 +30,9 @@ build () {
              --with-system-zlib
 
     make tooldir=/usr
+}
+
+check () {
     make -k check || true
 }
 

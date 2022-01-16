@@ -7,9 +7,11 @@ SOURCE=https://ftp.gnu.org/gnu/libtasn1/libtasn1-$PKG_VER.tar.gz
 DESC="The ASN.1 library used in GNUTLS"
 
 build () {
-
     ./configure \
             --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

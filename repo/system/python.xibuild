@@ -9,10 +9,10 @@ DESC="The Python development environment"
 build () {
     ./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes --enable-optimizations --with-ssl --with-requests
     make
-    make DESTDIR=$PKG_DEST install 
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install 
     ln -s /usr/bin/python3 $PKG_DEST/usr/bin/python
     ln -s /usr/bin/pip3 $PKG_DEST/usr/bin/pip
 }

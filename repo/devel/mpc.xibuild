@@ -2,15 +2,18 @@
 
 DEPS=(mpfr)
 
-SOURCE=http://www.multiprecision.org/downloads/mpc-1.2.0.tar.gz
+PKG_VER=1.2.0
+SOURCE=http://www.multiprecision.org/downloads/mpc-$PKG_VER.tar.gz
 DESC="Library for the arithmetic of complex numbers with arbitrarily high precision"
 
 build () {
-    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/mpc-1.2.0
+    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/mpc-$PKG_VER
 
     make
     make html
+}
 
+check () {
     make check
 }
 

@@ -9,7 +9,12 @@ DESC="Perfect hash function generator"
 build () {
     ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-$PKG_VER
     make
-    make -j1 check
+}
 
+check () {
+    make -j1 check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

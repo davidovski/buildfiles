@@ -9,7 +9,12 @@ DESC="GNU database library"
 build () {
     ./configure --prefix=/usr --disable-static --enable-libgdm-compat
     make
-    make -k check
+}
 
+check () {
+    make -k check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

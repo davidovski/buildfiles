@@ -10,5 +10,8 @@ DESC="GNU charset conversion library"
 build () {
     ./configure --prefix=/usr --disable-static &&
     make
+}
+
+package () {
     make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
 }

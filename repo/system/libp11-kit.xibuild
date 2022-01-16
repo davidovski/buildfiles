@@ -5,7 +5,7 @@ DEPS=(glibc libtasn1 libffi)
 SOURCE=https://github.com/p11-glue/p11-kit
 DESC="Loads and enumerates PKCS#11 modules"
 
-build () {
+patch () {
 
     sed '20,$ d' -i trust/trust-extract-compat &&
     cat >> trust/trust-extract-compat << "EOF"
@@ -15,12 +15,17 @@ build () {
 # Generate a new trust store
 /usr/sbin/make-ca -f -g
 EOF
+}
 
+build () {
     ./autogen.sh
     ./configure --prefix=/usr     \
                 --sysconfdir=/etc \
             --with-trust-paths=/etc/pki/anchors 
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
     ln -sfv $PKG_DEST/usr/libexec/p11-kit/trust-extract-compat \
         $PKG_DEST/usr/bin/update-ca-certificates

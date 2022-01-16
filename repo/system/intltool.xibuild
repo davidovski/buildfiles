@@ -9,7 +9,13 @@ DESC="The internationalization tool collection"
 build () {
     ./configure --prefix=/usr 
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
     install -v -Dm644 doc/I18N-HOWTO $PKG_DEST/usr/share/doc/intltool-$PKG_VER/I18N-HOWTO
 }

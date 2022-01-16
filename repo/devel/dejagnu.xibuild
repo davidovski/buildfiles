@@ -2,7 +2,8 @@
 
 DEPS=(sh expect)
 
-SOURCE=https://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.3.tar.gz
+PKG_VER=1.6.3
+SOURCE=https://ftp.gnu.org/gnu/dejagnu/dejagnu-$PKG_VER.tar.gz
 DESC="a framework for running test suites on GNU tools"
 
 build () {
@@ -13,11 +14,13 @@ build () {
 
     makeinfo --html --no-split -o doc/dejagnu.html ../doc/dejagnu.texi
     makeinfo --plaintext -o doc/dejagnu.txt ../doc/dejagnu.texi
+}
 
+package () {
     make DESTDIR=$PKG_DEST install
 
-    install -v -dm755 $PKG_DEST/usr/share/doc/dejagnu-1.6.3
-    install -v -m644 doc/dejagnu.{html,txt} $PKG_DEST/usr/share/doc/dejagnu-1.6.3
+    install -v -dm755 $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
+    install -v -m644 doc/dejagnu.{html,txt} $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
 }
 
 

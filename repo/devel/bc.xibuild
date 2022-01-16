@@ -2,14 +2,19 @@
 
 DEPS=(readline)
 
-SOURCE=https://github.com/gavinhoward/bc/releases/download/5.2.1/bc-5.2.1.tar.xz
+PKG_VER=5.2.1
+SOURCE=https://github.com/gavinhoward/bc/releases/download/$PKG_VER/bc-$PKG_VER.tar.xz
 DESC="An arbitrary precision numeric processing language"
 
 build () {
     CC=gcc ./configure --prefix=/usr -G -O3
     make
-    make test
-    make DESTDIR=$PKG_DEST install
 }
 
+check () {
+    make test
+}
 
+package () {
+    make DESTDIR=$PKG_DEST install
+}

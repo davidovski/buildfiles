@@ -11,5 +11,8 @@ build () {
     ./autogen.sh
     ./configure --prefix=/usr --disable-static
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

@@ -2,10 +2,9 @@
 
 DEPS=(python libxslt docbook-xsl)
 
-SOURCE=https://github.com/asciidoc-py/asciidoc-py/releases/download/10.1.1/asciidoc-10.1.1.tar.gz
+PKG_VER=10.1.1
+SOURCE=https://github.com/asciidoc-py/asciidoc-py/releases/download/$PKG_VER/asciidoc-$PKG_VER.tar.gz
 DESC="Text document format for short documents, articles, books and UNIX man pages"
-
-
 
 package () {
     pip install -t $PKG_DEST/usr/lib/python3.10/site-packages/ asciidoc

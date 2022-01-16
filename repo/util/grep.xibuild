@@ -2,12 +2,19 @@
 
 DEPS=(glibc pcre)
 
-SOURCE=https://ftp.gnu.org/gnu/grep/grep-3.7.tar.xz
+PKG_VER=3.7
+SOURCE=https://ftp.gnu.org/gnu/grep/grep-$PKG_VER.tar.xz
 DESC="A string search utility"
 
 build () {
     ./configure --prefix=/usr --bindir=/bin
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

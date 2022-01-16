@@ -10,5 +10,8 @@ build () {
     ./autogen.sh
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

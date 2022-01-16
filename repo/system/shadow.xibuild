@@ -7,7 +7,7 @@ PKG_VER=4.10
 SOURCE=https://github.com/shadow-maint/shadow/releases/download/v$PKG_VER/shadow-$PKG_VER.tar.xz
 DESC="Password and account management tool suite with support for shadow files and PAM"
 
-build () {
+patch () {
 
     curl https://www.linuxfromscratch.org/patches/lfs/development/shadow-$PKG_VER-useradd_segfault-1.patch > shadow-$PKG_VER-useradd_segfault-1.patch
     patch -Np1 -i shadow-$PKG_VER-useradd_segfault-1.patch
@@ -27,16 +27,16 @@ build () {
 
     mkdir -p $PKG_DEST/usr/bin
     touch $PKG_DEST/usr/bin/passwd
-    ./configure --sysconfdir=/etc --with-group-name-max-length=32
-
-    make
-
-    make exec_prefix=/usr DESTDIR=$PKG_DEST install
-
-    make DESTDIR=$PKG_DEST -C man install-man
 
 }
 
+build () {
+    ./configure --sysconfdir=/etc --with-group-name-max-length=32
+    make
+}
+
 package () {
+    make exec_prefix=/usr DESTDIR=$PKG_DEST install
+    make DESTDIR=$PKG_DEST -C man install-man
     mkdir -p $PKG_DEST/etc/default
 }

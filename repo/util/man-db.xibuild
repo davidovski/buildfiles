@@ -2,13 +2,13 @@
 
 DEPS=(bash gdbm zlib groff libpipeline less)
 
-SOURCE=http://download.savannah.nongnu.org/releases/man-db/man-db-2.9.4.tar.xz
+PKG_VER=2.9.4
+SOURCE=http://download.savannah.nongnu.org/releases/man-db/man-db-$PKG_VER.tar.xz
 DESC="A utility for reading man pages"
 
 build () {
-    ./configure --prefix=/usr
     ./configure --prefix=/usr                        \
-            --docdir=/usr/share/doc/man-db-2.9.4 \
+            --docdir=/usr/share/doc/man-db-$PKG_VER \
             --sysconfdir=/etc                    \
             --disable-setuid                     \
             --enable-cache-owner=bin             \
@@ -18,5 +18,8 @@ build () {
             --with-systemdtmpfilesdir=           \
             --with-systemdsystemunitdir=
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

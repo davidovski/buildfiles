@@ -9,7 +9,8 @@ DESC="Access control list utilities, libraries and headers"
 build () {
     ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/acl-$PKG_VER
     make
+}
 
+package() {
     make DESTDIR=$PKG_DEST install
-
 }

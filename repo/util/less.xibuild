@@ -2,11 +2,15 @@
 
 DEPS=(glibc ncurses pcre2)
 
-SOURCE=https://www.greenwoodsoftware.com/less/less-590.tar.gz
+PKG_VER=590
+SOURCE=https://www.greenwoodsoftware.com/less/less-$PKG_VER.tar.gz
 DESC="A terminal based program for viewing text files"
 
 build () {
     ./configure --prefix=/usr --sysconfdir=/etc
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

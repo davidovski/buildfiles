@@ -2,12 +2,12 @@
 
 DEPS=(glibc)
 
-SOURCE=https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-11.2.0/gcc-11.2.0.tar.xz
+PKG_VER=11.2.0
+SOURCE=https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
 
 DESC="The GNU Compiler Collection - C and C++ frontends"
 
-
-build () {
+patch () {
     #fix an issue breaking libasan.a
 
     sed -e '/static.*SIGSTKSZ/d' \
@@ -20,8 +20,9 @@ build () {
             -i.orig gcc/config/i386/t-linux64
       ;;
     esac
+}
 
-
+build () {
     mkdir -v build
     cd build
 
@@ -33,7 +34,9 @@ build () {
              --with-system-zlib
 
     make
+}
 
+check () {
     ulimit -s 32768
 
     if id -u tester; then
@@ -41,7 +44,6 @@ build () {
         su tester -c "PATH=$PATH make $MAKEFLAGS -k check"
         ../contrib/test_summary | grep -A7 Summ
     fi
-
 }
 
 

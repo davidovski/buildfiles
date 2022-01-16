@@ -30,9 +30,10 @@ build () {
         -i pkgs/itcl4.2.1/itclConfig.sh
 
     unset SRCDIR
+}
 
+check () {
     make test
-
 }
 
 package () {

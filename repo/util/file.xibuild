@@ -2,13 +2,20 @@
 
 DEPS=(glibc zlib xz bzip2)
 
-SOURCE=http://ftp.astron.com/pub/file/file-5.40.tar.gz
+PKG_VER=5.40
+SOURCE=http://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz
 DESC="A utility for determining the type of a given file or files"
 
 build () {
     ./configure --prefix=/usr 
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }
 

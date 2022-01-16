@@ -2,12 +2,17 @@
 
 DEPS=(glibc bash)
 
-SOURCE=http://ftp.gnu.org/gnu/which/which-2.21.tar.gz
+PKG_VER=2.21
+
+SOURCE=http://ftp.gnu.org/gnu/which/which-$PKG_VER.tar.gz
 DESC="A utility to show the full path of commands"
 
 build () {
     CC=gcc ./configure --prefix=/usr 
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }
 

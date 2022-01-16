@@ -6,12 +6,15 @@ PKG_VER=1.5.2
 SOURCE=https://github.com/linux-pam/linux-pam/releases/download/v$PKG_VER/Linux-PAM-$PKG_VER.tar.xz
 DESC="PAM (Pluggable Authentication Modules) library"
 
-build () {
+patch() {
     # prevent install of an uneeded systemd file
     sed -e /service_DATA/d \
         -i modules/pam_namespace/Makefile.am &&
     autoreconf
 
+}
+
+build () {
     ./configure --prefix=/usr                        \
             --sbindir=/usr/sbin                  \
             --sysconfdir=/etc                    \
@@ -19,11 +22,11 @@ build () {
             --enable-securedir=/usr/lib/security \
             --docdir=/usr/share/doc/Linux-PAM-$PKG_VER &&
     make
-
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
+
     install -v -m755 -d $PKG_DEST/etc/pam.d &&
 
     cat > $PKG_DEST/etc/pam.d/other << "EOF"

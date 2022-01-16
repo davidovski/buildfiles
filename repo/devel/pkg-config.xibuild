@@ -2,15 +2,22 @@
 
 DEPS=(glibc sh)
 
-SOURCE=https://pkg-config.freedesktop.org/releases/pkg-config-0.29.2.tar.gz
+PKG_VER=0.29.2
+SOURCE=https://pkg-config.freedesktop.org/releases/pkg-config-$PKG_VER.tar.gz
 DESC="Package compiler and linker metadata toolkit"
 
 build () {
     ./configure --prefix=/usr              \
             --with-internal-glib       \
             --disable-host-tool        \
-            --docdir=/usr/share/doc/pkg-config-0.29.2
+            --docdir=/usr/share/doc/pkg-config-$PKG_VER
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

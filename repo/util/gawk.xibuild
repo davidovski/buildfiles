@@ -2,11 +2,15 @@
 
 DEPS=(sh glibc mpfr)
 
-SOURCE=https://ftp.gnu.org/gnu/gawk/gawk-5.1.0.tar.xz
+PKG_VER=5.1.0
+SOURCE=https://ftp.gnu.org/gnu/gawk/gawk-$PKG_VER.tar.xz
 DESC="GNU's awk"
 
 build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

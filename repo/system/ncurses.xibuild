@@ -12,11 +12,11 @@ build () {
 
     make
 
-    make DESTDIR=$PKG_DEST install
 }
 
 
 package () {
+    make DESTDIR=$PKG_DEST install
 
     for lib in ncurses form panel menu ; do
         rm -vf                    $PKG_DEST/usr/lib/lib${lib}.so

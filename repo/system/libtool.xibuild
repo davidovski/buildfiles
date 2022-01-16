@@ -9,11 +9,13 @@ DESC="A generic library support script"
 build () {
     ./configure --prefix=/usr
     make
-    make check
+}
 
-    make DESTDIR=$PKG_DEST install 
+check () {
+    make check
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install 
     rm -fv $PKG_DEST/usr/lib/libltdl.a
 }

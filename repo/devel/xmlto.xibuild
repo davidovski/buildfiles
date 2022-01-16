@@ -2,12 +2,16 @@
 
 DEPS=(libxslt)
 
-SOURCE=https://releases.pagure.org/xmlto/xmlto-0.0.28.tar.bz2
+PKG_VER=0.0.28
+SOURCE=https://releases.pagure.org/xmlto/xmlto-$PKG_VER.tar.bz2
 DESC="Convert xml to many other formats"
 
 
 build () {
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

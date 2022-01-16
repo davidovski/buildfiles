@@ -9,8 +9,13 @@ DESC="An XML parser library"
 build () {
     ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/expat-$PKG_VER
     make
-    make check
+}
 
+check () {
+    make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 
     install -v -m644 doc/*{.html,png,css} $PKG_DEST/usr/share/doc/expat-$PKG_VER

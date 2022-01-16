@@ -2,13 +2,20 @@
 
 DEPS=(glibc bash)
 
-SOURCE=https://ftp.gnu.org/gnu/m4/m4-1.4.19.tar.xz
+PKG_VER=1.4.19
+SOURCE=https://ftp.gnu.org/gnu/m4/m4-$PKG_VER.tar.xz
 DESC="The gnu m4 macro processor"
 
 
 build () {
     ./configure --prefix=/usr 
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }

@@ -6,7 +6,7 @@ PKG_VER=1.19.2
 SOURCE=https://kerberos.org/dist/krb5/$(echo $PKG_VER | cut -d. -f-2)/krb5-$PKG_VER.tar.gz
 DESC="The Kerberos network authentication system"
 
-build () {
+patch () {
     # fix denial of service vulnerability
     sed -i '210a if (sprinc == NULL) {\
        status = "NULL_SERVER";\
@@ -19,7 +19,9 @@ build () {
     sed -i -e 's@\^u}@^u cols 300}@' tests/dejagnu/config/default.exp     &&
     sed -i -e '/eq 0/{N;s/12 //}'    plugins/kdb/db2/libdb2/test/run.test &&
     sed -i '/t_iprop.py/d'           tests/Makefile.in                    &&
+}
 
+build () {
     ./configure --prefix=/usr            \
                 --sysconfdir=/etc        \
                 --localstatedir=/var/lib \
@@ -29,6 +31,9 @@ build () {
                 --with-system-verto=no   \
                 --enable-dns-for-realm &&
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 
     install -v -dm755 $PKG_DEST/usr/share/doc/krb5-$PKG_VER &&

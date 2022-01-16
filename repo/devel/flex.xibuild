@@ -2,17 +2,21 @@
 
 DEPS=(glibc m4 sh)
 
-SOURCE=https://github.com/westes/flex/releases/download/v2.6.4/flex-2.6.4.tar.gz
+PKG_VER=2.6.4
+SOURCE=https://github.com/westes/flex/releases/download/v$PKG_VER/flex-$PKG_VER.tar.gz
 DESC="a utility for generating programs that recognize patterns in text"
 
 build () {
     ./configure --prefix=/usr --docdir=/usr/share/doc/flex --disable-static
     make
+}
+
+check () {
     make check
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
     ln -v /usr/bin/flex $PKG_DEST/usr/bin/lex
 }
 

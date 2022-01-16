@@ -2,7 +2,8 @@
 
 DEPS=(gcc python)
 
-SOURCE=https://github.com/distcc/distcc/releases/download/v3.4/distcc-3.4.tar.gz
+PKG_VER=3.4
+SOURCE=https://github.com/distcc/distcc/releases/download/v$PKG_VER/distcc-$PKG_VER.tar.gz
 
 DESC="Distributed compiler for C, C++ and Objective-C"
 

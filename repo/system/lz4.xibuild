@@ -9,6 +9,8 @@ DESC="A lossless compression algorithm, providing high compression speeds"
 
 build () {
     make
+}
+package () {
     make DESTDIR=$PKG_DEST install
 }
 

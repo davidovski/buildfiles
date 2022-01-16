@@ -10,7 +10,12 @@ DESC="Enhanced seccomp library"
 build () {
     ./configure --prefix=/usr --disable-static &&
     make
-    make check
-    make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
+}
 
+check () {
+    make check
+}
+
+package () {
+    make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
 }

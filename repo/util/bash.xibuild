@@ -8,10 +8,10 @@ DESC="The free Bourne Again Shell"
 build () {
     ./configure --without-bash-malloc --prefix=/usr
     make
-    make DESTDIR=$PKG_DEST install
 }
 
 package () {
+    make DESTDIR=$PKG_DEST install
     ln $PKG_DEST/usr/bin/bash $PKG_DEST/usr/bin/sh
 }
 

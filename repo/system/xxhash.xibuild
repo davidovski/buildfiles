@@ -9,6 +9,9 @@ DESC="xxHash is an Extremely fast Hash algorithm"
 
 build () {
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install
 }
 

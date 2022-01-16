@@ -8,6 +8,9 @@ DESC="Small build system with a focus on speed"
 
 build () {
     python configure.py --bootstrap
+}
+
+check () {
     ./ninja ninja_test
 }
 

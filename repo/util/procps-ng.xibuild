@@ -2,15 +2,22 @@
 
 DEPS=(glibc ncurses)
 
-SOURCE=https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-3.3.17.tar.xz
+PKG_VER=3.3.17
+SOURCE=https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-$PKG_VER.tar.xz
 DESC="Utilities for monitoring your system and its processes"
 
 build () {
     ./configure --prefix=/usr                        \
-            --docdir=/usr/share/doc/procps-ng-3.3.17 \
+            --docdir=/usr/share/doc/procps-ng-$PKG_VER \
             --disable-static                         \
             --disable-kill
     make
+}
+
+check () {
     make check
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }

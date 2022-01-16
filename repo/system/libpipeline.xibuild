@@ -9,5 +9,8 @@ build () {
     ./bootstrap
     ./configure --prefix=/usr
     make
+}
+
+package () {
     make DESTDIR=$PKG_DEST install 
 }
