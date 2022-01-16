@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/seccomp/libseccomp/releases/download/v2.5.3/libseccomp-2.5.3.tar.gz
+PKG_VER=2.5.3
+SOURCE=https://github.com/seccomp/libseccomp/releases/download/v$PKG_VER/libseccomp-$PKG_VER.tar.gz
 
 DESC="Enhanced seccomp library"
 

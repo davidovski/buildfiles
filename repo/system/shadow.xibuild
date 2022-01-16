@@ -2,13 +2,15 @@
 
 DEPS=(pam acl audit libcap libxcrypt)
 
-SOURCE=https://github.com/shadow-maint/shadow/releases/download/v4.10/shadow-4.10.tar.xz
+PKG_VER=4.10
+
+SOURCE=https://github.com/shadow-maint/shadow/releases/download/v$PKG_VER/shadow-$PKG_VER.tar.xz
 DESC="Password and account management tool suite with support for shadow files and PAM"
 
 build () {
 
-    curl https://www.linuxfromscratch.org/patches/lfs/development/shadow-4.10-useradd_segfault-1.patch > shadow-4.10-useradd_segfault-1.patch
-    patch -Np1 -i shadow-4.10-useradd_segfault-1.patch
+    curl https://www.linuxfromscratch.org/patches/lfs/development/shadow-$PKG_VER-useradd_segfault-1.patch > shadow-$PKG_VER-useradd_segfault-1.patch
+    patch -Np1 -i shadow-$PKG_VER-useradd_segfault-1.patch
 
 
     sed -i 's/groups$(EXEEXT) //' src/Makefile.in

@@ -2,7 +2,8 @@
 
 DEPS=(libxml2 libgcrypt)
 
-SOURCE=http://xmlsoft.org/sources/libxslt-1.1.34.tar.gz
+PKG_VER=1.1.34
+SOURCE=http://xmlsoft.org/sources/libxslt-$PKG_VER.tar.gz
 DESC="XML stylesheet transformation library"
 
 

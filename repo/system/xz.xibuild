@@ -2,14 +2,15 @@
 
 DEPS=(sh)
 
+PKG_VER=5.2.5
 SOURCE=https://git.tukaani.org/xz.git
-BRANCH=v5.2.5
+BRANCH=v$PKG_VER
 DESC="a selection of programs for compressing and decompressing files with the lzma and xz compression formats"
 
 
 build () {
     ./autogen.sh
-    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/xz-5.2.5
+    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/xz-$PKG_VER
     make
     make check
     make DESTDIR=$PKG_DEST install

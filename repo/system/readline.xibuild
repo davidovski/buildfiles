@@ -2,7 +2,9 @@
 
 DEPS=(glibc ncurses)
 
-SOURCE=https://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
+PKG_VER=8.1
+
+SOURCE=https://ftp.gnu.org/gnu/readline/readline-$PKG_VER.tar.gz
 DESC="a set of libraries that offer command line editing and history capabilities"
 
 

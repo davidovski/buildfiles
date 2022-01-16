@@ -2,7 +2,8 @@
 
 DEPS=(libtasn readline zlib nettle p11-kit libidn2 libunistring)
 
-SOURCE=https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.16.tar.xz
+PKG_VER=3.6.16
+SOURCE=https://www.gnupg.org/ftp/gcrypt/gnutls/v$(echo $PKG_VER | cut -d. -f-2)/gnutls-$PKG_VER.tar.xz
 DESC="Library which provides a secure layer over a transport layer"
 
 build () {

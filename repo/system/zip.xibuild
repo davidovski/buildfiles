@@ -2,7 +2,8 @@
 
 DEPS=(glibc bzip2)
 
-SOURCE=https://downloads.sourceforge.net/infozip/zip30.tar.gz
+PKG_VER=30
+SOURCE=https://downloads.sourceforge.net/infozip/zip$PKG_VER.tar.gz
 DESC="Compressor/archiver for creating and modifying zipfiles"
 
 build () {

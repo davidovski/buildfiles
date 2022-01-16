@@ -2,7 +2,8 @@
 
 DEPS=(gcc-libs)
 
-SOURCE=https://github.com/ivmai/bdwgc/releases/download/v8.0.6/gc-8.0.6.tar.gz
+PKG_VER=8.0.6
+SOURCE=https://github.com/ivmai/bdwgc/releases/download/v$PKG_VER/gc-$PKG_VER.tar.gz
 DESC="A garbage collector for C and C++"
 
 build () {

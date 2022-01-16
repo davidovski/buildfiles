@@ -2,7 +2,8 @@
 
 DEPS=(gmp)
 
-SOURCE=https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-2.1.27/cyrus-sasl-2.1.27.tar.gz
+PKG_VER=2.1.27
+SOURCE=https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-$PKG_VER/cyrus-sasl-$PKG_VER.tar.gz
 DESC="A library for Simple Authentication and Security Layer"
 
 build () {

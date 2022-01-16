@@ -2,7 +2,8 @@
 
 DEPS=(glibc gcc-libs zlib xz lz4)
 
-SOURCE=https://github.com/facebook/zstd/releases/download/v1.5.1/zstd-1.5.1.tar.gz
+PKG_VER=1.5.1
+SOURCE=https://github.com/facebook/zstd/releases/download/v$PKG_VER/zstd-$PKG_VER.tar.gz
 DESC="the Zstandard real-time compression algorithm"
 
 build () {

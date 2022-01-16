@@ -2,7 +2,8 @@
 
 DEPS=(zlib readline ncurses xz icu)
 
-SOURCE=http://xmlsoft.org/sources/libxml2-2.9.12.tar.gz
+PKG_VER=2.9.12
+SOURCE=http://xmlsoft.org/sources/libxml2-$PKG_VER.tar.gz
 DESC="XML parsing library"
 
 build () {

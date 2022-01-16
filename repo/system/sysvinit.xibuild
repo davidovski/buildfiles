@@ -2,12 +2,13 @@
 
 DEPS=(sh glibc)
 
-SOURCE=http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-3.00.tar.xz
+PKG_VER=3.01
+SOURCE=http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-$PKG_VER.tar.xz
 DESC="The sysvinit system for controlling startup, running and shutdown of the system"
 
 build () {
-    curl https://www.linuxfromscratch.org/patches/lfs/development/sysvinit-3.01-consolidated-1.patch > sysvinit-3.0.1-consolidated-1.patch
-    patch -Np1 -i ysvinit-3.01-consolidated-1.patch
+    curl https://www.linuxfromscratch.org/patches/lfs/development/sysvinit-$PKG_VER-consolidated-1.patch > sysvinit-$PKG_VER-consolidated-1.patch
+    patch -Np1 -i sysvinit-$PKG_VER-consolidated-1.patch
 
     make
     make ROOT=$PKG_DEST install 

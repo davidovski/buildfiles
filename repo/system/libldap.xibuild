@@ -2,7 +2,8 @@
 
 DEPS=(libidn libsasl)
 
-SOURCE=http://repository.linagora.org/OpenLDAP/openldap-release/openldap-2.6.0.tgz
+PKG_VER=2.6.0
+SOURCE=http://repository.linagora.org/OpenLDAP/openldap-release/openldap-$PKG_VER.tgz
 DESC="An open source implementation of the Lightweight Directory Access Protocol"
 
 build () {

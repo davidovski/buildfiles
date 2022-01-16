@@ -2,7 +2,8 @@
 
 DEPS=(glibc acl attr)
 
-SOURCE=https://ftp.gnu.org/gnu/sed/sed-4.8.tar.xz
+PKG_VER=4.8
+SOURCE=https://ftp.gnu.org/gnu/sed/sed-$PKG_VER.tar.xz
 DESC="GNU stream editor"
 
 build () {
@@ -14,6 +15,6 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install 
 
-    install -d -m755    $PKG_DEST/usr/share/doc/sed-4.8
-    install -m644 doc/sed.html $PKG_DEST/usr/share/doc/sed-4.8
+    install -d -m755    $PKG_DEST/usr/share/doc/sed-$PKG_VER
+    install -m644 doc/sed.html $PKG_DEST/usr/share/doc/sed-$PKG_VER
 }

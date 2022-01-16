@@ -2,7 +2,9 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/nghttp2/nghttp2/releases/download/v1.46.0/nghttp2-1.46.0.tar.xz
+PKG_VER=1.46.0
+
+SOURCE=https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VER/nghttp2-$PKG_VER.tar.xz
 DESC="Framing layer of HTTP implemented as a C library"
 
 
@@ -10,7 +12,7 @@ build () {
     ./configure --prefix=/usr     \
             --disable-static  \
             --enable-lib-only \
-            --docdir=/usr/share/doc/nghttp2-1.46.0 &&
+            --docdir=/usr/share/doc/nghttp2-$PKG_VER &&
     make
     make DESTDIR=$PKG_DEST install
 }

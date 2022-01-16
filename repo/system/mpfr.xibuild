@@ -1,12 +1,14 @@
 #!/bin/bash
 
 DEPS=(glibc gmp)
-SOURCE=https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.xz
+
+PKG_VER=4.1.0
+SOURCE=https://www.mpfr.org/mpfr-current/mpfr-$PKG_VER.tar.xz
 
 DESC="Multiple-precision floating-point library"
 
 build () {
-    ./configure --prefix=/usr --disable-static --enable-thread-safe --docdir=/usr/share/doc/mpfr-4.1.0
+    ./configure --prefix=/usr --disable-static --enable-thread-safe --docdir=/usr/share/doc/mpfr-$PKG_VER
     make
     make html
 

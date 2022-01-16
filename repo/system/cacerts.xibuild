@@ -2,7 +2,8 @@
 
 DEPS=(make-ca)
 
-SOURCE=https://github.com/djlucas/make-ca/releases/download/v1.7/make-ca-1.7.tar.xz
+PKG_VER=1.7
+SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz
 DESC="Root certificates needed by ssl built using make-ca"
 
 package () {

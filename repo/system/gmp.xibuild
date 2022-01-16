@@ -2,7 +2,8 @@
 
 DEPS=(gcc-libs sh)
 
-SOURCE=https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz
+PKG_VER=6.2.1
+SOURCE=https://gmplib.org/download/gmp/gmp-$PKG_VER.tar.xz
 DESC="a collection of mathematical libraries"
 
 build () {

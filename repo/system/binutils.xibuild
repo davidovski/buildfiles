@@ -2,12 +2,13 @@
 
 DEPS=(glib zlib elfutils)
 
-SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.xz
+PKG_VER=2.37
+SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
 DESC="tools for handling object files"
 
 build () {
-    curl https://www.linuxfromscratch.org/patches/lfs/development/binutils-2.37-upstream_fix-1.patch > binutils-2.37-upstream_fix-1.patch
-    patch -Np1 -i binutils-2.37-upstream_fix-1.patch
+    curl https://www.linuxfromscratch.org/patches/lfs/development/binutils-$PKG_VER-upstream_fix-1.patch > binutils-$PKG_VER-upstream_fix-1.patch
+    patch -Np1 -i binutils-$PKG_VER-upstream_fix-1.patch
 
     # An error in the building system causes the shipped man pages to be empty. Workaround the issue and remove the shipped man pages, so the man pages will be regenerated correctly:
 

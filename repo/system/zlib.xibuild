@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/madler/zlib/archive/refs/tags/v1.2.11.tar.gz
+PKG_VER=1.2.11
+SOURCE=https://github.com/madler/zlib/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="compression and decompression routines used by some programs"
 
 
@@ -14,7 +15,6 @@ build () {
 }
 
 package () {
-    # Remove a useless static library (lfs recommended)
     rm -fv $PKG_DEST/usr/lib/libz.a 
 }
 

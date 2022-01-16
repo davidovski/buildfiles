@@ -2,7 +2,8 @@
 
 DEPS=(bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib)
 
-SOURCE=https://www.python.org/ftp/python/3.10.0/Python-3.10.0.tgz
+PKG_VER=3.10.0
+SOURCE=https://www.python.org/ftp/python/$PKG_VER/Python-$PKG_VER.tgz
 DESC="The Python development environment"
 
 build () {

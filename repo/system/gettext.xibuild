@@ -2,11 +2,12 @@
 
 DEPS=(acl sh glib2)
 
-SOURCE=https://ftp.gnu.org/pub/gnu/gettext/gettext-0.21.tar.gz
+PKG_VER=0.21
+SOURCE=https://ftp.gnu.org/pub/gnu/gettext/gettext-$PKG_VER.tar.gz
 DESC="GNU internationalization library"
 
 build () {
-    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/gettext-0.21
+    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/gettext-$PKG_VER
     make
     make check
 }

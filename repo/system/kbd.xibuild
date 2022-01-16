@@ -2,7 +2,8 @@
 
 DEPS=(glibc pam)
 
-SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-2.4.0.tar.xz
+PKG_VER=2.4.0
+SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-$PKG_VER.tar.xz
 DESC="Keytable files and keyboard utilities"
 
 build () {

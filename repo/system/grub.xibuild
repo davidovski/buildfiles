@@ -2,7 +2,8 @@
 
 DEPS=(sh xz gettext device-mapper)
 
-SOURCE=https://ftp.gnu.org/gnu/grub/grub-2.06.tar.xz
+PKG_VER=2.06
+SOURCE=https://ftp.gnu.org/gnu/grub/grub-$PKG_VER.tar.xz
 DESC="GNU GRand Unified Bootloader v2"
 
 build () {

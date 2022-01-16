@@ -2,7 +2,8 @@
 
 DEPS=(libidn)
 
-SOURCE=https://github.com/rockdaboot/libpsl/releases/download/0.21.1/libpsl-0.21.1.tar.gz
+PKG_VER=0.21.1
+SOURCE=https://github.com/rockdaboot/libpsl/releases/download/$PKG_VER/libpsl-$PKG_VER.tar.gz
 DESC="C library to handle the Public Suffix List"
 
 build () {

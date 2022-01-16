@@ -2,7 +2,8 @@
 
 DEPS=(glibc zlib openssl xz zstd)
 
-SOURCE=https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-29.tar.xz
+PKG_VER=29
+SOURCE=https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$PKG_VER.tar.xz
 DESC="Libraries and utilities for managing kernel modules"
 
 build () {

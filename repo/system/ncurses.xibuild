@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-6.3.tar.gz
+PKG_VER=6.3
+SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VER.tar.gz
 
 DESC="curses emulation library"
 
@@ -28,6 +29,6 @@ package () {
     ln -sfv libncurses.so      $PKG_DEST/usr/lib/libcurses.so
 
     # install docs
-    mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-6.3
-    cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-6.3
+    mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
+    cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
 }

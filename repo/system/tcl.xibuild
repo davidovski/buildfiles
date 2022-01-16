@@ -2,7 +2,8 @@
 
 DEPS=(zlib)
 
-SOURCE=https://github.com/tcltk/tcl/archive/refs/tags/core-8-6-11.tar.gz
+PKG_VER=8.6.11
+SOURCE=https://github.com/tcltk/tcl/archive/refs/tags/core-$( echo $PKG_VER  | sed "s|\.|-|g").tar.gz
 DESC="the Tool Command language, a robust general purpose scripting language"
 
 
@@ -37,7 +38,7 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-    chmod -v u+w $PKG_DEST/usr/lib/libtcl8.6.so
+    chmod -v u+w $PKG_DEST/usr/lib/libtcl$(echo $PKG_DEST | cut -d. -f-2).so
 
     make DESTDIR=$PKG_DEST install-private-headers
 

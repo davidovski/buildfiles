@@ -2,7 +2,8 @@
 
 DEPS=(gmp)
 
-SOURCE=https://ftp.gnu.org/gnu/nettle/nettle-3.7.tar.gz
+PKG_VER=3.7
+SOURCE=https://ftp.gnu.org/gnu/nettle/nettle-$PKG_VER.tar.gz
 DESC="A low-level cryptographic library"
 
 build () {

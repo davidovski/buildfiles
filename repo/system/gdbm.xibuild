@@ -2,7 +2,8 @@
 
 DEPS=(glibc sh readline)
 
-SOURCE=https://ftp.gnu.org/gnu/gdbm/gdbm-1.21.tar.gz
+PKG_VER=1.21
+SOURCE=https://ftp.gnu.org/gnu/gdbm/gdbm-$PKG_VER.tar.gz
 DESC="GNU database library"
 
 build () {

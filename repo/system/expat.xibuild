@@ -2,15 +2,16 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/libexpat/libexpat/releases/download/R_2_4_1/expat-2.4.1.tar.xz
+PKG_VER=2.4.1
+SOURCE=https://github.com/libexpat/libexpat/releases/download/R_$PKG_VER/expat-$PKG_VER.tar.xz
 DESC="An XML parser library"
 
 build () {
-    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/expat-2.4.1
+    ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/expat-$PKG_VER
     make
     make check
 
     make DESTDIR=$PKG_DEST install 
 
-    install -v -m644 doc/*{.html,png,css} $PKG_DEST/usr/share/doc/expat-2.4.1
+    install -v -m644 doc/*{.html,png,css} $PKG_DEST/usr/share/doc/expat-$PKG_VER
 }

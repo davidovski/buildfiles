@@ -2,7 +2,8 @@
 
 DEPS=(perl-xml-parser)
 
-SOURCE=https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz
+PKG_VER=0.51.0
+SOURCE=https://launchpad.net/intltool/trunk/$PKG_VER/+download/intltool-$PKG_VER.tar.gz
 DESC="The internationalization tool collection"
 
 build () {
@@ -10,5 +11,5 @@ build () {
     make
     make check
     make DESTDIR=$PKG_DEST install 
-    install -v -Dm644 doc/I18N-HOWTO $PKG_DEST/usr/share/doc/intltool-0.51.0/I18N-HOWTO
+    install -v -Dm644 doc/I18N-HOWTO $PKG_DEST/usr/share/doc/intltool-$PKG_VER/I18N-HOWTO
 }

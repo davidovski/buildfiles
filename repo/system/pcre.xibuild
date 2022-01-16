@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-10.39/pcre2-10.39.tar.bz2
+PGK_VER=10.39
+SOURCE=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-$PKG_VER/pcre2-$PKG_VER.tar.bz2
 DESC="A library that implements regular expressions in a perl style"
 
 build () {

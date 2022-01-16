@@ -2,7 +2,8 @@
 
 DEPS=(ncurses)
 
-SOURCE=https://gitlab.com/psmisc/psmisc/-/archive/v23.4/psmisc-v23.4.tar.gz
+PKG_VER=23.4
+SOURCE=https://gitlab.com/psmisc/psmisc/-/archive/v$PKG_VER/psmisc-v$PKG_VER.tar.gz
 DESC="Miscellaneous procfs tools"
 
 build () {

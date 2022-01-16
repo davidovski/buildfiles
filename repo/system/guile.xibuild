@@ -2,7 +2,9 @@
 
 DEPS=(gmp libltdl ncurses texinfo libunistring gc libffi)
 
-SOURCE=https://ftp.gnu.org/gnu/guile/guile-2.2.7.tar.gz
+
+PKG_VER=2.2.7
+SOURCE=https://ftp.gnu.org/gnu/guile/guile-$PKG_VER.tar.gz
 DESC="Portable, embeddable Scheme implementation written in C"
 
 build () {

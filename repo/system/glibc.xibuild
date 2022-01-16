@@ -2,16 +2,17 @@
 
 DEPS=(glibc)
 
-SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-2.34.tar.xz
+PKG_VER=2.34
+SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-$PKG_VER.tar.xz
 DESC="The main gnu C library providing basic routines and procedures"
 
 build () {
     # patches as recommended by lfs
     sed -e '/NOTIFY_REMOVED)/s/)/ \&\& data.attr != NULL)/' -i sysdeps/unix/sysv/linux/mq_notify.c
 
-    curl https://www.linuxfromscratch.org/patches/lfs/development/glibc-2.34-fhs-1.patch > glibc-2.34-fhs-1.patch
+    curl https://www.linuxfromscratch.org/patches/lfs/development/glibc-$PKG_VER-fhs-1.patch > glibc-$PKG_VER-fhs-1.patch
 
-    patch -Np1 -i glibc-2.34-fhs-1.patch
+    patch -Np1 -i glibc-$PKG_VER-fhs-1.patch
 
     mkdir -v build
     cd build

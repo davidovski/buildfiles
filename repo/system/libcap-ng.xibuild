@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/stevegrubb/libcap-ng/archive/refs/tags/v0.8.2.tar.gz
+PKG_VER=0.8.2
+SOURCE=https://github.com/stevegrubb/libcap-ng/archive/refs/tags/v$PKG_VER.tar.gz
 
 DESC="A library for linux that makes posix capabilities easy"
 

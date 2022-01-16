@@ -2,7 +2,8 @@
 
 DEPS=(perl expat)
 
-SOURCE=https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.46.tar.gz
+PKG_VER=2.46
+SOURCE=https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-$PKG_VER.tar.gz
 DESC="A perl interface for the expat XML parser"
 
 build () {

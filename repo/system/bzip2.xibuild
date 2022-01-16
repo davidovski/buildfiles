@@ -2,15 +2,16 @@
 
 DEPS=(glibc sh)
 
+PKG_VER=1.0.8
 SOURCE=git://sourceware.org/git/bzip2.git
-BRANCH=bzip2-1.0.8
+BRANCH=bzip2-$PKG_VER
 DESC="a selection of programs for compressing and decompressing bzip2 files"
 
 
 build () {
-    #curl https://www.linuxfromscratch.org/patches/lfs/development/bzip2-1.0.8-install_docs-1.patch > bzip2-1.0.8-install_docs-1.patch
+    #curl https://www.linuxfromscratch.org/patches/lfs/development/bzip2-$PKG_VER-install_docs-1.patch > bzip2-$PKG_VER-install_docs-1.patch
 
-    #patch -Np1 -i bzip2-1.0.8-install_docs-1.patch
+    #patch -Np1 -i bzip2-$PKG_VER-install_docs-1.patch
     
 
     # ensure symbolic links are relative
@@ -28,7 +29,7 @@ build () {
 
 package () {
     cp -av libbz2.so* $PKG_DEST/usr/lib
-    cp -av libbz2.so.1.0.8 $PKG_DEST/usr/lib/libbz2.so
+    cp -av libbz2.so.$PKG_VER $PKG_DEST/usr/lib/libbz2.so
 
     cp -v bzip2-shared $PKG_DEST/usr/bin/bzip2
     for i in $PKG_DEST/usr/bin/{bzcat,bunzip2}; do

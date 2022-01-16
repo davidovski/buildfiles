@@ -2,7 +2,8 @@
 
 DEPS=(glibc)
 
-SOURCE=https://github.com/troglobit/sysklogd/releases/download/v2.3.0/sysklogd-2.3.0.tar.gz
+PKG_VER=2.3.0
+SOURCE=https://github.com/troglobit/sysklogd/releases/download/v$PKG_VER/sysklogd-$PKG_VER.tar.gz
 DESC="Programs for logging system messages"
 
 build () {

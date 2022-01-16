@@ -2,7 +2,8 @@
 
 DEPS=(sh)
 
-SOURCE=https://github.com/Cyan4973/xxHash/archive/refs/tags/v0.8.1.tar.gz
+PKG_VER=0.8.1
+SOURCE=https://github.com/Cyan4973/xxHash/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="xxHash is an Extremely fast Hash algorithm"
 
 

@@ -2,12 +2,13 @@
 
 DEPS=(glibc)
 
-SOURCE=https://www.oberhumer.com/opensource/lzo/download/lzo-2.10.tar.gz
+PKG_VER=2.10
+SOURCE=https://www.oberhumer.com/opensource/lzo/download/lzo-$PKG_VER.tar.gz
 
 DESC="Portable lossless data compression library"
 
 build () {
-    ./configure --prefix=/usr --disable-static --enable-shared --docdir=/usr/share/doc/lzo-2.10
+    ./configure --prefix=/usr --disable-static --enable-shared --docdir=/usr/share/doc/lzo-$PKG_VER
     make 
 }
 

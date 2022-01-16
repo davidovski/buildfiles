@@ -2,7 +2,8 @@
 
 DEPS=(glibc pam)
 
-SOURCE=https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-2.62.tar.gz
+PKG_VER=2.62
+SOURCE=https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-$PKG_VER.tar.gz
 
 DESC="POSIX 1003.1e capabilities"
 
