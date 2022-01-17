@@ -29,6 +29,8 @@ build () {
                 --with-system-et         \
                 --with-system-ss         \
                 --with-system-verto=no   \
+                # would be ideal to use openssl
+                --with-crypto-impl=builtin \
                 --enable-dns-for-realm &&
     make
 }
