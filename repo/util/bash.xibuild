@@ -15,3 +15,6 @@ package () {
     ln $PKG_DEST/usr/bin/bash $PKG_DEST/usr/bin/sh
 }
 
+postinstall () {
+    echo "/bin/bash" >> /etc/shells
+}

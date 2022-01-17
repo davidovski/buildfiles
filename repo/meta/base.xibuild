@@ -1,5 +1,4 @@
 #!/bin/bash
-DEPS=(acl attr binutils brotli bzip2 cacerts coreutils eudev expat findutils gc gdbm gettext glibc gmp gnutls gperf grub guile gzip iana-etc intltool kbd kmod krb5 libcap-ng libcap libffi libiconv libidn libldap libnghttp libp11-kit libpipeline libpsl libsasl libseccomp libsigsegv libtasn1 libtool libunistring libxcrypt libxml2 libxslt lz4 lzo mpfr ncurses nettle nspr openssl pam pcre perl perl-xml-parser psmisc python-requests python readline rtmpdump sed shadow sysklogd sysvinit tar tcl xxhash xz zip zlib zstd linux-headers xipkg)
+DEPS=(acl attr binutils brotli bzip2 cacerts coreutils eudev expat findutils gc gdbm gettext glibc gmp gnutls gperf grub guile gzip iana-etc intltool kbd kmod krb5 libcap-ng libcap libffi libiconv libidn libldap libnghttp libp11-kit libpipeline libpsl libsasl libseccomp libsigsegv libtasn1 libtool libunistring libxcrypt libxml2 libxslt lz4 lzo mpfr ncurses nettle nspr openssl pam pcre perl perl-xml-parser psmisc python-requests python readline rtmpdump sed shadow sysklogd sysvinit tar tcl xxhash xz zip zlib zstd linux-headers xipkg bootscripts systemconfigs)
 
 DESC="The base system to be installed"
-

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+DEPS=()
+
+PKG_VER=5.15.14
+SOURCE=https://cdn.kernel.org/pub/linux/kernel/v$(echo $PKG_VER | cut -d. -f1).x/linux-$PKG_VER.tar.xz
+
+prepare () {
+    curl https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config > .config
+
+    make olddefconfig
+    make -s kernelrelease > version
+    echo "Prepared linux version $(<version)"
+}
+
+build () {
+    make all
+}
+
+package () {
+    local kernver="$(<version)"
+    local modulesdir="$PKG_DEST/usr/lib/modules/$kernver"
+
+    echo "Installing boot image..."
+    cp -iv arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
+    cp -iv System.map $PKG_DEST/boot/System.map-$PKG_VER
+    cp -iv .config $PKG_DEST/boot/config-$PKG_VER
+    install -Dm644 "$(make -s image_name)" "$PKG_DEST/vmlinuz-$PKG_VER-xi"
+    install -Dm644 "$(make -s image_name)" "$PKG_DEST/vmlinuz-$PKG_VER-xi"
+
+    install -d $PKG_DEST/usr/share/doc/linux-$PKG_VER
+    cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$PKG_VER
+
+
+    install -v -m755 -d $PKG_DEST/etc/modprobe.d
+    cat > $PKG_DEST/etc/modprobe.d/usb.conf << "EOF"
+# Begin /etc/modprobe.d/usb.conf
+
+install ohci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i ohci_hcd ; true
+install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
+
+# End /etc/modprobe.d/usb.conf
+EOF
+
+}
+
