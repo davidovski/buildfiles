@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(sh udev)
+
+PKG_VER=20210608
+SOURCE=https://www.linuxfromscratch.org/lfs/downloads/development/lfs-bootscripts-$PKG_VER.tar.xz
+DESC="Bootscripts to initiate the system on boot (from lfs)"
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

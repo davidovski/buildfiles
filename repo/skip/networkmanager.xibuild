@@ -1,0 +1,51 @@
+#!/bin/bash
+
+DEPS=(jansson libndp curl wpa_supplicant newt nss polkit libpsl audit)
+
+PKG_VER=1.34
+SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
+DESC="Network connection manager and user applications"
+
+prepare () {
+    grep -rl '^#!.*python$' | xargs sed -i '1s/python/&3/'
+
+}
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    CXXFLAGS+="-O2 -fPIC"            \
+    meson --prefix=/usr              \
+          --buildtype=release        \
+          -Dlibaudit=no              \
+          -Dlibpsl=false             \
+          -Dnmtui=true               \
+          -Dovs=false                \
+          -Dppp=false                \
+          -Dselinux=false            \
+          -Dsession_tracking=elogind \
+          -Dmodem_manager=false      \
+          -Dsystemdsystemunitdir=no  \
+          -Dsystemd_journal=false    \
+          -Dqt=false                 \
+          .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install &&
+    mv -v $PKG_DEST/usr/share/doc/NetworkManager{,-$PKG_VER}
+
+    # create minimum config file
+    cat >> $PKG_DEST/etc/NetworkManager/NetworkManager.conf << "EOF"
+[main]
+plugins=keyfile
+EOF
+    cat > $PKG_DEST/etc/NetworkManager/conf.d/polkit.conf << "EOF"
+[main]
+auth-polkit=true
+EOF
+
+# TODO add boot scripts
+}
