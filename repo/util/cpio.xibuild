@@ -1,0 +1,31 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+PKG_VER=2.13
+SOURCE=https://ftp.gnu.org/gnu/cpio/cpio-$PKG_VER.tar.bz2
+DESC="The free Bourne Again Shell"
+
+prepare () {
+    sed -i '/The name/,+2 d' src/global.c
+}
+
+build () {
+    ./configure --prefix=/usr \
+            --enable-mt   \
+            --with-rmt=/usr/libexec/rmt &&
+    make &&
+    makeinfo --html            -o doc/html      doc/cpio.texi &&
+    makeinfo --html --no-split -o doc/cpio.html doc/cpio.texi &&
+    makeinfo --plaintext       -o doc/cpio.txt  doc/cpio.texi
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install &&
+        install -v -m755 -d $PKG_DEST/usr/share/doc/cpio-2.13/html &&
+    install -v -m644    doc/html/* \
+                        $PKG_DEST/usr/share/doc/cpio-2.13/html &&
+    install -v -m644    doc/cpio.{html,txt} \
+    $PKG_DEST/usr/share/doc/cpio-2.13
+}
+
