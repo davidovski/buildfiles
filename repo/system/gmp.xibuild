@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(gcc-libs sh)
+DEPS=(gcc sh)
 
 PKG_VER=6.2.1
 SOURCE=https://gmplib.org/download/gmp/gmp-$PKG_VER.tar.xz

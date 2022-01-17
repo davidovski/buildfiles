@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(bash coreutils findutils p11-kit)
+DEPS=(bash coreutils findutils libp11-kit)
 
 SOURCE=https://src.fedoraproject.org/rpms/ca-certificates
 DESC="CA certificate utilities"

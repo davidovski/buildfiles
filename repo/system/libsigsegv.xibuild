@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(libtasn readline zlib nettle p11-kit libidn2 libunistring)
+DEPS=(libtasn1 readline zlib nettle p11-kit libidn libunistring)
 
 PKG_VER=2.13
 SOURCE=https://ftp.gnu.org/gnu/libsigsegv/libsigsegv-$PKG_VER.tar.gz

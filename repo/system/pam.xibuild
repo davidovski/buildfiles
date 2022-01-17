@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(glibc libtirpc pambase audit libxcrypt)
+DEPS=(glibc libtirpc audit libxcrypt)
 
 PKG_VER=1.5.2
 SOURCE=https://github.com/linux-pam/linux-pam/releases/download/v$PKG_VER/Linux-PAM-$PKG_VER.tar.xz

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(p11-kit nss)
+DEPS=(libp11-kit nss)
 
 PKG_VER=1.7
 SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz

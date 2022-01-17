@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(gcc-libs)
+DEPS=(gcc)
 
 PKG_VER=8.0.6
 SOURCE=https://github.com/ivmai/bdwgc/releases/download/v$PKG_VER/gc-$PKG_VER.tar.gz

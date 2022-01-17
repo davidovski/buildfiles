@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(glibc gcc-libs zlib xz lz4)
+DEPS=(glibc gcc zlib xz lz4)
 
 PKG_VER=1.5.1
 SOURCE=https://github.com/facebook/zstd/releases/download/v$PKG_VER/zstd-$PKG_VER.tar.gz
