@@ -22,6 +22,7 @@ prepare () {
 }
 
 build () {
+    # would be ideal to use openssl rather than builtin library
     ./configure --prefix=/usr            \
                 --sysconfdir=/etc        \
                 --localstatedir=/var/lib \
@@ -29,7 +30,6 @@ build () {
                 --with-system-et         \
                 --with-system-ss         \
                 --with-system-verto=no   \
-                # would be ideal to use openssl
                 --with-crypto-impl=builtin \
                 --enable-dns-for-realm &&
     make
