@@ -9,7 +9,7 @@ BRANCH=v$PKG_VER
 DESC="Pahole and other DWARF Utils"
 
 build () {
-    cmake -S pahole -B build -G Ninja \
+    cmake -S . -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=None \
     -D__LIB=lib
