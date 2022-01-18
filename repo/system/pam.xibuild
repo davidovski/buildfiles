@@ -26,8 +26,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-
-    install -v -m755 -d $PKG_DEST/etc/pam.d &&
+    install -v -m755 -d $PKG_DEST/etc/pam.d
 }
 
 postinstall () {
