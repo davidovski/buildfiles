@@ -22,11 +22,10 @@ package () {
     local modulesdir="$PKG_DEST/usr/lib/modules/$kernver"
 
     echo "Installing boot image..."
+    mkdir -pv $PKG_DEST/boot
     cp -iv arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
     cp -iv System.map $PKG_DEST/boot/System.map-$PKG_VER
     cp -iv .config $PKG_DEST/boot/config-$PKG_VER
-    install -Dm644 "$(make -s image_name)" "$PKG_DEST/vmlinuz-$PKG_VER-xi"
-    install -Dm644 "$(make -s image_name)" "$PKG_DEST/vmlinuz-$PKG_VER-xi"
 
     install -d $PKG_DEST/usr/share/doc/linux-$PKG_VER
     cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$PKG_VER
