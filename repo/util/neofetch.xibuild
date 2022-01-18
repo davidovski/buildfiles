@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEPS=(bash)
+
+PKG_VER=3.7
+SOURCE=https://github.com/dylanaraps/neofetch
+DESC="A CLI system information tool written in BASH that supports displaying images."
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
