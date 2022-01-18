@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPS=(sh udev)
+DEPS=(sh eudev)
 
 PKG_VER=20210608
 SOURCE=https://www.linuxfromscratch.org/lfs/downloads/development/lfs-bootscripts-$PKG_VER.tar.xz
