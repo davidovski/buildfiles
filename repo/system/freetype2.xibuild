@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DEPS=(brotli libpng which)
+
+PKG_VER=2.11.1
+SOURCE=https://downloads.sourceforge.net/freetype/freetype-$PKG_VER.tar.xz
+DESC="Font rasterization library"
+
+prepare () {
+    sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg &&
+
+    sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
+        -i include/freetype/config/ftoption.h 
+}
+
+build () {
+    ./configure --prefix=/usr --enable-freetype-config --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
