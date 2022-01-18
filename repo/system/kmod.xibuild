@@ -19,12 +19,11 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir -p /usr/sbin
     mkdir -p /usr/bin
-
-    for target in depmod insmod modinfo modprobe rmmod; do
-        ln -sfv ../bin/kmod $PKG_DERT/usr/sbin/$target
-    done
-
+    ln -sfv kmod $PKG_DERT/usr/bin/depmod
+    ln -sfv kmod $PKG_DERT/usr/bin/insmod
+    ln -sfv kmod $PKG_DERT/usr/bin/modinfo
+    ln -sfv kmod $PKG_DERT/usr/bin/modprobe
+    ln -sfv kmod $PKG_DERT/usr/bin/rmmod
     ln -sfv kmod $PKG_DEST/usr/bin/lsmod
 }
