@@ -8,6 +8,7 @@ PKG_VER=055
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/dracut-$PKG_VER.tar.xz
 
 build () {
+    ./configure --prefix=/usr
     make sysconfdir=/etc
 }
 
