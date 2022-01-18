@@ -3,7 +3,9 @@
 DEPS=(glibc e2fsprogs libldap keyutils)
 
 PKG_VER=1.19.2
-SOURCE=https://kerberos.org/dist/krb5/$(echo $PKG_VER | cut -d. -f-2)/krb5-$PKG_VER.tar.gz
+SOURCE=https://github.com/krb5/krb5
+BRANCH=krb5-1.19.2-final
+#SOURCE=https://kerberos.org/dist/krb5/$(echo $PKG_VER | cut -d. -f-2)/krb5-$PKG_VER.tar.gz
 DESC="The Kerberos network authentication system"
 
 prepare () {
@@ -23,6 +25,7 @@ prepare () {
 
 build () {
     # would be ideal to use openssl rather than builtin library
+    autoreconf
     ./configure --prefix=/usr            \
                 --sysconfdir=/etc        \
                 --localstatedir=/var/lib \

@@ -8,6 +8,7 @@ DESC="Tool to download rtmp streams"
 
 prepare () {
     sed -e 's/^CRYPTO=OPENSSL/#CRYPTO=OPENSSL/' -e 's/#CRYPTO=GNUTLS/CRYPTO=GNUTLS/' -i Makefile -i librtmp/Makefile
+
 }
 
 build () {
@@ -15,6 +16,8 @@ build () {
 }
 
 package () {
+    mkdir -pv $PKG_DEST/usr/bin
+    mkdir -pv $PKG_DEST/usr/share
     make \
         prefix='/usr' \
         sbindir='/usr/bin' \
