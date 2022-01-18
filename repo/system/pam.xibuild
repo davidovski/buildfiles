@@ -28,12 +28,43 @@ package () {
     make DESTDIR=$PKG_DEST install
 
     install -v -m755 -d $PKG_DEST/etc/pam.d &&
+}
 
-    cat > $PKG_DEST/etc/pam.d/other << "EOF"
-    auth     required       pam_deny.so
-    account  required       pam_deny.so
-    password required       pam_deny.so
-    session  required       pam_deny.so
+postinstall () {
+
+    install -vdm755 /etc/pam.d &&
+    cat > /etc/pam.d/system-account << "EOF" &&
+# Begin /etc/pam.d/system-account
+
+account   required    pam_unix.so
+
+# End /etc/pam.d/system-account
+EOF
+
+    cat > /etc/pam.d/system-auth << "EOF" &&
+# Begin /etc/pam.d/system-auth
+
+auth      required    pam_unix.so
+
+# End /etc/pam.d/system-auth
+EOF
+
+    cat > /etc/pam.d/system-session << "EOF"
+# Begin /etc/pam.d/system-session
+
+session   required    pam_unix.so
+
+# End /etc/pam.d/system-session
+EOF
+
+    cat > /etc/pam.d/system-password << "EOF"
+# Begin /etc/pam.d/system-password
+
+# use sha512 hash for encryption, use shadow, and try to use any previously
+# defined authentication token (chosen password) set by any prior module
+password  required    pam_unix.so       sha512 shadow try_first_pass
+
+# End /etc/pam.d/system-password
 EOF
 
 }
