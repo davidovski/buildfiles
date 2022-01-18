@@ -1,13 +1,21 @@
 #!/bin/bash
 
-DEPS=(sh xz gettext device-mapper)
+DEPS=(sh xz gettext device-mapper efibootmgr)
 
 PKG_VER=2.06
 SOURCE=https://ftp.gnu.org/gnu/grub/grub-$PKG_VER.tar.xz
 DESC="GNU GRand Unified Bootloader v2"
 
+prepare () {
+    curl -SsL https://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/unifont-13.0.06.pcf.gz > unifont-13.0.06.pcf.gz
+    gunzip -c unifont-13.0.06.pcf.gz > /usr/share/fonts/unifont/unifont.pcf
+
+    unset {C,CPP,CXX,LD}FLAGS
+}
+
 build () {
-    ./configure --prefix=/usr --sysconfdir=/etc --disable-werror
+    ./configure --prefix=/usr --sysconfdir=/etc --disable-werror \
+        --disable-efiemu --enable-grub-mkfont --with-platform=efi
     make 
 }
 

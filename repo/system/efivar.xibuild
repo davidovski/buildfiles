@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DEPS=()
+
+PKG_VER=37
+SOURCE=https://github.com/rhboot/efivar/releases/download/$PKG_VER/efivar-$PKG_VER.tar.bz2
+DESC="Tools and libraries to manupulate EFI variables"
+
+prepare () {
+    curl -SsL https://www.linuxfromscratch.org/patches/blfs/svn/efivar-$PKG_VER-gcc_9-1.patch > efivar-$PKG_VER.patch
+    patch -Np1 -i efivar-$PKG_VER.patch
+}
+
+build () {
+    make CFLAGS="-O2 -Wno-stringop-truncation"
+}
+
+package () {
+    make LIBDIR=/usr/lib DESTDIR=$PKG_DEST install 
+}

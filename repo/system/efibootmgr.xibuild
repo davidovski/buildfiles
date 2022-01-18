@@ -1,0 +1,20 @@
+#!/bin/bash
+
+DEPS=(efivar popt)
+
+PKG_VER=17
+SOURCE=https://github.com/rhboot/efibootmgr/archive/$PKG_VER/efibootmgr-$PKG_VER.tar.gz
+DESC="Tools and libraries to manipulate EFI variables"
+
+prepare () {
+    # fix an outdated hotfix declaration causing compilation failure
+    sed -e '/extern int efi_set_verbose/d' -i src/efibootmgr.c
+}
+
+build () {
+    make EFIDIR=XI EFI_LOADER=grubx64.efi
+}
+
+package () {
+    make EFIDIR=XI DESTDIR=$PKG_DEST install 
+}
