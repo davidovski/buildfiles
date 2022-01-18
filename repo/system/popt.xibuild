@@ -1,0 +1,16 @@
+#!/bin/bash
+
+DEPS=()
+
+PKG_VER=1.18
+SOURCE=http://ftp.rpm.org/popt/releases/popt-1.x/popt-$PKG_VER.tar.gz
+DESC="Libraries for parsing command line options"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
