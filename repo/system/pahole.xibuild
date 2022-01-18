@@ -1,0 +1,25 @@
+#!/bin/bash
+
+DEPS=(elfutils python)
+
+PKG_VER=1.23
+SOURCE=https://git.kernel.org/pub/scm/devel/pahole/pahole.git
+BRANCH=v$PKG_VER
+
+DESC="Pahole and other DWARF Utils"
+
+build () {
+    cmake -S pahole -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=None \
+    -D__LIB=lib
+    cmake --build build
+}
+
+package () {
+    DESTDIR="$PKG_DEST" cmake --install build
+
+      
+    python -m compileall -d / "$PKG_DEST"
+    python -O -m compileall -d / "$PKG_DEST"
+}
