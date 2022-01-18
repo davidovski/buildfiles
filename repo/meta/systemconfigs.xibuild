@@ -3,11 +3,11 @@
 DEPS=(bootscripts sh)
 
 PKG_VER=N/A
-
 DESC="Default system configs for xilinux"
 
 package () {
-
+    mkdir -pv /etc/
+    mkdir -pv /etc/sysconfig
     cat > $PKG_DEST/etc/sysconfig/rc.site << "EOF"
 # rc.site
 
