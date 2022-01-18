@@ -19,7 +19,7 @@ build () {
 
 package () {
     local kernver="$(<version)"
-    local modulesdir="$PKG_DEST/usr/lib/modules/$kernver"
+    local modulesdir="$PKG_DEST/usr/lib/modules/$PKG_VER"
 
     echo "Installing boot image..."
     mkdir -pv $PKG_DEST/boot
@@ -41,5 +41,9 @@ install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
 # End /etc/modprobe.d/usb.conf
 EOF
 
+
+  echo "Installing modules..."
+  make INSTALL_MOD_PATH="$PKG_DEST/usr" INSTALL_MOD_STRIP=1 modules_install
+  rm "$modulesdir"/{source,build}
 }
 

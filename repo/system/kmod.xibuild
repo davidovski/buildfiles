@@ -20,10 +20,10 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install 
     mkdir -p /usr/bin
-    ln -sfv kmod $PKG_DERT/usr/bin/depmod
-    ln -sfv kmod $PKG_DERT/usr/bin/insmod
-    ln -sfv kmod $PKG_DERT/usr/bin/modinfo
-    ln -sfv kmod $PKG_DERT/usr/bin/modprobe
-    ln -sfv kmod $PKG_DERT/usr/bin/rmmod
-    ln -sfv kmod $PKG_DEST/usr/bin/lsmod
+    ln -sv kmod $PKG_DERT/usr/bin/depmod
+    ln -sv kmod $PKG_DERT/usr/bin/insmod
+    ln -sv kmod $PKG_DERT/usr/bin/modinfo
+    ln -sv kmod $PKG_DERT/usr/bin/modprobe
+    ln -sv kmod $PKG_DERT/usr/bin/rmmod
+    ln -sv kmod $PKG_DEST/usr/bin/lsmod
 }
