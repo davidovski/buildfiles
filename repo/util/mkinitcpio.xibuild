@@ -7,7 +7,7 @@ SOURCE=https://github.com/archlinux/mkinitcpio/releases/download/v31/mkinitcpio-
 DESC="Scripts to make initramfs provided by archlinux"
 
 build () {
-    make
+    make || true
 }
 
 package () {
