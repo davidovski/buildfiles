@@ -35,10 +35,8 @@ package () {
     make exec_prefix=/usr DESTDIR=$PKG_DEST install
     make DESTDIR=$PKG_DEST -C man install-man
     mkdir -p $PKG_DEST/etc/default
-}
 
-postinstall () {
-    install -v -m644 /etc/login.defs /etc/login.defs.orig &&
+    install -v -m644 $PKG_DEST/etc/login.defs $PKG_DEST/etc/login.defs.orig &&
     for FUNCTION in FAIL_DELAY               \
                     FAILLOG_ENAB             \
                     LASTLOG_ENAB             \
@@ -56,10 +54,10 @@ postinstall () {
                     CHFN_AUTH ENCRYPT_METHOD \
                     ENVIRON_FILE
     do
-        sed -i "s/^${FUNCTION}/# &/" /etc/login.defs
+        sed -i "s/^${FUNCTION}/# &/" $PKG_DEST/etc/login.defs
     done
 
-    cat > /etc/pam.d/login << "EOF"
+    cat > $PKG_DEST/etc/pam.d/login << "EOF"
 # Begin /etc/pam.d/login
 
 # Set failure delay before next prompt to 3 seconds
@@ -107,7 +105,7 @@ password  include     system-password
 # End /etc/pam.d/login
 EOF
 
-    cat > /etc/pam.d/passwd << "EOF"
+    cat > $PKG_DEST/etc/pam.d/passwd << "EOF"
 # Begin /etc/pam.d/passwd
 
 password  include     system-password
@@ -115,7 +113,7 @@ password  include     system-password
 # End /etc/pam.d/passwd
 EOF
 
-    cat > /etc/pam.d/su << "EOF"
+    cat > $PKG_DEST/etc/pam.d/su << "EOF"
 # Begin /etc/pam.d/su
 
 # always allow root
@@ -143,7 +141,7 @@ session   include     system-session
 # End /etc/pam.d/su
 EOF
 
-    cat > /etc/pam.d/chpasswd << "EOF"
+    cat > $PKG_DEST/etc/pam.d/chpasswd << "EOF"
 # Begin /etc/pam.d/chpasswd
 
 # always allow root
@@ -157,9 +155,9 @@ password  include     system-password
 # End /etc/pam.d/chpasswd
 EOF
 
-sed -e s/chpasswd/newusers/ /etc/pam.d/chpasswd >/etc/pam.d/newusers
+sed -e s/chpasswd/newusers/ $PKG_DEST/etc/pam.d/chpasswd >$PKG_DEST/etc/pam.d/newusers
 
-    cat > /etc/pam.d/chage << "EOF"
+    cat > $PKG_DEST/etc/pam.d/chage << "EOF"
 # Begin /etc/pam.d/chage
 
 # always allow root
