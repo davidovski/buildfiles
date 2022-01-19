@@ -1,0 +1,24 @@
+#!/bin/bash
+
+DEPS=(pcre libffi zlib glibc libxslt gdb)
+
+PKG_VER=2.70.2
+SOURCE=https://download.gnome.org/sources/glib/$($PKG_VER | cut -d. -f-2)/glib-$PKG_VER.tar.xz
+DESC="Low level core library"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr       \
+          --buildtype=release \
+          -Dman=true          \
+          ..                  &&
+    ninja
+}
+package () {
+    ninja DESTDIR=$PKG_DEST install
+    mkdir -p $PKG_DEST/usr/share/doc/glib-$PKG_VER &&
+    cp -r ../docs/reference/{NEWS,gio,glib,gobject} $PKG_DEST/usr/share/doc/glib-$PKG_VER
+
+}
