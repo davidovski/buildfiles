@@ -2,7 +2,7 @@
 
 DEPS=(jansson libndp curl wpa_supplicant newt nss polkit libpsl audit)
 
-PKG_VER=1.34
+PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
 DESC="Network connection manager and user applications"
 
