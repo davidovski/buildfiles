@@ -1,0 +1,19 @@
+#!/bin/bash
+
+DEPS=(glibc)
+
+PKG_VER=1.8
+SOURCE=http://libndp.org/files/libndp-$PKG_VER.tar.gz
+DESC="A wrapper for IPv6 Neighbor Discovery Protocol"
+
+build () {
+    ./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --disable-static     &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

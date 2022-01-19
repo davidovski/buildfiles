@@ -29,4 +29,18 @@ package () {
 
     chown -v root:messagebus $PKG_DEST/usr/libexec/dbus-daemon-launch-helper &&
     chmod -v      4750       $PKG_DEST/usr/libexec/dbus-daemon-launch-helper
+    
+
+    cat > $PKG_DEST/etc/dbus-1/session-local.conf << "EOF"
+<!DOCTYPE busconfig PUBLIC
+ "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/dbus/1.0/busconfig.dtd">
+<busconfig>
+
+  <!-- Search for .service files in /usr/local -->
+  <servicedir>/usr/local/share/dbus-1/services</servicedir>
+
+</busconfig>
+EOF
+
 }
