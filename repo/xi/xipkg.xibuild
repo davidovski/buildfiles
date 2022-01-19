@@ -6,9 +6,9 @@ SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
 DESC="The xilinux package manager"
 
 build () {
-    make
+    make 
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    make DESTDIR=$PKG_DEST install || true
 }

@@ -171,13 +171,13 @@ DISTRIB_RELEASE=rolling
 DISTRIB_DESCRIPTION="Xi Linux"
 EOF
 
-    cat > $PKG_DEST/etc/os-release << "EOF"
+    cat > $PKG_DEST/etc/lsb-release << "EOF"
 LSB_VERSION=1.4
 DISTRIB_ID=xi
 DISTRIB_RELEASE=rolling
 DISTRIB_DESCRIPTION="XiLinux"
 EOF
-    cat > $PKG_DEST/etc/lsb-release << "EOF"
+    cat > $PKG_DEST/etc/os-release << "EOF"
 NAME="xilinux"
 PRETTY_NAME="XiLinux"
 ID=xi
