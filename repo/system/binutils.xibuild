@@ -40,6 +40,6 @@ package() {
     make -j1 DESTDIR=$PKG_DEST -j1 install
     cp ../include/libiberty.h $PKG_DEST/usr/include
     rm -fv $PKG_DEST/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
-    [ -e $PKG_DEST/usr/bin/ld ] && ln -sv ld.gold $PKG_DEST/usr/bin/ld 
+    [ -e $PKG_DEST/usr/bin/ld ] || ln -sv ld.gold $PKG_DEST/usr/bin/ld 
 
 }
