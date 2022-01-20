@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(sh perl)
 
 SOURCE=https://github.com/dex4er/fakechroot

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make)
 DEPS=(bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib)
 
 PKG_VER=3.10.0

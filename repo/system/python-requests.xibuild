@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python )
 DEPS=(python)
 
 SOURCE=git://github.com/psf/requests.git

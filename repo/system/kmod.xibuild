@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc zlib openssl xz zstd)
 
 PKG_VER=29

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(elogind)
 
 PKG_VER=1.12.20

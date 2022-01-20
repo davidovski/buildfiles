@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc acl attr)
 
 PKG_VER=4.8

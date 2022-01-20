@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make)
 DEPS=(curl libarchive jsoncpp libuv rhash)
 
 PKG_VER=3.22.1

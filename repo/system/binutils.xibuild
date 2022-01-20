@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glib zlib elfutils)
 
 PKG_VER=2.37

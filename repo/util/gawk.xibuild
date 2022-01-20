@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(sh glibc mpfr)
 
 PKG_VER=5.1.0

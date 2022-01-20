@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=()
 DEPS=(glibc)
 
 PKG_VER=4.3

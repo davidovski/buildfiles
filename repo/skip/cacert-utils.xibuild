@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=()
 DEPS=(bash coreutils findutils libp11-kit)
 
 SOURCE=https://src.fedoraproject.org/rpms/ca-certificates

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc e2fsprogs libldap keyutils)
 
 PKG_VER=1.19.2

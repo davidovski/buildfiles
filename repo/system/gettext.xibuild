@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(acl sh glib2)
 
 PKG_VER=0.21

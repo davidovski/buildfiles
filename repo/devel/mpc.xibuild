@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(mpfr)
 
 PKG_VER=1.2.0

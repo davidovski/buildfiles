@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(cmake make )
 DEPS=(glibc)
 
 SOURCE=https://github.com/google/brotli

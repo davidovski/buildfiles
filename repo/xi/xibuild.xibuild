@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=()
 DEPS=(bash tar git hg curl openssl )
 
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git

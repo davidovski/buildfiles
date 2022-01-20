@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc libtirpc audit libxcrypt)
 
 PKG_VER=1.5.2

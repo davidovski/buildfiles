@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc iptables libelf)
 
 SOURCE=https://git.kernel.org/pub/scm/network/iproute2/iproute2.git

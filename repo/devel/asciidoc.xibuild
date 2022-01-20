@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python )
 DEPS=(python libxslt docbook-xsl)
 
 PKG_VER=10.1.1

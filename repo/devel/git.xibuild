@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(grep python make )
 DEPS=(curl perl openssl pcre grep shadow zlib openssh)
 
 PKG_VER=2.34.1

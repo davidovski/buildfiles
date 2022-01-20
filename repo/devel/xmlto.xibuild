@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(libxslt)
 
 PKG_VER=0.0.28

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(pam acl audit libcap libxcrypt)
 
 PKG_VER=4.11.1

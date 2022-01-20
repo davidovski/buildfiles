@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python make )
 DEPS=(gcc python)
 
 PKG_VER=3.4

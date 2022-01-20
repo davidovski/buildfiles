@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc gcc zlib xz lz4)
 
 PKG_VER=1.5.1

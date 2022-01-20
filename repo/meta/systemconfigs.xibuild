@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=()
 DEPS=(bootscripts sh)
 
 PKG_VER=N/A

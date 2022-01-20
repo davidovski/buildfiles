@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc libtasn1 libffi)
 
 SOURCE=https://github.com/p11-glue/p11-kit

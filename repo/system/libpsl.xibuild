@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python make )
 DEPS=(libidn)
 
 PKG_VER=0.21.1

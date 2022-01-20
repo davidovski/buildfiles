@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc krb5 openssl libedit ldns libxcrypt zlib pam)
 
 PKG_VER=8.8p1

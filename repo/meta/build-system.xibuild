@@ -1,5 +1,6 @@
 repo=devel
 
+MAKEDEPS=()
 DEPS=()
 
 for i in $(ls -1 $(echo $BUILD_FILE_PATH | rev | cut -d/ -f3- | rev)/$repo); do

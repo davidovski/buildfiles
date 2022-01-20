@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python make )
 DEPS=(zlib readline ncurses xz icu)
 
 PKG_VER=2.9.12

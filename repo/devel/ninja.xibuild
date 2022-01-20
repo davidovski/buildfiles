@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python)
 DEPS=(glibc)
 
 SOURCE=git://github.com/ninja-build/ninja.git

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(shadow coreutils libcap libxcrypt readline)
 
 PKG_VER=2.37.2

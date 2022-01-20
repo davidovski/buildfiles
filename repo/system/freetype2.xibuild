@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(brotli libpng which)
 
 PKG_VER=2.11.1

@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=()
 
 DESC="An initramfs infastructure aimin gto have as little possible hardcoded into the initramfs"

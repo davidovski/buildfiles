@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc)
 
 SOURCE=https://gitlab.com/cjwatson/libpipeline

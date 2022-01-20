@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc)
 
 SOURCE=https://sourceware.org/elfutils/ftp/elfutils-latest.tar.bz2

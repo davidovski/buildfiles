@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(glibc gnutls zlib)
 
 SOURCE=git://git.ffmpeg.org/rtmpdump

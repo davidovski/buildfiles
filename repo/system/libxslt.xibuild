@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(python make )
 DEPS=(libxml2 libgcrypt)
 
 PKG_VER=1.1.34

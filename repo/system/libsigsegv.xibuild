@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(libtasn1 readline zlib nettle p11-kit libidn libunistring)
 
 PKG_VER=2.13

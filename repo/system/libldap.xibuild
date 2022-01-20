@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(libidn libsasl)
 
 PKG_VER=2.6.0

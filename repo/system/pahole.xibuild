@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(cmake python make )
 DEPS=(elfutils python)
 
 PKG_VER=1.23

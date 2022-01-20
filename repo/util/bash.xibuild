@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(readline glibc ncurses)
 
 SOURCE=https://git.savannah.gnu.org/git/bash.git

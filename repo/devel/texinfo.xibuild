@@ -1,5 +1,6 @@
 #!/bin/bash
 
+MAKEDEPS=(make )
 DEPS=(ncurses gzip perl sh)
 
 PKG_VER=6.8
