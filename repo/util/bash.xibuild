@@ -3,7 +3,8 @@
 MAKEDEPS=(make )
 DEPS=(readline glibc ncurses)
 
-SOURCE=https://git.savannah.gnu.org/git/bash.git
+PKG_VER=5.1.16
+SOURCE=https://ftp.gnu.org/gnu/bash/bash-$PKG_VER.tar.gz
 DESC="The free Bourne Again Shell"
 
 build () {

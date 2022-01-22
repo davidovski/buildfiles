@@ -4,9 +4,8 @@ MAKEDEPS=(make )
 DEPS=(sh)
 
 PKG_VER=5.2.5
-SOURCE=https://git.tukaani.org/xz.git
-BRANCH=v$PKG_VER
-DESC="a selection of programs for compressing and decompressing files with the lzma and xz compression formats"
+SOURCE=https://tukaani.org/xz/xz-$PKG_VER.tar.xz
+DESC="Tools for the lzma and xz compression formats"
 
 
 build () {
