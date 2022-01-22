@@ -3,7 +3,7 @@
 MAKEDEPS=(grep make )
 DEPS=(glibc)
 
-PKG_VER=11.2.0
+PKG_VER=11.1.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
 
 DESC="The GNU Compiler Collection - C and C++ frontends"
