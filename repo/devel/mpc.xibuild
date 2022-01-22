@@ -3,7 +3,7 @@
 MAKEDEPS=(make )
 DEPS=(mpfr)
 
-PKG_VER=1.2.0
+PKG_VER=1.2.1
 SOURCE=http://www.multiprecision.org/downloads/mpc-$PKG_VER.tar.gz
 DESC="Library for the arithmetic of complex numbers with arbitrarily high precision"
 
