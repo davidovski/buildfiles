@@ -3,7 +3,8 @@
 MAKEDEPS=(make )
 DEPS=(gpm acl glibc libgcrypt pcre zlib)
 
-SOURCE=https://github.com/vim/vim.git
+PKG_VER=8.2.4257
+SOURCE=https://github.com/vim/vim/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="Vi Improved"
 
 prepare () {
