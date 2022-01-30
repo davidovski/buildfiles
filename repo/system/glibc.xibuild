@@ -5,16 +5,18 @@ DEPS=(glibc)
 
 PKG_VER=2.34
 SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-$PKG_VER.tar.xz
+
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/lfs/development/glibc-$PKG_VER-fhs-1.patch 
+    https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/glibc/trunk/locale-gen 
+    )
+
 DESC="The main gnu C library providing basic routines and procedures"
 
 prepare () {
     # patches as recommended by lfs
     sed -e '/NOTIFY_REMOVED)/s/)/ \&\& data.attr != NULL)/' -i sysdeps/unix/sysv/linux/mq_notify.c
-
-    curl https://www.linuxfromscratch.org/patches/lfs/development/glibc-$PKG_VER-fhs-1.patch > glibc-$PKG_VER-fhs-1.patch
-
-    patch -Np1 -i glibc-$PKG_VER-fhs-1.patch
-
+    patch -Np1 -i glibc-$PKG_VER-fhs-1.patch || exit 1
 }
 
 build () {
@@ -74,9 +76,8 @@ rpc: files
 # End /etc/nsswitch.conf
 EOF
 
-    curl https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/glibc/trunk/locale-gen > locale-gen
-
-    install -m755 locale-gen "$PKG_DEST/usr/bin"
+    curl 
+    #install -m755 locale-gen "$PKG_DEST/usr/bin"
 
     #curl https://data.iana.org/time-zones/releases/tzdata2021e.tar.gz > tzdata2021e.tar.gz
     #tar -xf tzdata2021e.tar.gz
