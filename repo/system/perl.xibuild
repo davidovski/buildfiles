@@ -23,6 +23,7 @@ check () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    make DESTDIR="$PKG_DEST" install 
+    for f in $(find /export -maxdepth 1 -type f); do echo $f; rm $f; done
     unset BUILD_ZLIB BUILD_BZIP2
 }
