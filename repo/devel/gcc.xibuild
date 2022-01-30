@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(grep make gmp mpfr mpc)
+MAKEDEPS=(grep make gmp mpfr mpc binutils)
 DEPS=(glibc)
 
 PKG_VER=11.2.0
