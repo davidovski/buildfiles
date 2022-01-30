@@ -7,12 +7,14 @@ PKG_VER=5.34.0
 SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
 DESC="The Practical Extraction and Report Language"
 
-build () {
+prepare () {
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
 
     sh Configure -des -Dprefix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
+}
 
+build () {
     make
 }
 
