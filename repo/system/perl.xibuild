@@ -11,7 +11,7 @@ prepare () {
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
 
-    sh Configure -des -Dpre[fix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
+    sh Configure -des -Dprefix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
 }
 
 build () {
