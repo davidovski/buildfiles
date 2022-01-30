@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make dejagnu)
+MAKEDEPS=(make dejagnu bzip2 xz zlib zstd libarchive)
 DEPS=(glibc zlib elfutils)
 
 PKG_VER=2.37

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(grep make gmp mpfr libxml2)
+MAKEDEPS=(grep make libxml2 dejagnu inetutils)
 DEPS=(glibc binutils mpc)
 
 PKG_VER=11.2.0
