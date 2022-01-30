@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make groff)
 DEPS=(libidn libsasl)
 
 PKG_VER=2.6.0
