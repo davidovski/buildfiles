@@ -20,7 +20,8 @@ build () {
 package () {
 make DESTDIR=$PKG_DEST install 
 
-    cat > vimrc << "EOF"
+    mkdir -pv $PKG_DEST/etc
+    cat > $PKG_DEST/etc/vimrc << "EOF"
 " Begin /etc/vimrc
 " Ensure defaults are set before customizing settings, not after
 source $VIMRUNTIME/defaults.vim
@@ -34,7 +35,5 @@ if (&term == "xterm") || (&term == "putty")
 endif
 " End /etc/vimrc
 EOF
-    curl -sL https://davidovski.xyz/r/vim/vimrc >> vimrc
-    mkdir -pv $PKG_DEST/etc
-    cp -v vimrc $PKG_DEST/etc/vimrc
+
 }

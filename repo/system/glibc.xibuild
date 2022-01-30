@@ -75,8 +75,6 @@ rpc: files
 
 # End /etc/nsswitch.conf
 EOF
-
-    curl 
     #install -m755 locale-gen "$PKG_DEST/usr/bin"
 
     #curl https://data.iana.org/time-zones/releases/tzdata2021e.tar.gz > tzdata2021e.tar.gz

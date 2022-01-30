@@ -7,13 +7,6 @@ PKG_VER=4.2
 SOURCE=https://github.com/dosfstools/dosfstools/releases/download/v$PKG_VER/dosfstools-$PKG_VER.tar.gz
 DESC="Utilities for use with the FAT familiy of file systems"
 
-prepare () {
-    curl -SsL https://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/unifont-13.0.06.pcf.gz > unifont-13.0.06.pcf.gz
-    gunzip -c unifont-13.0.06.pcf.gz > /usr/share/fonts/unifont/unifont.pcf
-
-    unset {C,CPP,CXX,LD}FLAGS
-}
-
 build () {
     ./configure --prefix=/usr        \
             --enable-compat-symlinks \

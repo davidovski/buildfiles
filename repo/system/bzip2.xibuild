@@ -10,15 +10,9 @@ DESC="a selection of programs for compressing and decompressing bzip2 files"
 
 
 prepare () {
-    #curl https://www.linuxfromscratch.org/patches/lfs/development/bzip2-$PKG_VER-install_docs-1.patch > bzip2-$PKG_VER-install_docs-1.patch
-
-    #patch -Np1 -i bzip2-$PKG_VER-install_docs-1.patch
-    
 
     # ensure symbolic links are relative
     sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
-
-    #sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 }
 
 build () {

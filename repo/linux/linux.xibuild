@@ -5,9 +5,12 @@ DEPS=()
 
 PKG_VER=5.15.14
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v$(echo $PKG_VER | cut -d. -f1).x/linux-$PKG_VER.tar.xz
+ADDITIONAL=(
+    https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config
+    )
 
 prepare () {
-    curl https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config > .config
+    mv config .config
 
     make olddefconfig
     make -s kernelrelease > version
