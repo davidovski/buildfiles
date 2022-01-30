@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make-ca)
+MAKEDEPS=(make-ca curl)
 DEPS=(make-ca)
 
 PKG_VER=1.7
