@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make help2man)
 DEPS=(glibc m4 sh)
 
 PKG_VER=2.6.4

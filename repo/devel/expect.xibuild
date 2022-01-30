@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make)
 DEPS=(tcl)
 
 PKG_VER=5.45.4
