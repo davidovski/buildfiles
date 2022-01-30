@@ -3,7 +3,7 @@
 MAKEDEPS=(make )
 DEPS=(glibc libtasn1 libffi)
 
-SOURCE=https://github.com/p11-glue/p11-kit
+SOURCE=https://github.com/p11-glue/p11-kit/releases/download/0.24.1/p11-kit-0.24.1.tar.xz
 DESC="Loads and enumerates PKCS#11 modules"
 
 prepare () {
@@ -18,7 +18,6 @@ EOF
 }
 
 build () {
-    ./autogen.sh
     ./configure --prefix=/usr     \
                 --sysconfdir=/etc \
             --with-trust-paths=/etc/pki/anchors 
