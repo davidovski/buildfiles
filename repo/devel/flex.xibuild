@@ -8,7 +8,7 @@ SOURCE=https://github.com/westes/flex/releases/download/v$PKG_VER/flex-$PKG_VER.
 DESC="a utility for generating programs that recognize patterns in text"
 
 build () {
-    ./configure --prefix=/usr --docdir=/usr/share/doc/flex --disable-static
+    ./configure --prefix=/usr --docdir=/usr/share/doc/flex --disable-static CFLAGS=-liconv
     make
 }
 
