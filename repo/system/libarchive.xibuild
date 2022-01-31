@@ -3,7 +3,8 @@
 MAKEDEPS=(make )
 DEPS=(acl bzip2 expat lz4 openssl xz zlib zstd)
 
-SOURCE=https://github.com/libarchive/libarchive/releases/download/v3.5.2/libarchive-3.5.2.tar.gz
+PKG_VER=3.5.2
+SOURCE=https://github.com/libarchive/libarchive/releases/download/v$PKG_VER/libarchive-$PKG_VER.tar.xz
 
 DESC="A library that provides a single interface for reading and writing various compression formats"
 
@@ -13,7 +14,7 @@ prepare () {
 }
 
 build () {
-    ./configure --prefix=/usr --disable-static
+    ./configure --prefix=/usr --disable-static --without-xml2 --without-nettle
     make 
 }
 
