@@ -12,9 +12,9 @@ build () {
     make
 }
 
-check () {
-    make -j4 check || true
-}
+#check () {
+    #make -j4 check || true
+#}
 
 package () {
     make DESTDIR=$PKG_DEST install
