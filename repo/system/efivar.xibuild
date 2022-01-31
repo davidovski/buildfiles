@@ -12,7 +12,7 @@ ADDITIONAL=(
 DESC="Tools and libraries to manupulate EFI variables"
 
 prepare () {
-    patch -Np1 -i efivar-$PKG_VER-gcc_9.1.patch
+    patch -Np1 -i efivar-$PKG_VER-gcc_9-1.patch
 }
 
 build () {
