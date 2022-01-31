@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make flex)
 DEPS=(glibc)
 
 PKG_VER=1.8
