@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MAKEDEPS=()
+DEPS=(glibc)
+
+PKG_VER=3.7
+SOURCE=https://github.com/thom311/libnl/releases/download/libnl3_5_0/libnl-3.5.0.tar.gz
+DESC="Library for applications dealing with netlink sockets"
+
+build () {
+    ./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --disable-static  &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+    mkdir -vp $PKG_DEST/usr/share/doc/libnl-3.5.0 &&
+    tar -xf ../libnl-doc-3.5.0.tar.gz --strip-components=1 --no-same-owner \
+        -C  $PKG_DEST/usr/share/doc/libnl-3.5.0
+}
