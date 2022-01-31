@@ -10,7 +10,7 @@ DESC="S-Lang is a powerful interpreted language"
 build () {
     ./configure --prefix=/usr \
             --sysconfdir=/etc
-    make
+    make -j1
 }
 
 package () {
