@@ -4,15 +4,13 @@ MAKEDEPS=(make autoconf libtool libpth libiconv)
 DEPS=(acl bzip2 expat lz4 openssl xz zlib zstd)
 
 PKG_VER=3.5.2
-#SOURCE=https://github.com/libarchive/libarchive/releases/download/v$PKG_VER/libarchive-$PKG_VER.tar.xz
-SOURCE=https://github.com/libarchive/libarchive
+SOURCE=https://github.com/libarchive/libarchive/releases/download/v$PKG_VER/libarchive-$PKG_VER.tar.xz
 
 DESC="A library that provides a single interface for reading and writing various compression formats"
 
 prepare () {
     sed -i '436a if ((OSSL_PROVIDER_load(NULL, "legacy")) == NULL) \
       return (ARCHIVE_FAILED);' libarchive/archive_digest.c
-    ./build/autogen.sh
 }
 
 build () {
