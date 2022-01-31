@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MAKEDEPS=(make libpcap)
+DEPS=(openssl libpcap)
+
+PKG_VER=1.8.1
+SOURCE=https://www.nlnetlabs.nl/downloads/ldns/ldns-$PKG_VER.tar.gz
+DESC="Free software implementation of IDNA2008, Punycode and TR46"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-rpath \
+		--with-drill \
+		--with-examples \
+		--with-trust-anchor=/etc/trusted-key.key \
+
+	make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
