@@ -9,16 +9,10 @@ DESC="S-Lang is a powerful interpreted language"
 
 build () {
     ./configure --prefix=/usr \
-            --sysconfdir=/etc \
-            --with-readline=gnu &&
-    make -j1
+            --sysconfdir=/etc
+    make
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install_doc_dir=/usr/share/doc/slang-$PKG_VER   \
-     SLSH_DOC_DIR=/usr/share/doc/slang-$PKG_VER/slsh \
-     install &&
-
-     chmod -v 755 $PKG_DEST/usr/lib/libslang.so.$PKG_VER \
-             $PKG_DEST/usr/lib/slang/v2/modules/*.so
+    make DESTDIR=$PKG_DEST install-all
 }
