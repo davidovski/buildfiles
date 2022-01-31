@@ -172,8 +172,8 @@ EOF
     for PROGRAM in chfn chgpasswd chsh groupadd groupdel \
                    groupmems groupmod useradd userdel usermod
     do
-        install -v -m644 $PKG_DEST/etc/pam.d/chage /etc/pam.d/${PROGRAM}
-        sed -i "s/chage/$PROGRAM/" /etc/pam.d/${PROGRAM}
+        install -v -m644 $PKG_DEST/etc/pam.d/chage $PKG_DEST/etc/pam.d/${PROGRAM}
+        sed -i "s/chage/$PROGRAM/" $PKG_DEST/etc/pam.d/${PROGRAM}
     done
 
     [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE}
