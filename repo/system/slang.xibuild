@@ -14,5 +14,5 @@ build () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install-all
+    make DESTDIR=$PKG_DEST install
 }
