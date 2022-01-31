@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make pkg-config)
+MAKEDEPS=(make pkg-config gcc)
 DEPS=(glibc)
 
 PKG_VER=6.3
