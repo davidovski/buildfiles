@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make autoconf)
+MAKEDEPS=(make autoconf libtool)
 DEPS=(acl bzip2 expat lz4 openssl xz zlib zstd)
 
 PKG_VER=3.5.2
@@ -12,6 +12,7 @@ DESC="A library that provides a single interface for reading and writing various
 prepare () {
     sed -i '436a if ((OSSL_PROVIDER_load(NULL, "legacy")) == NULL) \
       return (ARCHIVE_FAILED);' libarchive/archive_digest.c
+    ./build/autogen.sh
 }
 
 build () {
