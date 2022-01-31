@@ -20,8 +20,6 @@ prepare () {
     -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                \
     -i etc/login.defs
     
-    sed -e "224s/rounds/min_rounds/" -i libmisc/salt.c
-
     mkdir -p $PKG_DEST/usr/bin
     touch $PKG_DEST/usr/bin/passwd
 
@@ -170,5 +168,17 @@ account   include     system-account
 
 # End /etc/pam.d/chage
 EOF
+
+    for PROGRAM in chfn chgpasswd chsh groupadd groupdel \
+                   groupmems groupmod useradd userdel usermod
+    do
+        install -v -m644 $PKG_DEST/etc/pam.d/chage /etc/pam.d/${PROGRAM}
+        sed -i "s/chage/$PROGRAM/" /etc/pam.d/${PROGRAM}
+    done
+
+    [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE}
+    [ -f $PKG_DEST/etc/limits ] && mv -v $PKG_DEST/etc/limits{,.NOUSE}
+
+
 
 }
