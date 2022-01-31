@@ -3,8 +3,10 @@
 MAKEDEPS=()
 DEPS=(glibc)
 
-PKG_VER=3.7
-SOURCE=https://github.com/thom311/libnl/releases/download/libnl3_5_0/libnl-3.5.0.tar.gz
+PKG_VER=3.5.0
+SOURCE=https://github.com/thom311/libnl/releases/download/libnl$(echo $PKG_VER | sed 's/\./_/g')/libnl-$PKG_VER.tar.gz
+ADDITIONAL=(https://github.com/thom311/libnl/releases/download/libnl$(echo $PKG_VER | sed 's/\./_/g')/libnl-doc-$PKG_VER.tar.gz)
+
 DESC="Library for applications dealing with netlink sockets"
 
 build () {
