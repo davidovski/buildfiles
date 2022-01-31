@@ -9,9 +9,11 @@ DESC="A lossless compression algorithm, providing high compression speeds"
 
 
 build () {
-    make
+    make -C lib PREFIX=/usr
+    make -C programs PREFIX=/usr lz4 lz4c
 }
+
 package () {
-    make DESTDIR=$PKG_DEST install
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
 }
 
