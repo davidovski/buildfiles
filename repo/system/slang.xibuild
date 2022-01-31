@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=()
+DEPS=(pcre)
+
+PKG_VER=2.3.2
+SOURCE=https://www.jedsoft.org/releases/slang/slang-$PKG_VER.tar.bz2
+DESC="S-Lang is a powerful interpreted language"
+
+build () {
+    ./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --with-readline=gnu &&
+    make -j1
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install_doc_dir=/usr/share/doc/slang-$PKG_VER   \
+     SLSH_DOC_DIR=/usr/share/doc/slang-$PKG_VER/slsh \
+     install-all &&
+
+     chmod -v 755 $PKG_DEST/usr/lib/libslang.so.$PKG_VER \
+             $PKG_DEST/usr/lib/slang/v2/modules/*.so
+}
