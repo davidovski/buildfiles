@@ -176,8 +176,8 @@ EOF
         sed -i "s/chage/$PROGRAM/" $PKG_DEST/etc/pam.d/${PROGRAM}
     done
 
-    [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE}
-    [ -f $PKG_DEST/etc/limits ] && mv -v $PKG_DEST/etc/limits{,.NOUSE}
+    [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE} || true
+    [ -f $PKG_DEST/etc/limits ] && mv -v $PKG_DEST/etc/limits{,.NOUSE} || true
 
 
 
