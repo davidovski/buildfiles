@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make autoconf)
 DEPS=(acl bzip2 expat lz4 openssl xz zlib zstd)
 
 PKG_VER=3.5.2
