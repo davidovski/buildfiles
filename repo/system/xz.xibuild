@@ -3,7 +3,7 @@
 MAKEDEPS=(make )
 DEPS=(sh)
 
-PKG_VER=5.2.5
+PKG_VER=5.2.2
 SOURCE=https://github.com/xz-mirror/xz/releases/download/v$PKG_VER/xz-$PKG_VER.tar.xz
 DESC="Tools for the lzma and xz compression formats"
 
