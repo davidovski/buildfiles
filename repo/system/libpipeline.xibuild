@@ -3,11 +3,11 @@
 MAKEDEPS=(make )
 DEPS=(glibc)
 
-SOURCE=https://gitlab.com/cjwatson/libpipeline
+PKG_VER=1.5.5
+SOURCE=http://download.savannah.nongnu.org/releases/libpipeline/libpipeline-$PKG_VER.tar.gz
 DESC="A library for manipulating pipelines of subprocesses in a flexible and convenient way"
 
 build () {
-    ./bootstrap
     ./configure --prefix=/usr
     make
 }
