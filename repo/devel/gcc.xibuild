@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(grep make libxml2 dejagnu inetutils libiconv)
-DEPS=(glibc binutils mpc)
+DEPS=(glibc binutils mpc gdb)
 
 PKG_VER=11.2.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
