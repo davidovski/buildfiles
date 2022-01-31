@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(make tcl python)
+DEPS=(gmp libxcrypt popt slang python tcl)
+
+PKG_VER=0.52.21
+SOURCE=https://releases.pagure.org/newt/newt-0.52.21.tar.gz
+DESC="Not Erik's Windowing Toolkit - text mode windowing with slang"
+
+build () {
+    sed -e 's/^LIBNEWT =/#&/'                   \
+    -e '/install -m 644 $(LIBNEWT)/ s/^/#/' \
+    -e 's/$(LIBNEWT)/$(LIBNEWTSONAME)/g'    \
+    -i Makefile.in                          &&
+
+    ./configure --prefix=/usr           \
+                --with-gpm-support      \
+                --with-python=python3.10 &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
