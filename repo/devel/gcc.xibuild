@@ -17,8 +17,7 @@ prepare () {
 
     case $(uname -m) in
       x86_64)
-        sed -e '/m64=/s/lib64/lib/' \
-            -i.orig gcc/config/i386/t-linux64
+        sed -i.orig '/m64=/s/lib64/lib/' gcc/config/i386/t-linux64
       ;;
     esac
 }
@@ -27,13 +26,11 @@ build () {
     mkdir -v build
     cd build
 
-    ../configure --prefix=/usr            \
-             LD=ld                    \
-             --enable-languages=c,c++ \
-             --disable-multilib       \
-             --disable-bootstrap      \
-             --with-system-zlib
-
+    ../configure                                           \
+        --prefix=/usr                                      \
+        --disable-multilib                                 \
+        --with-system-zlib                                 \
+        --enable-languages=c,c++,d,fortran,go,objc,obj-c++ &&
     make
 }
 
@@ -51,15 +48,18 @@ check () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-    rm -rf $PKG_DEST/usr/lib/gcc/$(gcc -dumpmachine)/11.2.0/include-fixed/bits/
+    mkdir -pv $PKG_DEST/usr/share/gdb/auto-load/usr/lib              &&
+    mv -v $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib &&
 
     chown -v -R root:root \
-    $PKG_DEST/usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
-    ln -sv cpp $PKG_DEST/usr/lib/cpp
+        $PKG_DEST/usr/lib/gcc/*linux-gnu/$PKG_VER/include{,-fixed}
 
-    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
-        $PKG_DEST/usr/lib/bfd-plugins/
+    rm -rf $PKG_DEST/usr/lib/gcc/$(gcc -dumpmachine)/$PKG_VER/include-fixed/bits/
 
+    ln -v -sf ../usr/bin/cpp $PKG_DEST/lib          &&
+    ln -v -sf gcc $PKG_DEST/usr/bin/cc              &&
+    install -v -dm755 $PKG_DEST/usr/lib/bfd-plugins &&
+    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/$PKG_VER/liblto_plugin.so $PKG_DEST/usr/lib/bfd-plugins/
 
     # sanity checks
     echo 'int main(){}' > dummy.c
@@ -72,10 +72,4 @@ package () {
     grep "/lib.*/libc.so.6 " dummy.log
     grep found dummy.log
 
-    # move a misplaced file
-    mkdir -pv $PKG_DEST/usr/share/gdb/auto-load/usr/lib
-    mv -v $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib
-
-    # set gcc as the default c compiler
-    ln -s gcc $PKG_DEST/usr/bin/cc
 }
