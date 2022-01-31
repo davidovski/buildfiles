@@ -18,7 +18,8 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir -vp $PKG_DEST/usr/share/doc/libnl-3.5.0 &&
-    tar -xf ../libnl-doc-3.5.0.tar.gz --strip-components=1 --no-same-owner \
-        -C  $PKG_DEST/usr/share/doc/libnl-3.5.0
+
+    mkdir -vp $PKG_DEST/usr/share/doc/libnl-$PKG_VER &&
+    tar -xf libnl-doc-$PKG_VER.tar.gz --strip-components=1 --no-same-owner \
+        -C  $PKG_DEST/usr/share/doc/libnl-$PKG_VER
 }
