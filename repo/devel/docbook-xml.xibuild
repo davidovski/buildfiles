@@ -17,13 +17,13 @@ package () {
                     $PKG_DEST/usr/share/xml/docbook/stylesheet/docbook5
     
 
-    if [ ! -e /etc/xml/docbook-$PKG_VER ]; then
-  xmlcatalog --noout --create /etc/xml/docbook-$PKG_VER
+    if [ ! -e $PKG_DEST/etc/xml/docbook-$PKG_VER ]; then
+  xmlcatalog --noout --create $PKG_DEST/etc/xml/docbook-$PKG_VER
 fi &&
 
 xmlcatalog --noout --add "uri" \
   "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbook.rng" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
+  "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
   $PKG_DEST/etc/xml/docbook-$PKG_VER &&
 xmlcatalog --noout --add "uri" \
   "http://docbook.org/xml/$PKG_VER/rng/docbook.rng" \
@@ -64,7 +64,7 @@ xmlcatalog --noout --add "uri" \
   $PKG_DEST/etc/xml/docbook-$PKG_VER
 
 
-xmlcatalog --noout --create /usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+xmlcatalog --noout --create $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
 
 xmlcatalog --noout --add "uri" \
   "http://docbook.org/xml/$PKG_VER/schemas/rng/docbook.schemas/rng" \
@@ -100,8 +100,8 @@ xmlcatalog --noout --add "uri" \
   "docbook.schemas/sch" $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml
 
 
-if [ ! -e /etc/xml/catalog ]; then
-  xmlcatalog --noout --create /etc/xml/catalog
+if [ ! -e $PKG_DEST/etc/xml/catalog ]; then
+  xmlcatalog --noout --create $PKG_DEST/etc/xml/catalog
 fi &&
 xmlcatalog --noout --add "delegatePublic" \
   "-//OASIS//DTD DocBook XML $PKG_VER//EN" \
