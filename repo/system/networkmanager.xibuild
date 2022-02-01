@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(grep meson ninja python intltool)
+MAKEDEPS=(grep meson ninja python intltool glib)
 DEPS=(jansson libndp curl wpa_supplicant newt nss polkit libpsl audit dbus)
 
 PKG_VER=1.35.5
