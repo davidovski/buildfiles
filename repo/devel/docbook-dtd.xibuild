@@ -1,0 +1,41 @@
+#!/bin/bash
+
+MAKEDEPS=(unzip)
+DEPS=(libxml2 sgml-common)
+
+PKG_VER=4.5
+SOURCE=https://www.docbook.org/sgml/$PKG_VER/docbook-$PKG_VER.zip
+DESC="Document type definitions for verification of SGML data files"
+
+prepare() {
+    sed -i -e '/ISO 8879/d' \
+           -e '/gml/d' docbook.cat
+
+}
+
+package () {
+    install -v -d $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
+    chown -R root:root . &&
+
+    install -v docbook.cat $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
+    cp -v -af *.dtd *.mod *.dcl $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
+
+    install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+        /usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
+
+    install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+        $PKG_DEST/etc/sgml/sgml-docbook.cat
+
+
+    cat >> $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog << "EOF"
+  -- Begin Single Major Version catalog changes --
+
+PUBLIC "-//OASIS//DTD DocBook V4.4//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.3//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.2//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.1//EN" "docbook.dtd"
+PUBLIC "-//OASIS//DTD DocBook V4.0//EN" "docbook.dtd"
+
+  -- End Single Major Version catalog changes --
+EOF
+}
