@@ -16,116 +16,114 @@ package () {
     install -m644   tools/db4-upgrade.xsl \
                     $PKG_DEST/usr/share/xml/docbook/stylesheet/docbook5
     
+    mkdir -pv $PKG_DEST/etc/xml
+    xmlcatalog --noout --create $PKG_DEST/etc/xml/docbook-$PKG_VER &&
 
-    if [ ! -e $PKG_DEST/etc/xml/docbook-$PKG_VER ]; then
-  xmlcatalog --noout --create $PKG_DEST/etc/xml/docbook-$PKG_VER
-fi &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbook.rng" \
+      "file://usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/rng/docbook.rng" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbookxi.rng" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rng" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbook.rnc" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/rng/docbook.rnc" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbookxi.rnc" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rnc" \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
 
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbook.rng" \
-  "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/rng/docbook.rng" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbookxi.rng" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rng" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbook.rnc" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/rng/docbook.rnc" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbookxi.rnc" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rnc" \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/sch/docbook.sch" \
-  "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/sch/docbook.sch" \
-  "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
-  $PKG_DEST/etc/xml/docbook-$PKG_VER
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/sch/docbook.sch" \
+      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/sch/docbook.sch" \
+      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
+      $PKG_DEST/etc/xml/docbook-$PKG_VER
 
 
-xmlcatalog --noout --create $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --create $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
 
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/schemas/rng/docbook.schemas/rng" \
-  "docbook.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbook.schemas/rng" \
-  "docbook.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/schemas/rng/docbookxi.schemas/rng" \
-  "docbookxi.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbookxi.schemas/rng" \
-  "docbookxi.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/schemas/rng/docbook.rnc" \
-  "docbook.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbook.rnc" \
-  "docbook.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/schemas/rng/docbookxi.rnc" \
-  "docbookxi.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbookxi.rnc" \
-  "docbookxi.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml
-xmlcatalog --noout --create $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/schemas/rng/docbook.schemas/rng" \
+      "docbook.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbook.schemas/rng" \
+      "docbook.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/schemas/rng/docbookxi.schemas/rng" \
+      "docbookxi.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbookxi.schemas/rng" \
+      "docbookxi.schemas/rng" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/schemas/rng/docbook.rnc" \
+      "docbook.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbook.rnc" \
+      "docbook.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/schemas/rng/docbookxi.rnc" \
+      "docbookxi.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/rng/docbookxi.rnc" \
+      "docbookxi.rnc" $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml
+    xmlcatalog --noout --create $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml &&
 
-xmlcatalog --noout --add "uri" \
-  "http://docbook.org/xml/$PKG_VER/schemas/sch/docbook.schemas/sch" \
-  "docbook.schemas/sch" $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml &&
-xmlcatalog --noout --add "uri" \
-  "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/sch/docbook.schemas/sch" \
-  "docbook.schemas/sch" $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml
+    xmlcatalog --noout --add "uri" \
+      "http://docbook.org/xml/$PKG_VER/schemas/sch/docbook.schemas/sch" \
+      "docbook.schemas/sch" $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml &&
+    xmlcatalog --noout --add "uri" \
+      "http://www.oasis-open.org/docbook/xml/$PKG_VER/schemas/sch/docbook.schemas/sch" \
+      "docbook.schemas/sch" $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml
 
 
-if [ ! -e $PKG_DEST/etc/xml/catalog ]; then
-  xmlcatalog --noout --create $PKG_DEST/etc/xml/catalog
-fi &&
-xmlcatalog --noout --add "delegatePublic" \
-  "-//OASIS//DTD DocBook XML $PKG_VER//EN" \
-  "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog &&
-xmlcatalog --noout --add "delegateSystem" \
-  "http://docbook.org/xml/$PKG_VER/dtd/" \
-  "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog &&
-xmlcatalog --noout --add "delegateURI" \
-  "http://docbook.org/xml/$PKG_VER/dtd/" \
-  "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog &&
-xmlcatalog --noout --add "delegateURI" \
-  "http://docbook.org/xml/$PKG_VER/rng/"  \
-  "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog &&
-xmlcatalog --noout --add "delegateURI" \
-  "http://docbook.org/xml/$PKG_VER/sch/"  \
-  "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog &&
-xmlcatalog --noout --add "delegateURI" \
-  "http://docbook.org/xml/$PKG_VER/xsd/"  \
-  "file:///usr/share/xml/docbook/schema/xsd/$PKG_VER/catalog.xml" \
-  $PKG_DEST/etc/xml/catalog
+    if [ ! -e $PKG_DEST/etc/xml/catalog ]; then
+      xmlcatalog --noout --create $PKG_DEST/etc/xml/catalog
+    fi &&
+    xmlcatalog --noout --add "delegatePublic" \
+      "-//OASIS//DTD DocBook XML $PKG_VER//EN" \
+      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog &&
+    xmlcatalog --noout --add "delegateSystem" \
+      "http://docbook.org/xml/$PKG_VER/dtd/" \
+      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog &&
+    xmlcatalog --noout --add "delegateURI" \
+      "http://docbook.org/xml/$PKG_VER/dtd/" \
+      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog &&
+    xmlcatalog --noout --add "delegateURI" \
+      "http://docbook.org/xml/$PKG_VER/rng/"  \
+      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog &&
+    xmlcatalog --noout --add "delegateURI" \
+      "http://docbook.org/xml/$PKG_VER/sch/"  \
+      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog &&
+    xmlcatalog --noout --add "delegateURI" \
+      "http://docbook.org/xml/$PKG_VER/xsd/"  \
+      "file:///usr/share/xml/docbook/schema/xsd/$PKG_VER/catalog.xml" \
+      $PKG_DEST/etc/xml/catalog
 
 }
