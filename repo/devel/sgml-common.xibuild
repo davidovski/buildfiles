@@ -26,6 +26,7 @@ package () {
 
     mkdir -pv $PKG_DEST/etc/sgml
 
+    chmod +x bin/install-catalog
     bin/install-catalog --add $PKG_DEST/etc/sgml/sgml-ent.cat \
         $PKG_DEST/usr/share/sgml/sgml-iso-entities-8879.1986/catalog &&
 
