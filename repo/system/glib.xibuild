@@ -18,7 +18,7 @@ build () {
     ninja
 }
 package () {
-    ninja DESTDIR=$PKG_DEST install
+    DESTDIR=$PKG_DEST ninja install
     mkdir -p $PKG_DEST/usr/share/doc/glib-$PKG_VER &&
     cp -r ../docs/reference/{NEWS,gio,glib,gobject} $PKG_DEST/usr/share/doc/glib-$PKG_VER
 
