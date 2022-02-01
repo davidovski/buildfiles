@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(meson ninja)
+MAKEDEPS=(meson ninja docbook-xsl)
 DEPS=(pcre libffi zlib glibc libxslt gdb)
 
 PKG_VER=2.70.2

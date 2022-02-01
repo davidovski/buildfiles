@@ -1,0 +1,71 @@
+#!/bin/bash
+
+MAKEDEPS=()
+DEPS=(libxml2 libxslt docbook-xml)
+
+PKG_VER=1.79.2
+SOURCE=https://github.com/docbook/xslt10-stylesheets/releases/download/release/$PKG_VER/docbook-xsl-nons-$PKG_VER.tar.bz2
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/docbook-xsl-nons-$PKG_VER-stack_fix-1.patch
+)
+
+DESC="XML stylesheets for Docbook-xml transformations"
+
+prepare() {
+    patch -Np1 -i docbook-xsl-nons-$PKG_VER-stack_fix-1.patch
+
+}
+
+package () {
+    install -v -m755 -d $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER &&
+
+    cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        \
+             highlighting html htmlhelp images javahelp lib manpages params  \
+             profiling roundtrip slides template tests tools webhelp website \
+             xhtml xhtml-1_1 xhtml5                                          \
+             $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER &&
+
+    ln -s VERSION $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER/VERSION.xsl &&
+
+    install -v -m644 -D README \
+                        $PKG_DEST/usr/share/doc/docbook-xsl-nons-$PKG_VER/README.txt &&
+    install -v -m644    RELEASE-NOTES* NEWS* \
+                    $PKG_DEST/usr/share/doc/docbook-xsl-nons-$PKG_VER
+
+
+    if [ ! -d /etc/xml ]; then install -v -m755 -d /etc/xml; fi &&
+if [ ! -f /etc/xml/catalog ]; then
+    xmlcatalog --noout --create /etc/xml/catalog
+fi &&
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "https://cdn.docbook.org/release/xsl-nons/$PKG_VER" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+           $PKG_DEST/etc/xml/catalog &&
+
+xmlcatalog --noout --add "rewriteURI" \
+           "https://cdn.docbook.org/release/xsl-nons/$PKG_VER" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+    $PKG_DEST/etc/xml/catalog &&
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "https://cdn.docbook.org/release/xsl-nons/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+    $PKG_DEST/etc/xml/catalog &&
+
+xmlcatalog --noout --add "rewriteURI" \
+           "https://cdn.docbook.org/release/xsl-nons/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+    $PKG_DEST/etc/xml/catalog &&
+
+xmlcatalog --noout --add "rewriteSystem" \
+           "http://docbook.sourceforge.net/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+    $PKG_DEST/etc/xml/catalog &&
+
+xmlcatalog --noout --add "rewriteURI" \
+           "http://docbook.sourceforge.net/release/xsl/current" \
+           "/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER" \
+    $PKG_DEST/etc/xml/catalog
+
+}
