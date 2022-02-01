@@ -1,0 +1,28 @@
+#!/bin/bash
+
+MAKEDEPS=()
+DEPS=(python-mako python-markdown)
+
+PKG_VER=1.70.0
+SOURCE=https://download.gnome.org/sources/gobject-introspection/$(echo $PKG_VER | cut -d. -f-2)/gobject-introspection-$PKG_VER.tar.xz
+ADDITIONAL=(
+        https://www.linuxfromscratch.org/patches/blfs/svn/gobject-introspection-$PKG_VER-build_fix-1.patch
+    )
+
+DESC="Introspection system for GObject-based libraries"
+
+prepare() {
+    patch -Np1 -i gobject-introspection-$PKG_VER-build_fix-1.patch
+}
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr --buildtype=release .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
