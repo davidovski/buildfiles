@@ -24,10 +24,10 @@ build() {
 package () {
     make DESTDIR=$PKG_DEST docdir=/usr/share/doc install &&
 
-    install-catalog --add $PKG_DEST/etc/sgml/sgml-ent.cat \
+    $PKG_DEST/usr/bin/install-catalog --add $PKG_DEST/etc/sgml/sgml-ent.cat \
         $PKG_DEST/usr/share/sgml/sgml-iso-entities-8879.1986/catalog &&
 
-    install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook.cat \
+    $PKG_DEST/usr/bin/install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook.cat \
         $PKG_DEST/etc/sgml/sgml-ent.cat
 
 }
