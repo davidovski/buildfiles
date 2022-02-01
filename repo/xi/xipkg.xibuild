@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(python make )
+MAKEDEPS=(python make zip)
 DEPS=(tar python python-requests)
 
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
