@@ -8,7 +8,7 @@ SOURCE=http://ftp.gnu.org/pub/gnu/gperf/gperf-$PKG_VER.tar.gz
 DESC="Perfect hash function generator"
 
 build () {
-    ./configure LIBS="-liconv" --prefix=/usr --docdir=/usr/share/doc/gperf-$PKG_VER
+    ./configure LDFLAGS="-liconv" --prefix=/usr --docdir=/usr/share/doc/gperf-$PKG_VER
     make
 }
 
