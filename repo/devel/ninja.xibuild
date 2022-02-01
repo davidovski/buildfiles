@@ -16,6 +16,8 @@ check () {
 }
 
 package () {
+    mkdir -pv $PKG_DEST/usr/bin
+    mkdir -pv $PKG_DEST/usr/share/{bash-completion/completions,zsh/site-functions}
     install -vm755 ninja $PKG_DEST/usr/bin/
     install -vDm644 misc/bash-completion $PKG_DEST/usr/share/bash-completion/completions/ninja
     install -vDm644 misc/zsh-completion  $PKG_DEST/usr/share/zsh/site-functions/_ninja
