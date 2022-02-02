@@ -8,56 +8,50 @@ SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 prepare () {
-    mkdir $PKG_DEST/opt/rustc-$PKG_VER             &&
+    mkdir -pv $PKG_DEST/opt/rustc-$PKG_VER             &&
     ln -svfin rustc-$PKG_VER $PKG_DEST/opt/rustc
 
     cat << EOF > config.toml
 # see config.toml.example for more possible options
-# See the 8.4 book for an example using shipped LLVM
-# e.g. if not installing clang, or using a version before 10.0
 [llvm]
-# by default, rust will build for a myriad of architectures
-targets = "X86"
 
-# When using system llvm prefer shared libraries
-link-shared = true
+# use ninja
+ninja = true
+
+targets = "X86"
+# When compiling LLVM, the experimental targets (WebAssembly
+# and RISCV) are built by default - omit them
+experimental-targets = ""
 
 [build]
-# omit docs to save time and space (default is to build them)
+# omit HTML docs to save time and space (comment this to build them)
 docs = false
 
 # install cargo as well as rust
 extended = true
 
 [install]
-prefix = "/opt/rustc-1.58.1"
-docdir = "share/doc/rustc-1.58.1"
+# Adjust the prefix for the desired destination
+#prefix = "/usr"
+prefix = "/opt/rustc-1.32.0"
+
+# docdir is used even if the full awesome docs are not installed
+docdir = "share/doc/rustc-1.32.0"
 
 [rust]
 channel = "stable"
 rpath = false
 
-# BLFS does not install the FileCheck executable from llvm,
-# so disable codegen tests
 codegen-tests = false
 
-[target.x86_64-unknown-linux-gnu]
-# NB the output of llvm-config (i.e. help options) may be
-# dumped to the screen when config.toml is parsed.
-llvm-config = "/usr/bin/llvm-config"
-
-[target.i686-unknown-linux-gnu]
-# NB the output of llvm-config (i.e. help options) may be
-# dumped to the screen when config.toml is parsed.
-llvm-config = "/usr/bin/llvm-config"
-
+# get a trace if there is an Internal Compiler Exception
+backtrace-on-ice = true
 
 EOF
-
 }
 
 build () {
-    export RUSTFLAGS="$RUSTFLAGS -C link-args=-lffi" &&
+    export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi -C link-arg=-liconv" &&
     python3 ./x.py build --exclude src/tools/miri
 
 }
