@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make docbook-xml docbook-xsl libxslt)
+MAKEDEPS=(make docbook-xml docbook-xsl docbook-dtd libxslt)
 DEPS=(pam polkit)
 
 PKG_VER=246.10
