@@ -5,6 +5,12 @@ DEPS=(jansson libndp curl wpa_supplicant newt nss polkit libpsl audit dbus gobje
 
 PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
+
+BOOTSCRIPTS=blfs-bootscripts-20210826
+ADDITIONAL=(
+        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
+    )
+
 DESC="Network connection manager and user applications"
 
 prepare () {
@@ -48,5 +54,16 @@ EOF
 auth-polkit=true
 EOF
 
+cat > $PKG_DEST/etc/NetworkManager/conf.d/dhcp.conf << "EOF"
+[main]
+dhcp=dhclient
+EOF
+
 # TODO add boot scripts
+
+    tar xf $BOOTSCRIPTS.tar.xz
+    cd $BOOTSCRIPTS
+    make DESTDIR=$PKG_DEST install-networkmanager
+
+
 }
