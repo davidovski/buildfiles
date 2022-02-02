@@ -26,10 +26,10 @@ package () {
     install -v docbook.cat $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
     cp -v -af *.dtd *.mod *.dcl $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
 
-    install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
-        /usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
+    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+    $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
 
-    install-catalog --add $PKG_DEST/etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
         $PKG_DEST/etc/sgml/sgml-docbook.cat
 
 
