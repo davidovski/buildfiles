@@ -20,6 +20,7 @@ build () {
           -Dcgroup-controller=elogind          \
           -Ddbuspolicydir=/etc/dbus-1/system.d \
           -Dman=auto                           \
+          --nonet                              \
           ..  &&
     ninja
 }
