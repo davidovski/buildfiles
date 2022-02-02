@@ -33,10 +33,10 @@ extended = true
 [install]
 # Adjust the prefix for the desired destination
 #prefix = "/usr"
-prefix = "/opt/rustc-1.32.0"
+prefix = "/opt/rustc-$PKG_VER"
 
 # docdir is used even if the full awesome docs are not installed
-docdir = "share/doc/rustc-1.32.0"
+docdir = "share/doc/rustc-$PKG_VER"
 
 [rust]
 channel = "stable"
@@ -72,10 +72,8 @@ pathprepend /opt/rustc/bin           PATH
 
 # End /etc/profile.d/rustc.sh
 EOF
-}
-
-postinstall () {
-cat >> /etc/ld.so.conf << EOF
+    mkdir -pv $PKG_DEST/etc/ld.so.conf.d
+cat >> $PKG_DEST/etc/ld.so.conf.d/rustc.conf << EOF
 # Begin rustc addition
 
 /opt/rustc/lib
@@ -83,5 +81,4 @@ cat >> /etc/ld.so.conf << EOF
 # End rustc addition
 EOF
 
-ldconfig
 }

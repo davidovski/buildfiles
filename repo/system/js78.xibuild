@@ -16,7 +16,7 @@ prepare () {
     patch -Np1 -i js-$PKG_VER-python_3_10-1.patch
 
     mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
-
+    export PATH=/opt/rustc/bin:$PATH
 }
 
 build () {
