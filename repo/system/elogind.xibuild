@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(make docbook-xml docbook-xsl libxslt)
-DEPS=(dbus pam polkit)
+DEPS=(pam polkit)
 
 PKG_VER=246.10
 SOURCE=https://github.com/elogind/elogind/archive/v$PKG_VER/elogind-$PKG_VER.tar.gz
