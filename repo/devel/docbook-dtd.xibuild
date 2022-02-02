@@ -14,23 +14,11 @@ prepare() {
 }
 
 package () {
-    install-catalog --add /etc/sgml/sgml-ent.cat \
-        $PKG_DEST/usr/share/sgml/sgml-iso-entities-8879.1986/catalog &&
-
-    install-catalog --add /etc/sgml/sgml-docbook.cat \
-        $PKG_DEST/etc/sgml/sgml-ent.cat
-
     install -v -d $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
     chown -R root:root . &&
 
     install -v docbook.cat $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
     cp -v -af *.dtd *.mod *.dcl $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
-
-    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
-    $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
-
-    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
-        $PKG_DEST/etc/sgml/sgml-docbook.cat
 
 
     cat >> $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog << "EOF"
