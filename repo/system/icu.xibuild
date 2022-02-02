@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(python)
+DEPS=(bash)
+
+PKG_VER=70.1
+SOURCE=https://github.com/unicode-org/icu/releases/download/release-$(echo $PKG_VER | sed 's/\./-/g')/icu4c-$(echo $PKG_VER | sed 's/\./_/g')-src.tgz
+DESC="International Components for Unicode library"
+
+build () {
+    cd source                                    &&
+
+    ./configure --prefix=/usr                    &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

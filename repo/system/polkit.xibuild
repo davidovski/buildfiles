@@ -1,0 +1,57 @@
+#!/bin/bash
+
+MAKEDEPS=(git gobject-introspection meson libxslt)
+DEPS=(expat glib js78 pam)
+
+PKG_VER=0.120
+SOURCE=https://www.freedesktop.org/software/polkit/releases/polkit-$PKG_VER.tar.gz
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/polkit-$PKG_VER-security_fix-1.patch
+    )
+
+DESC="Application development toolkit for controlling system-wide privileges"
+
+prepare () {
+    sed '/0,/s/^/#/' -i meson_post_install.py &&
+    sed '/policy,/d' -i actions/meson.build \
+                     -i src/examples/meson.build
+
+    patch -Np1 -i polkit-$PKG_VE-security_fix-1.patch
+
+}
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr                 \
+          -Dman=true                    \
+          -Dsession_tracking=libelogind \
+          -Dsystemdsystemunitdir=/tmp   \
+          --buildtype=release           \
+          ..                            &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install &&
+
+
+        cat > $PKG_DEST/etc/pam.d/polkit-1 << "EOF"
+# Begin /etc/pam.d/polkit-1
+
+auth     include        system-auth
+account  include        system-account
+password include        system-password
+session  include        system-session
+
+# End /etc/pam.d/polkit-1
+EOF
+
+}
+
+postinstall() {
+    groupadd -fg 27 polkitd &&
+    useradd -c "PolicyKit Daemon Owner" -d /etc/polkit-1 -u 27 \
+            -g polkitd -s /bin/false polkitd
+}

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make docbook-xml docbook-xsl docbook-dtd libxslt)
+MAKEDEPS=(make docbook4-xml docbook-xsl docbook-dtd libxslt)
 DEPS=(pam polkit)
 
 PKG_VER=246.10
@@ -15,11 +15,12 @@ build () {
     mkdir build &&
     cd    build &&
 
+    # TODO re-enable BUILD_MANS
     meson --prefix=/usr                        \
           --buildtype=release                  \
           -Dcgroup-controller=elogind          \
           -Ddbuspolicydir=/etc/dbus-1/system.d \
-          -Dman=auto                           \
+          -DBUILD_MANS=false                   \
           ..  &&
     ninja
 }
