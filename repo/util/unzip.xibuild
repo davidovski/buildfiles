@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(bzip2 bash)
+
+PKG_VER=6.0
+SOURCE=https://downloads.sourceforge.net/infozip/unzip$(echo $PKG_VER | sed "s/.//g").tar.gz
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/unzip-$PKG_VER.consolidated_fixes-1.patch
+    )
+
+DESC="Compressor/archiver for creating and modifying zipfiles"
+
+prepare () {
+    patch -Np1 -i unzip-$PKG_VER-consolidated_fixes-1.patch
+}
+
+build () {
+    make -f unix/Makefile generic_gcc
+}
+
+package () {
+    make -f unix/Makefile prefix=$PKG_DEST/usr install
+}
