@@ -12,7 +12,7 @@ ADDITIONAL=(
 DESC="Compressor/archiver for creating and modifying zipfiles"
 
 prepare () {
-    patch -Np1 -i unzip-$PKG_VER-consolidated_fixes-1.patch
+    #patch -Np1 -i unzip-$PKG_VER-consolidated_fixes-1.patch
 }
 
 build () {
