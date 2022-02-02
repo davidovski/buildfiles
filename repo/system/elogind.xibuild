@@ -8,9 +8,7 @@ SOURCE=https://github.com/elogind/elogind/archive/v$PKG_VER/elogind-$PKG_VER.tar
 DESC="The standalone logind daemon"
 
 prepare () {
-    sed -i '/Disable polkit/,+8 d' meson.build &&
-
-
+    sed -i '/Disable polkit/,+8 d' meson.build
 }
 
 build () {
