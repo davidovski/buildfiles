@@ -21,44 +21,44 @@ package () {
 
     xmlcatalog --noout --add "uri" \
       "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbook.rng" \
-      "file://usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
+      "file:/$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://docbook.org/xml/$PKG_VER/rng/docbook.rng" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rng" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://www.oasis-open.org/docbook/xml/$PKG_VER/rng/docbookxi.rng" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rng" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rng" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbook.rnc" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://docbook.org/xml/$PKG_VER/rng/docbook.rnc" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbook.rnc" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://www.oasis-open.org/docbook/xml/$PKG_VER/rnc/docbookxi.rnc" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://docbook.org/xml/$PKG_VER/rng/docbookxi.rnc" \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/docbookxi.rnc" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
 
     xmlcatalog --noout --add "uri" \
       "http://www.oasis-open.org/docbook/xml/$PKG_VER/sch/docbook.sch" \
-      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER &&
     xmlcatalog --noout --add "uri" \
       "http://docbook.org/xml/$PKG_VER/sch/docbook.sch" \
-      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/docbook.sch" \
       $PKG_DEST/etc/xml/docbook-$PKG_VER
 
 
@@ -103,27 +103,27 @@ package () {
     fi &&
     xmlcatalog --noout --add "delegatePublic" \
       "-//OASIS//DTD DocBook XML $PKG_VER//EN" \
-      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog &&
     xmlcatalog --noout --add "delegateSystem" \
       "http://docbook.org/xml/$PKG_VER/dtd/" \
-      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog &&
     xmlcatalog --noout --add "delegateURI" \
       "http://docbook.org/xml/$PKG_VER/dtd/" \
-      "file:///usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/dtd/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog &&
     xmlcatalog --noout --add "delegateURI" \
       "http://docbook.org/xml/$PKG_VER/rng/"  \
-      "file:///usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog &&
     xmlcatalog --noout --add "delegateURI" \
       "http://docbook.org/xml/$PKG_VER/sch/"  \
-      "file:///usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog &&
     xmlcatalog --noout --add "delegateURI" \
       "http://docbook.org/xml/$PKG_VER/xsd/"  \
-      "file:///usr/share/xml/docbook/schema/xsd/$PKG_VER/catalog.xml" \
+      "file://$PKG_DEST/usr/share/xml/docbook/schema/xsd/$PKG_VER/catalog.xml" \
       $PKG_DEST/etc/xml/catalog
 
 }
