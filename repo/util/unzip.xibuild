@@ -6,7 +6,7 @@ DEPS=(bzip2 bash)
 PKG_VER=6.0
 SOURCE=https://downloads.sourceforge.net/infozip/unzip$(echo $PKG_VER | sed "s/.//g").tar.gz
 ADDITIONAL=(
-    https://www.linuxfromscratch.org/patches/blfs/svn/unzip-$PKG_VER.consolidated_fixes-1.patch
+    https://www.linuxfromscratch.org/patches/blfs/svn/unzip-$PKG_VER-consolidated_fixes-1.patch
     )
 
 DESC="Compressor/archiver for creating and modifying zipfiles"
