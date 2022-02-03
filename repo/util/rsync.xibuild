@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(make )
-DEPS=(sh)
+DEPS=(acl lz4 openssl perl popt xxhash zlib zstd)
 
 PKG_VER=3.2.3
 SOURCE=https://www.samba.org/ftp/rsync/src/rsync-$PKG_VER.tar.gz

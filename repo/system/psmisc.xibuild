@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make)
 DEPS=(ncurses)
 
 PKG_VER=23.4
