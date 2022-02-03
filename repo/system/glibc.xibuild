@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make patch)
+MAKEDEPS=(make)
 DEPS=(glibc)
 
 PKG_VER=2.34
