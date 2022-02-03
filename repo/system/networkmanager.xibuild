@@ -59,8 +59,7 @@ cat > $PKG_DEST/etc/NetworkManager/conf.d/dhcp.conf << "EOF"
 dhcp=dhclient
 EOF
 
-# TODO add boot scripts
-
+    cd ..
     tar xf $BOOTSCRIPTS.tar.xz
     cd $BOOTSCRIPTS
     make DESTDIR=$PKG_DEST install-networkmanager

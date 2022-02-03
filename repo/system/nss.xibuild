@@ -1,0 +1,50 @@
+#!/bin/bash
+
+MAKEDEPS=(make gyp perl mercurial python)
+DEPS=(nspr libp11-kit bash zlib)
+
+PKG_VER=3.74
+
+SOURCE=https://archive.mozilla.org/pub/security/nss/releases/NSS_$(echo $PKG_VER | sed 's/\./_/g')_RTM/src/nss-$PKG_VER.tar.gz
+ADDITIONAL=(
+        https://www.linuxfromscratch.org/patches/blfs/svn/nss-$PKG_VER-standalone-1.patch
+    )
+
+DESC="Network Security Services"
+
+prepare () {
+    patch -Np1 -i nss-$PKG_VER-standalone-1.patch 
+}
+
+build () {
+    cd nss &&
+
+    make BUILD_OPT=1                  \
+      NSPR_INCLUDE_DIR=/usr/include/nspr  \
+      USE_SYSTEM_ZLIB=1                   \
+      ZLIB_LIBS=-lz                       \
+      NSS_ENABLE_WERROR=0                 \
+      $([ $(uname -m) = x86_64 ] && echo USE_64=1) \
+      $([ -f /usr/include/sqlite3.h ] && echo NSS_USE_SYSTEM_SQLITE=1)
+
+}
+
+package () {
+    cd ../dist                                                          
+        mkdir -pv $PKG_DEST/usr/{lib/pkgconfig,bin,include/nss,}
+
+        install -v -m755 Linux*/lib/*.so              $PKG_DEST/usr/lib              
+    install -v -m644 Linux*/lib/{*.chk,libcrmf.a} $PKG_DEST/usr/lib              
+
+    install -v -m755 -d                           $PKG_DEST/usr/include/nss      
+    cp -v -RL {public,private}/nss/*              $PKG_DEST/usr/include/nss      
+    chmod -v 644                                  $PKG_DEST/usr/include/nss/*    
+
+    install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} $PKG_DEST/usr/bin 
+
+    install -v -m644 Linux*/lib/pkgconfig/nss.pc  $PKG_DEST/usr/lib/pkgconfig
+
+    ln -sfv ./pkcs11/p11-kit-trust.so $PKG_DEST/usr/lib/libnssckbi.so
+
+
+}
