@@ -1,0 +1,30 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(perl)
+
+PKG_VER=2.13
+SOURCE=https://ftp.gnu.org/gnu/autoconf/autoconf-$PKG_VER.tar.gz
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/autoconf-$PKG_VER-consolidated_fixes-1.patch
+    )
+
+DESC="GNU programs for producing shell scripts that can automatically configure source code, legacy $PKG_VER version"
+
+prepare() {
+    patch -Np1 -i autoconf-2.13-consolidated_fixes-1.patch &&
+    mv -v autoconf.texi autoconf213.texi                      &&
+    rm -v autoconf.info                                      
+
+}
+
+build () {
+    ./configure --prefix=/usr --program-suffix=$PKG_VER           &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+    install -v -m644 autoconf213.info $PKG_DEST/usr/share/info &&
+    install-info --info-dir=$PKG_DEST/usr/share/info autoconf213.info
+}

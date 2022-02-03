@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(gcc autoconf icu rustc which zip)
+MAKEDEPS=(gcc autoconf2.13 icu rustc which zip llvm)
 DEPS=(readline bash zlib)
 
 PKG_VER=78.15.0
@@ -9,14 +9,14 @@ ADDITIONAL=(
         https://www.linuxfromscratch.org/patches/blfs/svn/js-$PKG_VER-python_3_10-1.patch
     )
 
-DESC="JavaScript interpreter and libraries - Version 78
-"
+DESC="JavaScript interpreter and libraries - Version 78"
 
 prepare () {
     patch -Np1 -i js-$PKG_VER-python_3_10-1.patch
 
     mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
     export PATH=/opt/rustc/bin:$PATH
+    export LD_LIBRARY_PATH=/opt/rustc/lib:$LD_LIBRARY_PATH
 }
 
 build () {
@@ -36,7 +36,7 @@ build () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install &&
-    rm -v $PKG_VER/usr/lib/libjs_static.ajs &&
-    sed -i '/@NSPR_CFLAGS@/d' $PKG_VER/usr/bin/js78-config
+    make DESTDIR=$PKG_DEST install 
+    [ -f $PKG_DEST/usr/lib/libjs_static.ajs ] && rm -v $PKG_DEST/usr/lib/libjs_static.ajs 
+    sed -i '/@NSPR_CFLAGS@/d' $PKG_DEST/usr/bin/js78-config
 }

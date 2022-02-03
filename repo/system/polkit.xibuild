@@ -16,7 +16,7 @@ prepare () {
     sed '/policy,/d' -i actions/meson.build \
                      -i src/examples/meson.build
 
-    patch -Np1 -i polkit-$PKG_VE-security_fix-1.patch
+    patch -Np1 -i polkit-$PKG_VER-security_fix-1.patch
 
 }
 
@@ -24,8 +24,9 @@ build () {
     mkdir build &&
     cd    build &&
 
+    # TODO fix man
     meson --prefix=/usr                 \
-          -Dman=true                    \
+          -Dman=false                    \
           -Dsession_tracking=libelogind \
           -Dsystemdsystemunitdir=/tmp   \
           --buildtype=release           \

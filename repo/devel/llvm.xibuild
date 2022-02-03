@@ -1,0 +1,35 @@
+#!/bin/bash
+
+MAKEDEPS=(make ninja cmake libedit libffi libxml2 ncurses python)
+DEPS=()
+
+PKG_VER=13.0.0
+SOURCE=https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-$PKG_VER.src.tar.xz
+DESC="Collection of modular and reusable compiler and toolchain technologies"
+
+package () {
+    grep -rl '#!.*python' | xargs sed -i '1s/python$/python3/'
+}
+
+build () {
+    mkdir -v build &&
+    cd       build &&
+
+    CC=gcc CXX=g++                                  \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr               \
+          -DLLVM_ENABLE_FFI=ON                      \
+          -DCMAKE_BUILD_TYPE=Release                \
+          -DLLVM_BUILD_LLVM_DYLIB=ON                \
+          -DLLVM_LINK_LLVM_DYLIB=ON                 \
+          -DLLVM_ENABLE_RTTI=ON                     \
+          -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF" \
+          -DLLVM_BUILD_TESTS=ON                     \
+          -DLLVM_BINUTILS_INCDIR=/usr/include       \
+          -Wno-dev -G Ninja ..                      &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+
+}
