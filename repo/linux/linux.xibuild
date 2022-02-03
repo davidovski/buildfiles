@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make )
+MAKEDEPS=(make bc)
 DEPS=()
 
 PKG_VER=5.15.14

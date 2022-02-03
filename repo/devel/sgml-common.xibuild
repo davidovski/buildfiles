@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(unzip)
+MAKEDEPS=(unzip patch)
 DEPS=(libxml2 sgml-common)
 
 PKG_VER=0.6.3

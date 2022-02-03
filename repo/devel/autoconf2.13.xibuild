@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make)
+MAKEDEPS=(make patch)
 DEPS=(perl)
 
 PKG_VER=2.13

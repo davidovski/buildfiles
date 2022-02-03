@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make gyp perl mercurial python)
+MAKEDEPS=(make gyp perl mercurial python patch)
 DEPS=(nspr libp11-kit bash zlib)
 
 PKG_VER=3.74

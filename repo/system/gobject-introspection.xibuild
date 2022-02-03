@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=()
+MAKEDEPS=(meson ninja patch)
 DEPS=(python-mako python-markdown)
 
 PKG_VER=1.70.0

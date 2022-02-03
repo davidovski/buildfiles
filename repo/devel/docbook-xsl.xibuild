@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=()
+MAKEDEPS=(patch)
 DEPS=(libxml2 libxslt docbook-xml)
 
 PKG_VER=1.79.2
