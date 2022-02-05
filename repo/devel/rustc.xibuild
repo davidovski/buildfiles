@@ -51,7 +51,7 @@ EOF
 }
 
 build () {
-    export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi -C link-arg=-liconv" &&
+    export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi" &&
     python3 ./x.py build --exclude src/tools/miri
 
 }
