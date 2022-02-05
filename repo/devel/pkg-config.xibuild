@@ -11,8 +11,7 @@ build () {
     ./configure --prefix=/usr              \
             --with-internal-glib       \
             --disable-host-tool        \
-            --with-libiconv         \
-            --docdir=/usr/share/doc/pkg-config-$PKG_VER --with-libiconv=gnu
+            --docdir=/usr/share/doc/pkg-config-$PKG_VER 
     make
 }
 
