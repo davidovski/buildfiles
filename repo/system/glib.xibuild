@@ -3,7 +3,7 @@
 MAKEDEPS=(meson ninja docbook-xsl docbook-dtd)
 DEPS=(pcre libffi zlib glibc libxslt gdb )
 
-PKG_VER=2.70.2
+PKG_VER=2.70.3
 SOURCE=https://download.gnome.org/sources/glib/$(echo $PKG_VER | cut -d. -f-2)/glib-$PKG_VER.tar.xz
 DESC="Low level core library"
 

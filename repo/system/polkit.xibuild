@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(git gobject-introspection meson libxslt patch)
+MAKEDEPS=(git gobject-introspection meson libxslt patch elogind)
 DEPS=(expat glib js78 pam)
 
 PKG_VER=0.120

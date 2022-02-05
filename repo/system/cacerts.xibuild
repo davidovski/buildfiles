@@ -10,5 +10,6 @@ DESC="Root certificates needed by ssl built using make-ca"
 package () {
     # TODO check why this doesnt package /etc/ssl/certs the first time in some occasions
     bash make-ca -g --force -D $PKG_DEST
+    bash make-ca -g --force -D $PKG_DEST
     chmod -R 777 $PKG_DEST || echo "couldnt change permissions for $PKG_DEST"
 }
