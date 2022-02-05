@@ -17,7 +17,7 @@ prepare () {
     unset LDFLAGS
     # patches as recommended by lfs
     sed -e '/NOTIFY_REMOVED)/s/)/ \&\& data.attr != NULL)/' -i sysdeps/unix/sysv/linux/mq_notify.c
-    patch -Np1 -i glibc-$PKG_VER-fhs-1.patch || exit 1
+    patch -Np1 -i glibc-$PKG_VER-fhs-1.patch || true
 }
 
 build () {
