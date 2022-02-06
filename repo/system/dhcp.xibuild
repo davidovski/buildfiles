@@ -1,0 +1,73 @@
+#!/bin/bash
+
+MAKEDEPS=(bash iproute2 openldap)
+DEPS=(glibc libldap)
+
+PKG_VER=4.4.2-P1
+SOURCE=https://ftp.isc.org/isc/dhcp/$PKG_VER/dhcp-$PKG_VER.tar.gz
+
+BOOTSCRIPTS=blfs-bootscripts-20210826
+ADDITIONAL=(
+        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
+    )
+
+DESC="A DHCP server, client and relay"
+
+package () {
+    sed -i '/o.*dhcp_type/d' server/mdb.c &&
+    sed -r '/u.*(local|remote)_port/d'    \
+        -i client/dhclient.c              \
+           relay/dhcrelay.c
+}
+
+
+build () {
+    ( export CFLAGS="${CFLAGS:--g -O2} -Wall -fno-strict-aliasing                 \
+        -D_PATH_DHCLIENT_SCRIPT='\"/usr/sbin/dhclient-script\"'     \
+        -D_PATH_DHCPD_CONF='\"/etc/dhcp/dhcpd.conf\"'               \
+        -D_PATH_DHCLIENT_CONF='\"/etc/dhcp/dhclient.conf\"'"        &&
+
+./configure --prefix=/usr                                           \
+            --sysconfdir=/etc/dhcp                                  \
+            --localstatedir=/var                                    \
+            --with-srv-lease-file=/var/lib/dhcpd/dhcpd.leases       \
+            --with-srv6-lease-file=/var/lib/dhcpd/dhcpd6.leases     \
+            --with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
+            --with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
+) &&
+make -j1
+
+}
+
+package () {
+    make -C client DESTDIR=$PKG_DEST install             &&
+    install -v -m755 client/scripts/linux $PKG_DEST/usr/sbin/dhclient-script
+
+    install -vdm755 /etc/dhcp &&
+        cat > $PKG_DEST/etc/dhcp/dhclient.conf << "EOF"
+# Begin /etc/dhcp/dhclient.conf
+#
+# Basic dhclient.conf(5)
+
+#prepend domain-name-servers 127.0.0.1;
+request subnet-mask, broadcast-address, time-offset, routers,
+        domain-name, domain-name-servers, domain-search, host-name,
+        netbios-name-servers, netbios-scope, interface-mtu,
+        ntp-servers;
+require subnet-mask, domain-name-servers;
+#timeout 60;
+#retry 60;
+#reboot 10;
+#select-timeout 5;
+#initial-interval 2;
+
+# End /etc/dhcp/dhclient.conf
+EOF
+    install -v -dm 755 $PKG_DEST/var/lib/dhclient
+    
+    tar xf $BOOTSCRIPTS.tar.xz
+    cd $BOOTSCRIPTS
+    make DESTDIR=$PKG_DEST install-service-dhclient
+
+}
+

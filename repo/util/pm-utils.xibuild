@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(xmlto docbook-xml docbook-xsl)
+DEPS=(glibc bash procps)
+
+PKG_VER=1.4.1
+SOURCE=https://pm-utils.freedesktop.org/releases/pm-utils-$PKG_VER.tar.gz
+DESC="Utilities to manage suspend and hiberante powermanagement"
+
+build () {
+    ./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --docdir=/usr/share/doc/pm-utils-$PKG_VER &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

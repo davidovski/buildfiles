@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(libusb wget)
+DEPS=(libusb glibc hwdata coreutils python)
+
+PKG_VER=014
+SOURCE=https://www.kernel.org/pub/linux/utils/usb/usbutils/usbutils-$PKG_VER.tar.xz
+DESC="A collection of USB tools to query connected USB devices"
+
+build () {
+    ./configure --prefix=/usr --datadir=/usr/share/hwdata &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+    install -dm755 $PKG_DEST/usr/share/hwdata/ &&
+    wget http://www.linux-usb.org/usb.ids -O $PKG_DEST/usr/share/hwdata/usb.ids
+
+}

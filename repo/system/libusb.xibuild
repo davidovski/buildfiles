@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(glibc eudev)
+
+PKG_VER=1.0.25
+SOURCE=https://github.com/libusb/libusb/releases/download/v$PKG_VER/libusb-$PKG_VER.tar.bz2
+DESC="Library that provides generic access to USB devices"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

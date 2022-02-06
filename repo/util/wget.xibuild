@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc gnutls libidn2 libpsl nettle util-linux pcre2 zlib cacerts)
+
+PKG_VER=1.21.2
+SOURCE=https://ftp.gnu.org/gnu/wget/wget-$PKG_VER.tar.gz
+DESC="A utility for transfering files with URL syntax"
+
+build () {
+    ./configure --prefix=/usr      \
+            --sysconfdir=/etc  \
+            --with-ssl=openssl &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc libldap openssl pam zlib)
+
+PKG_VER=1.9.9
+SOURCE=https://www.sudo.ws/dist/sudo-$PKG_VER.tar.gz
+DESC="Give certain users the ability to run some commands as root"
+
+build () {
+    ./configure --prefix=/usr              \
+            --libexecdir=/usr/lib      \
+            --with-secure-path         \
+            --with-all-insults         \
+            --with-env-editor          \
+            --docdir=/usr/share/doc/sudo-1.9.9 \
+            --with-passprompt="[sudo] password for %p: " &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install &&
+    ln -sfv libsudo_util.so.0.0.0 $PKG_DEST/usr/lib/sudo/libsudo_util.so.0
+
+    cat > $PKG_DEST/etc/sudoers.d/00-sudo << "EOF"
+Defaults secure_path="/usr/sbin:/usr/bin"
+%wheel ALL=(ALL) ALL
+EOF
+
+    cat > $PKG_DEST/etc/pam.d/sudo << "EOF"
+# Begin /etc/pam.d/sudo
+
+# include the default auth settings
+auth      include     system-auth
+
+# include the default account settings
+account   include     system-account
+
+# Set default environment variables for the service user
+session   required    pam_env.so
+
+# include system session defaults
+session   include     system-session
+
+# End /etc/pam.d/sudo
+EOF
+    chmod 644 $PKG_DEST/etc/pam.d/sudo
+}

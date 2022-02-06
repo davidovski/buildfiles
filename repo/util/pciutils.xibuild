@@ -1,0 +1,31 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc kmod)
+
+PKG_VER=3.7.0
+SOURCE=https://www.kernel.org/pub/software/utils/pciutils/pciutils-$PKG_VER.tar.xz
+DESC="PCI bus configuration space access library and tools"
+
+build () {
+    make PREFIX=/usr                \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes
+}
+
+package () {
+    make DESTDIR=$PKG_DEST
+     PREFIX=/usr                \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes                 \
+     install install-lib        &&
+     chmod -v 755 $PKG_DEST/usr/lib/libpci.so
+
+    cat > $PKG_DEST/etc/cron.weekly/update-pciids.sh << "EOF" &&
+#!/bin/bash
+/usr/sbin/update-pciids
+EOF
+    chmod 754 $PKG_DEST/etc/cron.weekly/update-pciids.sh
+
+
+}

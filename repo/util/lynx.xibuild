@@ -1,0 +1,32 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(libidn openssl)
+
+PKG_VER=2.8.9rel.1
+
+SOURCE=https://invisible-mirror.net/archives/lynx/tarballs/lynx$PKG_VER.tar.bz2
+ADDITIONAL=(
+        https://www.linuxfromscratch.org/patches/blfs/svn/lynx-$PKG_VER-security_fix-1.patch
+    )
+
+DESC="A text only browser for the WWW"
+
+build () {
+    ./configure --prefix=/usr          \
+            --sysconfdir=/etc/lynx \
+            --datadir=/usr/share/doc/lynx-$PKG_VER \
+            --with-zlib            \
+            --with-bzlib           \
+            --with-ssl             \
+            --with-screen=ncursesw \
+            --enable-locale-charset &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install-full
+    chgrp -v -R root $PKG_DEST/usr/share/doc/lynx-$PKG_VER/lynx_doc
+
+}
