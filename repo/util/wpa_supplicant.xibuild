@@ -7,6 +7,11 @@ PKG_VER=2.10
 
 SOURCE=https://w1.fi/releases/wpa_supplicant-$PKG_VER.tar.gz
 DESC="A utility providng key negotiation for WPA wireless networks"
+BOOTSCRIPTS=blfs-bootscripts-20210826
+ADDITIONAL=(
+        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
+    )
+
 
 prepare () {
     cat > wpa_supplicant/.config << "EOF"
@@ -58,8 +63,11 @@ package () {
     install -v -d -m755 $PKG_DEST/etc/dbus-1/system.d &&
     install -v -m644 dbus/dbus-wpa_supplicant.conf \
                      $PKG_DEST/etc/dbus-1/system.d/wpa_supplicant.conf
-
-
+    
+    cd ..
+    tar xf $BOOTSCRIPTS.tar.xz
+    cd $BOOTSCRIPTS
+    make DESTDIR=$PKG_DEST install-service-wpa
 }
 
 

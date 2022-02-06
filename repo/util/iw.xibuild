@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libnl)
+
+PKG_VER=5.16
+SOURCE=https://www.kernel.org/pub/software/network/iw/iw-$PKG_VER.tar.xz
+DESC="nl80211 based CLI configuration utility for wireless devices"
+
+prepare () {
+    sed -i "/INSTALL.*gz/s/.gz//" Makefile
+}
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+

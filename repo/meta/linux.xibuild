@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in linux"
-DEPS=( linux-headers linux)
+DEPS=( linux-firmware linux-headers linux)
