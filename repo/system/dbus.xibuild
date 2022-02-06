@@ -5,6 +5,10 @@ DEPS=(elogind)
 
 PKG_VER=1.12.20
 SOURCE=https://dbus.freedesktop.org/releases/dbus/dbus-$PKG_VER.tar.gz
+BOOTSCRIPTS=blfs-bootscripts-20210826
+ADDITIONAL=(
+        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
+    )
 
 DESC="A message bus system allowing applications to talk to one another"
 
@@ -31,7 +35,6 @@ package () {
     chown -v root:messagebus $PKG_DEST/usr/libexec/dbus-daemon-launch-helper &&
     chmod -v      4750       $PKG_DEST/usr/libexec/dbus-daemon-launch-helper
     
-
     cat > $PKG_DEST/etc/dbus-1/session-local.conf << "EOF"
 <!DOCTYPE busconfig PUBLIC
  "-//freedesktop//DTD D-BUS Bus Configuration 1.0//EN"
@@ -44,4 +47,7 @@ package () {
 </busconfig>
 EOF
 
+    tar xf $BOOTSCRIPTS.tar.xz
+    cd $BOOTSCRIPTS
+    make DESTDIR=$PKG_DEST install-dbus
 }

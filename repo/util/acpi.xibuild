@@ -13,5 +13,5 @@ build () {
 }
 
 package () {
-      make -C "acpi-$PKG_VER" DESTDIR"=$PKG_DEST" install
+      make DESTDIR=$PKG_DEST install
 }

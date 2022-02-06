@@ -15,7 +15,7 @@ DESC="Network connection manager and user applications"
 
 prepare () {
     grep -rl '^#!.*python$' | xargs sed -i '1s/python/&3/'
-
+    dbus-uuidgen --ensure
 }
 
 build () {
