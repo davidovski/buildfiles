@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(gcc autoconf2.13 icu rustc which zip llvm patch make)
+MAKEDEPS=(gcc autoconf2-13 icu rustc which zip llvm patch make)
 DEPS=(readline bash zlib)
 
 PKG_VER=78.15.0
