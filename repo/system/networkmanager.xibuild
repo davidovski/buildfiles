@@ -6,9 +6,9 @@ DEPS=(jansson libndp curl wpa_supplicant newt nss polkit libpsl audit dbus gobje
 PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
 
-BOOTSCRIPTS=network-manager-sysvinit-compat_21.02.01
+BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL=(
-        https://mxrepo.com/mx/repo/pool/main/n/network-manager-sysvinit-compat/$BOOTSCRIPTS.tar.xz
+        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
     )
 
 DESC="Network connection manager and user applications"
@@ -61,10 +61,6 @@ EOF
 
     cd ..
     tar xf $BOOTSCRIPTS.tar.xz
-    cd all
-
-    mkdir $PKG_DEST/etc/init.d
-    cp -v network-manager $PKG_DEST/etc/init.d/networkmanager
-
-
+    cd $BOOTSCRIPTS
+    make DESTDIR=$PKG_DEST install-networkmanager
 }
