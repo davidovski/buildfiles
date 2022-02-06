@@ -14,13 +14,14 @@ build () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST
+    make DESTDIR=$PKG_DEST      \
      PREFIX=/usr                \
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes                 \
      install install-lib        &&
      chmod -v 755 $PKG_DEST/usr/lib/libpci.so
 
+     mkdir -pv $PKG_DEST/etc/cron.weekly/
     cat > $PKG_DEST/etc/cron.weekly/update-pciids.sh << "EOF" &&
 #!/bin/bash
 /usr/sbin/update-pciids

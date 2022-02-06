@@ -28,6 +28,7 @@ Defaults secure_path="/usr/sbin:/usr/bin"
 %wheel ALL=(ALL) ALL
 EOF
 
+    mkdir -pv $PKG_DEST/etc/pam.d
     cat > $PKG_DEST/etc/pam.d/sudo << "EOF"
 # Begin /etc/pam.d/sudo
 
