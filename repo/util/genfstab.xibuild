@@ -10,5 +10,5 @@ BRANCH=v$PKG_VER
 DESC="A tool for generating /etc/fstab files from archlinux"
 
 package () {
-    make PREFIX=/usr BINPROGS=genfstab MANS=doc/genfstab.8 install
+    make PREFIX=/usr BINPROGS=genfstab MANS=doc/genfstab.8 DESTDIR=$PKG_DEST install
 }
