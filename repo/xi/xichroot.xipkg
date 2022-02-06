@@ -1,0 +1,11 @@
+#!/bin/bash
+
+MAKEDEPS=(bash)
+DEPS=(bash)
+
+SOURCE=https://git.davidovski.xyz/xilinux/xiscripts.git
+DESC="A script to aid with chrooting on XiLinux"
+
+package () {
+    install -m755 xichroot $PKG_DEST/usr/bin/xichroot
+}
