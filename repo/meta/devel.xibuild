@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in devel"
-DEPS=( asciidoc autoconf2.13 autoconf automake bc bison check cmake dejagnu distcc docbook4-xml docbook-dtd docbook-xml docbook-xsl expect flex gcc git help2man llvm m4 make meson mpc ninja patch pkg-config rustc sgml-common texinfo xmlto)
+DEPS=( asciidoc autoconf2-13 autoconf automake bc bison check cmake dejagnu distcc docbook4-xml docbook-dtd docbook-xml docbook-xsl expect flex gcc git help2man llvm m4 make meson mpc ninja patch pkg-config rustc sgml-common texinfo xmlto)
