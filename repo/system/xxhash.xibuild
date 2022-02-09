@@ -9,10 +9,10 @@ DESC="xxHash is an Extremely fast Hash algorithm"
 
 
 build () {
-    make
+    make PREFIX=/usr -C xxHash
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    make PREFIX=/usr DESTDIR=$PKG_DEST -C xxHash install
 }
 
