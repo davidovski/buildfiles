@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(glibc)
+
+PKG_VER=1.0
+SOURCE=https://github.com/cktan/tomlc99.git
+DESC="Library for parsing toml v1.0 compliant files, in c99"
+
+build () {
+    make
+}
+
+package () {
+    mkdir -pv $PKG_DEST/usr/{include,lib}
+    install toml.h $PKG_DEST/usr/include
+    install libtoml.so.$PKG_VER $PKG_DEST/usr/lib
+    ln -s libtoml.so.$PKG_VER $PKG_DEST/usr/lib/libtoml.so
+}
