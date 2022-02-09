@@ -1,0 +1,32 @@
+#!/bin/bash
+
+MAKEDEPS=(make expat guile pmfr ncurses python xz texinfo)
+DEPS=(python-six doxygen gcc guile python rustc valgrind systemtap)
+
+PKG_VER=11.2
+SOURCE=https://ftp.gnu.org/gnu/gdb/gdb-$PKG_VER.tar.xz
+DESC="The GNU debugger"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    ../configure --prefix=/usr          \
+                 --with-system-readline \
+                 --with-python=/usr/bin/python3 &&
+    make
+
+}
+
+check () {
+    pushd gdb/testsuite &&
+    make  site.exp      &&
+    echo  "set gdb_test_timeout 120" >> site.exp &&
+    runtest
+    popd
+
+}
+
+package () {
+    make -C gdb DESTDIR=$PKG_DEST install 
+}
