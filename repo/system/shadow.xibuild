@@ -178,7 +178,12 @@ EOF
 
     [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE} || true
     [ -f $PKG_DEST/etc/limits ] && mv -v $PKG_DEST/etc/limits{,.NOUSE} || true
+}
 
+postinstall () {
+    /usr/sbin/pwconv
+    /usr/sbin/grpconv
+    mkdir -p /etc/default
 
-
+    /usr/sbin/useradd -D --gid 999
 }
