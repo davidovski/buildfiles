@@ -1,0 +1,27 @@
+#!/bin/bash
+
+MAKEDEPS=(perl)
+DEPS=(which )
+
+DESC="Collection of userspace tools for hardware monitoring"
+
+PKG_VER=3-6-0
+SOURCE=https://github.com/lm-sensors/lm-sensors/archive/refs/tags/V$PKG_VER.tar.gz
+
+build () {
+    make PREFIX=/usr        \
+         BUILD_STATIC_LIB=0 \
+         MANDIR=/usr/share/man
+}
+
+
+package () {
+    make DESTDIR=$PKG_DEST \
+         PREFIX=/usr        \
+         BUILD_STATIC_LIB=0 \
+         MANDIR=/usr/share/man install &&
+
+    install -v -m755 -d /usr/share/doc/lm_sensors-$PKG_VER &&
+    cp -rv              README INSTALL doc/* \
+                        /usr/share/doc/lm_sensors-$PKG_VER
+}

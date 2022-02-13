@@ -1,0 +1,25 @@
+#!/bin/bash
+
+MAKEDEPS=(autoconf autotools make)
+DEPS=(libcap libnl ncurses lm-sensors hwloc)
+
+PKG_VER=3.1.2
+SOURCE=https://github.com/htop-dev/htop/releases/download/$PKG_VER/htop-$PKG_VER.tar.xz
+DESC="Interactive process viewer"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --enable-cgroup \
+        --enable-delayacct \
+        --enable-openvz \
+        --enable-unicode \
+        --enable-vserver \
+        --enable-sensors
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
