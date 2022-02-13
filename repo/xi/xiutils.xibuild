@@ -11,5 +11,6 @@ build () {
 }
 
 package () {
+    mkdir -pv $PKG_DEST/usr/{include,bin}
     make DESTDIR=$PKG_DEST install
 }

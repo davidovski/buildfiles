@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja)
+DEPS=(ncurses glib icecream)
+
+PKG_VER=1.0.0
+SOURCE=https://github.com/JPEWdev/icecream-sundae/archive/refs/tags/v$PKG_VER.tar.gz
+
+DESC="A build distribution service based on distcc"
+
+
+build () {
+    mkdir builddir
+    cd builddir
+
+    meson .. --buildtype release
+    ninja
+
+}
+
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
