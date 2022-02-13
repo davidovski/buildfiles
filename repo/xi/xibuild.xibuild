@@ -4,7 +4,7 @@ MAKEDEPS=()
 DEPS=(bash tar git hg curl openssl )
 
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
-DESC="The build system for xilinux used to build packages and maintain repositories"
+DESC="The depricated xilinux build system, use XiB"
 
 package () {
     mkdir -pv $PKG_DEST/usr/bin
