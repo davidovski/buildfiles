@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in xi"
-DEPS=( sysconfigs xibuild xipkg)
+DEPS=( sysconfigs xibuild xib xipkg xiutils)

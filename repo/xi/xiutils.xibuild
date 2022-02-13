@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(gcc)
-DEPS=()
+DEPS=(bash)
 
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 DESC="Utilities required by various components of the xilinux system"
@@ -11,6 +11,6 @@ build () {
 }
 
 package () {
-    mkdir -pv $PKG_DEST/usr/{include,bin}
+    mkdir -pv $PKG_DEST/usr/{include,bin,lib}
     make DESTDIR=$PKG_DEST install
 }

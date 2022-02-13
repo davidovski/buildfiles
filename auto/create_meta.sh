@@ -22,6 +22,13 @@ create() {
 
 ls repo | create 'AlL tHe pacKageS!!' > repo/meta/all.xibuild
 
+skip="skip meta linux"
+
 for repo in $(ls repo); do
-    [ "$repo " = "meta" ] || echo $repo | create "All the the packages available in $repo" > repo/meta/$repo.xibuild
+    if echo $skip | grep -q $repo; then
+        echo "Skipping $repo"
+    else
+        echo $repo | create "All the the packages available in $repo" > repo/meta/$repo.xibuild
+        echo "Generated $repo.xibuild"
+    fi
 done
