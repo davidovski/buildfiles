@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(gcc make)
+MAKEDEPS=(gcc)
 DEPS=()
 
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
