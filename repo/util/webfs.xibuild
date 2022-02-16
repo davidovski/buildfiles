@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(openssl mime-types )
+
+PKG_VER=1.21
+SOURCE=https://www.kraxel.org/releases/webfs/webfs-$PKG_VER.tar.gz
+DESC="A simple instant server for static http content"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
