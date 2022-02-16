@@ -1,0 +1,57 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(readline)
+
+PKG_VER=5.4.4
+SOURCE=https://www.lua.org/ftp/lua-$PKG_VER.tar.gz
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/lua-$PKG_VER-shared_library-1.patch
+    )
+DESC="A powerful lightweight scripting language"
+
+prepare () {
+    cat > lua.pc << "EOF"
+V=5.4
+R=5.4.4
+
+prefix=/usr
+INSTALL_BIN=${prefix}/bin
+INSTALL_INC=${prefix}/include
+INSTALL_LIB=${prefix}/lib
+INSTALL_MAN=${prefix}/share/man/man1
+INSTALL_LMOD=${prefix}/share/lua/${V}
+INSTALL_CMOD=${prefix}/lib/lua/${V}
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: Lua
+Description: An Extensible Extension Language
+Version: ${R}
+Requires:
+Libs: -L${libdir} -llua -lm -ldl
+Cflags: -I${includedir}
+EOF
+
+    patch lua-$PKG_VER-shared_library-1.patch
+}
+
+build () {
+    make linux
+}
+
+package () {
+    make install 
+    make INSTALL_TOP=/usr \
+     DESTDIR=$PKG_DEST               \
+     INSTALL_DATA="cp -d"            \
+     INSTALL_MAN=/usr/share/man/man1 \
+     TO_LIB="liblua.so liblua.so.${PKG_VER} liblua.so.5.4.4" \
+     install &&
+
+     mkdir -pv                      $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
+    cp -v doc/*.{html,css,gif,png} $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
+
+    install -v -m644 -D lua.pc $PKG_DEST/usr/lib/pkgconfig/lua.pc
+}

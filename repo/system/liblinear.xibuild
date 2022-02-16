@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc)
+
+PKG_VER=243
+SOURCE=https://github.com/cjlin1/liblinear/archive/v$PKG_VER/liblinear-$PKG_VER.tar.gz
+DESC="A library for large linear classification"
+
+build () {
+    make lib
+}
+
+package () {
+    install -vm644 linear.h $PKG_DEST/usr/include &&
+    install -vm755 liblinear.so.4 $PKG_DEST/usr/lib &&
+    ln -sfv liblinear.so.4 $PKG_DEST/usr/lib/liblinear.so
+}

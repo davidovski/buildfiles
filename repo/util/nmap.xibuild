@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(libpcap lua pcre liblinear)
+
+PKG_VER=7.92
+SOURCE=https://nmap.org/dist/nmap-$PKG_VER.tar.bz2
+DESC="Network exploration and security auditing utility"
+
+build() {
+    ./configure --prefix=/usr
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
