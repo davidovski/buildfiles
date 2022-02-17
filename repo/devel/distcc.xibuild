@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(python make )
-DEPS=(gcc python)
+DEPS=(gcc python popt)
 
 PKG_VER=3.4
 SOURCE=https://github.com/distcc/distcc/releases/download/v$PKG_VER/distcc-$PKG_VER.tar.gz
