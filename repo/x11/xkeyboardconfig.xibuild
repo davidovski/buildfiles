@@ -9,7 +9,7 @@ SOURCE=https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-$
 DESC="X keyboard configuration files"
 
 prepare () {
-    sed -i -E 's/(ln -s)/\1f/' rules/meson.build &&
+    sed -i -E 's/(ln -s)/\1f/' rules/meson.build
 }
 
 build () {

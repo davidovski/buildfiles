@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(make)
-DEPS=(util-macros xcb-util)
+DEPS=(util-macros xcb-util xcursorgen)
 
 PKG_VER=1.0.6
 SOURCE=https://www.x.org/pub/individual/data/xcursor-themes-$PKG_VER.tar.bz2

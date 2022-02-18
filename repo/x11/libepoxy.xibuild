@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja doxygen)
+DEPS=(mesa)
+
+PKG_VER=1.5.9
+SOURCE=https://github.com/anholt/libepoxy/releases/download/$PKG_VER/libepoxy-$PKG_VER.tar.xz
+
+DESC="Library handling OpenGL function pointer management"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr --buildtype=release .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

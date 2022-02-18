@@ -20,6 +20,7 @@ package () {
     DESTDIR=$PKG_DEST ninja install
 
     mkdir -pv $PKG_DEST/etc/X11/xorg.conf.d &&
+    mkdir -pv $PKG_DEST/etc/sysconfig &&
 cat >> $PKG_DEST/etc/sysconfig/createfiles << "EOF"
 /tmp/.ICE-unix dir 1777 root root
 /tmp/.X11-unix dir 1777 root root
