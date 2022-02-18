@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(make asciidoc xmlto)
+DEPS=(libpng mesa xbitmaps xcb-util pam)
+
+PKG_VER=1.1.1
+SOURCE=https://www.x.org/pub/individual/app/luit-$PKG_VER.tar.bz2
+
+prepare () {
+    sed -i -e "/D_XOPEN/s/5/6/" configure
+}
+
+build () {
+    ./configure $XORG_CONFIG
+  make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

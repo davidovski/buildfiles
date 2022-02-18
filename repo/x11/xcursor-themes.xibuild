@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(util-macros xcb-util)
+
+PKG_VER=1.0.6
+SOURCE=https://www.x.org/pub/individual/data/xcursor-themes-$PKG_VER.tar.bz2
+
+DESC="Cursor themes for X.Org"
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make asciidoc xmlto)
+DEPS=(libpng mesa xbitmaps xcb-util pam)
+
+PKG_VER=1.5.1
+SOURCE=https://www.x.org/pub/individual/app/xrandr-$PKG_VER.tar.xz
+
+build () {
+    ./configure $XORG_CONFIG
+  make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    rm -f $PKG_DEST$XORG_PREFIX/bin/xkeystone
+
+}

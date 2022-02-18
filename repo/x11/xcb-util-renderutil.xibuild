@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xcb-util)
+
+# TODO check why this is one version less than the rest
+PKG_VER=0.3.9
+SOURCE=https://xcb.freedesktop.org/dist/xcb-util-renderutil-$PKG_VER.tar.bz2
+
+DESC="Utility libraries for XC Binding, with functions for the render extension"
+
+build () {
+    ./configure $XORG_CONFIG &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

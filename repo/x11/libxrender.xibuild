@@ -1,0 +1,16 @@
+#!/bin/bash
+
+MAKEDEPS=(make asciidoc xmlto lynx)
+DEPS=(fontconfig libxcb elogind)
+
+PKG_VER=0.9.10
+SOURCE=https://www.x.org/pub/individual/lib/libXrender-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libXrender-$PKG_VER
+  make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

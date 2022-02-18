@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xorgproto)
+
+PKG_VER=1.0.9
+SOURCE=https://www.x.org/pub/individual/lib/libXau-$PKG_VER.tar.bz2
+DESC="X11 authorisation library"
+
+build () {
+    ./configure $XORG_CONFIG &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

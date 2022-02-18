@@ -1,0 +1,23 @@
+#!/bin/bash
+
+MAKEDEPS=(ninja meson asciidoc libxslt xmlto)
+DEPS=(xorg-util-macros)
+
+PKG_VER=2021.5
+SOURCE=https://xorg.freedesktop.org/archive/individual/proto/xorgproto-$PKG_VER.tar.bz2
+DESC="combined X.Org X11 Protocol headers"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=$XORG_PREFIX -Dlegacy=true .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install &&
+
+    install -vdm 755 $PKG_DEST$XORG_PREFIX/share/doc/xorgproto-$PKG_VER &&
+    install -vm 644 ../[^m]*.txt ../PM_spec $PKG_DEST$XORG_PREFIX/share/doc/xorgproto-$PKG_VER
+}

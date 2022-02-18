@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja)
+DEPS=(glibc)
+
+PKG_VER=0.1.1
+SOURCE=https://www.x.org/pub/individual/lib/libxcvt-$PKG_VER.tar.xz
+
+DESC="library providing a standalone version of the X server implementation of the VESA CVT standard timing modelines generator"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

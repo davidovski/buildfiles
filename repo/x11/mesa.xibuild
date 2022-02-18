@@ -1,0 +1,50 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja python-mako libva libvdpau llvm libxxf86vm libelf lm_sensors libexpat libvulkan)
+DEPS=(xorg-libs libdrm)
+
+PKG_VER=21.3.6
+SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-add_xdemos-1.patch
+    https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-nouveau_fixes-1.patch
+)
+
+DESC="An implementation of the OpenGL specification"
+
+prepare () {
+    patch -Np1 -i mesa-$PKG_VER-add_xdemos-1.patch
+
+    export GALLIUM_DRV="crocus,i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
+    export DRI_DRIVERS="i965,nouveau"
+
+    patch -Np1 -i mesa-$PKG_VER-nouveau_fixes-1.patch
+
+}
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=$XORG_PREFIX          \
+          --buildtype=release            \
+          -Ddri-drivers=$DRI_DRIVERS     \
+          -Dgallium-drivers=$GALLIUM_DRV \
+          -Dgallium-nine=false           \
+          -Dglx=dri                      \
+          -Dvalgrind=disabled            \
+          -Dlibunwind=disabled           \
+          ..                             &&
+
+    unset GALLIUM_DRV DRI_DRIVERS &&
+
+    ninja
+
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+    install -v -dm755 $PKG_DEST/usr/share/doc/mesa-$PKG_VER &&
+    cp -rfv ../docs/* $PKG_DEST/usr/share/doc/mesa-$PKG_VER
+
+}

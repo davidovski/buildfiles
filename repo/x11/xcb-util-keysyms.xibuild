@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xcb-util)
+
+PKG_VER=0.4.0
+SOURCE=https://xcb.freedesktop.org/dist/xcb-util-keysyms-$PKG_VER.tar.bz2
+
+DESC="Utility libraries for XC Binding, with standard x key constants"
+
+build () {
+    ./configure $XORG_CONFIG &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
