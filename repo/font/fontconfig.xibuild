@@ -1,0 +1,22 @@
+#!/bin/bash
+
+MAKEDEPS=(make libxml2 texlive)
+DEPS=(freetype json)
+
+PKG_VER=2.13.1
+SOURCE=https://www.freedesktop.org/software/fontconfig/release/fontconfig-$PKG_VER.tar.bz2
+
+DESC="Library for configuring and customizing font access"
+
+build () {
+    ./configure --prefix=/usr        \
+            --sysconfdir=/etc    \
+            --localstatedir=/var \
+            --disable-docs       \
+            --docdir=/usr/share/doc/fontconfig-$PKG_VER &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

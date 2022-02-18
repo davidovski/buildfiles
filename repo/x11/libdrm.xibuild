@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja docbook-xml docbook-xsl docutils libxslt)
+DEPS=(libpciaccess)
+
+PKG_VER=2.4.109
+SOURCE=https://dri.freedesktop.org/libdrm/libdrm-$PKG_VER.tar.xz
+
+DESC="Userspace interface to kernel DRM services"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=$XORG_PREFIX \
+          --buildtype=release   \
+          -Dudev=true           \
+          -Dvalgrind=false      &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

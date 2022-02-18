@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja xmlto docbook-xml-4.5 docbook-xsl libxslt)
+DEPS=(libxml2)
+
+PKG_VER=1.20.0
+SOURCE=https://wayland.freedesktop.org/releases/wayland-$PKG_VER.tar.xz
+
+DESC="A computer display server protocol"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr       \
+          --buildtype=release \
+          -Ddocumentation=false &&
+    ninja
+
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

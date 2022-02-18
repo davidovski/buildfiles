@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(meson ninja)
+DEPS=(wayland)
+
+PKG_VER=1.25
+SOURCE=https://wayland.freedesktop.org/releases/wayland-protocols-$PKG_VER.tar.xz
+
+DESC="Specifications of extended Wayland protocols"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr --buildtype=release &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
