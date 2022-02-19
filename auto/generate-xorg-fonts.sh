@@ -8,8 +8,8 @@ make_xibuild () {
     cat > $xibuild << "EOF"
 #!/bin/bash
 
-MAKEDEPS=(make asciidoc xmlto lynx)
-DEPS=(fontconfig libxcb elogind)
+MAKEDEPS=(make mkfontscale)
+DEPS=(fontconfig libxcb xcursor-themes)
 
 EOF
     echo "PKG_VER=$ver" >> $xibuild

@@ -6,11 +6,13 @@ DEPS=(xorg-server mesa libxvmc pixman xcb-util)
 DESC="X.org intel video driver"
 
 PKG_VER=2.99.917
-SOURCE=https://gitlab.freedesktop.org/xorg/driver/xf86-video-intel.git
-BRANCH=$PKG_VER
+# TODO switch to official source not blfs
+SOURCE=https://anduin.linuxfromscratch.org/BLFS/xf86-video-intel/xf86-video-intel-20210222.tar.xz
+#BRANCH=$PKG_VER
 
 build () {
-    ./autogen.sh $XORG_CONFIG     \
+    ./autogen.sh
+    ./configure $XORG_CONFIG     \
             --enable-kms-only \
             --enable-uxa      \
             --mandir=/usr/share/man &&
@@ -19,10 +21,12 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
+    mkdir -pv $PKG_DEST/usr/share/man/man1
     mv -v $PKG_DEST/usr/share/man/man4/intel-virtual-output.4 \
       $PKG_DEST/usr/share/man/man1/intel-virtual-output.1 &&
 
     sed -i '/\.TH/s/4/1/' $PKG_DEST/usr/share/man/man1/intel-virtual-output.1
+    mkdir -pv $PKG_DEST/etc/X11/xorg.conf.d
     cat >> $PKG_DEST/etc/X11/xorg.conf.d/20-intel.conf << "EOF"
 Section   "Device"
         Identifier "Intel Graphics"

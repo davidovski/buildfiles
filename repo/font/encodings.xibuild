@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MAKEDEPS=(make asciidoc xmlto lynx)
-DEPS=(fontconfig libxcb elogind)
+MAKEDEPS=(make mkfontscale)
+DEPS=(fontconfig libxcb xcursor-themes)
 
 PKG_VER=1.0.5
 SOURCE=https://www.x.org/pub/individual/font/encodings-$PKG_VER.tar.bz2

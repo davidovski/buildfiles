@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc)
+
+PKG_VER=1.1.6
+SOURCE=https://bitmath.org/code/mtdev/mtdev-$PKG_VER.tar.bz2
+
+DESC="A stand-alone library which transforms all variants of kernel MT events to the slotted type B protocol"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+

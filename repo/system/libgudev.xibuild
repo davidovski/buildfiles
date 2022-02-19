@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(meson)
+DEPS=(glib2 libudev)
+
+PKG_VER=237
+SOURCE=https://download.gnome.org/sources/libgudev/$PKG_VER/libgudev-$PKG_VER.tar.xz
+DESC="GObject bindings for libudev"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr --buildtype=release .. &&
+    ninja
+
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
