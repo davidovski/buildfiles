@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MAKEDEPS=(meson ninja doxygen xmlto fop)
-DEPS=(libxcvt pixman font-util xkeyboard-config elogind libepoxy libtirpc polkit acpid nettle libgcrypt xcb-util-keysyms xcb-util-image xcb-util-renderutil xcb-util-wm)
+DEPS=(libxcvt pixman font-util xkeyboardconfig elogind libepoxy libtirpc polkit acpid nettle libgcrypt xcb-util-keysyms xcb-util-image xcb-util-renderutil xcb-util-wm xkbcomp)
 
 PKG_VER=21.1.3
 SOURCE=https://www.x.org/pub/individual/xserver/xorg-server-$PKG_VER.tar.xz
