@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(meson cmake)
+DEPS=(glibc)
+
+PKG_VER=2.0
+SOURCE=http://dist.schmorp.de/libptytty/libptytty-$PKG_VER.tar.gz
+DESC="Library for OS independent and secure pty/tty handling"
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    cmake -DCMAKE_INSTALL_PREFIX=/usr     \
+          -DCMAKE_BUILD_TYPE=Release      \
+          -DPT_UTMP_FILE:STRING=/run/utmp \
+          .. &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}
