@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libx11 libxmu libxaw libxrender libxft libxkbfile)
+
+DESC="X clock from X.Org"
+
+PKG_VER=1.0.9
+SOURCE=https://www.x.org/pub/individual/app/xclock-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

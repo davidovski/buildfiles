@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libx11 xorg-xauth xorg-xrdb xorg-xmodmap)
+
+DESC="X.Org initialisation program"
+
+PKG_VER=1.4.1
+SOURCE=https://www.x.org/pub/individual/app/xinit-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG --with-xinitdir=/etc/X11/app-defaults &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

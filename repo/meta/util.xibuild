@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in util"
-DEPS=( acpi bash cpio curl diffutils dosfstools dracut e2fsprogs elfutils file gawk genfstab grep groff htop inetutils iproute2 iw keyutils less lm-sensors lynx make-ca man-db neofetch openssh pciutils pm-utils procps-ng rsync sudo unzip usbutils util-linux vim wget which wpa_supplicant)
+DEPS=( acpi bash cpio curl diffutils dosfstools dracut e2fsprogs elfutils file gawk genfstab grep groff htop inetutils iproute2 iw keyutils less lm-sensors lynx make-ca man-db neofetch nmap openssh pciutils pm-utils procps-ng rsync sudo unzip usbutils util-linux vim webfs wget which wpa_supplicant)

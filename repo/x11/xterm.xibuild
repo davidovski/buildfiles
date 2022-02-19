@@ -1,0 +1,41 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libxft libxaw ncurses luit xbitmaps libutempter libxkbfile)
+
+DESC="X Terminal Emulator"
+
+PKG_VER=370
+SOURCE=https://invisible-mirror.net/archives/xterm/xterm-$PKG_VER.tgz
+
+prepare () {
+    sed -i '/v0/{n;s/new:/new:kb=^?:/}' termcap &&
+    printf '\tkbs=\\177,\n' >> terminfo &&
+
+    export TERMINFO=/usr/share/terminfo 
+}
+
+build () {
+    ./configure $XORG_CONFIG 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    make DESTDIR=$PKG_DEST install-ti
+
+    mkdir -pv $PKG_DEST/usr/share/applications &&
+    cp -v *.desktop $PKG_DEST/usr/share/applications/
+
+
+    mkdir -pv $PKG_DEST/etc/X11/app-defaults
+    cat >> $PKG_DEST/etc/X11/app-defaults/XTerm << "EOF"
+*VT100*locale: true
+*VT100*faceName: Monospace
+*VT100*faceSize: 10
+*backarrowKeyIsErase: true
+*ptyInitialErase: true
+EOF
+
+
+}
