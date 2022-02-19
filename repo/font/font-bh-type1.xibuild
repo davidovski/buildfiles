@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(make asciidoc xmlto lynx)
+DEPS=(fontconfig libxcb elogind)
+
+PKG_VER=1.0.3
+SOURCE=https://www.x.org/pub/individual/font/font-bh-type1-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG
+  make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+
+install -v -d -m755 $PKG_DEST/usr/share/fonts                               &&
+ln -svfn $XORG_PREFIX/share/fonts/X11/OTF $PKG_DEST/usr/share/fonts/X11-OTF &&
+ln -svfn $XORG_PREFIX/share/fonts/X11/TTF $PKG_DEST/usr/share/fonts/X11-TTF
+}

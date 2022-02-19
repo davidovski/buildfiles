@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libxi libxinerama libxrandr)
+
+DESC="X.Org Wacom tablet driver"
+
+PKG_VER=0.40.0
+SOURCE=https://github.com/linuxwacom/xf86-input-wacom/releases/download/xf86-input-wacom-$PKG_VER/xf86-input-wacom-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG --with-systemd-unit-dir=no 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

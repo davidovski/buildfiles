@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xorg-server)
+
+DESC="X.org framebuffer video driver"
+
+PKG_VER=0.5.0
+SOURCE=https://www.x.org/pub/individual/driver/xf86-video-fbdev-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

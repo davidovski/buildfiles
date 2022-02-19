@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xorg-server mesa)
+
+DESC="X.org vmware video driver"
+
+PKG_VER=13.3.0
+SOURCE=https://www.x.org/pub/individual/driver/xf86-video-vmware-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

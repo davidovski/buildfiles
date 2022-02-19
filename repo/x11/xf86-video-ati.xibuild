@@ -1,0 +1,26 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xorg-server mesa)
+
+DESC="X.org ATI video driver"
+
+PKG_VER=19.1.0
+SOURCE=https://www.x.org/pub/individual/driver/xf86-video-ati-$PKG_VER.tar.bz2
+
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/xf86-video-ati-$PKG_VER-upstream_fixes-1.patch
+    )
+
+prepare () {
+    patch -Np1 -i xf86-video-ati-$PKG_VER-upstream_fixes-1.patch
+}
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

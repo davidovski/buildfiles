@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libdrm libgl libx11 libxext libxfixes wayland mesa)
+
+DESC="Video Acceleration API"
+
+PKG_VER=2.13.0
+SOURCE=https://github.com/intel/libva/releases/download/$PKG_VER/libva-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

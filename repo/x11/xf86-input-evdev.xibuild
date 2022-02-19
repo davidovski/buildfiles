@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libevdev mtdev xorg-server)
+
+DESC="X.Org Evdev Drivers for generic linux inputs"
+
+PKG_VER=2.10.6
+SOURCE=https://www.x.org/pub/individual/driver/xf86-input-evdev-$PKG_VER.tar.bz2
+
+build () {
+    ./configure $XORG_CONFIG
+  make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

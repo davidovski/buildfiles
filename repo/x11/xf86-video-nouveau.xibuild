@@ -1,0 +1,23 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xorg-server mesa)
+
+DESC="X.org nouveau video driver"
+
+PKG_VER=1.0.17
+SOURCE=https://www.x.org/pub/individual/driver/xf86-video-nouveau-$PKG_VER.tar.bz2
+
+prepare () {
+    grep -rl slave | xargs sed -i s/slave/secondary/
+
+}
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

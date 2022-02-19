@@ -1,0 +1,23 @@
+#!/bin/bash
+
+MAKEDEPS=(cmake)
+DEPS=(glibc libgl libvdpau libx11 libva)
+
+DESC="VPAU driver with OpenGL backend"
+
+PKG_VER=0.4.0
+SOURCE=https://github.com/i-rinat/libvdpau-va-gl/archive/v$PKG_VER/libvdpau-va-gl-$PKG_VER.tar.gz
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$XORG_PREFIX .. &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+
+}

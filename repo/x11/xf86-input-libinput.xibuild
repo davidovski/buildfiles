@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libinput)
+
+DESC="Generic input driver for the X.Org server based on libinput"
+
+PKG_VER=1.2.1
+SOURCE=https://www.x.org/pub/individual/driver/xf86-input-libinput-$PKG_VER.tar.xz
+
+build () {
+    ./configure $XORG_CONFIG
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
