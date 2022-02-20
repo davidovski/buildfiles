@@ -21,4 +21,5 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
+    mv $PKG_DEST/usr/lib64 $PKG_DEST/usr/lib
 }
