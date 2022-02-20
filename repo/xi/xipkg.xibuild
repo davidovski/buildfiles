@@ -1,10 +1,12 @@
 #!/bin/bash
 
 MAKEDEPS=(make)
-DEPS=(dash xiutils findutils diffutils sed xichroot)
+DEPS=(openssl curl dash xiutils findutils diffutils sed xichroot)
 
+PKG_VER=1.0.1
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
-BRANCH="rewrite"
+BRANCH="v$PKG_VER"
+
 DESC="The xilinux package manager"
 
 build () {
