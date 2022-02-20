@@ -1,0 +1,26 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=()
+
+PKG_VER=29
+SOURCE=https://hewlettpackard.github.io/wireless-tools/wireless_tools.$PKG_VER.tar.gz
+DESC="Tools allowing to manipulate the Wireless Extensions"
+
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/wireless_tools-$PKG_VER-fix_iwlist_scanning-1.patch
+    )
+
+prepare () {
+    patch -Np1 -i wireless_tools-$PKG_VER-fix_iwlist_scanning-1.patch
+}
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST PREFIX=/usr INSTALL_MAN=/usr/share/man install
+}
+
+
