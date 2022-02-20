@@ -1,13 +1,14 @@
 #!/bin/bash
 
-MAKEDEPS=(python make zip)
-DEPS=(tar python python-requests curl)
+MAKEDEPS=(make)
+DEPS=(dash xiutils findutils diffutils sed xichroot)
 
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
+BRANCH="rewrite"
 DESC="The xilinux package manager"
 
 build () {
-    make || true
+    make 
 }
 
 package () {
