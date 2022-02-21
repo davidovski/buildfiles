@@ -8,12 +8,14 @@ SOURCE=http://gondor.apana.org.au/~herbert/dash/files/dash-$PKG_VER.tar.gz
 DESC="POSIX compliant shell that aims to be as small as possible"
 
 build () {
-    ./configure --bindir=/bin --mandir=/usr/share/man &&
+    ./configure --bindir=/usr/bin --mandir=/usr/share/man &&
     make
 }
 
 package () {
     make DESTDIR=$PKG_DEST install
+
+
     ln -s dash $PKG_DEST/usr/bin/sh
 }
 
