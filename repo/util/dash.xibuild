@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(glibc)
+
+PKG_VER=0.5.11.5
+SOURCE=http://gondor.apana.org.au/~herbert/dash/files/dash-$PKG_VER.tar.gz
+DESC="POSIX compliant shell that aims to be as small as possible"
+
+build () {
+    ./configure --bindir=/bin --mandir=/usr/share/man &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    ln $PKG_DEST/usr/bin/dash $PKG_DEST/usr/bin/sh
+}
+
+postinstall () {
+    if [ -f /etc/shells ] || grep -vq "dash" /etc/shells; then
+        echo "/bin/bash" >> /etc/shells
+    fi
+}
