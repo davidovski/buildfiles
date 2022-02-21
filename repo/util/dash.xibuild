@@ -14,7 +14,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    ln $PKG_DEST/usr/bin/dash $PKG_DEST/usr/bin/sh
+    ln -s dash $PKG_DEST/usr/bin/sh
 }
 
 postinstall () {
