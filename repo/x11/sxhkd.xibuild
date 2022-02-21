@@ -1,0 +1,17 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(xcb-util-keysyms)
+
+PKG_VER=0.6.2
+SOURCE=https://github.com/baskerville/sxhkd/archive/refs/tags/$PKG_VER.tar.gz
+
+DESC="Simple X HotKey Daemon; reacts to input events by executing commands"
+
+build () {
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

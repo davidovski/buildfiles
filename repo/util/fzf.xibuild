@@ -1,0 +1,50 @@
+#!/bin/bash
+
+MAKEDEPS=(git go)
+DEPS=(bash)
+
+PKG_VER=0.29.0
+SOURCE=https://github.com/junegunn/fzf/archive/refs/tags/$PKG_VER.tar.gz
+DESC="Command-line fuzzy finder"
+
+prepare () {
+	sed -i 's/-w /-w -linkmode external /' Makefile
+}
+
+build () {
+    export CGO_LDFLAGS="${LDFLAGS}"
+	export CGO_CFLAGS="${CFLAGS}"
+	export CGO_CPPFLAGS="${CPPFLAGS}"
+	export CGO_CXXFLAGS="${CXXFLAGS}"
+	export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
+	make
+
+}
+
+package () {
+	## Man page
+	install -Dm644 man/man1/fzf.1 "$PKG_DEST"/usr/share/man/man1/fzf.1
+	install -Dm644 man/man1/fzf-tmux.1 "$PKG_DEST"/usr/share/man/man1/fzf-tmux.1
+
+	## License
+	install -Dm644 LICENSE "$PKG_DEST"/usr/share/licenses/fzf/LICENSE
+
+	## Binaries
+	install -dm755 "$PKG_DEST"/usr/bin
+	install -m755 bin/fzf-tmux "$PKG_DEST"/usr/bin/
+	install -Dm755 target/fzf-linux_amd64 "$PKG_DEST"/usr/bin/fzf
+
+	## Completion and keybindings
+	install -dm755 "$PKG_DEST"/usr/share/fzf
+	install -m644 shell/*.bash shell/*.zsh "$PKG_DEST"/usr/share/fzf
+
+	## Fish keybindings
+	install -Dm644 shell/key-bindings.fish "$PKG_DEST"/usr/share/fish/vendor_functions.d/fzf_key_bindings.fish
+
+	## Vim plugin
+	install -Dm644 doc/fzf.txt "$PKG_DEST"/usr/share/vim/vimfiles/doc/fzf.txt
+	install -Dm644 plugin/fzf.vim "$PKG_DEST"/usr/share/vim/vimfiles/plugin/fzf.vim
+
+}
+
+
