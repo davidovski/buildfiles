@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libtiff giflib bzip2 freetype2 libxext libpng libid3tag libjpeg-turbo libwebp libheif librsvg xz)
+
+PKG_VER=1.8.0
+SOURCE=https://downloads.sourceforge.net/enlightenment/imlib2-$PKG_VER.tar.xz
+DESC="Graphics library for fast file loading, saving, rendering and manipulation"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+    install -v -m755 -d                        /usr/share/doc/imlib2-$PKG_VER &&
+    install -v -m644    doc/{*.gif,index.html} /usr/share/doc/imlib2-$PKG_VER
+
+}

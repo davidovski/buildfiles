@@ -4,7 +4,8 @@ MAKEDEPS=(git go)
 DEPS=(bash)
 
 PKG_VER=0.29.0
-SOURCE=https://github.com/junegunn/fzf/archive/refs/tags/$PKG_VER.tar.gz
+SOURCE=https://github.com/junegunn/fzf.git
+BRANCH=$PKG_VER
 DESC="Command-line fuzzy finder"
 
 prepare () {

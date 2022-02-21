@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(curl file imlib2 libexif libxinerama libpng)
+
+DESC="Fast and light imlib2-based image viewer"
+
+PKG_VER=3.8
+SOURCE=https://feh.finalrewind.org/feh-$PKG_VER.tar.bz2
+
+prepare () {
+    sed -i "s:doc/feh:&-3.8:" config.mk 
+}
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make DESTDIR=$PKG_DEST PREFIX=/usr install
+}
