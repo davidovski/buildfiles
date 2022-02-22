@@ -1,0 +1,24 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(cairo xcb-util-image xcb-util-wm xcb-util-xrm xcb-util-cursor alsa-lib libpulse libmpdclient libnl  jsoncpp curl)
+
+PKG_VER=3.5.7
+SOURCE=https://github.com/polybar/polybar/releases/download/$PKG_VER/polybar-$PKG_VER.tar.gz
+
+DESC="A fast and easy status bar"
+
+build () {
+    mkdir build &&
+    cd build
+
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DPYTHON_EXECUTABLE=/usr/bin/python3 ..
+    cmake --build .
+
+    cd ..
+}
+
+package () {
+    cmake --build "build" --target install -- DESTDIR=$PKG_DEST
+
+}
