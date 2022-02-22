@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MAKEDEPS=(make xmlto)
+DEPS=(alsa-lib fftw libsamplerate)
+
+DESC="ISO AAC audio decoder"
+
+PKG_VER=2_10_0
+SOURCE=https://github.com/knik0/faad2/archive/$PKG_VER/faad2-$PKG_VER.tar.gz
+
+build () {
+    ./bootstrap                                &&
+    ./configure --prefix=/usr --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

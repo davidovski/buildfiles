@@ -1,0 +1,35 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(alsa-lib)
+
+DESC="Advanced tools for certain sound cards"
+
+PKG_VER=1.2.5
+SOURCE=https://www.alsa-project.org/files/pub/tools/alsa-tools-$PKG_VER.tar.bz2
+
+prepare () {
+    rm -rf qlo10k1 Makefile gitcompile
+}
+
+build () {
+    for tool in *; do
+      case $tool in
+        seq )
+          tool_dir=seq/sbiload
+        ;;
+        * )
+          tool_dir=$tool
+        ;;
+      esac
+
+  pushd $tool_dir
+    ./configure --prefix=/usr
+    make
+    make DESTDIR=$PKG_DEST install
+  popd
+
+done
+unset tool tool_dir
+
+}

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+MAKEDEPS=(make xmlto)
+DEPS=(glibc)
+
+DESC="Freeware Advanced Audio Coder"
+
+PKG_VER=1_30
+SOURCE=https://github.com/knik0/faac/archive/$PKG_VER/faac-$PKG_VER.tar.gz
+
+build () {
+    ./bootstrap                                &&
+    ./configure --prefix=/usr --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

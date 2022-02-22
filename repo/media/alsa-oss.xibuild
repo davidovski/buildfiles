@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(alsa-lib)
+
+DESC="OSS compatibility library"
+
+PKG_VER=1.1.8
+SOURCE=https://www.alsa-project.org/files/pub/oss-lib/alsa-oss-$PKG_VER.tar.bz2
+
+build () {
+    ./configure --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

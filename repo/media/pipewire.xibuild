@@ -1,0 +1,21 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(bluez ffmpeg gstreamer gst-plugins-base libva pulseaudio sbc sdl2 v4l-utils)
+
+DESC="Low-latency audio/video router and processor"
+
+PKG_VER=0.3.47
+SOURCE=https://github.com/PipeWire/pipewire/archive/$PLG_VER/pipewire-$PKG_VER.tar.gz
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr --buildtype=release -Dsession-managers= .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+MAKEDEPS=(make xmlto)
+DEPS=(alsa-tools)
+
+DESC="Firmware binaries for loader programs in alsa-tools and hotplug firmware loader"
+
+PKG_VER=1.2.4
+SOURCE=https://www.alsa-project.org/files/pub/firmware/alsa-firmware-$PKG_VER.tar.bz2
+
+build () {
+    ./configure --prefix=/usr &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

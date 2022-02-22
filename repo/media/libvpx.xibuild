@@ -1,0 +1,27 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(nasm which)
+
+DESC="VP8 and VP9 codec"
+
+PKG_VER=1.11.0
+SOURCE=https://github.com/webmproject/libvpx/archive/v$PKG_VER/libvpx-$PKG_VER.tar.gz
+
+prepare () {
+    sed -i 's/cp -p/cp/' build/make/Makefile &&
+}
+
+build () {
+    mkdir libvpx-build            &&
+    cd    libvpx-build            &&
+
+    ../configure --prefix=/usr    \
+                 --enable-shared  \
+                 --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

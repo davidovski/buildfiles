@@ -1,0 +1,29 @@
+#!/bin/bash
+
+MAKEDEPS=(make asciidoc)
+DEPS=(alsa-lib flac)
+
+DESC="Libraries to support basic sound file formats"
+
+PKG_VER=0.3.6
+SOURCE=https://download.gnome.org/sources/audiofile/${PKG_VER%.*}/audiofile-$PKG_VER.tar.xz
+
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/audiofile-$PKG_VER-consolidated_patches-1.patch
+    )
+
+prepare () {
+    patch -Np1 -i audiofile-$PKG_VER-consolidated_patches-1.patch &&
+}
+
+build () {
+    autoreconf -fiv                             &&
+
+    ./configure --prefix=/usr --disable-static  &&
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

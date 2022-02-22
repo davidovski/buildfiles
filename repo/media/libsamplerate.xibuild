@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(make xmlto)
+DEPS=(libogg nasm)
+
+DESC="An audio sample rate conversion library"
+
+PKG_VER=0.2.2
+SOURCE=https://github.com/libsndfile/libsamplerate/releases/download/$PKG_VER/libsamplerate-$PKG_VER.tar.xz
+
+build () {
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --docdir=/usr/share/doc/libsamplerate-$PKG_VER &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

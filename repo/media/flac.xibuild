@@ -1,0 +1,28 @@
+#!/bin/bash
+
+MAKEDEPS=(make xmlto)
+DEPS=(libogg nasm)
+
+DESC="Free Lossless Audio Codec"
+
+PKG_VER=1.3.3
+SOURCE=https://downloads.xiph.org/releases/flac/flac-$PKG_VER.tar.xz
+
+ADDITIONAL=(
+    https://www.linuxfromscratch.org/patches/blfs/svn/flac-$PKG_VER-security_fixes-1.patch
+    )
+
+prepare () {
+    patch -Np1 -i flac-$PKG_VER-security_fixes-1.patch
+}
+
+build () {
+    ./configure --prefix=/usr                                \
+            --disable-thorough-tests                     \
+            --docdir=/usr/share/doc/flac-$PKG_VER          &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

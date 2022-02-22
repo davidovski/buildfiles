@@ -1,0 +1,26 @@
+#!/bin/bash
+
+MAKEDEPS=(make)
+DEPS=(libsndfile alsa-lib dbus elogind glib libcap speex libxtst gdbm)
+
+DESC="A featureful, general-purpose sound server"
+
+PKG_VER=15.0
+SOURCE=https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-$PKG_VER.tar.xz
+
+build () {
+    mkdir build &&
+    cd    build &&
+
+    meson --prefix=/usr       \
+          --buildtype=release \
+          -Ddatabase=gdbm     \
+          -Ddoxygen=false     \
+          -Dbluez5=disabled   &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+    rm -fv $PKG_DEST/etc/dbus-1/system.d/pulseaudio-system.conf
+}

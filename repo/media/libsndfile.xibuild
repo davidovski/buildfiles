@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAKEDEPS=(make )
+DEPS=(alsa-lib flac opus libvorbis)
+
+DESC="A C library for reading and writing files containing sampled audio data"
+
+PKG_VER=1.0.31
+SOURCE=https://github.com/libsndfile/libsndfile/releases/download/$PKG_VER/libsndfile-$PKG_VER.tar.bz2
+
+build () {
+    ./configure --prefix=/usr    \
+            --disable-static \
+            --docdir=/usr/share/doc/libsndfile-$PKG_VER &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
