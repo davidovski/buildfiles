@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(libxi libxinerama libxrandr)
+MAKEDEPS="make"
+DEPS="libxi libxinerama libxrandr"
 
 DESC="X.Org Wacom tablet driver"
 

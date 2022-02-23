@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=()
+MAKEDEPS="make"
+DEPS=""
 
 DESC="Ogg bitstream and framing library"
 

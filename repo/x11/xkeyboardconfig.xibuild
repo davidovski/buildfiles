@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson ninja)
-DEPS=(xorg-libs)
+MAKEDEPS="meson ninja"
+DEPS="xorg-libs"
 
 PKG_VER=2.35.1
 SOURCE=https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-$PKG_VER.tar.xz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make doxygen libxslt)
-DEPS=(libxau xcb-proto libxdmcp )
+MAKEDEPS="make doxygen libxslt"
+DEPS="libxau xcb-proto libxdmcp "
 
 PKG_VER=1.14
 SOURCE=https://xorg.freedesktop.org/archive/individual/lib/libxcb-$PKG_VER.tar.xz

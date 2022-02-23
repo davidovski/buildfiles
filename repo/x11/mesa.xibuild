@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson ninja python-mako libva libvdpau llvm libxxf86vm libelf lm_sensors libexpat libvulkan wayland-protocols)
-DEPS=(xorg-libs libdrm)
+MAKEDEPS="meson ninja python-mako libva libvdpau llvm libxxf86vm libelf lm_sensors libexpat libvulkan wayland-protocols"
+DEPS="xorg-libs libdrm"
 
 PKG_VER=21.3.6
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz

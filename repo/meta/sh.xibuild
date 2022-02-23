@@ -1,6 +1,6 @@
-#!/bin/bash
-DEPS=(dash)
-MAKEDEPS=()
+#!/bin/sh
+DEPS="dash"
+MAKEDEPS=""
 
 DESC="The system shell"
 

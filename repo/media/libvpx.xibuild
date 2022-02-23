@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(nasm which)
+MAKEDEPS="make"
+DEPS="nasm which"
 
 DESC="VP8 and VP9 codec"
 

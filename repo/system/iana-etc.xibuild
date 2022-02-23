@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(python )
-DEPS=()
+MAKEDEPS="python "
+DEPS=""
 
 SOURCE=https://github.com/Mic92/iana-etc
 DESC="A set of data from the internet assigned numbers authority providing data for network services and protocols"

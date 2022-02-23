@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc)
+MAKEDEPS="make "
+DEPS="glibc"
 
 PKG_VER=2.3.0
 SOURCE=https://github.com/troglobit/sysklogd/releases/download/v$PKG_VER/sysklogd-$PKG_VER.tar.gz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(curl file imlib2 libexif libxinerama libpng)
+MAKEDEPS="make"
+DEPS="curl file imlib2 libexif libxinerama libpng"
 
 DESC="Fast and light imlib2-based image viewer"
 

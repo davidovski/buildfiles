@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make xmlto)
-DEPS=(libogg nasm)
+MAKEDEPS="make xmlto"
+DEPS="libogg nasm"
 
 DESC="An audio sample rate conversion library"
 

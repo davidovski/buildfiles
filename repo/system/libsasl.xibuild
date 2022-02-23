@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(gmp)
+MAKEDEPS="make "
+DEPS="gmp"
 
 PKG_VER=2.1.27
 SOURCE=https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-$PKG_VER/cyrus-sasl-$PKG_VER.tar.gz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc kmod)
+MAKEDEPS="make "
+DEPS="glibc kmod"
 
 PKG_VER=3.7.0
 SOURCE=https://www.kernel.org/pub/software/utils/pciutils/pciutils-$PKG_VER.tar.xz
@@ -23,7 +23,7 @@ package () {
 
      mkdir -pv $PKG_DEST/etc/cron.weekly/
     cat > $PKG_DEST/etc/cron.weekly/update-pciids.sh << "EOF" &&
-#!/bin/bash
+#!/bin/sh
 /usr/sbin/update-pciids
 EOF
     chmod 754 $PKG_DEST/etc/cron.weekly/update-pciids.sh

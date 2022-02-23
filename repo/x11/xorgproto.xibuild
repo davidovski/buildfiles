@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(ninja meson asciidoc libxslt xmlto)
-DEPS=(xorg-util-macros)
+MAKEDEPS="ninja meson asciidoc libxslt xmlto"
+DEPS="xorg-util-macros"
 
 PKG_VER=2021.5
 SOURCE=https://xorg.freedesktop.org/archive/individual/proto/xorgproto-$PKG_VER.tar.bz2

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson ninja doxygen)
-DEPS=(mesa)
+MAKEDEPS="meson ninja doxygen"
+DEPS="mesa"
 
 PKG_VER=1.5.9
 SOURCE=https://github.com/anholt/libepoxy/releases/download/$PKG_VER/libepoxy-$PKG_VER.tar.xz

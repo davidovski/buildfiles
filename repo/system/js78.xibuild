@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(gcc autoconf2-13 icu rustc which zip llvm patch make)
-DEPS=(readline bash zlib)
+MAKEDEPS="gcc autoconf2-13 icu rustc which zip llvm patch make"
+DEPS="readline bash zlib"
 
 PKG_VER=78.15.0
 SOURCE=https://archive.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz

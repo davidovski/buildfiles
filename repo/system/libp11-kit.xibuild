@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc libtasn1 libffi)
+MAKEDEPS="make "
+DEPS="glibc libtasn1 libffi"
 
 PKG_VER=0.24.1
 SOURCE=https://github.com/p11-glue/p11-kit/releases/download/$PKG_VER/p11-kit-$PKG_VER.tar.xz

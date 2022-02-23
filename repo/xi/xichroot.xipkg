@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(bash)
-DEPS=(bash)
+MAKEDEPS="bash"
+DEPS="bash"
 
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 DESC="A script to aid with chrooting on XiLinux"

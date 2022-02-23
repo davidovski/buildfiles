@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=()
+MAKEDEPS="make"
+DEPS=""
 
 PKG_VER=1.17.7
 SOURCE=https://go.dev/dl/go$PKG_VER.src.tar.gz

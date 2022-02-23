@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc gnutls zlib)
+MAKEDEPS="make "
+DEPS="glibc gnutls zlib"
 
 SOURCE=git://git.ffmpeg.org/rtmpdump
 BRANCH="fa8646d"

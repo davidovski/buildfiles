@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(elogind)
+MAKEDEPS="make "
+DEPS="elogind"
 
 PKG_VER=1.12.20
 SOURCE=https://dbus.freedesktop.org/releases/dbus/dbus-$PKG_VER.tar.gz

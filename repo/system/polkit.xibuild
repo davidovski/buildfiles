@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(git gobject-introspection meson libxslt patch elogind)
-DEPS=(expat glib js78 pam)
+MAKEDEPS="git gobject-introspection meson libxslt patch elogind"
+DEPS="expat glib js78 pam"
 
 PKG_VER=0.120
 SOURCE=https://www.freedesktop.org/software/polkit/releases/polkit-$PKG_VER.tar.gz

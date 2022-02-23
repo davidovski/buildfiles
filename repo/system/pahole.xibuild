@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(cmake python make )
-DEPS=(elfutils python)
+MAKEDEPS="cmake python make "
+DEPS="elfutils python"
 
 PKG_VER=1.23
 SOURCE=https://git.kernel.org/pub/scm/devel/pahole/pahole.git

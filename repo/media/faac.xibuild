@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make xmlto)
-DEPS=(glibc)
+MAKEDEPS="make xmlto"
+DEPS="glibc"
 
 DESC="Freeware Advanced Audio Coder"
 

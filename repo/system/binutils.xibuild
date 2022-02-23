@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make dejagnu bzip2 xz zlib zstd patch)
-DEPS=(glibc zlib elfutils)
+MAKEDEPS="make dejagnu bzip2 xz zlib zstd patch"
+DEPS="glibc zlib elfutils"
 
 PKG_VER=2.37
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz

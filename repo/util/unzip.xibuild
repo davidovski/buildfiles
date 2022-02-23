@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(bzip2 bash)
+MAKEDEPS="make"
+DEPS="bzip2 bash"
 
 PKG_VER=60
 SOURCE=https://downloads.sourceforge.net/infozip/unzip$PKG_VER.tar.gz

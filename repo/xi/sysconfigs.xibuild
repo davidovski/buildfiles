@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=()
-DEPS=(bootscripts sh)
+MAKEDEPS=""
+DEPS="bootscripts sh"
 
 PKG_VER=N/A
 DESC="Default system configs for xilinux"

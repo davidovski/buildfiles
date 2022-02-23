@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make cpio bc perl libelf kmod xmlto xz)
-DEPS=(pahole)
+MAKEDEPS="make cpio bc perl libelf kmod xmlto xz"
+DEPS="pahole"
 
 PKG_VER=5.15.14
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$PKG_VER.tar.xz

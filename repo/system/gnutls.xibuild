@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(libtasn1 readline zlib nettle libp11-kit libidn libunistring)
+MAKEDEPS="make "
+DEPS="libtasn1 readline zlib nettle libp11-kit libidn libunistring"
 
 PKG_VER=3.6.16
 SOURCE=https://www.gnupg.org/ftp/gcrypt/gnutls/v$(echo $PKG_VER | cut -d. -f-2)/gnutls-$PKG_VER.tar.xz

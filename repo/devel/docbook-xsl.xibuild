@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(patch)
-DEPS=(libxml2 libxslt docbook-xml)
+MAKEDEPS="patch"
+DEPS="libxml2 libxslt docbook-xml"
 
 PKG_VER=1.79.2
 SOURCE=https://github.com/docbook/xslt10-stylesheets/releases/download/release/$PKG_VER/docbook-xsl-nons-$PKG_VER.tar.bz2

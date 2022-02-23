@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(readline)
+MAKEDEPS="make "
+DEPS="readline"
 
 PKG_VER=5.2.1
 SOURCE=https://github.com/gavinhoward/bc/releases/download/$PKG_VER/bc-$PKG_VER.tar.xz

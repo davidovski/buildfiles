@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(sh)
+MAKEDEPS="make "
+DEPS="sh"
 
 PKG_VER=0.1
 DESC="Scripts to make initramfs"
@@ -9,7 +9,7 @@ DESC="Scripts to make initramfs"
 package () {
     mkdir -pv $PKG_DEST/usr/sbin/
     cat > $PKG_DEST/usr/sbin/mkinitramfs << "EOF"
-#!/bin/bash
+#!/bin/sh
 # This file based in part on the mkinitramfs script for the LFS LiveCD
 # written by Alexander E. Patrakov and Jeremy Huntwork.
 

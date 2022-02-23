@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make pkg-config)
-DEPS=(glibc)
+MAKEDEPS="make pkg-config"
+DEPS="glibc"
 
 PKG_VER=6.3
 SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VER.tar.gz

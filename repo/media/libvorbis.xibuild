@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(libogg)
+MAKEDEPS="make"
+DEPS="libogg"
 
 DESC="Reference implementation of the Ogg Vorbis audio format"
 

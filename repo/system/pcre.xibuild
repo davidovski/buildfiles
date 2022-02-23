@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc)
+MAKEDEPS="make "
+DEPS="glibc"
 
 PKG_VER=10.39
 SOURCE=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-$PKG_VER/pcre2-$PKG_VER.tar.gz

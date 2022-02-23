@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(krb5)
+MAKEDEPS="make "
+DEPS="krb5"
 
 PKG_VER=1.3.2
 SOURCE=https://downloads.sourceforge.net/libtirpc/libtirpc-$PKG_VER.tar.bz2

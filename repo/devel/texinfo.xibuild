@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(ncurses gzip perl sh)
+MAKEDEPS="make "
+DEPS="ncurses gzip perl sh"
 
 PKG_VER=6.8
 SOURCE=https://ftp.gnu.org/gnu/texinfo/texinfo-$PKG_VER.tar.xz

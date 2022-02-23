@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(sh eudev)
+MAKEDEPS="make "
+DEPS="sh eudev"
 
 PKG_VER=20210608
 SOURCE=https://www.linuxfromscratch.org/lfs/downloads/development/lfs-bootscripts-$PKG_VER.tar.xz

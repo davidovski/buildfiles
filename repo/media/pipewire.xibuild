@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(bluez ffmpeg gstreamer gst-plugins-base libva pulseaudio sbc sdl2 v4l-utils)
+MAKEDEPS="make"
+DEPS="bluez ffmpeg gstreamer gst-plugins-base libva pulseaudio sbc sdl2 v4l-utils"
 
 DESC="Low-latency audio/video router and processor"
 

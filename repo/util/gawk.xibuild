@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(sh glibc mpfr)
+MAKEDEPS="make "
+DEPS="sh glibc mpfr"
 
 PKG_VER=5.1.0
 SOURCE=https://ftp.gnu.org/gnu/gawk/gawk-$PKG_VER.tar.xz

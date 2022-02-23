@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make doxygen)
-DEPS=(glibc)
+MAKEDEPS="make doxygen"
+DEPS="glibc"
 
 DESC="Wrapper library for evdev devices"
 

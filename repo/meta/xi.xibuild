@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in xi"
-DEPS=( sysconfigs xibuild xib xipkg xiutils)
+DEPS=" sysconfigs xibuild xib xipkg xiutils"

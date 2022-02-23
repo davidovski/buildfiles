@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make xmlto)
-DEPS=(alsa-lib fftw libsamplerate)
+MAKEDEPS="make xmlto"
+DEPS="alsa-lib fftw libsamplerate"
 
 DESC="ISO AAC audio decoder"
 

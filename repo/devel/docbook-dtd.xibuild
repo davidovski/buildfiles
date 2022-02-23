@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(unzip)
-DEPS=(libxml2 sgml-common)
+MAKEDEPS="unzip"
+DEPS="libxml2 sgml-common"
 
 PKG_VER=4.5
 SOURCE=https://www.docbook.org/sgml/$PKG_VER/docbook-$PKG_VER.zip

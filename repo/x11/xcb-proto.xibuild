@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make libxml2)
-DEPS=()
+MAKEDEPS="make libxml2"
+DEPS=""
 
 PKG_VER=1.14.1
 SOURCE=https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-$PKG_VER.tar.xz

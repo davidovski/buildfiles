@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=()
+MAKEDEPS="make"
+DEPS=""
 
 PKG_VER=29
 SOURCE=https://hewlettpackard.github.io/wireless-tools/wireless_tools.$PKG_VER.tar.gz

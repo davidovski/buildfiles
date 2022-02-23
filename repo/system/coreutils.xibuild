@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc acl attr gmp libcap openssl libiconv)
+MAKEDEPS="make "
+DEPS="glibc acl attr gmp libcap openssl libiconv"
 
 PKG_VER=9.0
 SOURCE=https://ftp.gnu.org/gnu/coreutils/coreutils-$PKG_VER.tar.xz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson ninja)
-DEPS=(glibc)
+MAKEDEPS="meson ninja"
+DEPS="glibc"
 
 PKG_VER=0.40.0
 SOURCE=https://www.cairographics.org/releases/pixman-$PKG_VER.tar.gz

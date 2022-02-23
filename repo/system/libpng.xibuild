@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=()
+MAKEDEPS="make "
+DEPS=""
 
 PKG_VER=1.6.37
 SOURCE=https://downloads.sourceforge.net/libpng/libpng-$PKG_VER.tar.xz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make xmlto libxslt)
-DEPS=(xorgproto)
+MAKEDEPS="make xmlto libxslt"
+DEPS="xorgproto"
 
 PKG_VER=1.1.3
 SOURCE=https://www.x.org/pub/individual/lib/libXdmcp-$PKG_VER.tar.bz2

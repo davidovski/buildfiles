@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make flex)
-DEPS=(glibc)
+MAKEDEPS="make flex"
+DEPS="glibc"
 
 PKG_VER=1.8
 SOURCE=http://libndp.org/files/libndp-$PKG_VER.tar.gz

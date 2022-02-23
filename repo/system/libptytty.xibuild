@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson cmake)
-DEPS=(glibc)
+MAKEDEPS="meson cmake"
+DEPS="glibc"
 
 PKG_VER=2.0
 SOURCE=http://dist.schmorp.de/libptytty/libptytty-$PKG_VER.tar.gz

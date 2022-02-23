@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/bin/sh
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in font"
-DEPS=( encodings font-adobe-utopia-type1 font-alias font-bh-ttf font-bh-type1 fontconfig font-ibm-type1 font-misc-ethiopic font-util font-xfree86-type1)
+DEPS=" encodings font-adobe-utopia-type1 font-alias font-bh-ttf font-bh-type1 fontconfig font-ibm-type1 font-misc-ethiopic font-util font-xfree86-type1"

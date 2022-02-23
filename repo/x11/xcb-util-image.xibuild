@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(xcb-util)
+MAKEDEPS="make"
+DEPS="xcb-util"
 
 PKG_VER=0.4.0
 SOURCE=https://xcb.freedesktop.org/dist/xcb-util-image-$PKG_VER.tar.bz2

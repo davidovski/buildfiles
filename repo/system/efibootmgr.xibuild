@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(efivar popt)
+MAKEDEPS="make "
+DEPS="efivar popt"
 
 PKG_VER=17
 SOURCE=https://github.com/rhboot/efibootmgr/archive/$PKG_VER/efibootmgr-$PKG_VER.tar.gz

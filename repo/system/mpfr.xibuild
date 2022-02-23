@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc gmp)
+MAKEDEPS="make "
+DEPS="glibc gmp"
 
 PKG_VER=4.1.0
 SOURCE=https://www.mpfr.org/mpfr-current/mpfr-$PKG_VER.tar.xz

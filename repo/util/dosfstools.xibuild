@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=()
+MAKEDEPS="make "
+DEPS=""
 
 PKG_VER=4.2
 SOURCE=https://github.com/dosfstools/dosfstools/releases/download/v$PKG_VER/dosfstools-$PKG_VER.tar.gz

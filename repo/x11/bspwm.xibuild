@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(xcb-util xcb-util-wm xcb-util-keysyms)
+MAKEDEPS="make"
+DEPS="xcb-util xcb-util-wm xcb-util-keysyms"
 
 PKG_VER=0.9.10
 SOURCE=https://github.com/baskerville/bspwm/archive/refs/tags/$PKG_VER.tar.gz

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(cairo xcb-util-image xcb-util-wm xcb-util-xrm xcb-util-cursor alsa-lib libpulse libmpdclient libnl  jsoncpp curl)
+MAKEDEPS="make"
+DEPS="cairo xcb-util-image xcb-util-wm xcb-util-xrm xcb-util-cursor alsa-lib libpulse libmpdclient libnl  jsoncpp curl"
 
 PKG_VER=3.5.7
 SOURCE=https://github.com/polybar/polybar/releases/download/$PKG_VER/polybar-$PKG_VER.tar.gz

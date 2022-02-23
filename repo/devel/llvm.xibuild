@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make ninja cmake libedit libffi libxml2 ncurses python)
-DEPS=(perl zlib libffi libedit ncurses)
+MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python"
+DEPS="perl zlib libffi libedit ncurses"
 
 PKG_VER=13.0.0
 SOURCE=https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-$PKG_VER.src.tar.xz

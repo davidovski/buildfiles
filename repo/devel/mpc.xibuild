@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(mpfr)
+MAKEDEPS="make "
+DEPS="mpfr"
 
 PKG_VER=1.2.1
 SOURCE=http://www.multiprecision.org/downloads/mpc-$PKG_VER.tar.gz

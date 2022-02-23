@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make ncurses)
-DEPS=(libxft perl startup-notification libnsl libptytty)
+MAKEDEPS="make ncurses"
+DEPS="libxft perl startup-notification libnsl libptytty"
 
 DESC="Unicode fork of rxvt terminal emulator"
 

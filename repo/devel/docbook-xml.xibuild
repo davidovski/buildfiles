@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=()
-DEPS=(libxml2)
+MAKEDEPS=""
+DEPS="libxml2"
 
 PKG_VER=5.1
 SOURCE=https://docbook.org/xml/$PKG_VER/docbook-v$PKG_VER-os.zip

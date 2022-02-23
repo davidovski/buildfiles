@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
-DEPS=(glibc)
+MAKEDEPS="make "
+DEPS="glibc"
 
 PKG_VER=3.4.2
 SOURCE=https://github.com/libffi/libffi/releases/download/v$PKG_VER/libffi-$PKG_VER.tar.gz

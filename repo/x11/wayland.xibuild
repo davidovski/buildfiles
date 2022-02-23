@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(meson ninja xmlto docbook-xml-4.5 docbook-xsl libxslt)
-DEPS=(libxml2)
+MAKEDEPS="meson ninja xmlto docbook-xml-4.5 docbook-xsl libxslt"
+DEPS="libxml2"
 
 PKG_VER=1.20.0
 SOURCE=https://wayland.freedesktop.org/releases/wayland-$PKG_VER.tar.xz

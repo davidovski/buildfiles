@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make tcl python)
-DEPS=(gmp libxcrypt popt slang python tcl)
+MAKEDEPS="make tcl python"
+DEPS="gmp libxcrypt popt slang python tcl"
 
 PKG_VER=0.52.21
 SOURCE=https://releases.pagure.org/newt/newt-0.52.21.tar.gz

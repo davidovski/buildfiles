@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make )
+MAKEDEPS="make "
 # TODO requires util-linux-libs
-DEPS=(sh )
+DEPS="sh "
 
 PKG_VER=1.46.4
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$PKG_VER/e2fsprogs-$PKG_VER.tar.xz

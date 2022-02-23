@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(libx11 libxt libxext libxmu libxrender libxi)
+MAKEDEPS="make"
+DEPS="libx11 libxt libxext libxmu libxrender libxi"
 
 DESC="Eyes that follow the mouse, X demo"
 

@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
-MAKEDEPS=(make)
-DEPS=(glibc bash)
+MAKEDEPS="make"
+DEPS="glibc bash"
 
 PKG_VER=3.8
 SOURCE=https://ftp.gnu.org/gnu/diffutils/diffutils-$PKG_VER.tar.xz
