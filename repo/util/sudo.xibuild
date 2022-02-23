@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc libldap openssl pam zlib"
+DEPS="glibc libldap libressl pam zlib"
 
 PKG_VER=1.9.9
 SOURCE=https://www.sudo.ws/dist/sudo-$PKG_VER.tar.gz

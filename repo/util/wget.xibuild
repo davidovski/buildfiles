@@ -10,7 +10,7 @@ DESC="A utility for transfering files with URL syntax"
 build () {
     ./configure --prefix=/usr      \
             --sysconfdir=/etc  \
-            --with-ssl=openssl &&
+            --with-ssl=libressl &&
     make
 }
 

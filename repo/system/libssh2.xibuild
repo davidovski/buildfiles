@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="openssl openssh libgcrypt zlib"
+DEPS="libressl openssh libgcrypt zlib"
 
 PKG_VER=1.10.0
 SOURCE=https://www.libssh2.org/download/libssh2-$PKG_VER.tar.gz

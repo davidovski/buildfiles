@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS=""
-DEPS="bash tar git hg curl openssl "
+DEPS="bash tar git hg curl libressl "
 
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
 DESC="The depricated xilinux build system, use XiB"

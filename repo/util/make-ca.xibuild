@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="libp11-kit nss openssl"
+DEPS="libp11-kit nss libressl"
 
 PKG_VER=1.7
 SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="libidn openssl"
+DEPS="libidn libressl"
 
 PKG_VER=2.8.9rel.1
 

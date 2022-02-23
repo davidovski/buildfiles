@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make autoconf libtool libpth libiconv"
-DEPS="acl bzip2 expat lz4 openssl xz zlib zstd"
+DEPS="acl bzip2 expat lz4 libressl xz zlib zstd"
 
 PKG_VER=3.5.2
 SOURCE=https://github.com/libarchive/libarchive/releases/download/v$PKG_VER/libarchive-$PKG_VER.tar.xz

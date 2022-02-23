@@ -4,17 +4,17 @@ MAKEDEPS="make "
 DEPS="glibc"
 
 PKG_VER=3.0.1
-SOURCE=https://github.com/openssl/openssl/archive/refs/tags/openssl-$PKG_VER.tar.gz
+SOURCE=https://github.com/libressl/libressl/archive/refs/tags/libressl-$PKG_VER.tar.gz
 DESC="The open source management tools and libraries for cryptography"
 
 build () {
-    ./config --prefix=/usr --openssldir=/etc/ssl --libdir=lib shared zlib-dynamic
+    ./config --prefix=/usr --libressldir=/etc/ssl --libdir=lib shared zlib-dynamic
     make
 }
 
 package () {
     sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/usr/share/doc/openssl
-    cp -vfr doc/* $PKG_DEST/usr/share/doc/openssl
+    mkdir -pv $PKG_DEST/usr/share/doc/libressl
+    cp -vfr doc/* $PKG_DEST/usr/share/doc/libressl
 }

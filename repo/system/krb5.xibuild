@@ -24,7 +24,7 @@ prepare () {
 }
 
 build () {
-    # would be ideal to use openssl rather than builtin library
+    # would be ideal to use libressl rather than builtin library
     autoreconf
     ./configure --prefix=/usr            \
                 --sysconfdir=/etc        \
