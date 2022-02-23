@@ -5,9 +5,9 @@ DEPS="readline bash zlib"
 
 PKG_VER=78.15.0
 SOURCE=https://archive.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz
-ADDITIONAL=(
+ADDITIONAL="
         https://www.linuxfromscratch.org/patches/blfs/svn/js-$PKG_VER-python_3_10-1.patch
-    )
+    "
 
 DESC="JavaScript interpreter and libraries - Version 78"
 

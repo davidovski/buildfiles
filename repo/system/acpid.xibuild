@@ -8,9 +8,9 @@ SOURCE=https://downloads.sourceforge.net/acpid2/acpid-$PKG_VER.tar.xz
 DESC="Daemon for battery, power, and thermal readings"
 
 BOOTSCRIPTS=blfs-bootscripts-20210826
-ADDITIONAL=(
+ADDITIONAL="
         https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    )
+    "
 
 build () {
     ./configure --prefix=/usr \

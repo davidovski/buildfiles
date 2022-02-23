@@ -5,9 +5,9 @@ DEPS="libxml2 libxslt docbook-xml"
 
 PKG_VER=1.79.2
 SOURCE=https://github.com/docbook/xslt10-stylesheets/releases/download/release/$PKG_VER/docbook-xsl-nons-$PKG_VER.tar.bz2
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/docbook-xsl-nons-$PKG_VER-stack_fix-1.patch
-)
+"
 
 DESC="XML stylesheets for Docbook-xml transformations"
 

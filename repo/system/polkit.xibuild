@@ -5,9 +5,9 @@ DEPS="expat glib js78 pam"
 
 PKG_VER=0.120
 SOURCE=https://www.freedesktop.org/software/polkit/releases/polkit-$PKG_VER.tar.gz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/polkit-$PKG_VER-security_fix-1.patch
-    )
+    "
 
 DESC="Application development toolkit for controlling system-wide privileges"
 

@@ -7,9 +7,9 @@ PKG_VER=29
 SOURCE=https://hewlettpackard.github.io/wireless-tools/wireless_tools.$PKG_VER.tar.gz
 DESC="Tools allowing to manipulate the Wireless Extensions"
 
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/wireless_tools-$PKG_VER-fix_iwlist_scanning-1.patch
-    )
+    "
 
 prepare () {
     sed -i "s/ldconfig/echo/g" Makefile

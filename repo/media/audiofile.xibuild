@@ -8,9 +8,9 @@ DESC="Libraries to support basic sound file formats"
 PKG_VER=0.3.6
 SOURCE=https://download.gnome.org/sources/audiofile/${PKG_VER%.*}/audiofile-$PKG_VER.tar.xz
 
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/audiofile-$PKG_VER-consolidated_patches-1.patch
-    )
+    "
 
 prepare () {
     patch -Np1 -i audiofile-$PKG_VER-consolidated_patches-1.patch 

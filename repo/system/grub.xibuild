@@ -5,9 +5,9 @@ DEPS="sh xz gettext device-mapper efibootmgr freetype2"
 
 PKG_VER=2.06
 SOURCE=https://ftp.gnu.org/gnu/grub/grub-$PKG_VER.tar.xz
-ADDITIONAL=(
+ADDITIONAL="
     https://unifoundry.com/pub/unifont/unifont-13.0.06/font-builds/unifont-13.0.06.pcf.gz
-    )
+    "
 
 
 DESC="GNU GRand Unified Bootloader v2"

@@ -5,9 +5,9 @@ DEPS="glibc"
 
 PKG_VER=37
 SOURCE=https://github.com/rhboot/efivar/releases/download/$PKG_VER/efivar-$PKG_VER.tar.bz2
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/efivar-$PKG_VER-gcc_9-1.patch
-    )
+    "
 
 DESC="Tools and libraries to manupulate EFI variables"
 

@@ -7,9 +7,9 @@ PKG_VER=4.4.3b1
 SOURCE=https://ftp.isc.org/isc/dhcp/$PKG_VER/dhcp-$PKG_VER.tar.gz
 
 BOOTSCRIPTS=blfs-bootscripts-20210826
-ADDITIONAL=(
+ADDITIONAL="
         https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    )
+    "
 
 DESC="A DHCP server, client and relay"
 

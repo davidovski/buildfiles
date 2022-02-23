@@ -5,9 +5,9 @@ DEPS="libxml2 sgml-common"
 
 PKG_VER=0.6.3
 SOURCE=https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/sgml-common-$PKG_VER.tgz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/sgml-common-$PKG_VER-manpage-1.patch
-    )
+    "
 
 DESC="Tools for maintaining centralized SGML catalogs."
 

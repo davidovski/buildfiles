@@ -5,9 +5,9 @@ DEPS="readline"
 
 PKG_VER=5.4.4
 SOURCE=https://www.lua.org/ftp/lua-$PKG_VER.tar.gz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/lua-$PKG_VER-shared_library-1.patch
-    )
+    "
 DESC="A powerful lightweight scripting language"
 
 prepare () {

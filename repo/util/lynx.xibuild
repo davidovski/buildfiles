@@ -6,9 +6,9 @@ DEPS="libidn openssl"
 PKG_VER=2.8.9rel.1
 
 SOURCE=https://invisible-mirror.net/archives/lynx/tarballs/lynx$PKG_VER.tar.bz2
-ADDITIONAL=(
+ADDITIONAL="
         https://www.linuxfromscratch.org/patches/blfs/svn/lynx-$PKG_VER-security_fix-1.patch
-    )
+    "
 
 DESC="A text only browser for the WWW"
 

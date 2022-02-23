@@ -6,9 +6,9 @@ DEPS="elogind"
 PKG_VER=1.12.20
 SOURCE=https://dbus.freedesktop.org/releases/dbus/dbus-$PKG_VER.tar.gz
 BOOTSCRIPTS=blfs-bootscripts-20210826
-ADDITIONAL=(
+ADDITIONAL="
         https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    )
+    "
 
 DESC="A message bus system allowing applications to talk to one another"
 

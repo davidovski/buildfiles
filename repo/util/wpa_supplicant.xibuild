@@ -8,9 +8,9 @@ PKG_VER=2.10
 SOURCE=https://w1.fi/releases/wpa_supplicant-$PKG_VER.tar.gz
 DESC="A utility providng key negotiation for WPA wireless networks"
 BOOTSCRIPTS=blfs-bootscripts-20210826
-ADDITIONAL=(
+ADDITIONAL="
         https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    )
+    "
 
 
 prepare () {

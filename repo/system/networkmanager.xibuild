@@ -7,9 +7,9 @@ PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
 
 BOOTSCRIPTS=blfs-bootscripts-20210826
-ADDITIONAL=(
+ADDITIONAL="
         https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    )
+    "
 
 DESC="Network connection manager and user applications"
 

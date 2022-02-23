@@ -5,9 +5,9 @@ DEPS="perl"
 
 PKG_VER=2.13
 SOURCE=https://ftp.gnu.org/gnu/autoconf/autoconf-$PKG_VER.tar.gz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/autoconf-$PKG_VER-consolidated_fixes-1.patch
-    )
+    "
 
 DESC="GNU programs for producing shell scripts that can automatically configure source code, legacy $PKG_VER version"
 

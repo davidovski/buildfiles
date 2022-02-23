@@ -6,9 +6,9 @@ DEPS="nspr libp11-kit bash zlib"
 PKG_VER=3.74
 
 SOURCE=https://archive.mozilla.org/pub/security/nss/releases/NSS_$(echo $PKG_VER | sed 's/\./_/g')_RTM/src/nss-$PKG_VER.tar.gz
-ADDITIONAL=(
+ADDITIONAL="
         https://www.linuxfromscratch.org/patches/blfs/svn/nss-$PKG_VER-standalone-1.patch
-    )
+    "
 
 DESC="Network Security Services"
 

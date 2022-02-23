@@ -5,9 +5,9 @@ DEPS="glibc zlib elfutils"
 
 PKG_VER=2.37
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/lfs/development/binutils-$PKG_VER-upstream_fix-1.patch
-    )
+    "
 
 DESC="tools for handling object files"
 

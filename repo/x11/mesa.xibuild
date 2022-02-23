@@ -5,10 +5,10 @@ DEPS="xorg-libs libdrm"
 
 PKG_VER=21.3.6
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-add_xdemos-1.patch
     https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-nouveau_fixes-1.patch
-)
+"
 
 DESC="An implementation of the OpenGL specification"
 

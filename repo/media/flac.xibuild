@@ -8,9 +8,9 @@ DESC="Free Lossless Audio Codec"
 PKG_VER=1.3.3
 SOURCE=https://downloads.xiph.org/releases/flac/flac-$PKG_VER.tar.xz
 
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/flac-$PKG_VER-security_fixes-1.patch
-    )
+    "
 
 prepare () {
     patch -Np1 -i flac-$PKG_VER-security_fixes-1.patch

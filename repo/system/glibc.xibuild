@@ -6,10 +6,10 @@ DEPS="glibc"
 PKG_VER=2.34
 SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-$PKG_VER.tar.xz
 
-ADDITIONAL=(
+ADDITIONAL="
     https://www.linuxfromscratch.org/patches/lfs/development/glibc-$PKG_VER-fhs-1.patch 
     https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/glibc/trunk/locale-gen 
-    )
+"   
 
 DESC="The main gnu C library providing basic routines and procedures"
 
