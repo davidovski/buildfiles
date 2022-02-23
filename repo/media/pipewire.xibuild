@@ -6,7 +6,7 @@ DEPS=(bluez ffmpeg gstreamer gst-plugins-base libva pulseaudio sbc sdl2 v4l-util
 DESC="Low-latency audio/video router and processor"
 
 PKG_VER=0.3.47
-SOURCE=https://github.com/PipeWire/pipewire/archive/$PLG_VER/pipewire-$PKG_VER.tar.gz
+SOURCE=https://github.com/PipeWire/pipewire/archive/$PKG_VER/pipewire-$PKG_VER.tar.gz
 
 build () {
     mkdir build &&

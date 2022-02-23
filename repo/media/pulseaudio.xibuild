@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS=(make)
+MAKEDEPS=(make check)
 DEPS=(libsndfile alsa-lib dbus elogind glib libcap speex libxtst gdbm)
 
 DESC="A featureful, general-purpose sound server"

@@ -9,7 +9,7 @@ PKG_VER=1.11.0
 SOURCE=https://github.com/webmproject/libvpx/archive/v$PKG_VER/libvpx-$PKG_VER.tar.gz
 
 prepare () {
-    sed -i 's/cp -p/cp/' build/make/Makefile &&
+    sed -i 's/cp -p/cp/' build/make/Makefile 
 }
 
 build () {
