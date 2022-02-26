@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc pam"
+DEPS="musl pam"
 
 PKG_VER=2.4.0
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-$PKG_VER.tar.xz

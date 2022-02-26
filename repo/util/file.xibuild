@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc zlib xz bzip2"
+DEPS="musl zlib xz bzip2"
 
 PKG_VER=5.40
 SOURCE=http://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz

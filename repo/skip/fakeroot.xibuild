@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc filesystem sed sh util-linux"
+DEPS="musl filesystem sed sh util-linux"
 
 SOURCE=https://github.com/mackyle/fakeroot
 DESC="Tool for simulating a superuser environment"

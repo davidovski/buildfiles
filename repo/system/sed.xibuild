@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc acl attr"
+DEPS="musl acl attr"
 
 PKG_VER=4.8
 SOURCE=https://ftp.gnu.org/gnu/sed/sed-$PKG_VER.tar.xz

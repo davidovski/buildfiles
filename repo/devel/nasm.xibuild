@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="glibc"
+DEPS="musl"
 
 PKG_VER=2.15.05
 SOURCE=https://www.nasm.us/pub/nasm/releasebuilds/$PKG_VER/nasm-$PKG_VER.tar.xz

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="gpm acl glibc libgcrypt pcre zlib"
+DEPS="gpm acl musl libgcrypt pcre zlib"
 
 PKG_VER=8.2.4257
 SOURCE=https://github.com/vim/vim/archive/refs/tags/v$PKG_VER.tar.gz

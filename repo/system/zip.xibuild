@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc bzip2"
+DEPS="musl bzip2"
 
 PKG_VER=30
 SOURCE=https://downloads.sourceforge.net/infozip/zip$PKG_VER.tar.gz

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc"
+DEPS="musl"
 
 PKG_VER=1.5.5
 SOURCE=http://download.savannah.nongnu.org/releases/libpipeline/libpipeline-$PKG_VER.tar.gz

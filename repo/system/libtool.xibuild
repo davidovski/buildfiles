@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="sh tar glibc"
+DEPS="sh tar musl"
 
 PKG_VER=2.4.6
 SOURCE=https://ftpmirror.gnu.org/libtool/libtool-$PKG_VER.tar.gz

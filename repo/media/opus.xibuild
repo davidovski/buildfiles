@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="glibc"
+DEPS="musl"
 
 DESC="Totally open, royalty-free, highly versatile audio codec"
 

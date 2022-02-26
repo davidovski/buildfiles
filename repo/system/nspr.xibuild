@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc bash"
+DEPS="musl bash"
 
 PKG_VER=4.33
 

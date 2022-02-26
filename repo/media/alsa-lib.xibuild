@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="glibc python alsa-topology-conf alsa-ucm-conf"
+DEPS="musl python alsa-topology-conf alsa-ucm-conf"
 
 DESC="An alternative implementation of Linux sound support"
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make patch"
-DEPS="sh glibc"
+DEPS="sh musl"
 
 PKG_VER=3.01
 SOURCE=http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-$PKG_VER.tar.xz

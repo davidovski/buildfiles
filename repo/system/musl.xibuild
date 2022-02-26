@@ -1,0 +1,47 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS=""
+
+PKG_VER=1.2.2
+SOURCE=https://musl.libc.org/releases/musl-$PKG_VER.tar.gz
+
+ADDITIONAL="
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-mlfs/fix-utmp-wtmp-paths.patch
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-mlfs/change-scheduler-functions-Linux-compatib.patch
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/0001-riscv64-define-ELF_NFPREG.patch
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/handle-aux-at_base.patch
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/syscall-cp-epoll.patch
+"   
+
+DESC="Implementation of the C standard library built on top of the Linux system call API"
+
+prepare () {
+    for p in *.patch;  do
+        patch -Np1 -i $p || true
+    done
+}
+
+build () {
+    LDFLAGS="$LDFLAGS -Wl,-soname,libc.musl-${CARCH}.so.1" \
+./configure --prefix=/usr \
+            --sysconfdir=/etc \
+            --localstatedir=/var \
+            --disable-gcc-wrapper
+    make 
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    ln -sv /lib/ld-musl-$ARCH.so.1 $PKG_DEST/bin/ldd
+    ln -sv libc.so $PKG_DEST/usr/lib/libc.musl-x86_64.so.1 
+
+    cat > $PKG_DEST/etc/ld-musl-x86_64.path << "EOF"
+/lib
+/usr/local/lib
+/usr/lib
+EOF
+
+    rm -v $PKG_DEST/usr/include/utmpx.h 
+}
+

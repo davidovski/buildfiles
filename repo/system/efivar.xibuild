@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make patch"
-DEPS="glibc"
+DEPS="musl"
 
 PKG_VER=37
 SOURCE=https://github.com/rhboot/efivar/releases/download/$PKG_VER/efivar-$PKG_VER.tar.bz2

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="bash iproute2 openldap"
-DEPS="glibc libldap"
+DEPS="musl libldap"
 
 PKG_VER=4.4.3b1
 SOURCE=https://ftp.isc.org/isc/dhcp/$PKG_VER/dhcp-$PKG_VER.tar.gz

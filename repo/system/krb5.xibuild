@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="glibc e2fsprogs libldap keyutils"
+DEPS="musl e2fsprogs libldap keyutils"
 
 PKG_VER=1.19.2
 SOURCE=https://github.com/krb5/krb5
