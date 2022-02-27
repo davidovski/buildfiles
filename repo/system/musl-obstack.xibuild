@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS="musl"
+
+PKG_VER=1.1
+SOURCE=https://github.com/pullmoll/musl-obstack/archive/v$PKG_VER.tar.gz
+
+DESC="Obstack functions found in GNU libiberty"
+
+prepare () {
+    sed -i "/pkgconfig_DATA/i pkgconfigdir=/usr/lib/pkgconfig" Makefile.am
+    ./bootstrap.sh
+}
+
+build () {
+    CFLAGS=" -fPIC" \
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

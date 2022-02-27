@@ -12,7 +12,6 @@ build () {
     ./configure --prefix=/usr --mandir=/usr/share/man --with-shared --without-debug --without-normal --enable-pc-files --enable-widec
 
     make
-
 }
 
 
@@ -20,16 +19,16 @@ package () {
     make DESTDIR=$PKG_DEST install
 
     for lib in ncurses form panel menu ; do
-        rm -vf                    $PKG_DEST/usr/lib/lib${lib}.so
+        rm -f                     $PKG_DEST/usr/lib/lib${lib}.so
         echo "INPUT(-l${lib}w)" > $PKG_DEST/usr/lib/lib${lib}.so
-        ln -sfv ${lib}w.pc        $PKG_DEST/usr/lib/pkgconfig/${lib}.pc
+        ln -sf ${lib}w.pc         $PKG_DEST/usr/lib/pkgconfig/${lib}.pc
     done
 
-    rm -vf                     $PKG_DEST/usr/lib/libcursesw.so
+    rm -f                      $PKG_DEST/usr/lib/libcursesw.so
     echo "INPUT(-lncursesw)" > $PKG_DEST/usr/lib/libcursesw.so
-    ln -sfv libncurses.so      $PKG_DEST/usr/lib/libcurses.so
+    ln -sf libncurses.so       $PKG_DEST/usr/lib/libcurses.so
 
     # install docs
-    mkdir -pv       $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
-    cp -v -R doc/* $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
+    mkdir -p       $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
+    cp -R doc/*    $PKG_DEST/usr/share/doc/ncurses-$PKG_VER
 }

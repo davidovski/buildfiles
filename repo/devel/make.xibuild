@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS=""
+MAKEDEPS="musl"
 DEPS=""
 
 PKG_VER=4.3

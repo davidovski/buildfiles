@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS=""
+
+PKG_VER=
+SOURCE=https://github.com/ericonr/argp-standalone/archive/$PKG_VER.tar.gz
+
+DESC="Standalone implementation for the argp interface"
+
+build () {
+    CFLAGS=" -fPIC" ./configure \
+        --prefix=/usr           \
+        --disable-static        \
+        --sysconfdir=/etc       \
+        --localstatedir=/var    &&
+    make
+}
+
+package () {
+    cp -v libargp.a $PKG_DEST/usr/lib/
+    cp -v argp.h    $PKG_DEST/usr/include/
+}
+

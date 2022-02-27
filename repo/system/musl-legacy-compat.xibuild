@@ -1,0 +1,21 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS="musl"
+
+HEADER_SOURCE="https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/musl-legacy-compat/files"
+ADDITIONAL="
+    $HEADER_SOURCE/cdefs.h
+    $HEADER_SOURCE/queue.h
+    $HEADER_SOURCE/tree.h
+"
+
+DESC="Legacy compatibility headers for musl"
+
+package () {
+    for h in cdefs queue tree
+    do
+        install -v -D -m644 $h.h $PKG_DEST/usr/include/sys
+    done
+}
+

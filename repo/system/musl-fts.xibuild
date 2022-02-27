@@ -1,0 +1,27 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS="musl"
+
+PKG_VER=1.2.7
+SOURCE=https://github.com/pullmoll/musl-fts/archive/v$PKG_DEST.tar.gz
+
+DESC="Libraries implementing the set of fts functions missing in musl libc"
+
+prepare () {
+    sed -i "/pkgconfig_DATA/i pkgconfigdir=/usr/lib/pkgconfig" Makefile.am
+    ./bootstrap.sh
+}
+
+build () {
+    CFLAGS=" -fPIC" \
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

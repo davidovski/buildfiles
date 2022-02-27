@@ -32,9 +32,14 @@ build () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
-    ln -sv /lib/ld-musl-$ARCH.so.1 $PKG_DEST/bin/ldd
-    ln -sv libc.so $PKG_DEST/usr/lib/libc.musl-x86_64.so.1 
+    make DESTDIR=$PKG_DEST install &&
+
+    install -d $PKG_DEST/etc
+    install -d $PKG_DEST/bin
+    install -d $PKG_DEST/lib
+
+    ln -s /lib/ld-musl-x86_64.so.1 $PKG_DEST/bin/ldd
+    ln -s libc.so $PKG_DEST/usr/lib/libc.musl-x86_64.so.1 
 
     cat > $PKG_DEST/etc/ld-musl-x86_64.path << "EOF"
 /lib
@@ -42,6 +47,6 @@ package () {
 /usr/lib
 EOF
 
-    rm -v $PKG_DEST/usr/include/utmpx.h 
+    rm $PKG_DEST/usr/include/utmpx.h 
 }
 
