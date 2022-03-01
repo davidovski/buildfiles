@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make"
 DEPS="musl"
 
 PKG_VER=2.5.1
@@ -9,11 +9,17 @@ SOURCE=http://download.savannah.nongnu.org/releases/attr/attr-$PKG_VER.tar.xz
 DESC="Extended attribute support library for ACL support"
 
 build () {
-    ./configure --prefix=/usr --disable-static --sysconfdir=/etc --docdir=/usr/share/doc/attr-$PKG_VER
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --disable-static \
+        --sysconfdir=/etc \
+        --docdir=/usr/share/doc/attr-$PKG_VER
     make
 }
 
-check () {
+# skip these tests since they require perl
+NO_check () {
     make check
 }
 

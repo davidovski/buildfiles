@@ -27,7 +27,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    ln -sfv $PKG_DEST/usr/libexec/p11-kit/trust-extract-compat \
+    ln -sf $PKG_DEST/usr/libexec/p11-kit/trust-extract-compat \
         $PKG_DEST/usr/bin/update-ca-certificates
 }
 

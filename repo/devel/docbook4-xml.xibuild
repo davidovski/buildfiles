@@ -8,10 +8,10 @@ SOURCE=https://www.docbook.org/xml/$PKG_VER/docbook-xml-$PKG_VER.zip
 DESC="A widely used XML scheme for writing documentation and help"
 
 package () {
-    install -v -d -m755 $PKG_DEST/usr/share/xml/docbook/xml-dtd-4.5 &&
-    install -v -d -m755 $PKG_DEST/etc/xml &&
+    install -m755 -d $PKG_DEST/usr/share/xml/docbook/xml-dtd-4.5 &&
+    install -m755 -d $PKG_DEST/etc/xml &&
     chown -R root:root . &&
-    cp -v -af docbook.cat *.dtd ent/ *.mod \
+    cp -af docbook.cat *.dtd ent/ *.mod \
         $PKG_DEST/usr/share/xml/docbook/xml-dtd-4.5
 
 

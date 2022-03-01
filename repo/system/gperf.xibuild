@@ -12,10 +12,6 @@ build () {
     make
 }
 
-check () {
-    make -j1 check
-}
-
 package () {
     make DESTDIR=$PKG_DEST install 
 }

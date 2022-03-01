@@ -1,0 +1,28 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="skalibs"
+
+PKG_VER=0.2.0.1
+
+SOURCE=https://skarnet.org/software/nsss/nsss-$PKG_VER.tar.gz
+
+DESC="Minimal competing implementation of glibc's Name Switch Service"
+
+build () {
+    ./configure --prefix=/usr              \
+            --exec-prefix=/usr         \
+            --with-dynlib=/usr/lib     \
+            --libexecdir=/usr/lib/nsss \
+            --libdir=/usr/lib          \
+            --with-dynlib=/usr/lib     \
+            --enable-shared \
+            --static-static 
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+
+}

@@ -22,5 +22,7 @@ check () {
 
 package() {
     make prefix=/usr lib=lib DESTDIR=$PKG_DEST install
-    chmod -v 755 $PKG_DEST/usr/lib/lib{cap,psx}.so.*
+    chmod 755 $PKG_DEST/usr/lib/libcap.so.*
+    chmod 755 $PKG_DEST/usr/lib/libpsx.so.*
+
 }

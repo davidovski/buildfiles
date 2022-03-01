@@ -19,6 +19,6 @@ check () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    rm -fv $PKG_DEST/usr/lib/libz.a 
+    rm -f $PKG_DEST/usr/lib/libz.a 
 }
 

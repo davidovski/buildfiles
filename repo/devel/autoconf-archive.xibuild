@@ -1,0 +1,21 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="gawk grep m4 diffutils perl sh gettext"
+
+PKG_VER=2022.02.11
+SOURCE=https://ftpmirror.gnu.org/autoconf-archive/autoconf-archive-$PKG_VER.tar.xz
+DESC="A collection of freely re-usable autoconf macros"
+
+
+build () {
+    ./configure --prefix=/usr 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+
+    # force these macros to use gnu grep rather than built in grep
+    sed -i "s/grep/ggrep/g" $PKG_DEST/usr/share/aclocal/*.m4
+}

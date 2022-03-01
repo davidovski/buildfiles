@@ -1,49 +1,77 @@
 #!/bin/sh
 
 MAKEDEPS="make dejagnu bzip2 xz zlib zstd patch"
-DEPS="musl zlib elfutils"
+DEPS="musl zlib libelf"
 
 PKG_VER=2.37
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
+
+PATCH_SOURCE="https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/binutils-alpine"
 ADDITIONAL="
-    https://www.linuxfromscratch.org/patches/lfs/development/binutils-$PKG_VER-upstream_fix-1.patch
+    $PATCH_SOURCE/0001-Revert-PR25882-.gnu.attributes-are-not-checked-for-s.patch
+    $PATCH_SOURCE/bfd-close-file-desriptor-if-there-is-no-archive-fd.patch
+    $PATCH_SOURCE/binutils-ld-fix-static-linking.patch
+    $PATCH_SOURCE/defang-no-split.patch
     "
 
-DESC="tools for handling object files"
+DESC="Tools for handling object files"
 
 prepare () {
-    /usr/bin/patch -Np1 -i binutils-$PKG_VER-upstream_fix-1.patch
+    for p in *.patch; do
+        patch -Np1 -i $p || true
+    done
 
-    # An error in the building system causes the shipped man pages to be empty. Workaround the issue and remove the shipped man pages, so the man pages will be regenerated correctly:
-
-    sed -i '63d' etc/texi2pod.pl
-    find -name \*.1 -delete
+    find . -name '[a-z]*\.[0-9]*' -empty -exec rm -f {} \; 
 }
 
 build () {
-    mkdir -v build
+    mkdir    build
     cd       build
+    case $(uname -m) in
+      x86_64)  export EXTRA_CONFIG=" --enable-targets=x86_64-pep " 
+               ;;
+      i686)    export EXTRA_CONFIG=" --disable-separate-code --enable-targets=x86_64-linux-gnu,x86_64-pep"
+               ;;
+    esac
+
     ../configure --prefix=/usr       \
              --enable-gold       \
              --enable-ld=default \
-             --enable-install-libiberty \
              --enable-plugins    \
              --enable-shared     \
              --disable-werror    \
+             --with-system-zlib  \
+             --enable-relro \
+             --enable-lto \
+             --disable-nls \
+             --enable-deterministic-archives \
+             --enable-default-hash-style=gnu \
+             --enable-threads \
+             --disable-multilib \
+             --with-mmap \
+             --with-pic  \
              --enable-64-bit-bfd \
-             --with-system-zlib
+             --with-pic $EXTRA_CONFIG
 
     make tooldir=/usr
 }
 
-check () {
-    make -k check || true
-}
+#check () {
+    #make -k check || true
+#}
 
 package() {
-    make -j1 DESTDIR=$PKG_DEST -j1 install
-    cp ../include/libiberty.h $PKG_DEST/usr/include
-    rm -fv $PKG_DEST/usr/lib/lib{bfd,ctf,ctf-nobfd,opcodes}.a
-    [ -e $PKG_DEST/usr/bin/ld ] || ln -sv ld.gold $PKG_DEST/usr/bin/ld 
+    make -j1 tooldir=/usr DESTDIR=$PKG_DEST install
+    cd .. 
 
+    # how about we use binutils ld?
+    #rm -f   $PKG_DEST/usr/bin/ld
+    #ln -sf /usr/bin/ld.bfd $PKG_DEST/usr/bin/ld
+
+    install -m 644 include/libiberty.h $PKG_DEST/usr/include
+    install -m 644 include/demangle.h  $PKG_DEST/usr/include
+
+    for f in dlltool nlmconv windres windmc; do
+        rm -f $PKG_DEST/usr/share/man/man1/${f}.1
+    done
 }

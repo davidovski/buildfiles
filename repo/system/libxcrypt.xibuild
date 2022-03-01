@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make "
-DEPS="musl"
+MAKEDEPS="make"
+DEPS="musl perl"
 
 PKG_VER=4.4.26
 SOURCE=https://github.com/besser82/libxcrypt/releases/download/v$PKG_VER/libxcrypt-$PKG_VER.tar.xz
@@ -14,9 +14,6 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    
-    # this is probably wrong
-    ln $PKG_DEST/usr/lib/libcrypt.so $PKG_DEST/usr/lib/libcrypt.so.2
 }
 
 

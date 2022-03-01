@@ -1,10 +1,10 @@
 #!/bin/sh
 
-MAKEDEPS=""
+MAKEDEPS="libtool"
 DEPS="musl"
 
 PKG_VER=1.2.7
-SOURCE=https://github.com/pullmoll/musl-fts/archive/v$PKG_DEST.tar.gz
+SOURCE=https://github.com/pullmoll/musl-fts/archive/v$PKG_VER.tar.gz
 
 DESC="Libraries implementing the set of fts functions missing in musl libc"
 

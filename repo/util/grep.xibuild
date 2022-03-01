@@ -18,4 +18,6 @@ check () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
+    mv $PKG_DEST/bin/grep $PKG_DEST/bin/ggrep 
+    
 }

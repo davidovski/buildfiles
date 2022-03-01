@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make"
-DEPS="gdbm musl libxcrypt bzip2 zlib"
+MAKEDEPS="make sed"
+DEPS="gdbm musl bzip2 zlib tar"
 
 PKG_VER=5.34.0
 SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
@@ -10,12 +10,34 @@ DESC="The Practical Extraction and Report Language"
 prepare () {
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
+    export CF_OLD=$CFLAGS
+    export CFLAGS+=" -DNO_POSIX_2008_LOCALE"
+    export CFLAGS+=" -D_GNU_SOURCE"
 
-    sh Configure -des -Dprefix=/usr -Dlibs=-lm -Uloclibpth -Ulocincpth
+    rm -rf cpan/Compress-Raw-Zlib/zlib-src
+    sed -i '/\(bzip2\|zlib\)-src/d' MANIFEST
+
+    rm -rf cpan/Compress-Raw-Bzip2/bzip2-src
+    sed -i '/\(bzip2\|zzz\)-src/d' MANIFEST
+
+    sh Configure -des -Dprefix=/usr                                \
+                  -Dvendorprefix=/usr                          \
+                  -Dprivlib=/usr/lib/perl5/5.34/core_perl      \
+                  -Darchlib=/usr/lib/perl5/5.34/core_perl      \
+                  -Dsitelib=/usr/lib/perl5/5.34/site_perl      \
+                  -Dsitearch=/usr/lib/perl5/5.34/site_perl     \
+                  -Dvendorlib=/usr/lib/perl5/5.34/vendor_perl  \
+                  -Dvendorarch=/usr/lib/perl5/5.34/vendor_perl \
+                  -Dman1dir=/usr/share/man/man1                \
+                  -Dman3dir=/usr/share/man/man3                \
+                  -Dpager="/usr/bin/less -isR"                 \
+                  -Duseshrplib                                 \
+                  -Dusethreads                                 \
+                  -Dcccdlflags='-fPIC' -Dccdlflags='-rdynamic'
 }
 
 build () {
-    make
+    make 
 }
 
 check () {
@@ -27,3 +49,4 @@ package () {
     for f in $(find /export -maxdepth 1 -type f); do echo $f; rm $f; done
     unset BUILD_ZLIB BUILD_BZIP2
 }
+

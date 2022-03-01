@@ -1,14 +1,24 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="pam libcap readline ncurses libxcrypt"
+DEPS="pam libcap readline ncurses libxcrypt utmps iana-etc net-tools"
 
 PKG_VER=2.2
 SOURCE=https://ftp.gnu.org/gnu/inetutils/inetutils-$PKG_VER.tar.xz
 DESC="A collection of common programs for basic networking"
 
+prepare () {
+    sed -i 's|_GL_WARN_ON_USE (gets|//_GL_WARN_ON_USE (gets|' lib/stdio.in.h
+    echo '#define PATH_PROCNET_DEV "/proc/net/dev"' >> ifconfig/system/linux.h
+    sed -i 's|port : "whois"|port : "nicname"|' whois/whois.c
+
+    # this might need to be changed in include/utmpx.h instead
+    sed -i '35s/char/char const/g' libinetutils/logwtmpko.c
+    touch man/whois.1
+}
+
 build () {
-    ./configure --prefix=/usr --bindir=/usr/bin  --localstatedir=/var --disable-logger --disable-whois  --disable-rcp  --disable-rexec --disable-rlogin --disable-rsh
+    ./configure --prefix=/usr --disable-rcp --disable-rlogin --disable-rlogind --disable-rsh --disable-rshd --disable-talk --disable-talkd
     make
 }
 

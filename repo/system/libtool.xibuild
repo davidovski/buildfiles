@@ -12,12 +12,12 @@ build () {
     make
 }
 
-check () {
-    # one test with older libltdl interfaces failed
-    make check || true
-}
+#check () {
+    ## one test with older libltdl interfaces failed
+    #make check || true
+#}
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    rm -fv $PKG_DEST/usr/lib/libltdl.a
+    rm -f $PKG_DEST/usr/lib/libltdl.a
 }

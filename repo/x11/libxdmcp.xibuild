@@ -10,7 +10,6 @@ DESC="X11 Display Manager Control Protocol library"
 build () {
     ./configure $XORG_CONFIG --docdir=/usr/share/doc/libXdmcp-$PKG_VER &&
     make
-
 }
 
 package () {

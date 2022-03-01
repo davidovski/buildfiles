@@ -6,15 +6,8 @@ DEPS="nspr libp11-kit bash zlib"
 PKG_VER=3.74
 
 SOURCE=https://archive.mozilla.org/pub/security/nss/releases/NSS_$(echo $PKG_VER | sed 's/\./_/g')_RTM/src/nss-$PKG_VER.tar.gz
-ADDITIONAL="
-        https://www.linuxfromscratch.org/patches/blfs/svn/nss-$PKG_VER-standalone-1.patch
-    "
 
 DESC="Network Security Services"
-
-prepare () {
-    patch -Np1 -i nss-$PKG_VER-standalone-1.patch 
-}
 
 build () {
     cd nss &&
@@ -31,20 +24,26 @@ build () {
 
 package () {
     cd ../dist                                                          
-        mkdir -pv $PKG_DEST/usr/{lib/pkgconfig,bin,include/nss,}
 
-        install -v -m755 Linux*/lib/*.so              $PKG_DEST/usr/lib              
-    install -v -m644 Linux*/lib/{*.chk,libcrmf.a} $PKG_DEST/usr/lib              
+    for p in lib/pkgconfig bin include/nss; do
+        mkdir -p $PKG_DEST/usr/$p
+    done
 
-    install -v -m755 -d                           $PKG_DEST/usr/include/nss      
-    cp -v -RL {public,private}/nss/*              $PKG_DEST/usr/include/nss      
-    chmod -v 644                                  $PKG_DEST/usr/include/nss/*    
+    install -m755 Linux*/lib/*.so              $PKG_DEST/usr/lib              
+    install -m644 Linux*/lib/*.chk             $PKG_DEST/usr/lib              
+    install -m644 Linux*/lib/libcrmf.a         $PKG_DEST/usr/lib              
 
-    install -v -m755 Linux*/bin/{certutil,nss-config,pk12util} $PKG_DEST/usr/bin 
+    install -m755 -d                           $PKG_DEST/usr/include/nss      
+    cp -RL public/nss/*                        $PKG_DEST/usr/include/nss      
+    cp -RL private/nss/*                       $PKG_DEST/usr/include/nss      
+    chmod 644                                  $PKG_DEST/usr/include/nss/*    
 
-    install -v -m644 Linux*/lib/pkgconfig/nss.pc  $PKG_DEST/usr/lib/pkgconfig
 
-    ln -sfv ./pkcs11/p11-kit-trust.so $PKG_DEST/usr/lib/libnssckbi.so
+    for p in certutil nss-config pk12util; do
+        install -m755 Linux*/bin/$p $PKG_DEST/usr/bin 
+    done
 
+    install -m644 Linux*/lib/pkgconfig/nss.pc  $PKG_DEST/usr/lib/pkgconfig
 
+    ln -sf ./pkcs11/p11-kit-trust.so $PKG_DEST/usr/lib/libnssckbi.so
 }

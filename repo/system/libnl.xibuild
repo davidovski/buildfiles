@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS=""
+MAKEDEPS="make tar gzip"
 DEPS="musl"
 
 PKG_VER=3.5.0
@@ -21,7 +21,7 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install 
 
-    mkdir -vp $PKG_DEST/usr/share/doc/libnl-$PKG_VER &&
-    tar -xf libnl-doc-$PKG_VER.tar.gz --strip-components=1 --no-same-owner \
+    mkdir -p $PKG_DEST/usr/share/doc/libnl-$PKG_VER &&
+    /usr/bin/tar -xf libnl-doc-$PKG_VER.tar.gz --strip-components=1 --no-same-owner \
         -C  $PKG_DEST/usr/share/doc/libnl-$PKG_VER
 }

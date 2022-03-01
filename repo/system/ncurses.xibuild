@@ -9,7 +9,12 @@ SOURCE=https://invisible-mirror.net/archives/ncurses/ncurses-$PKG_VER.tar.gz
 DESC="curses emulation library"
 
 build () {
-    ./configure --prefix=/usr --mandir=/usr/share/man --with-shared --without-debug --without-normal --enable-pc-files --enable-widec
+    ./configure --prefix=/usr       \
+            --mandir=/usr/share/man \
+            --with-shared           \
+            --without-debug         \
+            --without-normal        \
+            --enable-widec          \
 
     make
 }

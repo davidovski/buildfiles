@@ -17,8 +17,8 @@ build () {
 }
 
 package () {
-    mkdir -pv $PKG_DEST/usr/lib/udev/rules.d
-    mkdir -pv $PKG_DEST/etc/udev/rules.d
+    mkdir -p $PKG_DEST/usr/lib/udev/rules.d
+    mkdir -p $PKG_DEST/etc/udev/rules.d
 
     make DESTDIR=$PKG_DEST install
 

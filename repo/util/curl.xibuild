@@ -10,7 +10,7 @@ DESC="A utility for transfering files with URL syntax"
 build () {
     ./configure --prefix=/usr                           \
             --disable-static                        \
-            --with-libressl                          \
+            --with-openssl                          \
             --enable-threaded-resolver              \
             --with-ca-path=/etc/ssl/certs &&
     make

@@ -1,10 +1,10 @@
 #!/bin/sh
 
 MAKEDEPS=""
-DEPS=""
+DEPS="musl"
 
-PKG_VER=
-SOURCE=https://github.com/ericonr/argp-standalone/archive/$PKG_VER.tar.gz
+PKG_VER=1.3
+SOURCE=https://www.lysator.liu.se/~nisse/misc/argp-standalone-$PKG_VER.tar.gz
 
 DESC="Standalone implementation for the argp interface"
 
@@ -18,7 +18,9 @@ build () {
 }
 
 package () {
-    cp -v libargp.a $PKG_DEST/usr/lib/
-    cp -v argp.h    $PKG_DEST/usr/include/
+    install -d $PKG_DEST/usr/lib
+    install -d $PKG_DEST/usr/include
+    cp libargp.a $PKG_DEST/usr/lib/
+    cp argp.h    $PKG_DEST/usr/include/
 }
 

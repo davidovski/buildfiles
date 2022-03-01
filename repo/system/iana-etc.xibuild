@@ -1,18 +1,15 @@
 #!/bin/sh
 
-MAKEDEPS="python "
+MAKEDEPS=""
 DEPS=""
 
-SOURCE=https://github.com/Mic92/iana-etc
+PKG_VER=20210611
+SOURCE=https://github.com/Mic92/iana-etc/releases/download/$PKG_VER/iana-etc-$PKG_VER.tar.gz
 DESC="A set of data from the internet assigned numbers authority providing data for network services and protocols"
 
-build () {
-    python update.py out
-}
-
 package () {
-    mkdir -vp $PKG_DEST/etc
-    cp -v out/dist/protocols $PKG_DEST/etc/
-    cp -v out/dist/services $PKG_DEST/etc/
+    mkdir -p $PKG_DEST/etc
+    cp protocols $PKG_DEST/etc/
+    cp services $PKG_DEST/etc/
 }
 

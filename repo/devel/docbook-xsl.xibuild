@@ -17,9 +17,9 @@ prepare() {
 }
 
 package () {
-    install -v -m755 -d $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER &&
+    install -m755 -d $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER &&
 
-    cp -v -R VERSION assembly common eclipse epub epub3 extensions fo        \
+    cp -R VERSION assembly common eclipse epub epub3 extensions fo        \
              highlighting html htmlhelp images javahelp lib manpages params  \
              profiling roundtrip slides template tests tools webhelp website \
              xhtml xhtml-1_1 xhtml5                                          \
@@ -27,13 +27,13 @@ package () {
 
     ln -s VERSION $PKG_DEST/usr/share/xml/docbook/xsl-stylesheets-nons-$PKG_VER/VERSION.xsl &&
 
-    install -v -m644 -D README \
+    install -m644 -D README \
                         $PKG_DEST/usr/share/doc/docbook-xsl-nons-$PKG_VER/README.txt &&
-    install -v -m644    RELEASE-NOTES* NEWS* \
+    install -m644    RELEASE-NOTES* NEWS* \
                     $PKG_DEST/usr/share/doc/docbook-xsl-nons-$PKG_VER
 
 
-    if [ ! -d $PKG_DEST/etc/xml ]; then install -v -m755 -d $PKG_DEST/etc/xml; fi &&
+    if [ ! -d $PKG_DEST/etc/xml ]; then install -m755 -d $PKG_DEST/etc/xml; fi &&
         if [ ! -f $PKG_DEST/etc/xml/catalog ]; then
     xmlcatalog --noout --create $PKG_DEST/etc/xml/catalog
     fi &&

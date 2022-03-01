@@ -1,83 +1,181 @@
 #!/bin/sh
 
-MAKEDEPS="grep make libxml2 dejagnu inetutils libiconv"
-DEPS="musl binutils mpc"
+MAKEDEPS="grep make dejagnu inetutils"
+DEPS="musl binutils mpc mpfr gmp"
 
 PKG_VER=11.2.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
 
+ISL_VER=0.24
+PATCH_SRC="https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/gcc-alpine"
+
+ADDITIONAL="
+    https://libisl.sourceforge.io/isl-$ISL_VER.tar.xz
+
+    $PATCH_SRC/0001-posix_memalign.patch 
+    $PATCH_SRC/0003-Turn-on-Wl-z-relro-z-now-by-default.patch 
+    $PATCH_SRC/0004-Turn-on-D_FORTIFY_SOURCE-2-by-default-for-C-C-ObjC-O.patch 
+    $PATCH_SRC/0006-Enable-Wformat-and-Wformat-security-by-default.patch 
+    $PATCH_SRC/0007-Enable-Wtrampolines-by-default.patch 
+    $PATCH_SRC/0009-Ensure-that-msgfmt-doesn-t-encounter-problems-during.patch 
+    $PATCH_SRC/0010-Don-t-declare-asprintf-if-defined-as-a-macro.patch 
+    $PATCH_SRC/0011-libiberty-copy-PIC-objects-during-build-process.patch 
+    $PATCH_SRC/0012-libitm-disable-FORTIFY.patch 
+    $PATCH_SRC/0013-libgcc_s.patch 
+    $PATCH_SRC/0014-nopie.patch 
+    $PATCH_SRC/0015-libffi-use-__linux__-instead-of-__gnu_linux__-for-mu.patch 
+    $PATCH_SRC/0016-dlang-update-zlib-binding.patch 
+    $PATCH_SRC/0017-dlang-fix-fcntl-on-mips-add-libucontext-dep.patch 
+    $PATCH_SRC/0018-ada-fix-shared-linking.patch 
+    $PATCH_SRC/0019-build-fix-CXXFLAGS_FOR_BUILD-passing.patch 
+    $PATCH_SRC/0020-add-fortify-headers-paths.patch 
+    $PATCH_SRC/0023-Pure-64-bit-MIPS.patch 
+    $PATCH_SRC/0024-use-pure-64-bit-configuration-where-appropriate.patch 
+    $PATCH_SRC/0025-always-build-libgcc_eh.a.patch 
+    $PATCH_SRC/0027-ada-musl-support-fixes.patch 
+    $PATCH_SRC/0028-gcc-go-Use-_off_t-type-instead-of-_loff_t.patch 
+    $PATCH_SRC/0029-gcc-go-Don-t-include-sys-user.h.patch 
+    $PATCH_SRC/0030-gcc-go-Fix-ucontext_t-on-PPC64.patch 
+    $PATCH_SRC/0031-gcc-go-Fix-handling-of-signal-34-on-musl.patch 
+    $PATCH_SRC/0032-gcc-go-Use-int64-type-as-offset-argument-for-mmap.patch 
+    $PATCH_SRC/0035-gcc-go-Prefer-_off_t-over-_off64_t.patch 
+    $PATCH_SRC/0036-gcc-go-undef-SETCONTEXT_CLOBBERS_TLS-in-proc.c.patch 
+    $PATCH_SRC/0037-gcc-go-link-to-libucontext.patch 
+    $PATCH_SRC/0038-gcc-go-Disable-printing-of-unaccessible-ppc64-struct.patch 
+    $PATCH_SRC/0041-Use-generic-errstr.go-implementation-on-musl.patch 
+    $PATCH_SRC/0042-Disable-ssp-on-nostdlib-nodefaultlibs-and-ffreestand.patch 
+    $PATCH_SRC/0043-configure-Add-enable-autolink-libatomic-use-in-LINK_.patch 
+    $PATCH_SRC/0021-Alpine-musl-package-provides-libssp_nonshared.a.-We-.patch
+
+
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/files/musl/getconf.1
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/files/musl/getconf.c
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/files/musl/getent.1
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/files/musl/getent.c
+    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/files/musl/iconv.c
+"
+
 DESC="The GNU Compiler Collection - C and C++ frontends"
 
 prepare () {
-    #fix an issue breaking libasan.a
-
-    sed -e '/static.*SIGSTKSZ/d' \
-    -e 's/return kAltStackSize/return SIGSTKSZ * 4/' \
-    -i libsanitizer/sanitizer_common/sanitizer_posix_libcdep.cpp
-
     case $(uname -m) in
-      x86_64)
-        sed -e '/m64=/s/lib64/lib/' \
-            -i.orig gcc/config/i386/t-linux64
-      ;;
-    esac
+      x86_64) export TRUPLE="x86_64-linux-musl"
+              export EXTRA_CONFIG=" --with-arch=x86-64"
+              ;;
+      i686)   export TRUPLE="i686-linux-musl"
+              export EXTRA_CONFIG=" --with-arch=pentium3 --with-tune=pentium-m"
+              ;;
+      armv7l) export TRUPLE="armv7l-linux-musleabihf"
+              export EXTRA_CONFIG=" --with-arch=armv7-a --with-tune=generic-armv7-a --with-fpu=vfpv3-d16 --with-float=hard --with-abi=aapcs-linux --with-mode=thumb"
+              ;;
+      armv6l) export TRUPLE="armv6l-linux-musleabihf"
+              export EXTRA_CONFIG=" --with-arch=armv6zk --with-tune=arm1176jzf-s --with-fpu=vfp --with-float=hard --with-abi=aapcs-linux"
+              ;;
+      aarch64) export TRUPLE="aarch64-linux-musleabihf"
+               export EXTRA_CONFIG=" --with-arch=armv8-a --with-abi=lp64 --enable-fix-cortex-a53-835769 --enable-fix-cortex-a53-843419"
+               sed -i '/m64=/s/lib64/lib/' gcc/config/aarch64/t-aarch64-linux
+              ;;
+    esac 
+
+    tar xf isl-$ISL_VER.tar.xz
+    mv isl-$ISL_VER isl
+
+    for p in *.patch;  do
+        patch -Np1 -i $p || true
+    done
+
 }
 
 build () {
-    mkdir -v build
+    mkdir build
     cd build
 
-    ../configure --prefix=/usr            \
-             LD=ld                    \
-             --enable-languages=c,c++ \
-             --disable-multilib       \
-             --disable-bootstrap      \
-             --with-system-zlib
+    export  NOFF="--disable-libstdcxx-pch "
+    export NOFF+="--disable-nls "
+    export NOFF+="--disable-multilib "
+    export NOFF+="--disable-bootstrap "
+    export NOFF+="--disable-symvers "
+    export NOFF+="--disable-libsanitizer "
+    export NOFF+="--disable-libssp "
+    export NOFF+="--disable-libmpx "
+    export NOFF+="--disable-libmudflap "
+    export NOFF+="--disable-fixed-point "
+    export NOFF+="--disable-sjlj-exceptions "
+    export NOFF+="--disable-werror "
 
-    make
+    # Enable graphite
+    export XCONFIG="--with-ppl=yes --with-cloog=yes "
+
+    # Enable features for x86_64
+    export XTRA86="--with-arch=x86-64 "
+
+    # Enable features
+    export  FON="--enable-threads=posix "
+    export FON+="--enable-clocale=generic "
+    export FON+="--enable-tls "
+    export FON+="--enable-libstdcxx-time "
+    export FON+="--enable-fully-dynamic-string "
+    export FON+="--enable-default-pie "
+    export FON+="--enable-default-ssp "
+    export FON+="--enable-linker-build-id "
+    export FON+="--enable-checking=release "
+    export FON+="--enable-cloog-backend "
+    export FON+="--enable-__cxa_atexit "
+    export FON+="--enable-lto "
+    export FON+="--enable-plugins "
+    export FON+="--with-system-zlib "
+    export FON+="--with-linker-hash-style=gnu "
+    #export FON+="--with-isl "
+
+    # Configure source
+    SED=sed  libat_cv_have_ifunc=no  \
+    ../configure --prefix=/usr            \
+                 --target=${TRUPLE}          \
+                 --enable-languages=c,c++,lto \
+                 $NOFF $XTRA86 $XCONFIG $FON &&
+
+    make &&
+
+    cd .. &&
+    cc -fpie getent.c -o getent &&
+    cc -fpie getconf.c -o getconf &&
+    cc -fpie iconv.c -o iconv 
 }
 
 check () {
-    ulimit -s 32768
-
+    cd build
     if id -u tester; then
-        chown -Rv tester .
+        chown -R tester .
         su tester -c "PATH=$PATH make $MAKEFLAGS -k check" || true
         ../contrib/test_summary | grep -A7 Summ || true
     fi
+    cd ..
 }
 
 
 package () {
+    install -dm755 $PKG_DEST/usr/bin
+    install -dm755 $PKG_DEST/usr/share/man
+    install -dm755 $PKG_DEST/usr/lib/bfd-plugins
+
+    cd build
     make DESTDIR=$PKG_DEST install
+    cd ..
 
-    rm -rf $PKG_DEST/usr/lib/gcc/$(gcc -dumpmachine)/11.2.0/include-fixed/bits/
+    cp getent  $PKG_DEST/usr/bin/
+    cp getconf $PKG_DEST/usr/bin/
+    cp iconv   $PKG_DEST/usr/bin/
+    cp getent.1   $PKG_DEST/usr/share/man/man1/
+    cp getconf.1  $PKG_DEST/usr/share/man/man1/
 
-    chown -v -R root:root \
-    $PKG_DEST/usr/lib/gcc/*linux-gnu/11.2.0/include{,-fixed}
-    ln -sv cpp $PKG_DEST/usr/lib/cpp
-
-    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/11.2.0/liblto_plugin.so \
-        $PKG_DEST/usr/lib/bfd-plugins/
-
-
-    # sanity checks
-    echo 'int main(){}' > dummy.c
-    cc dummy.c -v -Wl,--verbose &> dummy.log
-    readelf -l a.out | grep ': /lib'
-
-    grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
-    grep -B4 '^ /usr/include' dummy.log
-    grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
-    grep "/lib.*/libc.so.6 " dummy.log
-    grep found dummy.log
-
-    # move a misplaced file
-    mkdir -pv $PKG_DEST/usr/share/gdb/auto-load/usr/lib
-    mv -v $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib
-
-    # set gcc as the default c compiler
+    ln -s ../bin/cpp $PKG_DEST/usr/lib
     ln -s gcc $PKG_DEST/usr/bin/cc
+
+    ln -sf ../../libexec/gcc/$(gcc -dumpmachine)/$PKG_VER/liblto_plugin.so \
+            $PKG_VER/usr/lib/bfd-plugins/
+
+    mkdir -p $PKG_DEST/usr/share/gdb/auto-load/usr/lib
+    #mv $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib
+
+
 }
-
-

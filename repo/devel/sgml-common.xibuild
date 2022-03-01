@@ -24,7 +24,7 @@ build() {
 package () {
     make DESTDIR=$PKG_DEST docdir=/usr/share/doc install &&
 
-    mkdir -pv $PKG_DEST/etc/sgml
-    mkdir -pv /etc/sgml
+    mkdir -p $PKG_DEST/etc/sgml
+    mkdir -p /etc/sgml
 
 }

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make sed"
 DEPS="musl ncurses"
 
 PKG_VER=8.1
@@ -16,15 +16,15 @@ prepare () {
 
 build () {
     ./configure --prefix=/usr \
- --disable-static \
- --with-curses \
- --docdir=/usr/share/doc/readline-8.1
+         --disable-static \
+         --with-curses \
+         --docdir=/usr/share/doc/readline-$PKG_VER
     
     make SHLIB_LIBS="-lncursesw"
 }
 
 package () {
     make SHLIB_LIBS="-lncursesw" DESTDIR=$PKG_DEST install
-    install -v -m644 doc/*.{ps,pdf,html,dvi} $PKG_DEST/usr/share/doc/readline-8.1
+    install -m644 doc/* $PKG_DEST/usr/share/doc/readline-$PKG_VER
 }
 

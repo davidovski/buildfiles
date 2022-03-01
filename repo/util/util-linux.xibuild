@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="shadow coreutils libcap libxcrypt readline"
+DEPS="coreutils libcap libxcrypt readline"
 
 PKG_VER=2.37.2
 SOURCE=https://cdn.kernel.org/pub/linux/utils/util-linux/v$(echo $PKG_VER | cut -d. -f-2)/util-linux-$PKG_VER.tar.xz

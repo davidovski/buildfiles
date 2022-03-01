@@ -1,15 +1,18 @@
 #!/bin/sh
 
-MAKEDEPS="python"
+MAKEDEPS="python gcc"
 DEPS="bash"
 
 PKG_VER=70.1
 SOURCE=https://github.com/unicode-org/icu/releases/download/release-$(echo $PKG_VER | sed 's/\./-/g')/icu4c-$(echo $PKG_VER | sed 's/\./_/g')-src.tgz
 DESC="International Components for Unicode library"
 
-build () {
+prepare () {
     cd source                                    &&
+    sed -i -e 's,DU_HAVE_STRTOD_L=1,DU_HAVE_STRTOD_L=0,' configure
+}
 
+build () {
     ./configure --prefix=/usr                    &&
     make
 

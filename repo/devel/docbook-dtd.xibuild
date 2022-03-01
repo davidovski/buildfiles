@@ -14,11 +14,11 @@ prepare() {
 }
 
 package () {
-    install -v -d $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
+    install -d $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
     chown -R root:root . &&
 
-    install -v docbook.cat $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
-    cp -v -af *.dtd *.mod *.dcl $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
+    install docbook.cat $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
+    cp -af *.dtd *.mod *.dcl $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER &&
 
 
     cat >> $PKG_DEST/usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog << "EOF"

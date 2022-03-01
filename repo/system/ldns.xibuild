@@ -14,6 +14,7 @@ build () {
 		--localstatedir=/var \
 		--disable-rpath \
 		--with-drill \
+        --disable-dane-verify \
 		--with-examples \
 		--with-trust-anchor=/etc/trusted-key.key \
 

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make findutils"
 DEPS="musl libunistring"
 
 PKG_VER=2.3.2
@@ -15,8 +15,12 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-    find doc -name "Makefile*" -delete            &&
-    rm -rf -v doc/{gdoc,idn.1,stamp-vti,man,texi} &&
-    mkdir -pv       $PKG_DEST/usr/share/doc/libidn-$PKG_VER     &&
-    cp -r -v doc/* $PKG_DEST/usr/share/doc/libidn-$PKG_VER
+    find ./doc -name "Makefile*" -delete &&
+    rm -rf doc/gdoc &&
+    rm -rf doc/idn.1 &&
+    rm -rf doc/stamp-vti &&
+    rm -rf doc/man &&
+    rm -rf doc/texi &&
+    mkdir -p       $PKG_DEST/usr/share/doc/libidn-$PKG_VER     &&
+    cp -r doc/* $PKG_DEST/usr/share/doc/libidn-$PKG_VER
 }

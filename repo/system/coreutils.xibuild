@@ -1,24 +1,20 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl acl attr gmp libcap libressl libiconv"
+DEPS="musl acl attr gmp"
 
-PKG_VER=9.0
-SOURCE=https://ftp.gnu.org/gnu/coreutils/coreutils-$PKG_VER.tar.xz
-DESC="The GNU coreutilities"
+SOURCE=https://git.suckless.org/sbase
+DESC="sbase from suckless.org"
 
 build () {
-    autoreconf -fiv
-
-    FORCE_UNSAFE_CONFIGURE=1 ./configure \
-            --prefix=/usr            \
-            --enable-no-install-program=kill,uptime
     make
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/usr/share/man/man8/chroot.8
-    mkdir -pv $PKG_DEST/usr/sbin
-    mv -v $PKG_DEST/usr/bin/chroot $PKG_DEST/usr/sbin
+    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+
+    for p in tar sed; do
+        rm $PKG_DEST/usr/bin/$p
+        rm $PKG_DEST/usr/share/man/man1/$p.1
+    done
 }

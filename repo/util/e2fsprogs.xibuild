@@ -1,15 +1,21 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make gzip"
 # TODO requires util-linux-libs
-DEPS="sh "
+DEPS="sh util-linux"
 
 PKG_VER=1.46.4
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$PKG_VER/e2fsprogs-$PKG_VER.tar.xz
 DESC="Ext2/3/4 filesystem utils"
 
+prepare () {
+    # use system's install command
+    rm config/install-sh
+    ln -s /usr/bin/install config/install-sh
+}
+
 build () {
-    mkdir -v build
+    mkdir build
     cd  build
     ../configure --prefix=/usr       \
              --sysconfdir=/etc       \
@@ -23,7 +29,10 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    rm -fv $PKG_DEST/usr/lib/{libcom_err,libe2p,libext2fs,libss}.a
-    gunzip -v $PKG_DEST/usr/share/info/libext2fs.info.gz
+    rm -f $PKG_DEST/usr/lib/libcom_err.a
+    rm -f $PKG_DEST/usr/lib/libe2p.a
+    rm -f $PKG_DEST/usr/lib/libext2fs.a
+    rm -f $PKG_DEST/usr/lib/libss.a
+    gunzip $PKG_DEST/usr/share/info/libext2fs.info.gz
     install-info --dir-file=$PKG_DEST/usr/share/info/dir $PKG_DEST/usr/share/info/libext2fs.info
 }

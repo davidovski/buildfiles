@@ -8,7 +8,7 @@ SOURCE=https://ftp.gnu.org/gnu/dejagnu/dejagnu-$PKG_VER.tar.gz
 DESC="a framework for running test suites on GNU tools"
 
 build () {
-    mkdir -v build
+    mkdir build
     cd  build
     
     ../configure --prefix=/usr 
@@ -20,8 +20,9 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-    install -v -dm755 $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
-    install -v -m644 doc/dejagnu.{html,txt} $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
+    install -dm755 $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
+    install -m644 doc/dejagnu.txt $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
+    install -m644 doc/dejagnu.html $PKG_DEST/usr/share/doc/dejagnu-$PKG_VER
 }
 
 

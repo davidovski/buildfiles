@@ -21,12 +21,12 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    install -v -m755    contrib/ssh-copy-id $PKG_DEST/usr/bin     
+    install -m755    contrib/ssh-copy-id $PKG_DEST/usr/bin     
 
-    install -v -m644    contrib/ssh-copy-id.1 \
+    install -m644    contrib/ssh-copy-id.1 \
                         $PKG_DEST/usr/share/man/man1              
-    install -v -m755 -d $PKG_DEST/usr/share/doc/openssh-$PKG_VER
-    install -v -m644    INSTALL LICENCE OVERVIEW README* \
+    install -m755 -d $PKG_DEST/usr/share/doc/openssh-$PKG_VER
+    install -m644    INSTALL LICENCE OVERVIEW README* \
                         $PKG_DEST/usr/share/doc/openssh-$PKG_VER
 
 }

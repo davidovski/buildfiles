@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make perl"
 DEPS="bash procps-ng"
 
 PKG_VER=6.2.1
@@ -8,8 +8,8 @@ SOURCE=https://gmplib.org/download/gmp/gmp-$PKG_VER.tar.xz
 DESC="a collection of mathematical libraries"
 
 prepare () {
-    cp -v configfsf.guess config.guess
-    cp -v configfsf.sub   config.sub
+    cp configfsf.guess config.guess
+    cp configfsf.sub   config.sub
 }
 
 build () {

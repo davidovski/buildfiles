@@ -1,14 +1,31 @@
 #!/bin/sh
 
-MAKEDEPS="make"
-DEPS="bzip2 expat gdbm libffi libnsl libxcrypt libressl zlib"
 
-PKG_VER=3.10.0
+MAKEDEPS="make autoconf automake autoconf-archive"
+DEPS="bzip2 expat gdbm libffi libnsl libxcrypt libressl zlib grep"
+
+PKG_VER=3.10.2
 SOURCE=https://www.python.org/ftp/python/$PKG_VER/Python-$PKG_VER.tgz
 DESC="The Python development environment"
 
+prepare () {
+    rm -r Modules/expat
+    rm -r Modules/_ctypes/darwin*
+    rm -r Modules/_ctypes/libffi*
+}
+
 build () {
-    ./configure --prefix=/usr --enable-shared --with-system-expat --with-system-ffi --with-ensurepip=yes --enable-optimizations --with-ssl --with-requests
+    CFLAGS="-flto"
+    autoreconf -i
+    GREP="/usr/bin/ggrep" ./configure --prefix=/usr        \
+                --enable-shared      \
+                --with-system-expat  \
+                --with-system-ffi    \
+                --with-ensurepip=yes \
+                --with-pip=yes \
+                --enable-ipv6        \
+                --enable-loadable-sqlite-extensions \
+                --with-computed-gotos
     make
 }
 

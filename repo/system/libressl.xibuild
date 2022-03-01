@@ -3,18 +3,41 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=3.0.1
-SOURCE=https://github.com/libressl/libressl/archive/refs/tags/libressl-$PKG_VER.tar.gz
+PKG_VER=3.4.2
+SOURCE=https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-$PKG_VER.tar.gz
 DESC="The open source management tools and libraries for cryptography"
 
+prepare () {
+    autoreconf -vif
+    case $(uname -m) in
+     x86_64)  export EXTRACONFIG=""
+              export TRUPLE="x86_64-linux-musl"
+             ;;
+     i686)    export EXTRACONFIG="--disable-hardening"
+              export TRUPLE="i686-linux-musl"
+             ;;
+     armv7l)  export TRUPLE="armv7l-linux-musleabihf"
+             ;;
+     armv6l)  export TRUPLE="armv6l-linux-musleabihf"
+             ;;
+     aarch64) export TRUPLE="aarch64-linux-musleabihf"
+             ;;
+    esac
+}
+
 build () {
-    ./config --prefix=/usr --libressldir=/etc/ssl --libdir=lib shared zlib-dynamic
+    CFLAGS="-L/usr/lib $CFLAGS" \
+    ./configure \
+               --build=$TRUPLE \
+               --host=$TRUPLE \
+               --prefix=/usr \
+               --sysconfdir=/etc \
+               --mandir=/usr/share/man \
+               --localstatedir=/var $EXTRACONFIG
+    unset EXTRACONFIG TRUPLE
     make
 }
 
 package () {
-    sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/usr/share/doc/libressl
-    cp -vfr doc/* $PKG_DEST/usr/share/doc/libressl
 }

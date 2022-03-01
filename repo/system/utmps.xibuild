@@ -1,16 +1,12 @@
 #!/bin/sh
 
 MAKEDEPS=""
-DEPS="skalib"
+DEPS="skalibs"
 
 PKG_VER=0.1.1.0
 SOURCE=https://skarnet.org/software/utmps/utmps-0.1.1.0.tar.gz
 
 DESC="Library implementing utmpx.h family of functions"
-
-prepare () {
-    sed -i -e "s/@@VERSION@@/0.1.1.0/g" -- /tmp/*.pc 
-}
 
 build () {
     ./configure \
@@ -24,13 +20,14 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    ln -sv utmps/utmpx.h $PKG_DEST/usr/include/utmpx.h
+    ln -s utmps/utmpx.h $PKG_DEST/usr/include/utmpx.h
+    install -d $PKG_DEST/usr/lib/pkgconfig
 
     cat > $PKG_DEST/usr/lib/pkgconfig/utmps.pc << EOF
 Name: utmps
 Description: A secure implementation of the utmp mechanism.
 URL: https://skarnet.org/software/utmps/
-Version: @@VERSION@@
+Version: $PKG_VER 
 Requires.private: skalibs
 Libs: -lutmps
 Cflags: -I/usr/include/utmps

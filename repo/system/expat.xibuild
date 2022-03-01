@@ -18,6 +18,5 @@ check () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-
-    install -v -m644 doc/*{.html,png,css} $PKG_DEST/usr/share/doc/expat-$PKG_VER
+    install -m644 doc/* $PKG_DEST/usr/share/doc/expat-$PKG_VER
 }
