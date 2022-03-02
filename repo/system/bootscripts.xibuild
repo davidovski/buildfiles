@@ -1,14 +1,13 @@
 #!/bin/sh
 
-MAKEDEPS="make "
-DEPS="sh eudev"
+MAKEDEPS="make s6-linux-init s6-rc"
+DEPS="sh eudev s6 s6-rc s6-linux-utils s6-protable-utils s6-linux-init"
 
-PKG_VER=20210608
-SOURCE=https://www.linuxfromscratch.org/lfs/downloads/development/lfs-bootscripts-$PKG_VER.tar.xz
-DESC="Bootscripts to initiate the system on boot (from lfs)"
+SOURCE=https://xi.davidovski.xyz/git/bootscripts.git
+DESC="Bootscripts to initiate the system on boot"
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    make DESTDIR=$PKG_DEST bootscripts
 
     cat > $PKG_DEST/etc/inittab << "EOF"
 # Begin /etc/inittab
@@ -38,6 +37,18 @@ su:S016:once:/sbin/sulogin
 
 # End /etc/inittab
 EOF
+
+    # Compile a basic database for boot
+    s6-rc-compile /etc/s6/db/basic /etc/s6/sv 
+    ln -s /etc/s6/db/basic /etc/s6/db/current
+
+    # initialize s6 init base. 
+    s6-linux-init-maker -1  -t 2 -L \
+                        -f $PKG_DEST/etc/s6linux-init/skel \
+                        -p "/usr/bin:/usr/sbin:/bin:/sbin"    \
+                        -D default \
+                        -G "/sbin/agetty -L -8 tty1 115200" \
+                        -c $PKG_DEST/etc/s6/base -u root -U utmp $PKG_DEST/etc/s6/base
 
 
 }

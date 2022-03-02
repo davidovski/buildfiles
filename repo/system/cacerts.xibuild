@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="coreutils sed"
+MAKEDEPS="sbase sed"
 DEPS="libnghttp"
 
 PKG_VER=1.7

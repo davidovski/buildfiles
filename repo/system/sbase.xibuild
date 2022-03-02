@@ -1,0 +1,36 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl acl attr gmp"
+
+SOURCE=https://git.suckless.org/sbase
+
+DESC="sbase from suckless.org"
+
+prepare () {
+    # add uname -o since some packages need it
+
+    sed -i "39i case 'o':" uname.c
+    sed -i "40i sflag = 1;" uname.c
+    sed -i "41i break;" uname.c
+}
+
+build () {
+    make
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+
+    for p in tar sed find; do
+        rm $PKG_DEST/usr/bin/$p
+        rm $PKG_DEST/usr/share/man/man1/$p.1
+    done
+
+    # quick and dirty realpath replacement
+    realpath=$PKG_DEST/usr/bin/realpath
+
+    echo '#!/bin/bash' > $realpath
+    echo '[[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"' >> $realpath
+    chmod +x $realpath
+}

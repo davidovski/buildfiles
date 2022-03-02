@@ -1,0 +1,25 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+SOURCE=https://git.suckless.org/ubase
+
+DESC="ubase from suckless.org"
+
+prepare () {
+    /usr/bin/find -type 'f' -name '*.c' | xargs sed -i "s@#include <sys/types.h>@#include <sys/sysmacros.h>@g" 
+}
+
+build () {
+    make
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+
+    #for p in todo; do
+    #   rm $PKG_DEST/usr/bin/$p
+    #   rm $PKG_DEST/usr/share/man/man1/$p.1
+    #done
+}

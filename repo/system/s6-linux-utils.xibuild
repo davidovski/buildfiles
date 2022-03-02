@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="skalibs s6"
+
+PKG_VER=2.11.0.1
+SOURCE=https://skarnet.org/software/s6-linux-utils/s6-linux-utils-2.5.1.7.tar.gz
+DESC="Minimalistic Linux-specific system utilities"
+
+build () {
+    ./configure --disable-allstatic \
+            --prefix=/usr       \
+            --with=dynlib=/usr/lib
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

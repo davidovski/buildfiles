@@ -15,7 +15,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir -v /usr/share/doc/libpng-$PKG_VER &&
-    cp -v README libpng-manual.txt /usr/share/doc/libpng-$PKG_VER
+    mkdir /usr/share/doc/libpng-$PKG_VER &&
+    cp README libpng-manual.txt /usr/share/doc/libpng-$PKG_VER
 
 }

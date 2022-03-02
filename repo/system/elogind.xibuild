@@ -1,14 +1,24 @@
 #!/bin/sh
 
-MAKEDEPS="make docbook4-xml docbook-xsl docbook-dtd libxslt"
+MAKEDEPS="make docbook4-xml docbook-xsl docbook-dtd libxslt ubase glib acl m4"
 DEPS="pam gperf eudev"
 
 PKG_VER=246.10
 SOURCE=https://github.com/elogind/elogind/archive/v$PKG_VER/elogind-$PKG_VER.tar.gz
+ADDITIONAL="
+https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/id-nobody.patch
+https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/mips.patch
+https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/ppc64-bad-tuple.patch
+https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/ppcle.patch
+"
 DESC="The standalone logind daemon"
 
 prepare () {
     sed -i '/Disable polkit/,+8 d' meson.build
+    
+    for p in *.patch; do
+        patch -Np1 -i $p
+    done
 }
 
 build () {
@@ -16,19 +26,23 @@ build () {
     cd    build &&
 
     # TODO re-enable BUILD_MANS
-    meson --prefix=/usr                        \
-          --buildtype=release                  \
-          -Dcgroup-controller=elogind          \
-          -Ddbuspolicydir=/etc/dbus-1/system.d \
-          -DBUILD_MANS=false                   \
-          ..  &&
+    meson \
+		-Dcgroup-controller=elogind \
+		-Dhalt-path=/sbin/halt \
+		-Drootlibexecdir=/usr/libexec/elogind \
+		-Dreboot-path=/sbin/reboot \
+		-Ddefault-hierarchy=hybrid \
+		-Ddefault-kill-user-processes=false \
+		-Dpolkit=true \
+		-Dman=true \
+		..
     ninja
 }
 
 package () {
     DESTDIR=$PKG_DEST ninja install &&
-    ln -sfv  libelogind.pc $PKG_DEST/usr/lib/pkgconfig/libsystemd.pc &&
-    ln -sfvn elogind $PKG_DEST/usr/include/systemd
+    ln -sf  libelogind.pc $PKG_DEST/usr/lib/pkgconfig/libsystemd.pc &&
+    ln -sfn elogind $PKG_DEST/usr/include/systemd
 
 
     sed -e '/\[Login\]/a KillUserProcesses=no' \
