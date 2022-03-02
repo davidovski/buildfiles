@@ -27,6 +27,6 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install-full
-    chgrp -v -R root $PKG_DEST/usr/share/doc/lynx-$PKG_VER/lynx_doc
+    chgrp -R root $PKG_DEST/usr/share/doc/lynx-$PKG_VER/lynx_doc
 
 }

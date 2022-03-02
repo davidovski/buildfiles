@@ -12,7 +12,7 @@ package () {
 }
 
 build () {
-    mkdir -v build &&
+    mkdir    build &&
     cd       build &&
 
     CC=gcc CXX=g++                                  \

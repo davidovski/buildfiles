@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake "
+MAKEDEPS="cmake llvm"
 DEPS="curl gcc libssh2"
 
 PKG_VER=1.58.1
@@ -8,10 +8,10 @@ SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 prepare () {
-    mkdir -pv $PKG_DEST/opt/rustc-$PKG_VER             &&
-    ln -svfin rustc-$PKG_VER $PKG_DEST/opt/rustc
+    mkdir -p $PKG_DEST/opt/rustc-$PKG_VER             &&
+    ln -sf rustc-$PKG_VER $PKG_DEST/opt/rustc
 
-    cat << EOF > config.toml
+    cat > config.toml << EOF
 # see config.toml.example for more possible options
 [llvm]
 
@@ -47,6 +47,9 @@ codegen-tests = false
 # get a trace if there is an Internal Compiler Exception
 backtrace-on-ice = true
 
+[target.x86_64-unknown-linux-musl]
+llvm-config = "/usr/bin/llvm-config"
+
 EOF
 }
 
@@ -64,7 +67,7 @@ package () {
     chown -R root:root install &&
     cp -a install/* $PKG_DEST
 
-    mkdir -pv $PKG_DEST/etc/profile.d/
+    mkdir -p $PKG_DEST/etc/profile.d/
     cat > $PKG_DEST/etc/profile.d/rustc.sh << "EOF"
 # Begin /etc/profile.d/rustc.sh
 
@@ -72,7 +75,7 @@ pathprepend /opt/rustc/bin           PATH
 
 # End /etc/profile.d/rustc.sh
 EOF
-    mkdir -pv $PKG_DEST/etc/ld.so.conf.d
+    mkdir -p $PKG_DEST/etc/ld.so.conf.d
 cat >> $PKG_DEST/etc/ld.so.conf.d/rustc.conf << EOF
 # Begin rustc addition
 

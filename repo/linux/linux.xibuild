@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make bc"
-DEPS="coreutils kmod"
+DEPS="sbase kmod"
 
 PKG_VER=5.16.11
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v$(echo $PKG_VER | cut -d. -f1).x/linux-$PKG_VER.tar.xz
