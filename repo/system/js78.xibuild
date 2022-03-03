@@ -37,6 +37,6 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    [ -f $PKG_DEST/usr/lib/libjs_static.ajs ] && rm -v $PKG_DEST/usr/lib/libjs_static.ajs 
+    [ -f $PKG_DEST/usr/lib/libjs_static.ajs ] && rm $PKG_DEST/usr/lib/libjs_static.ajs 
     sed -i '/@NSPR_CFLAGS@/d' $PKG_DEST/usr/bin/js78-config
 }

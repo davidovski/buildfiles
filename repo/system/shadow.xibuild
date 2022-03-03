@@ -35,7 +35,7 @@ package () {
     make DESTDIR=$PKG_DEST -C man install-man
     mkdir -p $PKG_DEST/etc/default
 
-    install -v -m644 $PKG_DEST/etc/login.defs $PKG_DEST/etc/login.defs.orig &&
+    install -m644 $PKG_DEST/etc/login.defs $PKG_DEST/etc/login.defs.orig &&
     for FUNCTION in FAIL_DELAY               \
                     FAILLOG_ENAB             \
                     LASTLOG_ENAB             \
@@ -172,12 +172,12 @@ EOF
     for PROGRAM in chfn chgpasswd chsh groupadd groupdel \
                    groupmems groupmod useradd userdel usermod
     do
-        install -v -m644 $PKG_DEST/etc/pam.d/chage $PKG_DEST/etc/pam.d/${PROGRAM}
+        install -m644 $PKG_DEST/etc/pam.d/chage $PKG_DEST/etc/pam.d/${PROGRAM}
         sed -i "s/chage/$PROGRAM/" $PKG_DEST/etc/pam.d/${PROGRAM}
     done
 
-    [ -f $PKG_DEST/etc/login.access ] && mv -v $PKG_DEST/etc/login.access{,.NOUSE} || true
-    [ -f $PKG_DEST/etc/limits ] && mv -v $PKG_DEST/etc/limits{,.NOUSE} || true
+    [ -f $PKG_DEST/etc/login.access ] && mv $PKG_DEST/etc/login.access{,.NOUSE} || true
+    [ -f $PKG_DEST/etc/limits ] && mv $PKG_DEST/etc/limits{,.NOUSE} || true
 }
 
 postinstall () {

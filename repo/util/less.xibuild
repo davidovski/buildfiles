@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl ncurses pcre"
+DEPS="musl ncurses pcre2"
 
 PKG_VER=590
 SOURCE=https://www.greenwoodsoftware.com/less/less-$PKG_VER.tar.gz

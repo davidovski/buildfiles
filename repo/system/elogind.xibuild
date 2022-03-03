@@ -19,12 +19,16 @@ prepare () {
     for p in *.patch; do
         patch -Np1 -i $p
     done
+
+    # skip the check that the source tree is "too far"
+    # (the assert_cc line)
+    sed -i '83d' src/basic/log.h
+
+    # remove -v options
+    sed -i 's/-v/-/g' tools/meson-symlink_headers.sh
 }
 
 build () {
-    mkdir build &&
-    cd    build &&
-
     # TODO re-enable BUILD_MANS
     meson \
 		-Dcgroup-controller=elogind \
@@ -33,16 +37,19 @@ build () {
 		-Dreboot-path=/sbin/reboot \
 		-Ddefault-hierarchy=hybrid \
 		-Ddefault-kill-user-processes=false \
-		-Dpolkit=true \
-		-Dman=true \
-		..
-    ninja
+		-Dpolkit=false \
+		-Dman=false \
+		build
+
+    ninja -C build
+
 }
 
 package () {
-    DESTDIR=$PKG_DEST ninja install &&
+    DESTDIR="$PKG_DEST" meson install --no-rebuild -C build
+
     ln -sf  libelogind.pc $PKG_DEST/usr/lib/pkgconfig/libsystemd.pc &&
-    ln -sfn elogind $PKG_DEST/usr/include/systemd
+    ln -sf  elogind $PKG_DEST/usr/include/systemd
 
 
     sed -e '/\[Login\]/a KillUserProcesses=no' \

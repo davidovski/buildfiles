@@ -24,6 +24,7 @@ build () {
           -DLLVM_ENABLE_RTTI=ON                     \
           -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF" \
           -DLLVM_BUILD_TESTS=ON                     \
+          -DLLVM_INSTALL_UTILS=ON                   \
           -DLLVM_BINUTILS_INCDIR=/usr/include       \
           -Wno-dev -G Ninja ..                      &&
     ninja
@@ -31,5 +32,4 @@ build () {
 
 package () {
     DESTDIR=$PKG_DEST ninja install
-
 }

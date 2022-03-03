@@ -13,7 +13,7 @@ build () {
 
     meson --prefix=/usr       \
           --buildtype=release \
-          -Dman=true          \
+          -Dman=false          \
           ..                  &&
     ninja
 }

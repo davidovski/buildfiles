@@ -18,7 +18,7 @@ check () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    ln -sv flex $PKG_DEST/usr/bin/lex
+    ln -s flex $PKG_DEST/usr/bin/lex
 }
 
 

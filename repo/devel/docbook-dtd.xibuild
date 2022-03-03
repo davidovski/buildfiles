@@ -32,4 +32,13 @@ PUBLIC "-//OASIS//DTD DocBook V4.0//EN" "docbook.dtd"
 
   -- End Single Major Version catalog changes --
 EOF
+} 
+
+postinstall () {
+    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+    /usr/share/sgml/docbook/sgml-dtd-$PKG_VER/catalog &&
+
+    install-catalog --add /etc/sgml/sgml-docbook-dtd-$PKG_VER.cat \
+        /etc/sgml/sgml-docbook.cat
 }
+

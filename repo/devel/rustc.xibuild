@@ -11,51 +11,54 @@ prepare () {
     mkdir -p $PKG_DEST/opt/rustc-$PKG_VER             &&
     ln -sf rustc-$PKG_VER $PKG_DEST/opt/rustc
 
-    cat > config.toml << EOF
-# see config.toml.example for more possible options
-[llvm]
+    openssl_file=vendor/openssl-sys/build/main.rs
+    checksum_before=$(sha256sum $openssl_file | cut -d' ' -f1)
+    sed -i "240i (3, 4, _) => ('3', '4', 'x')," $openssl_file
+    checksum_after=$(sha256sum $openssl_file | cut -d' ' -f1)
+    echo "checksum before: $checksum_before"
+    echo "checksum after: $checksum_after"
 
-# use ninja
-ninja = true
+    sed -i "s/$checksum_before/$checksum_after/g" vendor/openssl-sys/.cargo-checksum.json
 
-targets = "X86"
-# When compiling LLVM, the experimental targets (WebAssembly
-# and RISCV) are built by default - omit them
-experimental-targets = ""
-
-[build]
-# omit HTML docs to save time and space (comment this to build them)
-docs = false
-
-# install cargo as well as rust
-extended = true
-
-[install]
-# Adjust the prefix for the desired destination
-#prefix = "/usr"
-prefix = "/opt/rustc-$PKG_VER"
-
-# docdir is used even if the full awesome docs are not installed
-docdir = "share/doc/rustc-$PKG_VER"
-
-[rust]
-channel = "stable"
-rpath = false
-
-codegen-tests = false
-
-# get a trace if there is an Internal Compiler Exception
-backtrace-on-ice = true
-
-[target.x86_64-unknown-linux-musl]
-llvm-config = "/usr/bin/llvm-config"
-
-EOF
 }
 
 build () {
     export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi" &&
-    python3 ./x.py build --exclude src/tools/miri
+    target=x86_64-unknown-linux-musl
+    build=x86_64-unknown-linux-musl
+    ./configure \
+        --build="$build" \
+        --host="$target" \
+        --target="$target" \
+		--prefix="/usr" \
+		--release-channel="stable" \
+		--llvm-root="/usr/lib/" \
+		--disable-docs \
+		--enable-extended \
+		--tools="analysis,cargo,src,rustfmt" \
+		--enable-llvm-link-shared \
+		--enable-option-checking \
+		--enable-locked-deps \
+		--enable-vendor \
+		--set="rust.musl-root=/usr" \
+		--set="rust.codegen-units=1" \
+		--set="rust.codegen-units-std=1" \
+		--set="rust.parallel-compiler=false" \
+		--set="target.$target.llvm-config=/usr/bin/llvm-config" \
+		--set="target.$target.musl-root=/usr" \
+		--set="target.$target.crt-static=false" \
+		--set="target.$target.cc=gcc" \
+		--set="target.$target.cxx=c++" \
+		--set="target.$target.ar=ar" \
+		--set="target.$target.linker=gcc" \
+		--set="target.$build.musl-root=/usr" \
+		--set="target.$build.crt-static=false" \
+		--set="target.$build.cc=gcc" \
+		--set="target.$build.cxx=c++" \
+		--set="target.$build.ar=ar" \
+		--set="target.$build.linker=gcc"
+
+        python ./x.py dist --jobs $JOBS
 
 }
 

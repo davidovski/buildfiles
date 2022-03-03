@@ -13,8 +13,8 @@ DESC="GNU programs for producing shell scripts that can automatically configure 
 
 prepare() {
     patch -Np1 -i autoconf-2.13-consolidated_fixes-1.patch &&
-    mv -v autoconf.texi autoconf213.texi                      &&
-    rm -v autoconf.info                                      
+    mv autoconf.texi autoconf213.texi                      &&
+    rm autoconf.info                                      
 
 }
 
@@ -25,6 +25,6 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    install -v -m644 autoconf213.info $PKG_DEST/usr/share/info &&
+    install -m644 autoconf213.info $PKG_DEST/usr/share/info &&
     install-info --info-dir=$PKG_DEST/usr/share/info autoconf213.info
 }

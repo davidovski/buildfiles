@@ -38,13 +38,13 @@ build () {
 
     unset GALLIUM_DRV DRI_DRIVERS &&
 
-    ninja
+    ninja -j$JOBS
 
 }
 
 package () {
     DESTDIR=$PKG_DEST ninja install
-    install -v -dm755 $PKG_DEST/usr/share/doc/mesa-$PKG_VER &&
-    cp -rfv ../docs/* $PKG_DEST/usr/share/doc/mesa-$PKG_VER
+    install -dm755 $PKG_DEST/usr/share/doc/mesa-$PKG_VER &&
+    cp -rf ../docs/* $PKG_DEST/usr/share/doc/mesa-$PKG_VER
 
 }
