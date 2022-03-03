@@ -31,12 +31,17 @@ prepare () {
 
 build () {
     # would be ideal to use openssl rather than builtin library
-    ./configure ${configure_args} --sbindir=/usr/bin \
-		--disable-rpath --with-system-et --without-system-verto --with-ldap \
-		--with-system-ss --enable-shared --without-tcl \
-		ac_cv_func_pthread_once=yes ac_cv_func_pthread_rwlock_init=yes \
-		acx_pthread_ok=yes ac_cv_func_regcomp=yes ac_cv_printf_positional=yes \
-		krb5_cv_attr_constructor_destructor=yes,yes
+    autoreconf
+    ./configure --prefix=/usr            \
+                --sysconfdir=/etc        \
+                --localstatedir=/var/lib \
+                --runstatedir=/run       \
+                --with-system-et         \
+                --with-system-ss         \
+                --with-system-verto=no   \
+                --with-crypto-impl=builtin \
+                --enable-dns-for-realm &&
+
     make
 }
 
