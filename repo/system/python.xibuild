@@ -2,7 +2,7 @@
 
 
 MAKEDEPS="make autoconf automake autoconf-archive"
-DEPS="bzip2 expat gdbm libffi libnsl libxcrypt libressl zlib grep"
+DEPS="bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib grep"
 
 PKG_VER=3.10.2
 SOURCE=https://www.python.org/ftp/python/$PKG_VER/Python-$PKG_VER.tgz

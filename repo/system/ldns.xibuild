@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make libpcap"
-DEPS="libressl libpcap"
+DEPS="openssl libpcap"
 
 PKG_VER=1.8.1
 SOURCE=https://www.nlnetlabs.nl/downloads/ldns/ldns-$PKG_VER.tar.gz

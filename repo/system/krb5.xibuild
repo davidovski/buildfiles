@@ -6,11 +6,6 @@ DEPS="musl e2fsprogs libldap keyutils gdbm"
 PKG_VER=1.19.2
 SOURCE=http://web.mit.edu/kerberos/dist/krb5/${PKG_VER%.*}/krb5-${PKG_VER}.tar.gz
 
-ADDITIONAL="
-https://cgit.freebsd.org/ports/plain/security/krb5-119/files/patch-plugins_preauth_pkinit_pkinit__crypto__openssl.c
-https://cgit.freebsd.org/ports/plain/security/krb5-119/files/patch-plugins_preauth_pkinit_pkinit__crypto__openssl.h
-"
-
 DESC="The Kerberos network authentication system"
 
 prepare () {
@@ -24,8 +19,9 @@ prepare () {
 
 
     cd src &&
-    patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.c
-    patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.h
+    #these were needed for libressl
+    #patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.c
+    #patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.h
 
    	sed -e "/LDFLAGS=/d" -i build-tools/krb5-config.in
     sed -i -e 's@\^u}@^u cols 300}@' tests/dejagnu/config/default.exp || true
@@ -34,7 +30,7 @@ prepare () {
 }
 
 build () {
-    # would be ideal to use libressl rather than builtin library
+    # would be ideal to use openssl rather than builtin library
     ./configure ${configure_args} --sbindir=/usr/bin \
 		--disable-rpath --with-system-et --without-system-verto --with-ldap \
 		--with-system-ss --enable-shared --without-tcl \

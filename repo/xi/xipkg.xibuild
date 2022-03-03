@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="libressl curl dash xiutils findutils diffutils sed xichroot grep"
+DEPS="openssl curl dash xiutils findutils diffutils sed xichroot grep"
 
 PKG_VER=1.0.2
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git

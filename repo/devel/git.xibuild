@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="grep python make xmlto"
-DEPS="curl perl libressl pcre2 grep shadow zlib openssh"
+DEPS="curl perl openssl pcre2 grep shadow zlib openssh"
 
 PKG_VER=2.34.1
 SOURCE=https://www.kernel.org/pub/software/scm/git/git-$PKG_VER.tar.xz

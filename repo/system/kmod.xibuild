@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl zlib libressl xz zstd"
+DEPS="musl zlib openssl xz zstd"
 
 PKG_VER=29
 SOURCE=https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$PKG_VER.tar.xz
@@ -21,10 +21,10 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install 
     mkdir -p /usr/bin
-    ln -sv kmod $PKG_DEST/usr/bin/depmod
-    ln -sv kmod $PKG_DEST/usr/bin/insmod
-    ln -sv kmod $PKG_DEST/usr/bin/modinfo
-    ln -sv kmod $PKG_DEST/usr/bin/modprobe
-    ln -sv kmod $PKG_DEST/usr/bin/rmmod
-    ln -sv kmod $PKG_DEST/usr/bin/lsmod
+    ln -s kmod $PKG_DEST/usr/bin/depmod
+    ln -s kmod $PKG_DEST/usr/bin/insmod
+    ln -s kmod $PKG_DEST/usr/bin/modinfo
+    ln -s kmod $PKG_DEST/usr/bin/modprobe
+    ln -s kmod $PKG_DEST/usr/bin/rmmod
+    ln -s kmod $PKG_DEST/usr/bin/lsmod
 }
