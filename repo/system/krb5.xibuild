@@ -4,7 +4,11 @@ MAKEDEPS="make "
 DEPS="musl e2fsprogs libldap keyutils gdbm"
 
 PKG_VER=1.19.2
-SOURCE=http://web.mit.edu/kerberos/dist/krb5/${PKG_VER%.*}/krb5-${PKG_VER}.tar.gz
+SOURCE=http://kerberos.org/dist/krb5/${PKG_VER%.*}/krb5-${PKG_VER}.tar.gz
+
+ADDITIONAL="
+    https://www.linuxfromscratch.org/patches/blfs/svn/mitkrb-${PKG_VER}-openssl3_fixes-1.patch
+"
 
 DESC="The Kerberos network authentication system"
 
@@ -22,6 +26,8 @@ prepare () {
     #these were needed for libressl
     #patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.c
     #patch -Np0 -i ../patch-plugins_preauth_pkinit_pkinit__crypto__openssl.h
+    patch -Np2 -i ../mitkrb-$PKG_VER-openssl3_fixes-1.patch
+
 
    	sed -e "/LDFLAGS=/d" -i build-tools/krb5-config.in
     sed -i -e 's@\^u}@^u cols 300}@' tests/dejagnu/config/default.exp || true
