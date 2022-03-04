@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="grep make dejagnu inetutils"
+MAKEDEPS="grep make dejagnu inetutils flex"
 DEPS="musl binutils mpc mpfr gmp"
 
 PKG_VER=11.2.0
@@ -19,10 +19,8 @@ ADDITIONAL="
     $PATCH_SRC/0007-Enable-Wtrampolines-by-default.patch 
     $PATCH_SRC/0009-Ensure-that-msgfmt-doesn-t-encounter-problems-during.patch 
     $PATCH_SRC/0010-Don-t-declare-asprintf-if-defined-as-a-macro.patch 
-    $PATCH_SRC/0011-libiberty-copy-PIC-objects-during-build-process.patch 
     $PATCH_SRC/0012-libitm-disable-FORTIFY.patch 
     $PATCH_SRC/0013-libgcc_s.patch 
-    $PATCH_SRC/0014-nopie.patch 
     $PATCH_SRC/0015-libffi-use-__linux__-instead-of-__gnu_linux__-for-mu.patch 
     $PATCH_SRC/0016-dlang-update-zlib-binding.patch 
     $PATCH_SRC/0017-dlang-fix-fcntl-on-mips-add-libucontext-dep.patch 
@@ -79,11 +77,8 @@ prepare () {
 
     tar xf isl-$ISL_VER.tar.xz
     mv isl-$ISL_VER isl
-
-    for p in *.patch;  do
-        patch -Np1 -i $p || true
-    done
-
+    
+    apply_patches
 }
 
 build () {
@@ -115,7 +110,6 @@ build () {
     export FON+="--enable-tls "
     export FON+="--enable-libstdcxx-time "
     export FON+="--enable-fully-dynamic-string "
-    export FON+="--enable-default-pie "
     export FON+="--enable-default-ssp "
     export FON+="--enable-linker-build-id "
     export FON+="--enable-checking=release "
@@ -137,9 +131,9 @@ build () {
     make &&
 
     cd .. &&
-    cc -fpie getent.c -o getent &&
-    cc -fpie getconf.c -o getconf &&
-    cc -fpie iconv.c -o iconv 
+    cc getent.c -o getent &&
+    cc getconf.c -o getconf &&
+    cc iconv.c -o iconv 
 }
 
 check () {
@@ -176,6 +170,10 @@ package () {
 
     mkdir -p $PKG_DEST/usr/share/gdb/auto-load/usr/lib
     #mv $PKG_DEST/usr/lib/*gdb.py $PKG_DEST/usr/share/gdb/auto-load/usr/lib
+
+    for p in gcov gcc-ar gcc gcc-ranlib c++ g++ gcc-nm lto-dump gcov-tools gcov-dump cpp; do
+        ln -s $TRUPLE-$p $PKG_DEST/usr/bin/$p
+    done
 
 
 }

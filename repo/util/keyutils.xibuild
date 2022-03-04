@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make file"
 DEPS="musl sh"
 
 PKG_VER=1.6.3
@@ -12,5 +12,10 @@ build () {
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    make DESTDIR=$PKG_DEST \
+         NO_ARLIB=1 \
+	     LIBDIR=/usr/lib \
+		 USRLIBDIR=/usr/lib \
+         install
+
 }

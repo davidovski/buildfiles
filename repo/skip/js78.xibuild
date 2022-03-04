@@ -1,0 +1,55 @@
+#!/bin/sh
+
+MAKEDEPS="gcc autoconf2-13 icu rustc zlib which zip llvm patch make"
+DEPS="readline nspr bash zlib"
+
+PKG_VER=78.15.0
+SOURCE=https://archive.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz
+ADDITIONAL="
+    patches/js78/disable-jslint.patch
+    patches/js78/fd6847c9416f9eebde636e21d794d25d1be8791d.patch
+    patches/js78/fix-musl-build.patch
+    patches/js78/fix-python3.10-compilation.patch
+    "
+
+DESC="JavaScript interpreter and libraries - Version 78"
+
+prepare () {
+    apply_patches
+
+    mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
+    export PATH=/opt/rustc/bin:$PATH
+    export LD_LIBRARY_PATH=/opt/rustc/lib:$LD_LIBRARY_PATH
+}
+
+build () {
+    mkdir obj &&
+    cd    obj &&
+
+    CC=gcc CXX=g++ \
+    CFLAGS="-fPIE -fPIC" CXXFLAGS="-fPIE -fPIC" SHELL=/bin/bash PYTHON=/usr/bin/python3 \
+        ../js/src/configure --prefix=/usr \
+            --disable-jemalloc \
+            --disable-optimize \
+            --enable-ctypes \
+            --enable-readline \
+            --enable-shared-js \
+            --enable-system-ffi \
+            --enable-tests \
+            --with-intl-api \
+            --with-system-icu \
+            --with-system-nspr \
+            --enable-hardening \
+            --enable-release \
+            --with-system-zlib \
+            --host=x86_64-linux-musl 
+
+    make -j1
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+    [ -f $PKG_DEST/usr/lib/libjs_static.ajs ] && rm $PKG_DEST/usr/lib/libjs_static.ajs 
+    sed -i '/@NSPR_CFLAGS@/d' $PKG_DEST/usr/bin/js78-config
+}

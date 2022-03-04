@@ -49,9 +49,8 @@ build () {
              --enable-threads \
              --disable-multilib \
              --with-mmap \
-             --with-pic  \
              --enable-64-bit-bfd \
-             --with-pic $EXTRA_CONFIG
+             $EXTRA_CONFIG
 
     make tooldir=/usr
 }
@@ -65,8 +64,8 @@ package() {
     cd .. 
 
     # how about we use binutils ld?
-    #rm -f   $PKG_DEST/usr/bin/ld
-    #ln -sf /usr/bin/ld.bfd $PKG_DEST/usr/bin/ld
+    rm -f   $PKG_DEST/usr/bin/ld
+    ln -sf /usr/bin/ld.bfd $PKG_DEST/usr/bin/ld
 
     install -m 644 include/libiberty.h $PKG_DEST/usr/include
     install -m 644 include/demangle.h  $PKG_DEST/usr/include

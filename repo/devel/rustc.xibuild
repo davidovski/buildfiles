@@ -7,18 +7,25 @@ PKG_VER=1.58.1
 SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
+ADDITIONAL="
+    https://git.alpinelinux.org/aports/plain/community/rust/link-musl-dynamically.patch
+"
+
 prepare () {
+   
+    apply_patches
+
     mkdir -p $PKG_DEST/opt/rustc-$PKG_VER             &&
     ln -sf rustc-$PKG_VER $PKG_DEST/opt/rustc
 
-    openssl_file=vendor/openssl-sys/build/main.rs
-    checksum_before=$(sha256sum $openssl_file | cut -d' ' -f1)
-    sed -i "240i (3, 4, _) => ('3', '4', 'x')," $openssl_file
-    checksum_after=$(sha256sum $openssl_file | cut -d' ' -f1)
-    echo "checksum before: $checksum_before"
-    echo "checksum after: $checksum_after"
+    #openssl_file=vendor/openssl-sys/build/main.rs
+    #checksum_before=$(sha256sum $openssl_file | cut -d' ' -f1)
+    #sed -i "240i (3, 4, _) => ('3', '4', 'x')," $openssl_file
+    #checksum_after=$(sha256sum $openssl_file | cut -d' ' -f1)
+    #echo "checksum before: $checksum_before"
+    #echo "checksum after: $checksum_after"
 
-    sed -i "s/$checksum_before/$checksum_after/g" vendor/openssl-sys/.cargo-checksum.json
+    #sed -i "s/$checksum_before/$checksum_after/g" vendor/openssl-sys/.cargo-checksum.json
 
 }
 
@@ -43,7 +50,7 @@ build () {
 		--set="rust.musl-root=/usr" \
 		--set="rust.codegen-units=1" \
 		--set="rust.codegen-units-std=1" \
-		--set="rust.parallel-compiler=false" \
+		--set="rust.parallel-compiler=true" \
 		--set="target.$target.llvm-config=/usr/bin/llvm-config" \
 		--set="target.$target.musl-root=/usr" \
 		--set="target.$target.crt-static=false" \

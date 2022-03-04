@@ -3,7 +3,7 @@
 MAKEDEPS="gcc"
 DEPS="bash"
 
-PKG_VER=1.0.1
+PKG_VER=1.0.2
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 BRANCH="v$PKG_VER"
 
@@ -13,7 +13,13 @@ build () {
     make
 }
 
+check () {
+    make check
+}
+
 package () {
-    mkdir -pv $PKG_DEST/usr/{include,bin,lib}
+    for dir in include bin lib; do
+        mkdir -p $PKG_DEST/usr/$dir
+    done
     make DESTDIR=$PKG_DEST install
 }
