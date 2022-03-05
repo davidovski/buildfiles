@@ -1,0 +1,15 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS=""
+
+DESC="The queue.h header from glibc"
+
+ADDITIONAL="
+    https://gitweb.gentoo.org/repo/gentoo.git/plain/sys-libs/queue-standalone/files/queue.h
+"
+
+package () {
+    install -d $PKG_DEST/usr/include/sys/
+    install -m644 queue.h $PKG_DEST/usr/include/sys/
+}

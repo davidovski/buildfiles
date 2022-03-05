@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python"
+MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python-setuptools python-sphinx"
 DEPS="perl zlib libffi libedit ncurses"
 
 PKG_VER=13.0.0
@@ -12,11 +12,11 @@ package () {
 }
 
 build () {
-    mkdir    build &&
-    cd       build &&
-
+    mkdir build
+    cd build
     CC=gcc CXX=g++                                  \
-    cmake -DCMAKE_INSTALL_PREFIX=/usr               \
+    cmake                                           \
+          -DCMAKE_INSTALL_PREFIX=/usr               \
           -DLLVM_ENABLE_FFI=ON                      \
           -DCMAKE_BUILD_TYPE=Release                \
           -DLLVM_BUILD_LLVM_DYLIB=ON                \
@@ -25,11 +25,21 @@ build () {
           -DLLVM_TARGETS_TO_BUILD="host;AMDGPU;BPF" \
           -DLLVM_BUILD_TESTS=ON                     \
           -DLLVM_INSTALL_UTILS=ON                   \
+          -DLLVM_ENABLE_SPHINX=ON                   \
+          -DLLVM_ENABLE_TERMINFO=ON                 \
           -DLLVM_BINUTILS_INCDIR=/usr/include       \
           -Wno-dev -G Ninja ..                      &&
-    ninja
+    ninja llvm-tblgen &&
+    ninja &&
+    cd ..
+
+    python3 utils/lit/setup.py build
 }
 
 package () {
-    DESTDIR=$PKG_DEST ninja install
+    DESTDIR=$PKG_DEST ninja -C build install
+
+    cd build
+	python3 ../utils/lit/setup.py install --prefix=/usr --root=$PKG_DEST
+
 }

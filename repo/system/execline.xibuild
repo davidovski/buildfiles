@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="skalibs"
+
+PKG_VER=2.8.2.0
+SOURCE=https://skarnet.org/software/execline/execline-$PKG_VER.tar.gz
+DESC="A non-interactive shell-like scripting language"
+
+build () {
+    ./configure --enable-shared       \
+                --enable-static       \
+                --enable-allstatic    \
+                --enable-static-libc  \
+                --libdir=/usr/lib     \
+                --with-dynlib=/usr/lib \
+                --enable-pedantic-posix
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

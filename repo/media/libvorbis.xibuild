@@ -15,5 +15,5 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    install -v -m644 doc/Vorbis* $PKG_DEST/usr/share/doc/libvorbis-$PKG_VER
+    install -m644 doc/Vorbis* $PKG_DEST/usr/share/doc/libvorbis-$PKG_VER
 }

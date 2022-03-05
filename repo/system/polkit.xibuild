@@ -5,9 +5,6 @@ DEPS="expat glib js78 pam"
 
 PKG_VER=0.120
 SOURCE=https://www.freedesktop.org/software/polkit/releases/polkit-$PKG_VER.tar.gz
-ADDITIONAL="
-    https://www.linuxfromscratch.org/patches/blfs/svn/polkit-$PKG_VER-security_fix-1.patch
-    "
 
 DESC="Application development toolkit for controlling system-wide privileges"
 
@@ -15,8 +12,6 @@ prepare () {
     sed '/0,/s/^/#/' -i meson_post_install.py &&
     sed '/policy,/d' -i actions/meson.build \
                      -i src/examples/meson.build
-
-    patch -Np1 -i polkit-$PKG_VER-security_fix-1.patch
 
 }
 
