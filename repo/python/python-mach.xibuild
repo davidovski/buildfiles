@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS=""
+
+PKG_VER=1.0.0
+SOURCE=https://files.pythonhosted.org/packages/4b/88/d4def370b1ba6127ab936d4cb368ef3f00b500309ae90fb31132861fb872/mach-$PKG_VER.tar.gz
+DESC="Generic command line command dispatching framework."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

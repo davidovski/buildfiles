@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="gcc autoconf2-13 icu rustc zlib which zip clang llvm patch make"
+MAKEDEPS="gcc autoconf2-13 icu rustc zlib which zip clang llvm patch make python-six python-mach"
 DEPS="readline nspr bash zlib"
 
 PKG_VER=78.15.0
@@ -18,9 +18,6 @@ prepare () {
     apply_patches
     export LDFLAGS="$LDFLAGS -Wl,-z,stack-size=1048576"
 
-
-    autoreconf -fi
-
     mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
     export PATH=/opt/rustc/bin:$PATH
     export LD_LIBRARY_PATH=/opt/rustc/lib:$LD_LIBRARY_PATH
@@ -28,12 +25,11 @@ prepare () {
 }
 
 build () {
-    mkdir build &&
-    cd    build &&
+    mkdir build
+    cd    build 
 
     SHELL=/bin/bash PYTHON=/usr/bin/python3 \
         ../js/src/configure --prefix=/usr \
-        		--with-clang-path=/usr/bin/clang \
                 --with-intl-api \
                 --with-libclang-path=/usr/lib \
                 --with-system-icu \
@@ -54,7 +50,13 @@ build () {
 
 
     make -j1
+}
 
+check () {
+    dist/bin/jsapi-tests \
+		--format=none \
+		--exclude-random \
+		basic
 }
 
 package () {

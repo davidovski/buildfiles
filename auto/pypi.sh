@@ -9,12 +9,14 @@ else
     name=$1
 fi
 
-if ! pip show $name > /dev/null; then
+json_url=https://pypi.org/pypi/$name/json
+
+if [ "$(curl -s -o /dev/null -w "%{http_code}" $json_url)" != 200 ] ; then
    echo "Failed to find $name" 
    exit 1
 fi
 
-json=$(curl -SsL https://pypi.org/pypi/$name/json)
+json=$(curl -SsL $json_url)
 version=$(echo $json | jq -r '.info.version')
 desc=$(echo $json | jq -r '.info.summary')
 url=$(echo $json | jq -r '.urls[] | select((.version="1.0.3")) | .url' | grep -v "whl" | sed "s/$version/\$PKG_VER/g")

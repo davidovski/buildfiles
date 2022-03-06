@@ -1,0 +1,26 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="libedit"
+
+PKG_VER=3370200
+SOURCE=https://sqlite.org/2022/sqlite-autoconf-$PKG_VER.tar.gz
+DESC="Small suite of programs for UNIX, designed to allow process supervision"
+
+build () {
+    ./configure --prefix=/usr     \
+            --disable-static  \
+            --enable-fts5     \
+            CPPFLAGS="-DSQLITE_ENABLE_FTS3=1            \
+                      -DSQLITE_ENABLE_FTS4=1            \
+                      -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+                      -DSQLITE_ENABLE_UNLOCK_NOTIFY=1   \
+                      -DSQLITE_ENABLE_DBSTAT_VTAB=1     \
+                      -DSQLITE_SECURE_DELETE=1          \
+                      -DSQLITE_ENABLE_FTS3_TOKENIZER=1" &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

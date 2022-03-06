@@ -7,6 +7,7 @@ Subject: [PATCH] Fixup compatibility of mozbuild with Python 3.10
 
 ---
  python/mach/mach/config.py                                    | 4 ++--
+ python/mach/mach/main.py                                      | 4 ++--
  python/mach/mach/decorators.py                                | 2 +-
  python/mozbuild/mozbuild/backend/configenvironment.py         | 3 ++-
  python/mozbuild/mozbuild/makeutil.py                          | 2 +-
@@ -61,6 +62,17 @@ index 27f7f34a6..5f63271a3 100644
 +        if not isinstance(command.conditions, collections.abc.Iterable):
              msg = msg % (command.name, type(command.conditions))
              raise MachError(msg)
+
+--- a/python/mach/mach/main.py
++++ b/python/mach/mach/main.py
+@@ -16,7 +16,7 @@
+ import sys
+ import traceback
+ import uuid
+-from collections import Iterable
++from collections.abc import Iterable
+ 
+ from six import string_types
  
 diff --git a/python/mozbuild/mozbuild/backend/configenvironment.py b/python/mozbuild/mozbuild/backend/configenvironment.py
 index 20d1a9fa6..8747958bd 100644

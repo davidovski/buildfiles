@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake llvm"
+MAKEDEPS="cmake llvm clang"
 DEPS="curl gcc libssh2 openssl"
 
 PKG_VER=1.58.1
@@ -54,16 +54,16 @@ build () {
 		--set="target.$target.llvm-config=/usr/bin/llvm-config" \
 		--set="target.$target.musl-root=/usr" \
 		--set="target.$target.crt-static=false" \
-		--set="target.$target.cc=gcc" \
-		--set="target.$target.cxx=c++" \
-		--set="target.$target.ar=ar" \
-		--set="target.$target.linker=gcc" \
+		--set="target.$target.cc=clang" \
+		--set="target.$target.cxx=clang++" \
+		--set="target.$target.ar=llvm-ar" \
+		--set="target.$target.linker=clang" \
 		--set="target.$build.musl-root=/usr" \
 		--set="target.$build.crt-static=false" \
-		--set="target.$build.cc=gcc" \
-		--set="target.$build.cxx=c++" \
-		--set="target.$build.ar=ar" \
-		--set="target.$build.linker=gcc"
+		--set="target.$build.cc=clang" \
+		--set="target.$build.cxx=clang++" \
+		--set="target.$build.ar=llvm-ar" \
+		--set="target.$build.linker=clang"
 
         python ./x.py dist --jobs $JOBS
 
