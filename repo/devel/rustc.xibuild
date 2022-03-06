@@ -8,7 +8,14 @@ SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 ADDITIONAL="
-    https://git.alpinelinux.org/aports/plain/community/rust/link-musl-dynamically.patch
+    patches/rustc/0006-Prefer-libgcc_eh-over-libunwind-for-musl.patch
+    patches/rustc/0007-do-not-install-libunwind-source.patch
+    patches/rustc/install-template-shebang.patch
+    patches/rustc/link-musl-dynamically.patch
+    patches/rustc/musl-fix-linux_musl_base.patch
+    patches/rustc/need-rpath.patch
+    patches/rustc/need-ssp_nonshared.patch
+    patches/rustc/need-ssp_nonshared.patch
 "
 
 prepare () {
@@ -17,23 +24,13 @@ prepare () {
 
     mkdir -p $PKG_DEST/opt/rustc-$PKG_VER             &&
     ln -sf rustc-$PKG_VER $PKG_DEST/opt/rustc
-
-    #openssl_file=vendor/openssl-sys/build/main.rs
-    #checksum_before=$(sha256sum $openssl_file | cut -d' ' -f1)
-    #sed -i "240i (3, 4, _) => ('3', '4', 'x')," $openssl_file
-    #checksum_after=$(sha256sum $openssl_file | cut -d' ' -f1)
-    #echo "checksum before: $checksum_before"
-    #echo "checksum after: $checksum_after"
-
-    #sed -i "s/$checksum_before/$checksum_after/g" vendor/openssl-sys/.cargo-checksum.json
-
 }
 
 build () {
     export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi" &&
     target=x86_64-unknown-linux-musl
     build=x86_64-unknown-linux-musl
-    ./configure \
+    CFLAGS="-fPIE" CXXFLAGS="-fPIE" ./configure \
         --build="$build" \
         --host="$target" \
         --target="$target" \

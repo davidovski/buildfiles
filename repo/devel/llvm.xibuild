@@ -35,6 +35,7 @@ build () {
             -DLLVM_ENABLE_ZLIB=ON \
             -DLLVM_HOST_TRIPLE="x86_64-linux-musl" \
             -DLLVM_INCLUDE_EXAMPLES=OFF \
+            -DLLVM_INSTALL_UTILS=ON \
             -DLLVM_LINK_LLVM_DYLIB=ON \
             -DLLVM_APPEND_VC_REV=OFF \
           -Wno-dev -G Ninja ..                      &&
@@ -50,11 +51,4 @@ package () {
 
     cd build
 	python3 ../utils/lit/setup.py install --prefix=/usr --root=$PKG_DEST
-
-    mkdir $PKG_DEST/usr/bin
-    for path in bin/*; do
-        name=${path##*/}
-        ln -s ../lib/llvm/bin/$name $PKG_DEST/usr/bin/$name
-    done
-
 }

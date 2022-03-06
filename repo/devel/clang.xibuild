@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake llvm libxml2 ninja python3"
+MAKEDEPS="cmake llvm libxml2 ninja python3 python-markupsafe" 
 DEPS="curl gcc libssh2 openssl"
 
 PKG_VER=13.0.1
@@ -26,7 +26,6 @@ build () {
 	cd    build
 
 	python_version=$(python3 -V | sed 's/.*\([0-9]\{1,\}\.[0-9]\{1,\}\)\..*/\1/')
-
 
     cmake .. -G Ninja -Wno-dev \
 		-DCMAKE_BUILD_TYPE=Release \
