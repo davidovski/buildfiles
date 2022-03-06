@@ -1,3 +1,7 @@
+#!/bin/sh
+
+[ -f /usr/lib/colors.sh ] && . /usr/lib/colors.sh
+
 if [ $# = 0 ]; then
     printf "Name of package: python-"
     read name
@@ -20,18 +24,33 @@ if [ ${#deps} != 0 ]; then
     echo $package_deps
 fi
 
+echo PKG_VER: $version
+echo DESC: $desc
+echo SOURCE: $url
+echo DEPS: $package_deps
+
 file=repo/python/python-$name.xibuild
 
-cat templates/pypi.xibuild |
-    sed "s@^SOURCE=.*@SOURCE=$url@g" |
-    sed "s/^PKG_VER=.*/PKG_VER=$version/g" |
-    sed "s/^DESC=.*/DESC=\"$desc\"/g" |
-    sed "s/^DEPS=.*/DEPS=\"$package_deps\"/g"  > $file
-echo written to $file
+inp=templates/pypi.xibuild
+if [ -f $file ]; then
+    inp=$file
+    echo "replacing existing"
+fi
+
+tmp=/tmp/python-$name.xibuild
+rm -f $tmp
+cat $inp > $tmp
+
+sed -i "s@^SOURCE=.*@SOURCE=$url@g" $tmp
+sed -i "s@^PKG_VER=.*@PKG_VER=$version@g" $tmp
+sed -i "s@^DESC=.*@DESC=\"$desc\"@g" $tmp
 
 if [ ${#deps} != 0 ]; then
-    for p in $deps; do
-        $0 $p
-    done
+    printf "${LIGHT_BLUE}Please ensure the following exist: ${BLUE}${deps}${RESET}\n"
+    sed -i "s/^DEPS=.*/DEPS=\"$package_deps\"/g" $tmp
 fi
+
+mv $tmp $file
+
+printf "${GREEN}Written to $file${RESET}\n"
 
