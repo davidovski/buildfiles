@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-urllib3 python-certifi python-chardet python-idna python-charset-python-normalizer python-idna python-PySocks python-win-python-inet-python-pton python-chardet"
+
+PKG_VER=2.27.1
+SOURCE=https://files.pythonhosted.org/packages/60/f3/26ff3767f099b73e0efa138a9998da67890793bfa475d8278f84a30fec77/requests-$PKG_VER.tar.gz
+DESC="Python HTTP for Humans."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

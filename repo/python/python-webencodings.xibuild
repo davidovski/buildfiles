@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS=""
+
+PKG_VER=0.5.1
+SOURCE=https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-$PKG_VER.tar.gz
+DESC="Character encoding aliases for legacy web content"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

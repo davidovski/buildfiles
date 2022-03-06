@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-MarkupSafe python-Babel"
+
+PKG_VER=3.0.3
+SOURCE=https://files.pythonhosted.org/packages/91/a5/429efc6246119e1e3fbf562c00187d04e83e54619249eb732bb423efa6c6/Jinja2-$PKG_VER.tar.gz
+DESC="A very fast and expressive template engine."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

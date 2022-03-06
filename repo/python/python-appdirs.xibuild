@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=1.4.4
+SOURCE=https://pypi.io/packages/source/a/appdirs/appdirs-$PKG_VER.tar.gz
+DESC="A small Python module for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

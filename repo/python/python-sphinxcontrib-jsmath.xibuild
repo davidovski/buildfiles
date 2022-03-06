@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-pytest python-flake8 python-mypy"
+
+PKG_VER=1.0.1
+SOURCE=https://files.pythonhosted.org/packages/b2/e8/9ed3830aeed71f17c026a07a5097edcf44b692850ef215b161b8ad875729/sphinxcontrib-jsmath-$PKG_VER.tar.gz
+DESC="A sphinx extension which renders display math in HTML via JavaScript"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

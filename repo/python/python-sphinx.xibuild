@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-sphinxcontrib-python-applehelp python-sphinxcontrib-python-devhelp python-sphinxcontrib-python-jsmath python-sphinxcontrib-python-htmlhelp python-sphinxcontrib-python-serializinghtml python-sphinxcontrib-python-qthelp python-Jinja2 python-Pygments python-docutils python-snowballstemmer python-babel python-alabaster python-imagesize python-requests python-packaging python-importlib-python-metadata python-colorama python-sphinxcontrib-python-websupport python-flake8 python-isort python-mypy python-docutils-python-stubs python-types-python-typed-python-ast python-types-python-requests python-pytest python-pytest-python-cov python-html5lib python-cython python-typed-python-ast"
+
+PKG_VER=4.4.0
+SOURCE=https://files.pythonhosted.org/packages/c9/08/c2932e66460cfbc8973928d276dc82ccde2d24b365055eeda9f0afc1951e/Sphinx-$PKG_VER.tar.gz
+DESC="Python documentation generator"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

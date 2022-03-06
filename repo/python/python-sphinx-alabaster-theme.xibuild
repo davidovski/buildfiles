@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=0.7.12
+SOURCE=https://pypi.org/packages/source/a/alabaster/alabaster-$PKG_VER.tar.gz
+DESC="Sphinx default theme"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

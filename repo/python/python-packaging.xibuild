@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=21.3
+SOURCE=https://github.com/pypa/packaging/archive/$PKG_VER/python-packaging-$PKG_VER.tar.gz
+DESC="Core utilities for Python packages"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

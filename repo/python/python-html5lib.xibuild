@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-six python-webencodings python-genshi python-chardet python-lxml python-chardet python-genshi python-lxml"
+
+PKG_VER=1.1
+SOURCE=https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-$PKG_VER.tar.gz
+DESC="HTML parser based on the WHATWG HTML specification"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

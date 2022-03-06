@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=3.0.1
+SOURCE=https://github.com/pyparsing/pyparsing/archive/pyparsing_$PKG_VER.tar.gz
+DESC="General parsing module for Python"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    pytho3 setup.py install --root="$PKG_DEST" --optimize=1
+}

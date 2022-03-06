@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS=""
+
+PKG_VER=22.0.3
+SOURCE=https://files.pythonhosted.org/packages/88/d9/761f0b1e0551a3559afe4d34bd9bf68fc8de3292363b3775dda39b62ce84/pip-$PKG_VER.tar.gz
+DESC="The PyPA recommended tool for installing Python packages."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

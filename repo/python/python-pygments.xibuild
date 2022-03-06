@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=2.11.2
+SOURCE=https://pypi.org/packages/source/P/Pygments/Pygments-$PKG_VER.tar.gz
+DESC="Python syntax highlighter"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

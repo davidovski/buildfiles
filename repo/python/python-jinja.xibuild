@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS=""
+
+PKG_VER=3.0.3
+SOURCE=https://files.pythonhosted.org/packages/source/J/Jinja2/Jinja2-$PKG_VER.tar.gz
+DESC="A simple pythonic template language written in Python"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}
