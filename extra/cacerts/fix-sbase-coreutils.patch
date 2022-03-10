@@ -1,0 +1,12 @@
+diff -Nuar a/make-ca b/make-ca
+--- a/make-ca	2020-03-08 04:55:46.000000000 +0000
++++ b/make-ca	2022-03-09 21:41:03.786961743 +0000
+@@ -809,7 +809,7 @@
+ 
+ # Install certdata.txt
+ if test "${REBUILD}" == "0"; then
+-  install -vdm755 "${DESTDIR}${SSLDIR}"
++  install -dm755 "${DESTDIR}${SSLDIR}"
+   install -m644 "${WORKDIR}/certdata.txt" "${DESTDIR}${SSLDIR}/certdata.txt"
+ fi
+ 

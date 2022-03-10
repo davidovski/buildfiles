@@ -1,0 +1,25 @@
+#!/bin/sh
+
+MAKEDEPS="elfutils zlib"
+DEPS="musl zlib libelf"
+
+PKG_VER=20210528
+SOURCE=http://www.prevanders.net/libdwarf-$PKG_VER.tar.gz
+DESC="Parsing library for DWARF2 and later debugging file format"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--enable-shared \
+        --enable-dwarfgen
+    make
+}
+
+check () {
+    make check
+}
+
+
+package () {
+    make  DESTDIR=$PKG_DEST install 
+}

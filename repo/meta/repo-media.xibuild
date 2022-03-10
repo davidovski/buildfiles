@@ -1,0 +1,5 @@
+#!/bin/sh
+# This file was automatically generated, do not edit!
+
+DESC="All the the packages available in media"
+DEPS=" alsa-firmware alsa-lib alsa-plugins alsa-tools alsa-utils audiofile faac faad2 fdk-aac flac libogg libsamplerate libsndfile libtheora libvorbis libvpx opus pipewire pulseaudio"

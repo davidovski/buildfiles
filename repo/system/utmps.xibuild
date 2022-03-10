@@ -32,4 +32,14 @@ Requires.private: skalibs
 Libs: -lutmps
 Cflags: -I/usr/include/utmps
 EOF
+
+    #ln -s utmps/wtmp /var/log/wtmp
+}
+
+postinstall () {
+    useradd -c "utmps user" -d /run/utmps \
+        -u 984 -g utmp -s /bin/false utmp
+    [ -d /var/log/utmps ] || mkdir -p /var/log/utmps
+    chown -R utmp:utmp /var/log/utmps
+    
 }

@@ -12,7 +12,8 @@ build () {
 }
 
 package () {
-    mkdir -pv $PKG_DEST/usr/{include,lib}
+    mkdir -p $PKG_DEST/usr/lib
+    mkdir -p $PKG_DEST/usr/include
     install toml.h $PKG_DEST/usr/include
     install libtoml.so.$PKG_VER $PKG_DEST/usr/lib
     ln -s libtoml.so.$PKG_VER $PKG_DEST/usr/lib/libtoml.so

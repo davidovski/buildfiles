@@ -44,6 +44,7 @@ build () {
 		--enable-64-bit-bfd \
         --enable-plugins \
 		--enable-relro \
+        --enable-install-libiberty \
 		--enable-deterministic-archives \
         --enable-targets=x86_64-pep \
         --enable-default-hash-style=gnu \

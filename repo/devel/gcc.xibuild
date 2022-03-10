@@ -1,7 +1,8 @@
 #!/bin/sh
 
 MAKEDEPS="grep make dejagnu inetutils flex"
-DEPS="musl binutils mpc mpfr gmp"
+DEPS="zstd musl binutils mpc mpfr gmp"
+
 
 PKG_VER=11.2.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
@@ -56,6 +57,8 @@ ADDITIONAL="
 DESC="The GNU Compiler Collection - C and C++ frontends"
 
 prepare () {
+    export languages="c,c++,lto"
+
     case $(uname -m) in
       x86_64) export TRUPLE="x86_64-linux-musl"
               export EXTRA_CONFIG=" --with-arch=x86-64"
@@ -85,18 +88,17 @@ build () {
     mkdir build
     cd build
 
-    export  NOFF="--disable-libstdcxx-pch "
-    export NOFF+="--disable-nls "
-    export NOFF+="--disable-multilib "
-    export NOFF+="--disable-bootstrap "
-    export NOFF+="--disable-symvers "
-    export NOFF+="--disable-libsanitizer "
-    export NOFF+="--disable-libssp "
-    export NOFF+="--disable-libmpx "
-    export NOFF+="--disable-libmudflap "
-    export NOFF+="--disable-fixed-point "
-    export NOFF+="--disable-sjlj-exceptions "
-    export NOFF+="--disable-werror "
+    export  NOFF="--disable-libstdcxx-pch 
+                  --disable-nls 
+                  --disable-multilib 
+                  --disable-bootstrap 
+                  --disable-symvers 
+                  --disable-libsanitizer 
+                  --disable-libmpx 
+                  --disable-libmudflap 
+                  --disable-fixed-point 
+                  --disable-sjlj-exceptions 
+                  --disable-werror "
 
     # Enable graphite
     export XCONFIG="--with-ppl=yes --with-cloog=yes "
@@ -105,28 +107,40 @@ build () {
     export XTRA86="--with-arch=x86-64 "
 
     # Enable features
-    export  FON="--enable-threads=posix "
-    export FON+="--enable-clocale=generic "
-    export FON+="--enable-tls "
-    export FON+="--enable-libstdcxx-time "
-    export FON+="--enable-fully-dynamic-string "
-    export FON+="--enable-default-ssp "
-    export FON+="--enable-linker-build-id "
-    export FON+="--enable-checking=release "
-    export FON+="--enable-cloog-backend "
-    export FON+="--enable-__cxa_atexit "
-    export FON+="--enable-lto "
-    export FON+="--enable-plugins "
-    export FON+="--with-system-zlib "
-    export FON+="--with-linker-hash-style=gnu "
+    export  FON="--enable-threads=posix 
+                 --enable-clocale=generic 
+                 --enable-tls 
+                 --enable-libstdcxx-time 
+                 --enable-fully-dynamic-string 
+                 --enable-linker-build-id 
+                 --enable-checking=release 
+                 --enable-cloog-backend 
+                 --enable-__cxa_atexit 
+                 --enable-lto 
+                 --enable-plugins 
+                 --with-system-zlib 
+                 --with-linker-hash-style=gnu "
     #export FON+="--with-isl "
 
     # Configure source
     SED=sed  libat_cv_have_ifunc=no  \
-    ../configure --prefix=/usr            \
-                 --target=${TRUPLE}          \
-                 --enable-languages=c,c++,lto \
-                 $NOFF $XTRA86 $XCONFIG $FON &&
+    ../configure --prefix=/usr \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--with-pkgversion="XiLinux $PKG_VER" \
+		--enable-checking=release \
+		--disable-fixed-point \
+		--disable-libstdcxx-pch \
+		--disable-multilib \
+		--disable-nls \
+		--disable-werror \
+		--enable-__cxa_atexit \
+		--enable-default-pie \
+		--enable-cloog-backend \
+		--enable-languages=$languages \
+		--with-system-zlib \
+        --target=${TRUPLE}          \
+        $NOFF $XTRA86 $XCONFIG $FON &&
 
     make &&
 

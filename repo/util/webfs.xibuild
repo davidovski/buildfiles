@@ -7,11 +7,14 @@ PKG_VER=1.21
 SOURCE=https://www.kraxel.org/releases/webfs/webfs-$PKG_VER.tar.gz
 DESC="A simple instant server for static http content"
 
+prepare () {
+    mv GNUmakefile Makefile
+}
+
 build() {
-    ./configure --prefix=/usr
     make
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    make prefix=/usr DESTDIR=$PKG_DEST install 
 }

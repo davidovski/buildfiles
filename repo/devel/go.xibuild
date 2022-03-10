@@ -1,26 +1,53 @@
 #!/bin/sh
 
-MAKEDEPS="make"
+# Ensure we have gcc-go
+MAKEDEPS="make gcc"
 DEPS=""
 
 PKG_VER=1.17.7
 SOURCE=https://go.dev/dl/go$PKG_VER.src.tar.gz
+
+BOOTSTRAP="go1.4-bootstrap-20171003"
+ADDITIONAL="
+    https://dl.google.com/go/$BOOTSTRAP.tar.gz
+"
+
 DESC="Core compiler tools for the Go programming language"
 
-build () {
-  export GOARCH=amd64
-  export GOAMD64=v1 # make sure we're building for the right x86-64 version
-  export GOROOT_FINAL=/usr/lib/go
-  export GOROOT_BOOTSTRAP=/usr/lib/go
+prepare () {
+    export TMPDIR=/tmp
+    tar -xvf $BOOTSTRAP.tar.gz
+    mv go $BOOTSTRAP
+}
 
-  cd src
-  ./make.bash -v
-  cd ..
+build () {
+    export sourceroot=$(pwd)
+    export GOARCH=amd64
+    export GOAMD64=v1 # make sure we're building for the right x86-64 version
+    export GOOS="linux"
+
+    cd $BOOTSTRAP
+    cd src
+    echo "~~~~BUILDING BOOTSTRAP"
+    CGO_ENABLED=0 ./make.bash -v
+    
+    cd $sourceroot
+    export GOROOT_FINAL=/usr/lib/go
+    export GOROOT_BOOTSTRAP="$(pwd)/$BOOTSTRAP"
+
+    echo "~~~~BUILDING GOLANG"
+    cd src
+    if [ ! -z "${GOROOT_BOOTSTRAP}" ]; then
+        ./bootstrap.bash -v
+    fi
+    ./make.bash -v
+    cd ..
 }
 
 package () {
   install -d "$PKG_DEST/usr/bin" "$PKG_DEST/usr/lib/go" "$PKG_DEST/usr/share/doc/go" \
-    "$PKG_DEST/usr/lib/go/pkg/linux_amd64_"{dynlink,race}
+    "$PKG_DEST/usr/lib/go/pkg/linux_amd64_"dynlink \
+    "$PKG_DEST/usr/lib/go/pkg/linux_amd64_"race
 
   cp -a bin pkg src lib misc api test "$PKG_DEST/usr/lib/go"
   cp -r doc/* "$PKG_DEST/usr/share/doc/go"

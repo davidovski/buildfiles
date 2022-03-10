@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="meson ninja doxygen xmlto fop"
-DEPS="libxcvt pixman font-util xkeyboardconfig elogind libepoxy libtirpc polkit acpid nettle libgcrypt xcb-util-keysyms xcb-util-image xcb-util-renderutil xcb-util-wm xkbcomp xf86-input-libinput"
+DEPS="libxcvt pixman font-util xkeyboardconfig elogind libepoxy libtirpc polkit acpid nettle libgcrypt xcb-util-keysyms xcb-util-image xcb-util-renderutil xcb-util-wm xkbcomp"
 
 PKG_VER=21.1.3
 SOURCE=https://www.x.org/pub/individual/xserver/xorg-server-$PKG_VER.tar.xz
@@ -19,8 +19,8 @@ build () {
 package () {
     DESTDIR=$PKG_DEST ninja install
 
-    mkdir -pv $PKG_DEST/etc/X11/xorg.conf.d &&
-    mkdir -pv $PKG_DEST/etc/sysconfig &&
+    mkdir -p $PKG_DEST/etc/X11/xorg.conf.d &&
+    mkdir -p $PKG_DEST/etc/sysconfig &&
 cat >> $PKG_DEST/etc/sysconfig/createfiles << "EOF"
 /tmp/.ICE-unix dir 1777 root root
 /tmp/.X11-unix dir 1777 root root

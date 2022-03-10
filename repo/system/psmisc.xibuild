@@ -1,14 +1,13 @@
 #!/bin/sh
 
-MAKEDEPS="make"
+MAKEDEPS="make gettext-tiny libintl"
 DEPS="ncurses"
 
 PKG_VER=23.4
-SOURCE=https://gitlab.com/psmisc/psmisc/-/archive/v$PKG_VER/psmisc-v$PKG_VER.tar.gz
+SOURCE=https://downloads.sourceforge.net/psmisc/psmisc-$PKG_VER.tar.xz
 DESC="Miscellaneous procfs tools"
 
 build () {
-    ./autogen.sh
     ./configure --prefix=/usr
     make
 }

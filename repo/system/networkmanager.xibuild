@@ -4,7 +4,7 @@ MAKEDEPS="grep meson ninja python intltool glib"
 DEPS="jansson libndp curl wpa_supplicant newt nss polkit libpsl audit dbus gobject-introspection dhcp"
 
 PKG_VER=1.35.5
-SOURCE=https://download.gnome.org/sources/NetworkManager/$(echo $PKG_VER | cut -d. -f-2)/NetworkManager-$PKG_VER.tar.xz
+SOURCE=https://download.gnome.org/sources/NetworkManager/${PKG_VER%.*}/NetworkManager-$PKG_VER.tar.xz
 
 BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL="
@@ -14,7 +14,7 @@ ADDITIONAL="
 DESC="Network connection manager and user applications"
 
 prepare () {
-    grep -rl '^#!.*python$' | xargs sed -i '1s/python/&3/'
+    ggrep -rl '^#!.*python$' | xargs sed -i '1s/python/&3/'
     dbus-uuidgen --ensure
 }
 
@@ -22,7 +22,6 @@ build () {
     mkdir build &&
     cd    build &&
 
-    CXXFLAGS+="-O2 -fPIC"            \
     meson --prefix=/usr              \
           --buildtype=release        \
           -Dlibaudit=no              \
@@ -42,7 +41,8 @@ build () {
 
 package () {
     DESTDIR=$PKG_DEST ninja install &&
-    mv -v $PKG_DEST/usr/share/doc/NetworkManager{,-$PKG_VER}
+    mv $PKG_DEST/usr/share/doc/NetworkManager \
+     $PKG_DEST/usr/share/doc/NetworkManager-$PKG_VER}
 
     # create minimum config file
     cat >> $PKG_DEST/etc/NetworkManager/NetworkManager.conf << "EOF"

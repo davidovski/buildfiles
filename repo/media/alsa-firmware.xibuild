@@ -7,6 +7,13 @@ DESC="Firmware binaries for loader programs in alsa-tools and hotplug firmware l
 
 PKG_VER=1.2.4
 SOURCE=https://www.alsa-project.org/files/pub/firmware/alsa-firmware-$PKG_VER.tar.bz2
+ADDITIONAL="
+    use-uint32_t-instead-u_int32_t.patch
+"
+
+prepare () {
+    apply_patches
+}
 
 build () {
     ./configure --prefix=/usr &&

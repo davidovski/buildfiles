@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="git go"
-DEPS="bash"
+DEPS="sh"
 
 PKG_VER=0.29.0
 SOURCE=https://github.com/junegunn/fzf.git

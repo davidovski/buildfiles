@@ -5,14 +5,25 @@ DEPS="musl"
 
 PKG_VER=37
 SOURCE=https://github.com/rhboot/efivar/releases/download/$PKG_VER/efivar-$PKG_VER.tar.bz2
+
 ADDITIONAL="
-    https://www.linuxfromscratch.org/patches/blfs/svn/efivar-$PKG_VER-gcc_9-1.patch
-    "
+    patches/musl-bswap.patch
+    patches/efivar-fix-format_guid.patch
+    patches/efivar-fix-packed.patch
+    patches/efivar-fix-ucs2.patch
+"
 
 DESC="Tools and libraries to manupulate EFI variables"
 
-prepare () {
-    patch -Np1 -i efivar-$PKG_VER-gcc_9-1.patch
+prepare() {
+    apply_patches
+
+    # remove verbosity in ln commands
+    for f in Makefile src/Makefile src/test/Makefile docs/Makefile Make.rules; do 
+        echo "patching $f"
+        sed -i "s@-vfs@-fs@g" $f
+        sed -i "s@-rfv@-rf@g" $f
+    done
 }
 
 build () {

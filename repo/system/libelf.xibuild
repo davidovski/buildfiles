@@ -14,7 +14,7 @@ prepare() {
     cp error.h lib/
     cp error.h src/
 
-    autoreconf -ifv
+    autoreconf -if
 
 }
 

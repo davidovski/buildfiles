@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="alsa-lib"
+DEPS="alsa-lib musl-legacy-compat"
 
 DESC="OSS compatibility library"
 

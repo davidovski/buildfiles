@@ -41,9 +41,9 @@ make -j1
 
 package () {
     make -C client DESTDIR=$PKG_DEST install             &&
-    install -v -m755 client/scripts/linux $PKG_DEST/usr/sbin/dhclient-script
+    install -m755 client/scripts/linux $PKG_DEST/usr/sbin/dhclient-script
 
-    install -vdm755 /etc/dhcp &&
+    install -dm755 /etc/dhcp &&
         cat > $PKG_DEST/etc/dhcp/dhclient.conf << "EOF"
 # Begin /etc/dhcp/dhclient.conf
 #
@@ -63,7 +63,7 @@ require subnet-mask, domain-name-servers;
 
 # End /etc/dhcp/dhclient.conf
 EOF
-    install -v -dm 755 $PKG_DEST/var/lib/dhclient
+    install -dm 755 $PKG_DEST/var/lib/dhclient
     
     tar xf $BOOTSCRIPTS.tar.xz
     cd $BOOTSCRIPTS

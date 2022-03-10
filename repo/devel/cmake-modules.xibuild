@@ -1,0 +1,21 @@
+#!/bin/sh
+
+MAKEDEPS="cmake python-sphinx"
+DEPS="cmake"
+
+PKG_VER=5.91.0
+SOURCE=https://download.kde.org/stable/frameworks/${PKG_VER%.*}/extra-cmake-modules-$PKG_VER.tar.xz
+DESC="Extra CMake modules"
+
+build () {
+    cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DSphinx_BUILD_EXECUTABLE=/usr/bin/sphinx-build
+	cmake --build build
+
+}
+
+package () {
+    DESTDIR="$PKG_DEST" cmake --build build --target install
+}

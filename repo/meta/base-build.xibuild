@@ -1,0 +1,4 @@
+#!/bin/sh
+DEPS="musl binutils gcc linux-headers tcl expect dejagnu m4 ncurses dash bison bzip2 sbase ubase diffutils file findutils gawk grep sed gzip make patch perl tar texinfo xz flex"
+
+DESC="Base toolchain used to build other packages"

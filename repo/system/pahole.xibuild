@@ -1,26 +1,22 @@
 #!/bin/sh
 
-MAKEDEPS="cmake python make "
-DEPS="libelf python"
+MAKEDEPS="cmake-modules python make "
+DEPS="libelf python elfutils libdwarf musl-obstack argp-standalone libbpf"
 
-PKG_VER=1.23
+PKG_VER=1.22
 SOURCE=https://git.kernel.org/pub/scm/devel/pahole/pahole.git
 BRANCH=v$PKG_VER
 
 DESC="Pahole and other DWARF Utils"
 
 build () {
-    cmake -S . -B build \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=None \
-    -D__LIB=lib
+    cmake -B build -G Ninja .  \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_BUILD_TYPE=None \
+        -D__LIB=lib 
     cmake --build build
 }
 
 package () {
     DESTDIR="$PKG_DEST" cmake --install build
-
-      
-    python -m compileall -d / "$PKG_DEST"
-    python -O -m compileall -d / "$PKG_DEST"
 }

@@ -1,12 +1,12 @@
 #!/bin/sh
 
 MAKEDEPS=""
-DEPS="xichroot xiutils git tar unzip"
+DEPS="xichroot xipkg xiutils git tar unzip"
 
 SOURCE=https://git.davidovski.xyz/xilinux/xib.git
 DESC="The XiBuild system"
 
 package () {
-    mkdir -pv $PKG_DEST/var/lib/xib
+    mkdir -p $PKG_DEST/var/lib/xib
     mv * $PKG_DEST/var/lib/xib/
 }

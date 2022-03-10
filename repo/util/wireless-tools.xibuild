@@ -13,6 +13,7 @@ ADDITIONAL="
 
 prepare () {
     sed -i "s/ldconfig/echo/g" Makefile
+    sed -i "s/ln -sfn/ln -sf/g" Makefile
     patch -Np1 -i wireless_tools-$PKG_VER-fix_iwlist_scanning-1.patch
 }
 

@@ -12,5 +12,5 @@ build() {
 }
 
 package () {
-    pytho3 setup.py install --root="$PKG_DEST" --optimize=1
+    python setup.py install --root="$PKG_DEST" --optimize=1
 }

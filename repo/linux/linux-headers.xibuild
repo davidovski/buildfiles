@@ -16,6 +16,6 @@ build () {
 }
 
 package () {
-    mkdir -pv $PKG_DEST/usr/include
-    cp -rv usr/include/* $PKG_DEST/usr/include/
+    mkdir -p $PKG_DEST/usr/include
+    cp -r usr/include/* $PKG_DEST/usr/include/
 }

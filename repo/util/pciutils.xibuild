@@ -19,9 +19,9 @@ package () {
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes                 \
      install install-lib        &&
-     chmod -v 755 $PKG_DEST/usr/lib/libpci.so
+     chmod 755 $PKG_DEST/usr/lib/libpci.so
 
-     mkdir -pv $PKG_DEST/etc/cron.weekly/
+     mkdir -p $PKG_DEST/etc/cron.weekly/
     cat > $PKG_DEST/etc/cron.weekly/update-pciids.sh << "EOF" &&
 #!/bin/sh
 /usr/sbin/update-pciids

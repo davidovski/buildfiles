@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="docbook4-xml docbook-dtd docbook-xsl itstool libxslt"
+
+PKG_VER=1.33.2
+SOURCE=https://download.gnome.org/sources/gtk-doc/${PKG_VER%.*}/gtk-doc-$PKG_VER.tar.xz
+DESC="Documentation tool for public library API"
+
+prepare () {
+    autoreconf -fiv
+}
+build () {
+    ./configure --prefix=/usr &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+

@@ -10,6 +10,6 @@ BRANCH=0c6a7b3bf728b95c8b7b95328f94335e2bb2c967
 DESC="All firmware files for linux"
 
 package () {
-    mkdir -pv $PKG_DEST/usr/lib/firmware
-    cp -rv * $PKG_DEST/usr/lib/firmware
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r * $PKG_DEST/usr/lib/firmware
 }

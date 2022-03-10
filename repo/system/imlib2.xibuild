@@ -15,7 +15,8 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    install -v -m755 -d                        /usr/share/doc/imlib2-$PKG_VER &&
-    install -v -m644    doc/{*.gif,index.html} /usr/share/doc/imlib2-$PKG_VER
+    install -m755 -d                        /usr/share/doc/imlib2-$PKG_VER &&
+    install -m644    doc/index.html /usr/share/doc/imlib2-$PKG_VER
+    install -m644    doc/*.gif /usr/share/doc/imlib2-$PKG_VER
 
 }

@@ -3,39 +3,43 @@
 MAKEDEPS="make bc"
 DEPS="sbase kmod"
 
-PKG_VER=5.16.11
-SOURCE=https://cdn.kernel.org/pub/linux/kernel/v$(echo $PKG_VER | cut -d. -f1).x/linux-$PKG_VER.tar.xz
+PKG_VER=5.16.12
+SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 ADDITIONAL="
-    https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/linux/trunk/config
+    config
+    fix-sbase-coreutils.patch
     "
 
 prepare () {
+    apply_patches
     mv config .config
+
+    export GREP="ggrep"
 
     make olddefconfig
     make -s kernelrelease > version
-    echo "Prepared linux version $(<version)"
+    echo "Prepared linux version $(cat version)"
 }
 
 build () {
-    make all
+    make all 
 }
 
 package () {
-    local kernver="$(<version)"
+    local kernver="$(cat version)"
     local modulesdir="$PKG_DEST/usr/lib/modules/$PKG_VER"
 
     echo "Installing boot image..."
-    mkdir -pv $PKG_DEST/boot
-    cp -iv arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
-    cp -iv System.map $PKG_DEST/boot/System.map-$PKG_VER
-    cp -iv .config $PKG_DEST/boot/config-$PKG_VER
+    mkdir -p $PKG_DEST/boot
+    cp arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
+    cp System.map $PKG_DEST/boot/System.map-$PKG_VER
+    cp .config $PKG_DEST/boot/config-$PKG_VER
 
     install -d $PKG_DEST/usr/share/doc/linux-$PKG_VER
     cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$PKG_VER
 
 
-    install -v -m755 -d $PKG_DEST/etc/modprobe.d
+    install -m755 -d $PKG_DEST/etc/modprobe.d
     cat > $PKG_DEST/etc/modprobe.d/usb.conf << "EOF"
 # Begin /etc/modprobe.d/usb.conf
 
@@ -48,6 +52,7 @@ EOF
 
   echo "Installing modules..."
   make INSTALL_MOD_PATH="$PKG_DEST/usr" INSTALL_MOD_STRIP=1 modules_install
-  rm "$modulesdir"/{source,build}
+  rm "$modulesdir"/source
+  rm "$modulesdir"/build
 }
 

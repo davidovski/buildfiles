@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake llvm libxml2 ninja python3 python-markupsafe" 
+MAKEDEPS="cmake llvm libxml2 ninja python3 python-markupsafe python-pygments" 
 DEPS="curl gcc libssh2 openssl"
 
 PKG_VER=13.0.1
@@ -8,8 +8,8 @@ SOURCE=https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/c
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 ADDITIONAL="
-    patches/clang/30-Enable-stack-protector-by-default-for-Alpine-Linux.patch
-    patches/clang/10-add-musl-triples.patch
+    patches/30-Enable-stack-protector-by-default-for-Alpine-Linux.patch
+    patches/10-add-musl-triples.patch
     "
 
 prepare () {

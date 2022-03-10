@@ -1,0 +1,5 @@
+#!/bin/sh
+# This file was automatically generated, do not edit!
+
+DESC="All the the packages available in devel"
+DEPS=" asciidoc autoconf2-13 autoconf-archive autoconf automake bc bison check clang cmake-extra cmake-modules cmake dejagnu distcc docbook4-xml docbook-dtd docbook-xml docbook-xsl expect flex gcc gdb git go gtk-doc help2man icecream itstool llvm m4 make meson mpc nasm ninja patch pkg-config rustc sgml-common texinfo xmlto"

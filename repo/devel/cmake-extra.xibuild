@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MAKEDEPS="cmake"
+DEPS="cmake"
+
+PKG_VER=1.6
+SOURCE=https://gitlab.com/ubports/core/cmake-extras/-/archive/$PKG_VER/cmake-extras-$PKG_VER.tar.gz
+DESC="A collection of add-ons for the CMake build tool"
+
+build () {
+    cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr
+	cmake --build build
+
+}
+
+package () {
+    DESTDIR="$PKG_DEST" cmake --build build --target install
+}

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="libinput"
+DEPS="libinput xorg-server"
 
 DESC="Generic input driver for the X.Org server based on libinput"
 

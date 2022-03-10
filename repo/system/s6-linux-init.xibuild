@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="s6 skalibs"
+DEPS="s6 skalibs nsss"
 
 PKG_VER=1.0.7.0
 SOURCE=https://skarnet.org/software/s6-linux-init/s6-linux-init-$PKG_VER.tar.gz 
@@ -16,7 +16,7 @@ build () {
             --libdir=/usr/lib \
             --libexecdir=/usr/lib/s6-linux-init \
             --with-dynlib=/usr/lib   \
-            --enable-utmps ${OPARG}
+            --enable-utmps 
 
     make
 }

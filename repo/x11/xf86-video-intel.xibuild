@@ -21,12 +21,12 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
-    mkdir -pv $PKG_DEST/usr/share/man/man1
-    mv -v $PKG_DEST/usr/share/man/man4/intel-virtual-output.4 \
+    mkdir -p $PKG_DEST/usr/share/man/man1
+    mv $PKG_DEST/usr/share/man/man4/intel-virtual-output.4 \
       $PKG_DEST/usr/share/man/man1/intel-virtual-output.1 &&
 
     sed -i '/\.TH/s/4/1/' $PKG_DEST/usr/share/man/man1/intel-virtual-output.1
-    mkdir -pv $PKG_DEST/etc/X11/xorg.conf.d
+    mkdir -p $PKG_DEST/etc/X11/xorg.conf.d
     cat >> $PKG_DEST/etc/X11/xorg.conf.d/20-intel.conf << "EOF"
 Section   "Device"
         Identifier "Intel Graphics"

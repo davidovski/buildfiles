@@ -15,7 +15,7 @@ DESC="GNU GRand Unified Bootloader v2"
 prepare () {
     gunzip -c unifont-13.0.06.pcf.gz > $PKG_DEST/usr/share/fonts/unifont/unifont.pcf
 
-    unset {C,CPP,CXX,LD}FLAGS
+    unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 }
 
 build () {
@@ -26,6 +26,6 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/usr/share/bash-completion/completions
-    mv -v $PKG_DEST/etc/bash_completion.d/grub $PKG_DEST/usr/share/bash-completion/completions
+    mkdir -p $PKG_DEST/usr/share/bash-completion/completions
+    mv $PKG_DEST/etc/bash_completion.d/grub $PKG_DEST/usr/share/bash-completion/completions
 }

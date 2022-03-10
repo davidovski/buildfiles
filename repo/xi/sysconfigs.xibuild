@@ -7,8 +7,8 @@ PKG_VER=N/A
 DESC="Default system configs for xilinux"
 
 package () {
-    mkdir -pv $PKG_DEST/etc/
-    mkdir -pv $PKG_DEST/etc/sysconfig
+    mkdir -p $PKG_DEST/etc/
+    mkdir -p $PKG_DEST/etc/sysconfig
     cat > $PKG_DEST/etc/sysconfig/rc.site << "EOF"
 # rc.site
 

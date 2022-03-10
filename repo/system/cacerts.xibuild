@@ -1,18 +1,24 @@
 #!/bin/sh
 
-MAKEDEPS="sbase sed"
-DEPS="libnghttp"
+MAKEDEPS="sbase bash sed"
+DEPS="libnghttp libp11-kit"
 
 PKG_VER=1.7
 SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz
+ADDITIONAL="
+    fix-sbase-coreutils.patch
+"
+
 DESC="Root certificates needed by ssl built using make-ca"
 
+
 prepare () {
+    apply_patches
     sed -i "s/grep/ggrep/g" make-ca
+
 }
 
 package () {
-    # TODO check why this doesnt package /etc/ssl/certs the first time in some occasions
     mkdir -p $PKG_DEST/etc/ssl/certs
     bash make-ca -g --force -D $PKG_DEST
     chmod -R 777 $PKG_DEST || echo "couldnt change permissions for $PKG_DEST"

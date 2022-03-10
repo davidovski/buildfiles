@@ -7,6 +7,13 @@ PKG_VER=3.74
 
 SOURCE=https://archive.mozilla.org/pub/security/nss/releases/NSS_$(echo $PKG_VER | sed 's/\./_/g')_RTM/src/nss-$PKG_VER.tar.gz
 
+ADDITIONAL="
+    nss-util.pc.in
+    nss-softokn.pc.in
+    nss-config.in
+    nss.pc.in
+"
+
 DESC="Network Security Services"
 
 build () {
@@ -46,4 +53,21 @@ package () {
     install -m644 Linux*/lib/pkgconfig/nss.pc  $PKG_DEST/usr/lib/pkgconfig
 
     ln -sf ./pkcs11/p11-kit-trust.so $PKG_DEST/usr/lib/libnssckbi.so
+
+    cd ..
+    local _pc; for _pc in nss.pc nss-util.pc nss-softokn.pc; do
+		sed $_pc.in \
+			-e "s,%libdir%,/usr/lib,g" \
+			-e "s,%prefix%,/usr,g" \
+			-e "s,%exec_prefix%,/usr/bin,g" \
+			-e "s,%includedir%,/usr/include/nss,g" \
+			-e "s,%SOFTOKEN_VERSION%,$PKG_VER,g" \
+			-e "s,%NSPR_VERSION%,$PKG_VER,g" \
+			-e "s,%NSS_VERSION%,$PKG_VER,g" \
+			-e "s,%NSSUTIL_VERSION%,$PKG_VER,g" \
+			> "$PKG_DEST"/usr/lib/pkgconfig/$_pc
+	done
+	ln -sf nss.pc "$PKG_DEST"/usr/lib/pkgconfig/mozilla-nss.pc
+	chmod 644 "$PKG_DEST"/usr/lib/pkgconfig/*.pc
+
 }

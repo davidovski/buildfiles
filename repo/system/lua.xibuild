@@ -43,16 +43,17 @@ build () {
 }
 
 package () {
-    make install 
     make INSTALL_TOP=/usr \
-     DESTDIR=$PKG_DEST               \
-     INSTALL_DATA="cp -d"            \
-     INSTALL_MAN=/usr/share/man/man1 \
-     TO_LIB="liblua.so liblua.so.${PKG_VER} liblua.so.5.4.4" \
-     install &&
+    DESTDIR=$PKG_DEST               \
+    INSTALL="install"            \
+    INSTALL_MAN=/usr/share/man/man1 \
+    TO_LIB="liblua.so liblua.so.${PKG_VER} liblua.so.5.4.4" \
+    install &&
 
-     mkdir -pv                      $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
-    cp -v doc/*.{html,css,gif,png} $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
+    mkdir -p                      $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
+    for s in html css gif png; do
+        cp doc/*.$s $PKG_DEST/usr/share/doc/lua-$PKG_VER 
+    done
 
-    install -v -m644 -D lua.pc $PKG_DEST/usr/lib/pkgconfig/lua.pc
+    install -m644 -D lua.pc $PKG_DEST/usr/lib/pkgconfig/lua.pc
 }

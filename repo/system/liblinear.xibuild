@@ -12,8 +12,9 @@ build () {
 }
 
 package () {
-    mkdir -pv ${PKG_DEST}/usr/{include,lib}
-    install -vm644 linear.h $PKG_DEST/usr/include &&
-    install -vm755 liblinear.so.4 $PKG_DEST/usr/lib &&
-    ln -sfv liblinear.so.4 $PKG_DEST/usr/lib/liblinear.so
+    mkdir -p ${PKG_DEST}/usr/include
+    mkdir -p ${PKG_DEST}/usr/lib
+    install -m644 linear.h $PKG_DEST/usr/include &&
+    install -m755 liblinear.so.4 $PKG_DEST/usr/lib &&
+    ln -sf liblinear.so.4 $PKG_DEST/usr/lib/liblinear.so
 }

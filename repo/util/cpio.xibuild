@@ -23,10 +23,12 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install &&
-        install -v -m755 -d $PKG_DEST/usr/share/doc/cpio-2.13/html &&
-    install -v -m644    doc/html/* \
-                        $PKG_DEST/usr/share/doc/cpio-2.13/html &&
-    install -v -m644    doc/cpio.{html,txt} \
-    $PKG_DEST/usr/share/doc/cpio-2.13
+        install -m755 -d $PKG_DEST/usr/share/doc/cpio-$PKG_VER/html &&
+    install -m644    doc/html/* \
+                        $PKG_DEST/usr/share/doc/cpio-$PKG_VER/html &&
+    install -m644    doc/cpio.txt \
+    $PKG_DEST/usr/share/doc/cpio-$PKG_VER
+    install -m644    doc/cpio.html \
+    $PKG_DEST/usr/share/doc/cpio-$PKG_VER
 }
 

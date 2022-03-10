@@ -32,8 +32,8 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-    chown -v root:messagebus $PKG_DEST/usr/libexec/dbus-daemon-launch-helper &&
-    chmod -v      4750       $PKG_DEST/usr/libexec/dbus-daemon-launch-helper
+    chown  root:messagebus $PKG_DEST/usr/libexec/dbus-daemon-launch-helper &&
+    chmod       4750       $PKG_DEST/usr/libexec/dbus-daemon-launch-helper
     
     cat > $PKG_DEST/etc/dbus-1/session-local.conf << "EOF"
 <!DOCTYPE busconfig PUBLIC

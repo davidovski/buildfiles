@@ -21,7 +21,7 @@ package () {
          BUILD_STATIC_LIB=0 \
          MANDIR=/usr/share/man install &&
 
-    install -v -m755 -d /usr/share/doc/lm_sensors-$PKG_VER &&
-    cp -rv              README INSTALL doc/* \
+    install -m755 -d /usr/share/doc/lm_sensors-$PKG_VER &&
+    cp -r              README INSTALL doc/* \
                         /usr/share/doc/lm_sensors-$PKG_VER
 }

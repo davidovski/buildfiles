@@ -53,15 +53,19 @@ build () {
 }
 
 package () {
-    mkdir -pv $PKG_DEST/usr/sbin
-    mkdir -pv $PKG_DEST/usr/share/dbus-1/system-services
-    install -v -m755 wpa_{cli,passphrase,supplicant} $PKG_DEST/usr/sbin/ &&
-    install -v -m644 doc/docbook/wpa_supplicant.conf.5 $PKG_DEST/usr/share/man/man5/ &&
-    install -v -m644 doc/docbook/wpa_{cli,passphrase,supplicant}.8 $PKG_DEST/usr/share/man/man8/
-    install -v -m644 dbus/fi.w1.wpa_supplicant1.service \
+    mkdir -p $PKG_DEST/usr/sbin
+    mkdir -p $PKG_DEST/usr/share/dbus-1/system-services
+    install -m755 wpa_cli $PKG_DEST/usr/sbin/ &&
+    install -m755 wpa_passphrase $PKG_DEST/usr/sbin/ &&
+    install -m755 wpa_supplicant $PKG_DEST/usr/sbin/ &&
+    install -m644 doc/docbook/wpa_supplicant.conf.5 $PKG_DEST/usr/share/man/man5/ &&
+    install -m644 doc/docbook/wpa_cli.8 $PKG_DEST/usr/share/man/man8/
+    install -m644 doc/docbook/wpa_passphrase.8 $PKG_DEST/usr/share/man/man8/
+    install -m644 doc/docbook/wpa_supplicant.8 $PKG_DEST/usr/share/man/man8/
+    install -m644 dbus/fi.w1.wpa_supplicant1.service \
         $PKG_DEST/usr/share/dbus-1/system-services/ &&
-    install -v -d -m755 $PKG_DEST/etc/dbus-1/system.d &&
-    install -v -m644 dbus/dbus-wpa_supplicant.conf \
+    install -d -m755 $PKG_DEST/etc/dbus-1/system.d &&
+    install -m644 dbus/dbus-wpa_supplicant.conf \
                      $PKG_DEST/etc/dbus-1/system.d/wpa_supplicant.conf
     
     cd ..

@@ -13,7 +13,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/etc
+    mkdir -p $PKG_DEST/etc
     cat > $PKG_DEST/etc/syslog.conf << "EOF"
 # Begin /etc/syslog.conf
 

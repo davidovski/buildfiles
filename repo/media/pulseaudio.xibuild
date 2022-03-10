@@ -22,5 +22,5 @@ build () {
 
 package () {
     DESTDIR=$PKG_DEST ninja install
-    rm -fv $PKG_DEST/etc/dbus-1/system.d/pulseaudio-system.conf
+    rm -f $PKG_DEST/etc/dbus-1/system.d/pulseaudio-system.conf
 }

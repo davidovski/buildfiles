@@ -1,0 +1,54 @@
+#!/bin/sh
+
+MAKEDEPS="bison flex zlib bzip2 xz argp-standalone libtool fts musl-obstack"
+DEPS="musl zlib"
+
+PKG_VER=0.186
+SOURCE=https://sourceware.org/elfutils/ftp/$PKG_VER/elfutils-$PKG_VER.tar.bz2
+ADDITIONAL="
+        files/error.h
+        patches/fix-aarch64_fregs.patch
+        patches/fix-uninitialized.patch
+        patches/musl-macros.patch
+        patches/musl-strndupa.patch
+        patches/musl-asm-ptrace-h.patch
+"
+
+DESC="Utilities and DSOs to handle ELF files and DWARF data"
+
+prepare () {
+    apply_patches 
+
+    cp error.h lib
+	cp error.h src
+
+	cat > lib/libintl.h <<-EOF
+		#ifndef LIBINTL_H
+		#define LIBINTL_H
+		#define _(x) (x)
+		#endif
+	EOF
+
+}
+
+build () {
+    CFLAGS="$CFLAGS -Wno-error -Wno-null-dereference" \
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--disable-werror \
+		--program-prefix=eu- \
+		--enable-deterministic-archives \
+		--disable-nls \
+		--disable-libdebuginfod \
+		--disable-debuginfod
+    make
+}
+
+package() {
+    make DESTDIR=$PKG_DEST install
+    rm -r "$PKG_DEST"/usr/lib/libelf.so.*
+    rm -r "$PKG_DEST"/usr/include/libelf.h
+}

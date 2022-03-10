@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="git gobject-introspection meson libxslt patch elogind"
+MAKEDEPS="git gobject-introspection meson libxslt patch elogind gtk-doc autoconf-archive"
 DEPS="expat glib js78 pam"
 
 PKG_VER=0.120
@@ -8,42 +8,46 @@ SOURCE=https://www.freedesktop.org/software/polkit/releases/polkit-$PKG_VER.tar.
 
 DESC="Application development toolkit for controlling system-wide privileges"
 
-prepare () {
-    sed '/0,/s/^/#/' -i meson_post_install.py &&
-    sed '/policy,/d' -i actions/meson.build \
-                     -i src/examples/meson.build
+ADDITIONAL="
+    files/polkit-1
+    patches/CVE-2021-4034.patch
+    patches/make-innetgr-optional.patch
+"
 
+prepare () {
+    apply_patches
+
+    autoreconf -fi
 }
 
 build () {
     mkdir build &&
     cd    build &&
 
-    # TODO fix man
-    meson --prefix=/usr                 \
-          -Dman=false                    \
-          -Dsession_tracking=libelogind \
-          -Dsystemdsystemunitdir=/tmp   \
-          --buildtype=release           \
-          ..                            &&
-    ninja
+    ../configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--libexecdir=/usr/lib/polkit-1 \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-introspection \
+		--with-authfw=pam \
+		--with-os-type=alpine \
+		--disable-gtk-doc \
+		--disable-gtk-doc-html \
+		--disable-gtk-doc-pdf \
+		--disable-libelogind \
+		--disable-systemd \
+        --enable-libsystemd-login
+    make
 }
 
 package () {
-    DESTDIR=$PKG_DEST ninja install &&
-
-
-        cat > $PKG_DEST/etc/pam.d/polkit-1 << "EOF"
-# Begin /etc/pam.d/polkit-1
-
-auth     include        system-auth
-account  include        system-account
-password include        system-password
-session  include        system-session
-
-# End /etc/pam.d/polkit-1
-EOF
-
+    make DESTDIR=$PKG_DEST install &&
+        cd .. &&
+        install -m644 polkit-1 $PKG_DEST/etc/pam.d/polkit-1 
 }
 
 postinstall() {

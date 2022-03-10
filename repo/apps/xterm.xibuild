@@ -24,11 +24,11 @@ package () {
     make DESTDIR=$PKG_DEST install
     make DESTDIR=$PKG_DEST install-ti
 
-    mkdir -pv $PKG_DEST/usr/share/applications &&
-    cp -v *.desktop $PKG_DEST/usr/share/applications/
+    mkdir -p $PKG_DEST/usr/share/applications &&
+    cp *.desktop $PKG_DEST/usr/share/applications/
 
 
-    mkdir -pv $PKG_DEST/etc/X11/app-defaults
+    mkdir -p $PKG_DEST/etc/X11/app-defaults
     cat >> $PKG_DEST/etc/X11/app-defaults/XTerm << "EOF"
 *VT100*locale: true
 *VT100*faceName: Monospace

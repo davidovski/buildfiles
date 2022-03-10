@@ -21,14 +21,14 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install &&
-    ln -sfv libsudo_util.so.0.0.0 $PKG_DEST/usr/lib/sudo/libsudo_util.so.0
+    ln -sf libsudo_util.so.0.0.0 $PKG_DEST/usr/lib/sudo/libsudo_util.so.0
 
     cat > $PKG_DEST/etc/sudoers.d/00-sudo << "EOF"
 Defaults secure_path="/usr/sbin:/usr/bin"
 %wheel ALL="ALL" ALL
 EOF
 
-    mkdir -pv $PKG_DEST/etc/pam.d
+    mkdir -p $PKG_DEST/etc/pam.d
     cat > $PKG_DEST/etc/pam.d/sudo << "EOF"
 # Begin /etc/pam.d/sudo
 

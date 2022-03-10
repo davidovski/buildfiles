@@ -18,9 +18,8 @@ build () {
 
 
 package () {
-make DESTDIR=$PKG_DEST install 
-
-    mkdir -pv $PKG_DEST/etc
+    make DESTDIR=$PKG_DEST install 
+    mkdir -p $PKG_DEST/etc
     cat > $PKG_DEST/etc/vimrc << "EOF"
 " Begin /etc/vimrc
 " Ensure defaults are set before customizing settings, not after

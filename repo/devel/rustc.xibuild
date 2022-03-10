@@ -8,29 +8,26 @@ SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 ADDITIONAL="
-    patches/rustc/0006-Prefer-libgcc_eh-over-libunwind-for-musl.patch
-    patches/rustc/0007-do-not-install-libunwind-source.patch
-    patches/rustc/install-template-shebang.patch
-    patches/rustc/link-musl-dynamically.patch
-    patches/rustc/musl-fix-linux_musl_base.patch
-    patches/rustc/need-rpath.patch
-    patches/rustc/need-ssp_nonshared.patch
-    patches/rustc/need-ssp_nonshared.patch
+    patches/0006-Prefer-libgcc_eh-over-libunwind-for-musl.patch
+    patches/0007-do-not-install-libunwind-source.patch
+    patches/install-template-shebang.patch
+    patches/link-musl-dynamically.patch
+    patches/musl-fix-linux_musl_base.patch
+    patches/need-rpath.patch
+    patches/need-ssp_nonshared.patch
 "
 
 prepare () {
-   
     apply_patches
+    sed -i /LD_LIBRARY_PATH/d src/bootstrap/bootstrap.py
+    sed -i 's/\("files":{\)[^}]*/\1/' vendor/libc/.cargo-checksum.json
 
-    mkdir -p $PKG_DEST/opt/rustc-$PKG_VER             &&
-    ln -sf rustc-$PKG_VER $PKG_DEST/opt/rustc
 }
 
 build () {
-    export RUSTFLAGS="$RUSTFLAGS -C link-arg=-lffi" &&
     target=x86_64-unknown-linux-musl
     build=x86_64-unknown-linux-musl
-    CFLAGS="-fPIE" CXXFLAGS="-fPIE" ./configure \
+    ./configure \
         --build="$build" \
         --host="$target" \
         --target="$target" \
@@ -51,18 +48,21 @@ build () {
 		--set="target.$target.llvm-config=/usr/bin/llvm-config" \
 		--set="target.$target.musl-root=/usr" \
 		--set="target.$target.crt-static=false" \
-		--set="target.$target.cc=clang" \
-		--set="target.$target.cxx=clang++" \
-		--set="target.$target.ar=llvm-ar" \
-		--set="target.$target.linker=clang" \
+		--set="target.$target.cc=gcc" \
+		--set="target.$target.cxx=c++" \
+		--set="target.$target.ar=ar" \
+		--set="target.$target.linker=gcc" \
 		--set="target.$build.musl-root=/usr" \
 		--set="target.$build.crt-static=false" \
-		--set="target.$build.cc=clang" \
-		--set="target.$build.cxx=clang++" \
-		--set="target.$build.ar=llvm-ar" \
-		--set="target.$build.linker=clang"
+		--set="target.$build.cc=gcc" \
+		--set="target.$build.cxx=c++" \
+		--set="target.$build.ar=ar" \
+		--set="target.$build.linker=gcc"
 
-        python ./x.py dist --jobs $JOBS
+    	sed 's/#deny-warnings = .*/deny-warnings = false/' -i config.toml
+        sed 's|deny(warnings,|deny(|' -i src/bootstrap/lib.rs
+
+        python ./x.py dist -v --jobs $JOBS
 
 }
 

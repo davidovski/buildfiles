@@ -14,7 +14,7 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-install -v -d -m755 $PKG_DEST/usr/share/fonts                               &&
-ln -svfn $XORG_PREFIX/share/fonts/X11/OTF $PKG_DEST/usr/share/fonts/X11-OTF &&
-ln -svfn $XORG_PREFIX/share/fonts/X11/TTF $PKG_DEST/usr/share/fonts/X11-TTF
+install -d -m755 $PKG_DEST/usr/share/fonts                               &&
+ln -sf $XORG_PREFIX/share/fonts/X11/OTF $PKG_DEST/usr/share/fonts/X11-OTF &&
+ln -sf $XORG_PREFIX/share/fonts/X11/TTF $PKG_DEST/usr/share/fonts/X11-TTF
 }

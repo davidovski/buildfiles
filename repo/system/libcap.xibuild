@@ -10,6 +10,7 @@ DESC="POSIX 1003.1e capabilities"
 
 prepare () {
     sed -i '/install -m.*STA/d' libcap/Makefile
+    sed -i 's/xargs -e/xargs /g' pam_cap/Makefile
 }
 
 build () {

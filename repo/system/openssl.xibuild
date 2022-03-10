@@ -15,6 +15,6 @@ build () {
 package () {
     sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
     make MANSUFFIX=ssl DESTDIR=$PKG_DEST install 
-    mkdir -pv $PKG_DEST/usr/share/doc/openssl
-    cp -vfr doc/* $PKG_DEST/usr/share/doc/openssl
+    mkdir -p $PKG_DEST/usr/share/doc/openssl
+    cp -fr doc/* $PKG_DEST/usr/share/doc/openssl
 }

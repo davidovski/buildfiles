@@ -1,0 +1,5 @@
+#!/bin/sh
+# This file was automatically generated, do not edit!
+
+DESC="All the the packages available in python"
+DEPS=" python-alabaster python-appdirs python-babel python-certifi python-chardet python-docutils python-html5lib python-idna python-imagesize python-Jinja2 python-jinja python-lxml python-mach python-mako python-markupsafe python-packaging python-pip python-pygments python-pyparsing python-pytz python-requests python-six python-snowballstemmer python-sphinx-alabaster-theme python-sphinxcontrib-applehelp python-sphinxcontrib-devhelp python-sphinxcontrib-htmlhelp python-sphinxcontrib-jsmath python-sphinxcontrib-qthelp python-sphinxcontrib-serializinghtml python-sphinx python-urllib3 python-webencodings python"

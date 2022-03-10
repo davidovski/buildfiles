@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="grep python make xmlto"
+MAKEDEPS="grep python make xmlto cmake"
 DEPS="curl perl openssl pcre2 grep shadow zlib openssh"
 
 PKG_VER=2.34.1

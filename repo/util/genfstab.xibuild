@@ -7,7 +7,16 @@ PKG_VER=24
 SOURCE=https://github.com/archlinux/arch-install-scripts.git
 BRANCH=v$PKG_VER
 
+ADDITIONAL="
+    remove-extra-flags.patch
+"
+
 DESC="A tool for generating /etc/fstab files from archlinux"
+
+
+prepare () {
+    apply_patches
+}
 
 package () {
     make PREFIX=/usr BINPROGS=genfstab MANS=doc/genfstab.8 DESTDIR=$PKG_DEST install

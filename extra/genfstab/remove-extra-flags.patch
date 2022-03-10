@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 50f319a..018fa8b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -44,7 +44,7 @@ install: all
+ 		install -Dm644 $$comp $(DESTDIR)$(PREFIX)/share/bash-completion/completions/$${comp%%.*}; \
+ 	done;
+ 	for manfile in $(MANS); do \
+-		install -Dm644 $$manfile -t $(DESTDIR)$(PREFIX)/share/man/man$${manfile##*.}; \
++		install -Dm644 $$manfile  $(DESTDIR)$(PREFIX)/share/man/man$${manfile##*.}; \
+ 	done;
+ 
+ .PHONY: all clean install uninstall

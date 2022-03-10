@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl bash less"
+DEPS="musl sh less"
 
 PKG_VER=1.11
 SOURCE=https://ftp.gnu.org/gnu/gzip/gzip-$PKG_VER.tar.xz
