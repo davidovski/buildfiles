@@ -15,11 +15,13 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 
-
     ln -s dash $PKG_DEST/usr/bin/sh
 }
 
 postinstall () {
+    command -v grep || exit 1
+    command -v echo || exit 1
+
     if [ -f /etc/shells ] || grep -vq "dash" /etc/shells; then
         echo "/bin/bash" >> /etc/shells
     fi

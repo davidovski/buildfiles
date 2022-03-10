@@ -3,11 +3,11 @@
 MAKEDEPS="meson ninja python-mako libva libvdpau llvm libxxf86vm libelf lm_sensors libexpat libvulkan wayland-protocols"
 DEPS="xorg-libs libdrm"
 
-PKG_VER=21.3.6
+PKG_VER=21.3.7
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
 ADDITIONAL="
-    https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-add_xdemos-1.patch
-    https://www.linuxfromscratch.org/patches/blfs/svn/mesa-$PKG_VER-nouveau_fixes-1.patch
+    mesa-$PKG_VER-add_xdemos-1.patch
+    mesa-$PKG_VER-nouveau_fixes-1.patch
 "
 
 DESC="An implementation of the OpenGL specification"

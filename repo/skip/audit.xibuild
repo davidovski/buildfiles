@@ -1,0 +1,41 @@
+#!/bin/sh
+
+MAKEDEPS="make swig"
+DEPS="sbase libcap-ng musl"
+
+PKG_VER=3.0.6
+SOURCE=https://people.redhat.com/sgrubb/audit/audit-$PKG_VER.tar.gz
+ADDITIONAL="
+	0003-all-get-rid-of-strndupa.patch
+	0004-fix-path-in-au-remote-conf.patch
+	auditd.initd
+	auditd.confd
+    "
+
+DESC="User space tools for 2.6 kernel auditing"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--disable-zos-remote \
+		--enable-shared=audit
+    make
+}
+
+check () {
+    make -j1 check
+}
+
+package () {
+    make DESTDIR="$PKG_DEST" install
+	install -Dm755 /auditd.initd "$PKG_DEST"/etc/init.d/auditd
+	install -Dm644 /auditd.confd "$PKG_DEST"/etc/conf.d/auditd
+
+}

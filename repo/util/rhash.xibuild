@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MAKEDEPS="make openssl"
+DEPS="musl"
+
+PKG_VER=1.4.2
+SOURCE=https://downloads.sourceforge.net/rhash/rhash-$PKG_VER-src.tar.gz
+DESC="Utility for calculation and verification of hash sums and magnet links"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--enable-openssl \
+		--disable-openssl-runtime
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make expat guile pmfr ncurses python xz texinfo"
+MAKEDEPS="make expat guile ncurses python xz texinfo"
 DEPS="python-six doxygen gcc guile python rustc valgrind systemtap"
 
 PKG_VER=11.2

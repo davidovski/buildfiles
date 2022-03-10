@@ -1,7 +1,6 @@
 #!/bin/sh
 
-
-MAKEDEPS="make autoconf automake autoconf-archive sqlite"
+MAKEDEPS="make autoconf automake autoconf-archive sqlite3"
 DEPS="bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib grep"
 
 PKG_VER=3.10.2

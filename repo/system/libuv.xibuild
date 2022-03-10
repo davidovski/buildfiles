@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MAKEDEPS="automake autoconf libtool make"
+DEPS="musl"
+
+PKG_VER=1.44.1
+SOURCE=https://dist.libuv.org/dist/v$PKG_VER/libuv-v$PKG_VER.tar.gz
+DESC="Cross-platform asychronous I/O"
+
+prepare () {
+    sh autogen.sh
+}
+
+build () {
+    ./configure --prefix=/usr 
+    make CFLAGS="$CFLAGS -D__USE_MISC" BUILDTYPE=Release
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+

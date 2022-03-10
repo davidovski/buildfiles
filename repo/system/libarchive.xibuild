@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make autoconf libtool libpth libiconv"
+MAKEDEPS="make autoconf libtool"
 DEPS="acl bzip2 expat lz4 openssl xz zlib zstd"
 
 PKG_VER=3.5.2

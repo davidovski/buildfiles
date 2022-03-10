@@ -1,0 +1,25 @@
+#!/bin/sh
+
+MAKEDEPS="make meson"
+DEPS="gcc musl"
+
+PKG_VER=1.9.5
+SOURCE=https://github.com/open-source-parsers/jsoncpp/archive/$PKG_VER.tar.gz
+DESC="JSON C++ library"
+
+build () {
+    mkdir build &&
+    cd build &&
+
+    meson --prefix=/usr \
+          --buildtype=release \
+          .. &&
+    ninja
+        
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
+
+

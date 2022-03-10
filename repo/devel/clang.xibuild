@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake llvm libxml2 ninja python3 python-markupsafe python-pygments" 
+MAKEDEPS="cmake llvm libxml2 ninja python python-markupsafe python-pygments" 
 DEPS="curl gcc libssh2 openssl"
 
 PKG_VER=13.0.1

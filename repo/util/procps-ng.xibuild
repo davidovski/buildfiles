@@ -13,6 +13,7 @@ ADDITIONAL="
 
 prepare () {
     patch -Np1 -i use_utmpx.patch
+
     sed -i '1i#include <langinfo.h>' proc/escape.c
 }
 

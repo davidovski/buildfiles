@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS="make autoconf automake gettext libtirpc libtool"
+DEPS="libintl libtirpc musl"
+
+PKG_VER=1.2.0
+SOURCE=https://github.com/thkukuk/libnsl/archive/v$PKG_VER.tar.gz
+
+DESC="Public client interface for NIS(YP) and NIS+ in a IPv6 ready version"
+
+prepare () {
+	autoreconf -vfi
+}
+
+build () {
+    ./configure --prefix=/usr     \
+            --sysconfdir=/etc \
+            --disable-static  &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

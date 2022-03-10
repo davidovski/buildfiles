@@ -11,8 +11,8 @@ prepare () {
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
     export CF_OLD=$CFLAGS
-    export CFLAGS+=" -DNO_POSIX_2008_LOCALE"
-    export CFLAGS+=" -D_GNU_SOURCE"
+    export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE"
+    export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 
     rm -rf cpan/Compress-Raw-Zlib/zlib-src
     sed -i '/\(bzip2\|zlib\)-src/d' MANIFEST

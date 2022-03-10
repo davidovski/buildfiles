@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="grep make dejagnu inetutils flex"
+MAKEDEPS="grep make dejagnu flex"
 DEPS="zstd musl binutils mpc mpfr gmp"
 
 

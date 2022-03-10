@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="musl"
+
+PKG_VER=1.42
+SOURCE=https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$PKG_VER.tar.bz2
+DESC="Support library for libgcrypt"
+
+prepare() {
+	default_prepare
+	aclocal
+	automake
+}
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--enable-static \
+		--disable-nls
+	make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+

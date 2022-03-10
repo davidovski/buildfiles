@@ -4,7 +4,7 @@ MAKEDEPS=""
 DEPS="skalibs"
 
 PKG_VER=0.1.1.0
-SOURCE=https://skarnet.org/software/utmps/utmps-0.1.1.0.tar.gz
+SOURCE=https://skarnet.org/software/utmps/utmps-$PKG_VER.tar.gz
 
 DESC="Library implementing utmpx.h family of functions"
 
@@ -22,7 +22,6 @@ package () {
     make DESTDIR=$PKG_DEST install
     ln -s utmps/utmpx.h $PKG_DEST/usr/include/utmpx.h
     install -d $PKG_DEST/usr/lib/pkgconfig
-
     cat > $PKG_DEST/usr/lib/pkgconfig/utmps.pc << EOF
 Name: utmps
 Description: A secure implementation of the utmp mechanism.
@@ -37,9 +36,12 @@ EOF
 }
 
 postinstall () {
+    # check that shadow exists
+    command -v useradd || exit 1
+    command -v chown || exit 1
+
     useradd -c "utmps user" -d /run/utmps \
         -u 984 -g utmp -s /bin/false utmp
     [ -d /var/log/utmps ] || mkdir -p /var/log/utmps
     chown -R utmp:utmp /var/log/utmps
-    
 }

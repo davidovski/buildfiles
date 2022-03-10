@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="grep meson ninja python intltool glib"
-DEPS="jansson libndp curl wpa_supplicant newt nss polkit libpsl audit dbus gobject-introspection dhcp"
+DEPS="jansson libndp curl wpa_supplicant newt nss polkit libpsl dbus gobject-introspection dhcp"
 
 PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/${PKG_VER%.*}/NetworkManager-$PKG_VER.tar.xz
