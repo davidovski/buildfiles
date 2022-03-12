@@ -9,7 +9,8 @@ DESC="XML stylesheet transformation library"
 
 
 prepare () {
-    sed -i s/3000/5000/ libxslt/transform.c doc/xsltproc.{1,xml} &&
+    sed -i s/3000/5000/ libxslt/transform.c doc/xsltproc.xml &&
+    sed -i s/3000/5000/ libxslt/transform.c doc/xsltproc.1 &&
     sed -i -r '/max(Parser)?Depth/d' ./tests/fuzz/fuzz.c 
 }
 

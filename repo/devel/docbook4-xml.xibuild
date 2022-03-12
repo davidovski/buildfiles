@@ -28,7 +28,7 @@ package () {
 
         cd ..
     done
-    }
+}
 
 postinstall () {
     for v in $VERSIONS; do 

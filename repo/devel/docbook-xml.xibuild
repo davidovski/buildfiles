@@ -8,7 +8,8 @@ SOURCE=https://docbook.org/xml/$PKG_VER/docbook-v$PKG_VER-os.zip
 DESC="A widely used XML scheme for writing documentation and help"
 
 package () {
-    install -dm755 $PKG_DEST/usr/share/xml/docbook/schema/{rng,sch}/$PKG_VER         &&
+    install -dm755 $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER         &&
+    install -dm755 $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER         &&
     install -m644   schemas/rng/* $PKG_DEST/usr/share/xml/docbook/schema/rng/$PKG_VER &&
     install -m644   schemas/sch/* $PKG_DEST/usr/share/xml/docbook/schema/sch/$PKG_VER &&
     install -m755   tools/db4-entities.pl $PKG_DEST/usr/bin                      &&

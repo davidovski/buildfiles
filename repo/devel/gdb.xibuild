@@ -18,14 +18,14 @@ build () {
 
 }
 
-check () {
-    pushd gdb/testsuite &&
-    make  site.exp      &&
-    echo  "set gdb_test_timeout 120" >> site.exp &&
-    runtest
-    popd
-
-}
+#check () {
+#    cd gdb/testsuite &&
+#    make  site.exp      &&
+#    echo  "set gdb_test_timeout 120" >> site.exp &&
+#    runtest
+#    cd ../..
+#
+#}
 
 package () {
     make -C gdb DESTDIR=$PKG_DEST install 
