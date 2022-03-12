@@ -16,10 +16,9 @@ build () {
 }
 
 package () {
-    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+    install -d $PKG_DEST/usr/bin
+    install -m755 stat $PKG_DEST/usr/bin
 
-    #for p in todo; do
-    #   rm $PKG_DEST/usr/bin/$p
-    #   rm $PKG_DEST/usr/share/man/man1/$p.1
-    #done
+    install -d $PKG_DEST/usr/share/man
+    install -m644 stat.1 $PKG_DEST/usr/share/man/stat.1
 }

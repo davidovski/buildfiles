@@ -4,16 +4,23 @@ MAKEDEPS="make "
 DEPS="pam libcap readline ncurses libxcrypt utmps iana-etc net-tools"
 
 PKG_VER=2.10
-SOURCE=https://downloads.sourceforge.net/project/net-tools/net-tools-$PKG_VER.tar.xz
+SOURCE=https://github.com/ecki/net-tools
 ADDITIONAL="
-    musl-fixes.patch
 "
 
 DESC="Linux networking base tools"
 
 prepare () {
-    apply_patches
-    cat > config.make <<EOF
+    sed -i lib/inet_sr.c \
+        -e "/#include <sys\/param.h>/a #include <asm\/param.h>"
+    sed -i netstat.c \
+        -e "/#include <sys\/param.h>/a #include <asm\/param.h>"
+
+    sed -i slattach.c \
+        -e "/#include <limits.h>/a #include <termios.h>"
+
+
+    	cat > config.make <<EOF
 # I18N=0
 HAVE_AFUNIX=1
 HAVE_AFINET=1
@@ -59,10 +66,11 @@ HAVE_PLIP_TOOLS=1
 HAVE_SERIAL_TOOLS=1
 EOF
 	sed -n -e 's/^\(HAVE.*\)=\(.*\)/#define \1 \2/p' config.make > config.h
+
 }
 
 build () {
-    make
+    yes "" | make
 }
 
 package () {

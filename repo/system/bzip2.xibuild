@@ -28,7 +28,7 @@ package () {
     cp -a libbz2.so.$PKG_VER $PKG_DEST/usr/lib/libbz2.so
 
     cp bzip2-shared $PKG_DEST/usr/bin/bzip2
-    for i in $PKG_DEST/usr/bin/{bzcat,bunzip2}; do
+    for i in $PKG_DEST/usr/bin/bzcat $PKG_DEST/usr/bin/bunzip2; do
      ln -sf bzip2 $i
     done
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl acl attr gmp"
+DEPS="musl acl attr gmp ubase"
 
 SOURCE=https://git.suckless.org/sbase
 
@@ -22,7 +22,8 @@ build () {
 package () {
     make PREFIX=/usr DESTDIR=$PKG_DEST install 
 
-    for p in tar sed find; do
+    # these are provided by other utils
+    for p in tar sed find xargs; do
         rm $PKG_DEST/usr/bin/$p
         rm $PKG_DEST/usr/share/man/man1/$p.1
     done

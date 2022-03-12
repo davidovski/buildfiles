@@ -1,5 +1,5 @@
 #!/bin/sh
-DEPS="bash bzip2 sbase ubase s6 bootscripts findutils iana-etc file gawk gettext musl grep gzip iproute2 iputils xipkg pciutils procps-ng psmisc sed shadow tar util-linux xz linux-headers sysconfigs inetutils"
+DEPS="bash bzip2 sbase s6 bootscripts findutils iana-etc file gawk gettext musl grep gzip iproute2 iputils xipkg pciutils procps-ng psmisc sed shadow tar util-linux xz linux-headers sysconfigs inetutils mkinitramfs genfstab"
 MAKEDEPS="grep python"
 
 DESC="The base system to be installed"

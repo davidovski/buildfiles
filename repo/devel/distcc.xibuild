@@ -1,16 +1,30 @@
 #!/bin/sh
 
-MAKEDEPS="python make "
+MAKEDEPS="python make automake autoconf"
 DEPS="gcc python popt musl-obstack"
 
 PKG_VER=3.4
 SOURCE=https://github.com/distcc/distcc/releases/download/v$PKG_VER/distcc-$PKG_VER.tar.gz
+ADDITIONAL="
+    gcc-10.patch
+    dcc_gcc_rewrite_fqn-avoid-heap-corruption.patch
+    distcc-hardened.patch
+"
 
 DESC="Distributed compiler for C, C++ and Objective-C"
 
+prepare () {
+    apply_patches
+}
+
 
 build () {
-    ./configure --prefix=/usr
+    ./configure --prefix=/usr \
+            --without-libiberty \
+    		--disable-Werror \
+            --without-gtk \
+
+
     make
 }
 

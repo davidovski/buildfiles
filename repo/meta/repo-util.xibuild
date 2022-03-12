@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in util"
-DEPS=" acpi bash cpio curl dash diffutils dosfstools dracut e2fsprogs file fzf gawk genfstab grep groff htop inetutils iproute2 iw keyutils less lm-sensors man-db neofetch nmap openssh pciutils pm-utils procps-ng rsync sudo unzip usbutils util-linux webfs wget which wireless-tools wpa_supplicant"
+DEPS=" acpi bash cpio curl dash diffutils dosfstools dracut e2fsprogs file fzf gawk genfstab grep groff htop inetutils iproute2 iw keyutils less lm-sensors man-db neofetch net-tools nmap openssh pciutils pm-utils procps-ng rhash rsync sudo unzip usbutils util-linux webfs wget which wireless-tools wpa_supplicant"

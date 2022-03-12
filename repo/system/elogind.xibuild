@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make docbook4-xml docbook-xsl docbook-dtd libxslt ubase glib acl m4"
+MAKEDEPS="make docbook4-xml docbook-xsl docbook-dtd libxslt util-linux glib acl m4"
 DEPS="pam gperf eudev"
 
 PKG_VER=246.10

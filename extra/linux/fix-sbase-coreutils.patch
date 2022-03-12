@@ -6,118 +6,10 @@ diff -rNu a/arch/arc/boot/Makefile b/arch/arc/boot/Makefile
  
  LINUX_START_TEXT = $$($(READELF) -h vmlinux | \
 -			grep "Entry point address" | grep -o 0x.*)
-+			ggrep "Entry point address" | ggrep -o 0x.*)
++			grep "Entry point address" | ggrep -o 0x.*)
  
  UIMAGE_LOADADDR    = $(CONFIG_LINUX_LINK_BASE)
  UIMAGE_ENTRYADDR   = $(LINUX_START_TEXT)
-diff -rNu a/arch/arm/vdso/Makefile b/arch/arm/vdso/Makefile
---- a/arch/arm/vdso/Makefile	2022-03-08 18:11:18.522346568 +0000
-+++ b/arch/arm/vdso/Makefile	2022-03-08 19:14:39.089463092 +0000
-@@ -74,8 +74,8 @@
- quiet_cmd_vdso_install = INSTALL $<
- define cmd_vdso_install
- 	cp $< "$(MODLIB)/vdso/vdso.so"; \
--	if readelf -n $< | grep -q 'Build ID'; then \
--	  buildid=`readelf -n $< |grep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
-+	if readelf -n $< | ggrep -q 'Build ID'; then \
-+	  buildid=`readelf -n $< |ggrep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
- 	  first=`echo $$buildid | cut -b-2`; \
- 	  last=`echo $$buildid | cut -b3-`; \
- 	  mkdir -p "$(MODLIB)/vdso/.build-id/$$first"; \
-diff -rNu a/arch/mips/Makefile b/arch/mips/Makefile
---- a/arch/mips/Makefile	2022-03-08 18:11:18.555680519 +0000
-+++ b/arch/mips/Makefile	2022-03-08 19:14:39.089463092 +0000
-@@ -322,7 +322,7 @@
- 
- ifdef CONFIG_MIPS
- CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
--	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
-+	eggrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
- 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
- endif
- 
-@@ -512,7 +512,7 @@
- $(generic_defconfigs):
- 	$(Q)$(CONFIG_SHELL) $(srctree)/scripts/kconfig/merge_config.sh \
- 		-m -O $(objtree) $(srctree)/arch/$(ARCH)/configs/generic_defconfig $^ | \
--		grep -Ev '^#'
-+		ggrep -Ev '^#'
- 	$(Q)cp $(KCONFIG_CONFIG) $(objtree)/.config.$@
- 	$(Q)$(MAKE) -f $(srctree)/Makefile olddefconfig \
- 		KCONFIG_CONFIG=$(objtree)/.config.$@ >/dev/null
-diff -rNu a/arch/mips/vdso/Makefile b/arch/mips/vdso/Makefile
---- a/arch/mips/vdso/Makefile	2022-03-08 18:11:18.579014284 +0000
-+++ b/arch/mips/vdso/Makefile	2022-03-08 19:14:39.086129697 +0000
-@@ -68,7 +68,7 @@
- 
- # Check that we don't have PIC 'jalr t9' calls left
- quiet_cmd_vdso_mips_check = VDSOCHK $@
--      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | egrep -h "jalr.*t9" > /dev/null; \
-+      cmd_vdso_mips_check = if $(OBJDUMP) --disassemble $@ | eggrep -h "jalr.*t9" > /dev/null; \
- 		       then (echo >&2 "$@: PIC 'jalr t9' calls are not supported"; \
- 			     rm -f $@; /bin/false); fi
- 
-diff -rNu a/arch/powerpc/Makefile b/arch/powerpc/Makefile
---- a/arch/powerpc/Makefile	2022-03-08 18:11:18.585681074 +0000
-+++ b/arch/powerpc/Makefile	2022-03-08 19:14:39.086129697 +0000
-@@ -37,7 +37,7 @@
- uname := $(shell uname -m)
- KBUILD_DEFCONFIG := $(if $(filter ppc%,$(uname)),$(uname),ppc64)_defconfig
- 
--new_nm := $(shell if $(NM) --help 2>&1 | grep -- '--synthetic' > /dev/null; then echo y; else echo n; fi)
-+new_nm := $(shell if $(NM) --help 2>&1 | ggrep -- '--synthetic' > /dev/null; then echo y; else echo n; fi)
- 
- ifeq ($(new_nm),y)
- NM		:= $(NM) --synthetic
-@@ -446,7 +446,7 @@
- # - gcc-4.6 is the minimum kernel-wide version so nothing required.
- checkbin:
- 	@if test "x${CONFIG_CPU_LITTLE_ENDIAN}" = "xy" \
--	    && $(LD) --version | head -1 | grep ' 2\.24$$' >/dev/null ; then \
-+	    && $(LD) --version | head -1 | ggrep ' 2\.24$$' >/dev/null ; then \
- 		echo -n '*** binutils 2.24 miscompiles weak symbols ' ; \
- 		echo 'in some circumstances.' ; \
- 		echo -n '*** Please use a different binutils version.' ; \
-diff -rNu a/arch/sh/Makefile b/arch/sh/Makefile
---- a/arch/sh/Makefile	2022-03-08 18:11:18.619015025 +0000
-+++ b/arch/sh/Makefile	2022-03-08 19:14:39.086129697 +0000
-@@ -52,7 +52,7 @@
- # correctly for the target in mind.
- #
- cflags-y	+= $(shell $(CC) $(KBUILD_CFLAGS) -print-multi-lib | \
--		     grep nofpu | sed q | sed -e 's/^/-/;s/;.*$$//')
-+		     ggrep nofpu | sed q | sed -e 's/^/-/;s/;.*$$//')
- # At this point, anything goes.
- isaflags-y	:= $(call as-option,-Wa$(comma)-isa=any,)
- else
-diff -rNu a/arch/sparc/vdso/Makefile b/arch/sparc/vdso/Makefile
---- a/arch/sparc/vdso/Makefile	2022-03-08 18:11:18.635682001 +0000
-+++ b/arch/sparc/vdso/Makefile	2022-03-08 19:14:39.086129697 +0000
-@@ -123,8 +123,8 @@
- quiet_cmd_vdso_install = INSTALL $(@:install_%=%)
- define cmd_vdso_install
- 	cp $< "$(MODLIB)/vdso/$(@:install_%=%)"; \
--	if readelf -n $< |grep -q 'Build ID'; then \
--	  buildid=`readelf -n $< |grep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
-+	if readelf -n $< |ggrep -q 'Build ID'; then \
-+	  buildid=`readelf -n $< |ggrep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
- 	  first=`echo $$buildid | cut -b-2`; \
- 	  last=`echo $$buildid | cut -b3-`; \
- 	  mkdir -p "$(MODLIB)/vdso/.build-id/$$first"; \
-diff -rNu a/arch/x86/entry/vdso/Makefile b/arch/x86/entry/vdso/Makefile
---- a/arch/x86/entry/vdso/Makefile	2022-03-08 18:11:18.639015396 +0000
-+++ b/arch/x86/entry/vdso/Makefile	2022-03-08 19:14:39.082796301 +0000
-@@ -191,8 +191,8 @@
- quiet_cmd_vdso_install = INSTALL $(@:install_%=%)
- define cmd_vdso_install
- 	cp $< "$(MODLIB)/vdso/$(@:install_%=%)"; \
--	if readelf -n $< |grep -q 'Build ID'; then \
--	  buildid=`readelf -n $< |grep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
-+	if readelf -n $< |ggrep -q 'Build ID'; then \
-+	  buildid=`readelf -n $< |ggrep 'Build ID' |sed -e 's/^.*Build ID: \(.*\)$$/\1/'`; \
- 	  first=`echo $$buildid | cut -b-2`; \
- 	  last=`echo $$buildid | cut -b3-`; \
- 	  mkdir -p "$(MODLIB)/vdso/.build-id/$$first"; \
 diff -rNu a/arch/x86/Makefile b/arch/x86/Makefile
 --- a/arch/x86/Makefile	2022-03-08 18:11:18.639015396 +0000
 +++ b/arch/x86/Makefile	2022-03-08 22:31:30.242604366 +0000
@@ -142,56 +34,6 @@ diff -rNu a/Documentation/devicetree/bindings/Makefile b/Documentation/devicetre
  	{ echo "ERROR: dtschema minimum version is v$(DT_SCHEMA_MIN_VERSION)" >&2; false; }
  
  quiet_cmd_extract_ex = DTEX    $@
-@@ -39,12 +39,12 @@
- 
- quiet_cmd_yamllint = LINT    $(src)
-       cmd_yamllint = ($(find_cmd) | \
--                     xargs -n200 -P$$(nproc) \
-+                     xargs -n200 \
- 		     $(DT_SCHEMA_LINT) -f parsable -c $(srctree)/$(src)/.yamllint >&2) || true
- 
- quiet_cmd_chk_bindings = CHKDT   $@
-       cmd_chk_bindings = ($(find_cmd) | \
--                         xargs -n200 -P$$(nproc) $(DT_DOC_CHECKER) -u $(srctree)/$(src)) || true
-+                         xargs -n200 $(DT_DOC_CHECKER) -u $(srctree)/$(src)) || true
- 
- quiet_cmd_mk_schema = SCHEMA  $@
-       cmd_mk_schema = f=$$(mktemp) ; \
-diff -rNu a/drivers/firmware/efi/libstub/Makefile b/drivers/firmware/efi/libstub/Makefile
---- a/drivers/firmware/efi/libstub/Makefile	2022-03-08 18:11:18.712350087 +0000
-+++ b/drivers/firmware/efi/libstub/Makefile	2022-03-08 19:14:39.079462906 +0000
-@@ -137,7 +137,7 @@
- quiet_cmd_stubcopy = STUBCPY $@
-       cmd_stubcopy =							\
- 	$(STRIP) --strip-debug -o $@ $<;				\
--	if $(OBJDUMP) -r $@ | grep $(STUBCOPY_RELOC-y); then		\
-+	if $(OBJDUMP) -r $@ | ggrep $(STUBCOPY_RELOC-y); then		\
- 		echo "$@: absolute symbol references not allowed in the EFI stub" >&2; \
- 		/bin/false;						\
- 	fi;								\
-diff -rNu a/kernel/gen_kheaders.sh b/kernel/gen_kheaders.sh
---- a/kernel/gen_kheaders.sh	2022-03-08 18:11:19.319027989 +0000
-+++ b/kernel/gen_kheaders.sh	2022-03-08 21:55:45.407148635 +0000
-@@ -78,7 +78,7 @@
- 
- # Remove comments except SDPX lines
- find $cpio_dir -type f -print0 |
--	xargs -0 -P8 -n1 perl -pi -e 'BEGIN {undef $/;}; s/\/\*((?!SPDX).)*?\*\///smg;'
-+	xargs -n1 perl -pi -e 'BEGIN {undef $/;}; s/\/\*((?!SPDX).)*?\*\///smg;'
- 
- # Create archive and try to normalize metadata for reproducibility.
- # For compatibility with older versions of tar, files are fed to tar
-diff -rNu a/lib/vdso/Makefile b/lib/vdso/Makefile
---- a/lib/vdso/Makefile	2022-03-08 18:11:19.329028175 +0000
-+++ b/lib/vdso/Makefile	2022-03-08 19:14:39.059462533 +0000
-@@ -17,6 +17,6 @@
- endif
- 
- quiet_cmd_vdso_check = VDSOCHK $@
--      cmd_vdso_check = if $(OBJDUMP) -R $@ | egrep -h "$(ARCH_REL_TYPE_ABS)"; \
-+      cmd_vdso_check = if $(OBJDUMP) -R $@ | eggrep -h "$(ARCH_REL_TYPE_ABS)"; \
- 		       then (echo >&2 "$@: dynamic relocations are not supported"; \
- 			     rm -f $@; /bin/false); fi
 diff -rNu a/Makefile b/Makefile
 --- a/Makefile	2022-03-08 18:11:18.462345457 +0000
 +++ b/Makefile	2022-03-08 22:30:31.351528535 +0000
@@ -204,15 +46,6 @@ diff -rNu a/Makefile b/Makefile
  	$(call cmd,makefile)
  	$(Q)test -e .gitignore || \
  	{ echo "# this is build directory, ignore it"; echo "*"; } > .gitignore
-@@ -1254,7 +1254,7 @@
- 
- PHONY += headerdep
- headerdep:
--	$(Q)find $(srctree)/include/ -name '*.h' | xargs --max-args 1 \
-+	$(Q)find $(srctree)/include/ -name '*.h' | xargs -n1 \
- 	$(srctree)/scripts/headerdep.pl -I$(srctree)/include
- 
- # ---------------------------------------------------------------------------
 @@ -1695,7 +1695,7 @@
  PHONY += scripts_gdb
  scripts_gdb: prepare0
@@ -222,35 +55,6 @@ diff -rNu a/Makefile b/Makefile
  
  ifdef CONFIG_GDB_SCRIPTS
  all: scripts_gdb
-diff -rNu a/samples/bpf/Makefile b/samples/bpf/Makefile
---- a/samples/bpf/Makefile	2022-03-08 18:11:19.365695521 +0000
-+++ b/samples/bpf/Makefile	2022-03-08 19:14:39.059462533 +0000
-@@ -253,12 +253,12 @@
- $(warning WARNING: Please install kernel headers locally (make headers_install).)
- endif
- 
--BTF_LLC_PROBE := $(shell $(LLC) -march=bpf -mattr=help 2>&1 | grep dwarfris)
--BTF_PAHOLE_PROBE := $(shell $(BTF_PAHOLE) --help 2>&1 | grep BTF)
--BTF_OBJCOPY_PROBE := $(shell $(LLVM_OBJCOPY) --help 2>&1 | grep -i 'usage.*llvm')
-+BTF_LLC_PROBE := $(shell $(LLC) -march=bpf -mattr=help 2>&1 | ggrep dwarfris)
-+BTF_PAHOLE_PROBE := $(shell $(BTF_PAHOLE) --help 2>&1 | ggrep BTF)
-+BTF_OBJCOPY_PROBE := $(shell $(LLVM_OBJCOPY) --help 2>&1 | ggrep -i 'usage.*llvm')
- BTF_LLVM_PROBE := $(shell echo "int main() { return 0; }" | \
- 			  $(CLANG) -target bpf -O2 -g -c -x c - -o ./llvm_btf_verify.o; \
--			  $(LLVM_READELF) -S ./llvm_btf_verify.o | grep BTF; \
-+			  $(LLVM_READELF) -S ./llvm_btf_verify.o | ggrep BTF; \
- 			  /bin/rm -f ./llvm_btf_verify.o)
- 
- BPF_EXTRA_CFLAGS += -fno-stack-protector
-@@ -389,7 +389,7 @@
- define get_sys_includes
- $(shell $(1) -v -E - </dev/null 2>&1 \
-         | sed -n '/<...> search starts here:/,/End of search list./{ s| \(/.*\)|-idirafter \1|p }') \
--$(shell $(1) -dM -E - </dev/null | grep '#define __riscv_xlen ' | sed 's/#define /-D/' | sed 's/ /=/')
-+$(shell $(1) -dM -E - </dev/null | ggrep '#define __riscv_xlen ' | sed 's/#define /-D/' | sed 's/ /=/')
- endef
- 
- CLANG_SYS_INCLUDES = $(call get_sys_includes,$(CLANG))
 diff -rNu a/scripts/gdb/linux/Makefile b/scripts/gdb/linux/Makefile
 --- a/scripts/gdb/linux/Makefile	2022-03-08 18:11:19.369028916 +0000
 +++ b/scripts/gdb/linux/Makefile	2022-03-08 22:31:15.895675602 +0000
@@ -263,33 +67,6 @@ diff -rNu a/scripts/gdb/linux/Makefile b/scripts/gdb/linux/Makefile
  
  always-y += $(symlinks)
  $(addprefix $(obj)/, $(symlinks)): FORCE
-diff -rNu a/tools/build/feature/Makefile b/tools/build/feature/Makefile
---- a/tools/build/feature/Makefile	2022-03-08 18:11:19.419029842 +0000
-+++ b/tools/build/feature/Makefile	2022-03-08 19:14:39.056129138 +0000
-@@ -211,12 +211,12 @@
- $(OUTPUT)test-gtk2-infobar.bin:
- 	$(BUILD) $(shell $(PKG_CONFIG) --libs --cflags gtk+-2.0 2>/dev/null)
- 
--grep-libs  = $(filter -l%,$(1))
-+ggrep-libs  = $(filter -l%,$(1))
- strip-libs = $(filter-out -l%,$(1))
- 
- PERL_EMBED_LDOPTS = $(shell perl -MExtUtils::Embed -e ldopts 2>/dev/null)
- PERL_EMBED_LDFLAGS = $(call strip-libs,$(PERL_EMBED_LDOPTS))
--PERL_EMBED_LIBADD = $(call grep-libs,$(PERL_EMBED_LDOPTS))
-+PERL_EMBED_LIBADD = $(call ggrep-libs,$(PERL_EMBED_LDOPTS))
- PERL_EMBED_CCOPTS = `perl -MExtUtils::Embed -e ccopts 2>/dev/null`
- FLAGS_PERL_EMBED=$(PERL_EMBED_CCOPTS) $(PERL_EMBED_LDOPTS)
- 
-@@ -329,7 +329,7 @@
- 
- $(OUTPUT)test-clang-bpf-co-re.bin:
- 	$(CLANG) -S -g -target bpf -o - $(patsubst %.bin,%.c,$(@F)) |	\
--		grep BTF_KIND_VAR
-+		ggrep BTF_KIND_VAR
- 
- $(OUTPUT)test-file-handle.bin:
- 	$(BUILD)
 diff -rNu a/tools/lib/bpf/Makefile b/tools/lib/bpf/Makefile
 --- a/tools/lib/bpf/Makefile	2022-03-08 18:11:19.425696632 +0000
 +++ b/tools/lib/bpf/Makefile	2022-03-08 19:14:39.056129138 +0000
@@ -345,86 +122,16 @@ diff -rNu a/tools/objtool/Makefile b/tools/objtool/Makefile
  CFLAGS += $(if $(elfshdr),,-DLIBELF_USE_DEPRECATED)
  
  AWK = awk
-diff -rNu a/tools/perf/Makefile b/tools/perf/Makefile
---- a/tools/perf/Makefile	2022-03-08 18:11:19.429030027 +0000
-+++ b/tools/perf/Makefile	2022-03-08 19:14:39.056129138 +0000
-@@ -25,7 +25,7 @@
- # (To override it, run 'make JOBS=1' and similar.)
- #
- ifeq ($(JOBS),)
--  JOBS := $(shell (getconf _NPROCESSORS_ONLN || egrep -c '^processor|^CPU[0-9]' /proc/cpuinfo) 2>/dev/null)
-+  JOBS := $(shell (getconf _NPROCESSORS_ONLN || eggrep -c '^processor|^CPU[0-9]' /proc/cpuinfo) 2>/dev/null)
-   ifeq ($(JOBS),0)
-     JOBS := 1
-   endif
-diff -rNu a/tools/testing/radix-tree/Makefile b/tools/testing/radix-tree/Makefile
---- a/tools/testing/radix-tree/Makefile	2022-03-08 18:11:19.452363792 +0000
-+++ b/tools/testing/radix-tree/Makefile	2022-03-08 19:14:39.052795742 +0000
-@@ -51,7 +51,7 @@
- xarray.o: ../../../lib/xarray.c ../../../lib/test_xarray.c
+diff -rNu a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+--- a/scripts/link-vmlinux.sh	2022-03-12 19:18:55.306065317 +0000
++++ b/scripts/link-vmlinux.sh	2022-03-12 19:17:31.794505850 +0000
+@@ -231,7 +231,7 @@
+ 		--strip-all ${1} ${2} 2>/dev/null
+ 	# Change e_type to ET_REL so that it can be used to link final vmlinux.
+ 	# Unlike GNU ld, lld does not allow an ET_EXEC input.
+-	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
++	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 
+ }
  
- generated/map-shift.h:
--	@if ! grep -qws $(SHIFT) generated/map-shift.h; then		\
-+	@if ! ggrep -qws $(SHIFT) generated/map-shift.h; then		\
- 		echo "#define XA_CHUNK_SHIFT $(SHIFT)" >		\
- 				generated/map-shift.h;			\
- 	fi
-diff -rNu a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
---- a/tools/testing/selftests/bpf/Makefile	2022-03-08 18:11:19.455697188 +0000
-+++ b/tools/testing/selftests/bpf/Makefile	2022-03-08 19:14:39.052795742 +0000
-@@ -277,12 +277,12 @@
- define get_sys_includes
- $(shell $(1) -v -E - </dev/null 2>&1 \
- 	| sed -n '/<...> search starts here:/,/End of search list./{ s| \(/.*\)|-idirafter \1|p }') \
--$(shell $(1) -dM -E - </dev/null | grep '__riscv_xlen ' | awk '{printf("-D__riscv_xlen=%d -D__BITS_PER_LONG=%d", $$3, $$3)}')
-+$(shell $(1) -dM -E - </dev/null | ggrep '__riscv_xlen ' | awk '{printf("-D__riscv_xlen=%d -D__BITS_PER_LONG=%d", $$3, $$3)}')
- endef
- 
- # Determine target endianness.
- IS_LITTLE_ENDIAN = $(shell $(CC) -dM -E - </dev/null | \
--			grep 'define __BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__')
-+			ggrep 'define __BYTE_ORDER__ __ORDER_LITTLE_ENDIAN__')
- MENDIAN=$(if $(IS_LITTLE_ENDIAN),-mlittle-endian,-mbig-endian)
- 
- CLANG_SYS_INCLUDES = $(call get_sys_includes,$(CLANG))
-diff -rNu a/tools/testing/selftests/rseq/Makefile b/tools/testing/selftests/rseq/Makefile
---- a/tools/testing/selftests/rseq/Makefile	2022-03-08 18:11:19.482364349 +0000
-+++ b/tools/testing/selftests/rseq/Makefile	2022-03-08 19:14:39.052795742 +0000
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0+ OR MIT
- 
--ifneq ($(shell $(CC) --version 2>&1 | head -n 1 | grep clang),)
-+ifneq ($(shell $(CC) --version 2>&1 | head -n 1 | ggrep clang),)
- CLANG_FLAGS += -no-integrated-as
- endif
- 
-diff -rNu a/tools/testing/selftests/sched/Makefile b/tools/testing/selftests/sched/Makefile
---- a/tools/testing/selftests/sched/Makefile	2022-03-08 18:11:19.482364349 +0000
-+++ b/tools/testing/selftests/sched/Makefile	2022-03-08 19:14:39.052795742 +0000
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0+
- 
--ifneq ($(shell $(CC) --version 2>&1 | head -n 1 | grep clang),)
-+ifneq ($(shell $(CC) --version 2>&1 | head -n 1 | ggrep clang),)
- CLANG_FLAGS += -no-integrated-as
- endif
- 
-diff -rNu a/tools/testing/selftests/wireguard/qemu/Makefile b/tools/testing/selftests/wireguard/qemu/Makefile
---- a/tools/testing/selftests/wireguard/qemu/Makefile	2022-03-08 18:11:19.485697744 +0000
-+++ b/tools/testing/selftests/wireguard/qemu/Makefile	2022-03-08 19:14:39.052795742 +0000
-@@ -220,13 +220,13 @@
- 		-nographic \
- 		-smp $(NR_CPUS) \
- 		$(QEMU_MACHINE) \
--		-m $$(grep -q CONFIG_DEBUG_KMEMLEAK=y $(KERNEL_BUILD_PATH)/.config && echo 1G || echo 256M) \
-+		-m $$(ggrep -q CONFIG_DEBUG_KMEMLEAK=y $(KERNEL_BUILD_PATH)/.config && echo 1G || echo 256M) \
- 		-serial stdio \
- 		-serial file:$(BUILD_PATH)/result \
- 		-no-reboot \
- 		-monitor none \
- 		-kernel $<
--	grep -Fq success $(BUILD_PATH)/result
-+	ggrep -Fq success $(BUILD_PATH)/result
- 
- $(BUILD_PATH)/init-cpio-spec.txt:
- 	mkdir -p $(BUILD_PATH)
+ # Create ${2} .S file with all symbols from the ${1} object file
+
