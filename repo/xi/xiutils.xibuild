@@ -3,8 +3,7 @@
 MAKEDEPS="make gcc"
 DEPS="musl sh"
 
-# Use master
-PKG_VER=1.2
+PKG_VER=1.2.1
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 BRANCH="v$PKG_VER"
 

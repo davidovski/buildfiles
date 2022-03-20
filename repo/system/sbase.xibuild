@@ -4,6 +4,10 @@ MAKEDEPS="make "
 DEPS="musl acl attr gmp ubase"
 
 SOURCE=https://git.suckless.org/sbase
+ADDITIONAL="
+    https://gitea.linfan.moe/mirror/ataraxia/raw/commit/74914d05c701919fe6aa0d63e131df8c4df420fe/stuff/sbase/realpath.1
+    https://gitea.linfan.moe/mirror/ataraxia/raw/commit/74914d05c701919fe6aa0d63e131df8c4df420fe/stuff/sbase/realpath.c
+"
 
 DESC="sbase from suckless.org"
 
@@ -13,6 +17,8 @@ prepare () {
     sed -i "39i case 'o':" uname.c
     sed -i "40i sflag = 1;" uname.c
     sed -i "41i break;" uname.c
+
+    sed -i '182i realpath\\' Makefile
 }
 
 build () {
@@ -27,11 +33,4 @@ package () {
         rm $PKG_DEST/usr/bin/$p
         rm $PKG_DEST/usr/share/man/man1/$p.1
     done
-
-    # quick and dirty realpath replacement
-    realpath=$PKG_DEST/usr/bin/realpath
-
-    echo '#!/bin/bash' > $realpath
-    echo '[[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"' >> $realpath
-    chmod +x $realpath
 }

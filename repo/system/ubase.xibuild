@@ -16,9 +16,17 @@ build () {
 }
 
 package () {
-    install -d $PKG_DEST/usr/bin
-    install -m755 stat $PKG_DEST/usr/bin
+    for p in stat id df dd truncate who; do
+        install -d $PKG_DEST/usr/bin
+        install -m755 $p $PKG_DEST/usr/bin
 
-    install -d $PKG_DEST/usr/share/man
-    install -m644 stat.1 $PKG_DEST/usr/share/man/stat.1
+        if [ -f $p.1 ]; then
+            install -d $PKG_DEST/usr/share/man
+            install -m644 $p.1 $PKG_DEST/usr/share/man/$p.1
+        fi
+        if [ -f $p.8 ]; then
+            install -d $PKG_DEST/usr/share/man
+            install -m644 $p.8 $PKG_DEST/usr/share/man/$p.8
+        fi
+    done;
 }

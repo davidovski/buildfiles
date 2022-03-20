@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MAKEDEPS="make eudev"
+DEPS=""
+
+PKG_VER=20210613
+SOURCE=https://github.com/gentoo/hwids/archive/hwids-$PKG_VER.tar.gz
+DESC="Hardware Identification databases"
+
+prepare () {
+    sed -i "s/install -p/install/g" Makefile
+}
+
+build () {
+    make UDEV=yes
+}
+
+package () {
+    make DESTDIR=$PKG_DEST DOCDIR="/usr/share/doc/hwids-$PKG_VER" MISCDIR="/usr/share/hwdata" UDEV=yes install
+}

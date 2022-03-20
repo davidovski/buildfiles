@@ -1,18 +1,34 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="gperf"
+DEPS="gperf udev-rules kmod"
 
 PKG_VER=3.2.10
 SOURCE=https://dev.gentoo.org/~blueness/eudev/eudev-$PKG_VER.tar.gz
 DESC="Programs for dynamic creation of device nodes"
+ADDITIONAL="
+    default-rules.patch
+    load-fbcon.patch
+"
+
+prepare () {
+    apply_patches
+    sed -i 's/\$(LN_S) -n -f/\$(LN_S) -f/' src/udev/Makefile.in
+}
 
 build () {
-    ./configure --prefix=/usr           \
-            --bindir=/usr/sbin      \
-            --sysconfdir=/etc       \
-            --enable-manpages       \
-            --disable-static
+    ./configure \
+        --prefix=/usr           \
+        --bindir=/usr/sbin      \
+        --sbindir=/usr/sbin     \
+        --libexecdir=/usr/lib   \
+        --sysconfdir=/etc       \
+		--enable-split-usr \
+		--enable-manpages \
+		--disable-hwdb \
+        --enable-modules \
+		--enable-kmod 
+        --disable-static
     make
 }
 
@@ -21,5 +37,5 @@ package () {
     mkdir -p $PKG_DEST/etc/udev/rules.d
 
     make DESTDIR=$PKG_DEST install
-
+    rm -rf $PKG_DEST/sbin
 }

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=1.5
+
+SOURCE=https://www.fourmilab.ch/webtools/base64/base64-$PKG_VER.tar.gz
+DESC="A utility to encode and decode files in base64"
+
+build () {
+    ./configure --prefix=/usr --mandir=/usr/share/man
+    make
+}
+
+check () {
+    make check
+}
+
+
+package () {
+    install -d $PKG_DEST/usr/bin
+    install -d $PKG_DEST/usr/share/man/man1
+    make DESTDIR=$PKG_DEST install
+}
+
+

@@ -3,12 +3,12 @@
 MAKEDEPS="make bc"
 DEPS="sbase kmod"
 
-PKG_VER=5.16.12
+PKG_VER=5.16.14
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 ADDITIONAL="
     config
     fix-sbase-coreutils.patch
-    "
+"
 
 prepare () {
     apply_patches
@@ -38,7 +38,6 @@ package () {
     install -d $PKG_DEST/usr/share/doc/linux-$PKG_VER
     cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$PKG_VER
 
-
     install -m755 -d $PKG_DEST/etc/modprobe.d
     cat > $PKG_DEST/etc/modprobe.d/usb.conf << "EOF"
 # Begin /etc/modprobe.d/usb.conf
@@ -48,7 +47,6 @@ install uhci_hcd /sbin/modprobe ehci_hcd ; /sbin/modprobe -i uhci_hcd ; true
 
 # End /etc/modprobe.d/usb.conf
 EOF
-
 
   echo "Installing modules..."
   make INSTALL_MOD_PATH="$PKG_DEST/usr" INSTALL_MOD_STRIP=1 modules_install

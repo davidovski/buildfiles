@@ -1,0 +1,34 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="util-linux sbase musl"
+
+PKG_VER=6.03
+SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/boot/syslinux/${PKG_VER%.*}.xx/syslinux-$PKG_VER.tar.xz
+ADDITIONAL="
+	update-extlinux.conf
+	update-extlinux
+	0018-prevent-pow-optimization.patch
+	fix-sysmacros.patch
+    "
+DESC="Boot loader for the Linux operating system"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    make efi64 installer
+}
+
+package () {
+    make -j1 INSTALLROOT="$PKG_DEST" MANDIR=/usr/share/man \
+    bios efi64 install
+
+	mkdir -p "$PKG_DEST"/etc/update-extlinux.d
+	cp update-extlinux.conf "$PKG_DEST"/etc/
+	sed "/^version=/s/=.*/=$PKG_VER/" update-extlinux \
+		> "$PKG_DEST"/sbin/update-extlinux
+	chmod 755 "$PKG_DEST"/sbin/update-extlinux
+}
+

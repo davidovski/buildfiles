@@ -1,0 +1,14 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS=""
+
+SOURCE=https://xi.davidovski.xyz/git/bootscripts.git
+DESC="udev rules for xilinux"
+
+package () {
+    cd udev
+    mkdir -p $PKG_DEST/usr/lib/udev/rules.d
+    mkdir -p $PKG_DEST/etc/udev/rules.d
+    make DESTDIR=$PKG_DEST install
+}

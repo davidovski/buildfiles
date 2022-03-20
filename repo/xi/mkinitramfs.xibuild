@@ -3,9 +3,7 @@
 MAKEDEPS="make "
 DEPS="sh cpio sbase findutils gzip util-linux"
 
-PKG_VER=1.2
-SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
-BRANCH="v$PKG_VER"
+SOURCE=https://git.davidovski.xyz/xilinux/bootscripts.git
 
 DESC="Scripts to make initramfs"
 
