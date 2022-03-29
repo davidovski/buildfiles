@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make autoconf automake"
 DEPS="gperf udev-rules kmod"
 
 PKG_VER=3.2.10
@@ -12,30 +12,22 @@ ADDITIONAL="
 "
 
 prepare () {
-    apply_patches
+    #apply_patches
+    autoreconf -fiv
     sed -i 's/\$(LN_S) -n -f/\$(LN_S) -f/' src/udev/Makefile.in
 }
 
 build () {
-    ./configure \
-        --prefix=/usr           \
-        --bindir=/usr/sbin      \
-        --sbindir=/usr/sbin     \
-        --libexecdir=/usr/lib   \
-        --sysconfdir=/etc       \
-		--enable-split-usr \
-		--enable-manpages \
-		--disable-hwdb \
-        --enable-modules \
-		--enable-kmod 
-        --disable-static
+    ./configure --prefix=/usr           \
+            --bindir=/usr/sbin      \
+            --sbindir=/usr/sbin     \
+            --libexecdir=/usr/lib   \
+            --sysconfdir=/etc       \
+            --enable-manpages       \
+            --disable-static
     make
 }
 
 package () {
-    mkdir -p $PKG_DEST/usr/lib/udev/rules.d
-    mkdir -p $PKG_DEST/etc/udev/rules.d
-
     make DESTDIR=$PKG_DEST install
-    rm -rf $PKG_DEST/sbin
 }

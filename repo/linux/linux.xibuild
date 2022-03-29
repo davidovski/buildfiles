@@ -3,11 +3,11 @@
 MAKEDEPS="make bc"
 DEPS="sbase kmod"
 
-PKG_VER=5.16.14
+PKG_VER=5.17.1
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 ADDITIONAL="
-    config
     fix-sbase-coreutils.patch
+    config
 "
 
 prepare () {
@@ -31,6 +31,7 @@ package () {
 
     echo "Installing boot image..."
     mkdir -p $PKG_DEST/boot
+
     cp arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
     cp System.map $PKG_DEST/boot/System.map-$PKG_VER
     cp .config $PKG_DEST/boot/config-$PKG_VER
@@ -50,7 +51,7 @@ EOF
 
   echo "Installing modules..."
   make INSTALL_MOD_PATH="$PKG_DEST/usr" INSTALL_MOD_STRIP=1 modules_install
-  rm "$modulesdir"/source
-  rm "$modulesdir"/build
+  #rm "$modulesdir"/source
+  #rm "$modulesdir"/build
 }
 

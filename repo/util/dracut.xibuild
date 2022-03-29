@@ -13,6 +13,23 @@ ADDITIONAL="
 
 prepare () {
     apply_patches
+    # make all this into a patch
+    find ./ -name "*.sh" | xargs sed -i "s/ln -sfn/ln -sf/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/ln -sfr/ln -sf/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/sort -Vu/sort -u/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/realpath -e/realpath /g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp --reflink=auto/cp /g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -axT/cp -a/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -ax/cp -a/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -a -t/cp -a/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -af \. -t/cp -af . /g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -a -l/cp -a/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -a --/cp -a/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp -f --/cp -f/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/cp  --sparse=auto --preserve=.* -dfr/cp -fr/g" 
+    find ./ -name "*.sh" | xargs sed -i "s/\$CP_HARDLINK --backup --suffix=.usrmove~//g" 
+    find ./ -name "*.sh" | xargs sed -i "s/find . -print0 | sort -z/find . -print0/g"
+     
 }
 
 build () {
