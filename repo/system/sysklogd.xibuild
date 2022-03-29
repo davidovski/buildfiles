@@ -5,6 +5,9 @@ DEPS="musl"
 
 PKG_VER=2.3.0
 SOURCE=https://github.com/troglobit/sysklogd/releases/download/v$PKG_VER/sysklogd-$PKG_VER.tar.gz
+ADDITIONAL="
+sysklogd.initd
+"
 DESC="Programs for logging system messages"
 
 build () {
@@ -27,4 +30,7 @@ user.* -/var/log/user.log
 
 # End /etc/syslog.conf
 EOF
+	install -Dm 754 sysklogd.initd $PKG_DEST/etc/init.d/sysklogd
+    mkdir -p $PKG_DEST/etc/runlevels/boot/
+    ln -s /etc/init.d/sysklogd $PKG_DEST/etc/runlevels/boot/sysklogd
 }

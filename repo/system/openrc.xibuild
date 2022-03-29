@@ -43,7 +43,7 @@ prepare () {
 build () {
     export MKZSHCOMP=yes
 	export MKBASHCOMP=yes
-	make LIBDIR=/lib LIBEXECDIR=/lib/rc
+	make LIBDIR=/lib LIBEXECDIR=/lib/rc MKSYSVINIT=yes
 }
 
 check () {
@@ -51,18 +51,19 @@ check () {
 }
 
 package () {
-	make LIBEXECDIR=/lib/rc DESTDIR="$PKG_DEST/" install
+	make LIBEXECDIR=/lib/rc DESTDIR="$PKG_DEST/" MKSYSVINIT=yes install
 
-	rm -f "$PKG_DEST"/sbin/openrc-init "$PKG_DEST"/sbin/openrc-shutdown
+    # remove -n from ln in mtab
+    sed -i "s/ln -snf/ln -sf/g" $PKG_DEST/etc/init.d/mtab
 
-	# we cannot have anything turned on by default
-	rm -f "$PKG_DEST"/etc/runlevels/*/*
+    ln -s openrc-init $PKG_DEST/sbin/init
 
 	# we still use our ifup/ifdown based net config
-	rm -f "$PKG_DEST"/etc/conf.d/network "$PKG_DEST"/etc/init.d/network
+	#rm -f "$PKG_DEST"/etc/conf.d/network "$PKG_DEST"/etc/init.d/network
 
-	# our hostname init script reads hostname from /etc/hostname
-	rm -f "$PKG_DEST"/etc/conf.d/hostname
+    # our hostname init script reads hostname from /etc/hostname
+	rm -f "$pkgdir"/etc/conf.d/hostname
+
 
 	# we override some of the scripts
 	for i in *.initd; do
@@ -95,6 +96,12 @@ package () {
 
 	# remove deprecated /sbin/runscript to avoid conflict with minicom
 	rm $PKG_DEST/sbin/runscript
+
+    #spawn ttys
+    for x in tty1 tty2 tty3 tty4 tty5 tty6; do
+      ln -sf agetty $PKG_DEST/etc/init.d/agetty.$x
+    done
+
 }
 
 postinstall () {

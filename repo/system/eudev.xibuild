@@ -9,6 +9,8 @@ DESC="Programs for dynamic creation of device nodes"
 ADDITIONAL="
     default-rules.patch
     load-fbcon.patch
+    udev.initd
+    udev_retry.initd
 "
 
 prepare () {
@@ -30,4 +32,11 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
+
+	install -Dm 754 udev.initd $PKG_DEST/etc/init.d/udev
+	install -Dm 754 udev_retry.initd $PKG_DEST/etc/init.d/udev_retry
+    mkdir -p $PKG_DEST/etc/runlevels/boot/
+    ln -s /etc/init.d/udev $PKG_DEST/etc/runlevels/boot/udev
+    ln -s /etc/init.d/udev_retry $PKG_DEST/etc/runlevels/boot/udev_retry
+
 }

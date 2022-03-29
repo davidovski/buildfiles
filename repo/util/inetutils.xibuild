@@ -24,4 +24,5 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
+    rm $PKG_DEST/usr/bin/hostname
 }
