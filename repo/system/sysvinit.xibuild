@@ -1,0 +1,25 @@
+#!/bin/sh
+
+MAKEDEPS="make patch"
+DEPS="sh musl"
+
+PKG_VER=3.01
+SOURCE=http://download.savannah.nongnu.org/releases/sysvinit/sysvinit-$PKG_VER.tar.xz
+ADDITIONAL="
+    https://www.linuxfromscratch.org/patches/lfs/development/sysvinit-$PKG_VER-consolidated-1.patch
+    "
+
+DESC="The sysvinit system for controlling startup, running and shutdown of the system"
+
+
+prepare () {
+    patch -Np1 -i sysvinit-$PKG_VER-consolidated-1.patch
+}
+
+build () {
+    make
+}
+
+package () {
+    make ROOT=$PKG_DEST install 
+}

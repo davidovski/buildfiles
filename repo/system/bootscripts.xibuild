@@ -1,23 +1,11 @@
 #!/bin/sh
 
-MAKEDEPS="make s6-linux-init s6-rc utmps"
-DEPS="sh eudev s6 s6-rc s6-linux-utils s6-portable-utils s6-linux-init"
+MAKEDEPS="make "
+DEPS="sh eudev"
 
 SOURCE=https://xi.davidovski.xyz/git/bootscripts.git
 DESC="Bootscripts to initiate the system on boot"
 
 package () {
-    make DESTDIR=$PKG_DEST bootscripts
-
-    # Compile a basic database for boot
-    s6-rc-compile $PKG_DEST/etc/s6/db/basic $PKG_DEST/etc/s6/sv 
-    ln -s /etc/s6/db/basic $PKG_DEST/etc/s6/db/current
-
-    # initialize s6 init base. 
-    s6-linux-init-maker -1  -t 2 -L \
-                        -f $PKG_DEST/etc/s6/skel \
-                        -p "/usr/bin:/usr/sbin:/bin:/sbin"    \
-                        -D default \
-                        -G "/sbin/agetty -L -8 tty1 115200" \
-                        -c $PKG_DEST/etc/s6/base -u root -U utmp $PKG_DEST/etc/s6/base
+    make DESTDIR=$PKG_DEST install
 }

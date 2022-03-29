@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MAKEDEPS="make scdoc"
+DEPS="musl"
+
+DESC="Tools for managing network configuration"
+
+PKG_VER=0.12.0
+SOURCE=https://distfiles.dereferenced.org/ifupdown-ng/ifupdown-ng-$PKG_VER.tar.xz
+
+build () {
+    make
+	make docs
+}
+
+#check () {
+    #make check
+#}
+
+package () {
+    make DESTDIR="$PKG_DEST" install install_docs
+}
+

@@ -1,0 +1,129 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="ifupdown-ng sbase musl"
+
+PKG_VER=0.44.10
+SOURCE=https://github.com/OpenRC/openrc/archive/refs/tags/$PKG_VER.zip
+ADDITIONAL="
+	0001-call-sbin-mkmntdirs-in-localmount-OpenRC-service.patch
+	0002-fsck-don-t-add-C0-to-busybox-fsck.patch
+	0003-rc-pull-in-sysinit-and-boot-as-stacked-levels-when-n.patch
+	0004-make-consolefont-service-compatible-with-busyboxs-se.patch
+	0005-Support-early-loading-of-keymap-if-kbd-is-installed.patch
+	0006-Add-support-for-starting-services-in-a-specified-VRF.patch
+	0007-Clean-up-staticroute-config-remove-irrelevant-parts-.patch
+	0008-bootmisc-switch-wipe_tmp-setting-to-no-by-default.patch
+	0009-fix-bootmisc-mv-error.patch
+	0010-noexec-devfs.patch
+	seedrng.patch
+	openrc.logrotate
+	hostname.initd
+	hwdrivers.initd
+	modules.initd
+	modloop.initd
+	networking.initd
+	modloop.confd
+	sysfsconf.initd
+	firstboot.initd
+	sysctl.initd
+	machine-id.initd
+	test-networking.sh
+    "
+
+DESC="Dependency based init system that works with sysvinit"
+
+# build borrowed from alpine linux
+prepare () {
+    apply_patches
+    sed -i -e '/^sed/d' pkgconfig/Makefile
+    find ./ -name "Makefile" | xargs sed -i 's/ln -snf/ln -sf/g'
+}
+
+build () {
+    export MKZSHCOMP=yes
+	export MKBASHCOMP=yes
+	make LIBDIR=/lib LIBEXECDIR=/lib/rc
+}
+
+check () {
+	make check
+}
+
+package () {
+	make LIBEXECDIR=/lib/rc DESTDIR="$PKG_DEST/" install
+
+	rm -f "$PKG_DEST"/sbin/openrc-init "$PKG_DEST"/sbin/openrc-shutdown
+
+	# we cannot have anything turned on by default
+	rm -f "$PKG_DEST"/etc/runlevels/*/*
+
+	# we still use our ifup/ifdown based net config
+	rm -f "$PKG_DEST"/etc/conf.d/network "$PKG_DEST"/etc/init.d/network
+
+	# our hostname init script reads hostname from /etc/hostname
+	rm -f "$PKG_DEST"/etc/conf.d/hostname
+
+	# we override some of the scripts
+	for i in *.initd; do
+		j=${i##*/}
+		install -Dm755 $i "$PKG_DEST"/etc/init.d/${j%.initd}
+	done
+
+	# we override some of the conf.d files
+	for i in *.confd; do
+		j=${i##*/}
+		install -Dm644 $i "$PKG_DEST"/etc/conf.d/${j%.confd}
+	done
+
+	# additional documentation considered useful
+	mkdir -p "$PKG_DEST"/usr/share/doc/openrc/
+	install -m644 ChangeLog ./*.md "$PKG_DEST"/usr/share/doc/openrc/
+
+	# we use a virtual keymaps services to allow users to set their
+	# keymaps either with the OpenRC loadkeys service provided by
+	# the kbd aport or with the loadkmap service provided by the
+	# busybox-initscripts aport.
+	rm -f "$PKG_DEST/etc/init.d/keymaps" \
+		"$PKG_DEST/etc/conf.d/keymaps"
+
+	install -Dm644 openrc.logrotate $PKG_DEST/etc/logrotate.d/openrc
+	install -d "$PKG_DEST"/etc/local.d "$PKG_DEST"/run
+
+	# openrc upstream removed service(8) for whatever reason, put it back
+	ln -s /sbin/rc-service $PKG_DEST/sbin/service
+
+	# remove deprecated /sbin/runscript to avoid conflict with minicom
+	rm $PKG_DEST/sbin/runscript
+}
+
+postinstall () {
+    mkdir -p /run/openrc
+    for dir in /libexec /lib; do
+        [ -d $dir/rc/init.d ] || continue
+
+        for i in $dir/rc/init.d/* ; do
+            [ -e "$i" ] || continue
+            if [ -e /run/openrc/${i##*/} ]; then
+                rm -r $i
+            else
+                mv $i /run/openrc/
+            fi
+        done
+
+        rmdir $dir/rc/init.d $dir/rc /libexec 2>/dev/null
+    done
+
+    # create rc.local compat
+    if [ -f /etc/rc.local ]; then
+        cat >/etc/local.d/rc.local-compat.start<< EOF
+#!/bin/sh
+
+# this is only here for compatibility reasons
+if [ -f /etc/rc.local ]; then
+    . /etc/rc.local
+fi
+EOF
+        chmod +x /etc/local.d/rc.local-compat.start
+    fi
+}

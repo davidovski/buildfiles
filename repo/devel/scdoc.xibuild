@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python "
+DEPS="pkgconf"
+
+PKG_VER=1.11.2
+SOURCE=https://git.sr.ht/~sircmpwn/scdoc/archive/$PKG_VER.tar.gz
+DESC="Simple man page generator written for POSIX systems written in C99"
+
+build () {
+    make PREFIX="/usr"
+}
+
+package () {
+    make DESTDIR=$PKG_DEST PREFIX="/usr" install
+}
