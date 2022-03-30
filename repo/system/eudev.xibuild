@@ -38,5 +38,4 @@ package () {
     mkdir -p $PKG_DEST/etc/runlevels/boot/
     ln -s /etc/init.d/udev $PKG_DEST/etc/runlevels/boot/udev
     ln -s /etc/init.d/udev_retry $PKG_DEST/etc/runlevels/boot/udev_retry
-
 }

@@ -11,12 +11,14 @@ sysklogd.initd
 DESC="Programs for logging system messages"
 
 build () {
-    ./configure && make
+    ./configure --prefix=/usr --sysconfdir=/etc &&
+        make 
 }
 
 package () {
     make DESTDIR=$PKG_DEST install 
     mkdir -p $PKG_DEST/etc
+
     cat > $PKG_DEST/etc/syslog.conf << "EOF"
 # Begin /etc/syslog.conf
 

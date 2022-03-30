@@ -29,7 +29,7 @@ ADDITIONAL="
 	sysctl.initd
 	machine-id.initd
 	test-networking.sh
-    "
+"
 
 DESC="Dependency based init system that works with sysvinit"
 
