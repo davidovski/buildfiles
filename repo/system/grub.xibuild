@@ -28,4 +28,16 @@ package () {
     make DESTDIR=$PKG_DEST install 
     mkdir -p $PKG_DEST/usr/share/bash-completion/completions
     mv $PKG_DEST/etc/bash_completion.d/grub $PKG_DEST/usr/share/bash-completion/completions
+    mkdir -p $PKG_DEST/etc/default
+    cat > $PKG_DEST/etc/default/grub << "EOF"
+# GRUB boot loader configuration
+
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="XiLinux"
+
+GRUB_CMDLINE_LINUX_DEFAULT=""
+GRUB_CMDLINE_LINUX=""
+
+EOF
 }

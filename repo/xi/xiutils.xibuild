@@ -3,7 +3,7 @@
 MAKEDEPS="make gcc"
 DEPS="musl sh"
 
-PKG_VER=1.2.1
+PKG_VER=1.2.2
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 BRANCH="v$PKG_VER"
 

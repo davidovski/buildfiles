@@ -25,7 +25,7 @@ package () {
 
     cat > $PKG_DEST/etc/sudoers.d/00-sudo << "EOF"
 Defaults secure_path="/usr/sbin:/usr/bin"
-%wheel ALL="ALL" ALL
+%wheel ALL=(ALL:ALL) ALL
 EOF
 
     mkdir -p $PKG_DEST/etc/pam.d

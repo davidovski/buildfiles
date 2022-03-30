@@ -7,9 +7,11 @@ PKG_VER=2.10
 
 SOURCE=https://w1.fi/releases/wpa_supplicant-$PKG_VER.tar.gz
 DESC="A utility providng key negotiation for WPA wireless networks"
-BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL="
-        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
+wpa_cli.confd
+wpa_cli.initd
+wpa_supplicant.confd
+wpa_supplicant.initd
     "
 
 
@@ -55,6 +57,8 @@ build () {
 package () {
     mkdir -p $PKG_DEST/usr/sbin
     mkdir -p $PKG_DEST/usr/share/dbus-1/system-services
+    mkdir -p $PKG_DEST/usr/share/man/man5
+    mkdir -p $PKG_DEST/usr/share/man/man8
     install -m755 wpa_cli $PKG_DEST/usr/sbin/ &&
     install -m755 wpa_passphrase $PKG_DEST/usr/sbin/ &&
     install -m755 wpa_supplicant $PKG_DEST/usr/sbin/ &&
@@ -71,6 +75,7 @@ package () {
     cd ..
 
     # openrc runscripts
+    install -d $PKG_DEST/etc/init.d/wpa_supplicant
 	install -Dm755 wpa_supplicant.initd \
 		$PKG_DEST/etc/init.d/wpa_supplicant
 	install -Dm644 wpa_supplicant.confd \

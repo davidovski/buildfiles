@@ -33,6 +33,6 @@ user.* -/var/log/user.log
 # End /etc/syslog.conf
 EOF
 	install -Dm 754 sysklogd.initd $PKG_DEST/etc/init.d/sysklogd
-    mkdir -p $PKG_DEST/etc/runlevels/boot/
-    ln -s /etc/init.d/sysklogd $PKG_DEST/etc/runlevels/boot/sysklogd
+    mkdir -p $PKG_DEST/etc/runlevels/default/
+    ln -s /etc/init.d/sysklogd $PKG_DEST/etc/runlevels/default/sysklogd
 }
