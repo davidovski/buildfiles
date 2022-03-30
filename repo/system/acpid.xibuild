@@ -7,11 +7,14 @@ PKG_VER=2.0.33
 SOURCE=https://downloads.sourceforge.net/acpid2/acpid-$PKG_VER.tar.xz
 DESC="Daemon for battery, power, and thermal readings"
 
-BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL="
-        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    "
-
+    acpid.confd
+    acpid.initd
+    anything
+    handler.sh
+    lid-closed
+    power-supply-ac
+"
 build () {
     ./configure --prefix=/usr \
             --docdir=/usr/share/doc/acpid-$PKG_VER &&
@@ -20,10 +23,15 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    install -v -m755 -d $PKG_DEST/etc/acpi/events &&
+    install -m755 -d $PKG_DEST/etc/acpi/events &&
     cp -r samples $PKG_DEST/usr/share/doc/acpid-$PKG_VER
 
-    tar xf $BOOTSCRIPTS.tar.xz
-    cd $BOOTSCRIPTS
-    make DESTDIR=$PKG_DEST install-acpid
+    install -D -m 755 handler.sh etc/acpi/handler.sh
+	install -D -m 644 anything etc/acpi/events/anything
+	install -D -m 755 power-supply-ac usr/share/acpid/
+	install -D -m 755 lid-closed usr/share/acpid/
+
+	install -D -m 755 acpid.initd etc/init.d/acpid
+	install -D -m 644 acpid.confd etc/conf.d/acpid
+
 }

@@ -8,11 +8,11 @@ depend() {
 
 start() {
 	if [ -s /etc/hostname ] ; then
-		opts="-F /etc/hostname"
+		name=$(cat /etc/hostname)
 	else
-		opts="${hostname:-localhost}"
+		name="${hostname:-localhost}"
 	fi
 	ebegin "Setting hostname"
-	hostname $opts
+	hostname $name
 	eend $?
 }

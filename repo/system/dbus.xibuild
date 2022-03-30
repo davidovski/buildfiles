@@ -5,10 +5,12 @@ DEPS="elogind"
 
 PKG_VER=1.12.20
 SOURCE=https://dbus.freedesktop.org/releases/dbus/dbus-$PKG_VER.tar.gz
-BOOTSCRIPTS=blfs-bootscripts-20210826
+
 ADDITIONAL="
-        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    "
+dbus.confd
+dbus.initd
+dbus.trigger
+"
 
 DESC="A message bus system allowing applications to talk to one another"
 
@@ -25,7 +27,8 @@ build () {
             --docdir=/usr/share/doc/dbus-$PKG_VER \
             --with-console-auth-dir=/run/console \
             --with-system-pid-file=/run/dbus/pid \
-            --with-system-socket=/run/dbus/system_bus_socket &&
+            --with-system-socket=/run/dbus/system_bus_socket \
+            --with-x &&
     make
 }
 
@@ -47,7 +50,6 @@ package () {
 </busconfig>
 EOF
 
-    tar xf $BOOTSCRIPTS.tar.xz
-    cd $BOOTSCRIPTS
-    make DESTDIR=$PKG_DEST install-dbus
+    install -Dm755 dbus.initd $PKG_DEST/etc/init.d/dbus
+	install -Dm644 dbus.confd $PKG_DEST/etc/conf.d/dbus
 }

@@ -6,14 +6,19 @@ DEPS="musl libldap"
 PKG_VER=4.4.3b1
 SOURCE=https://ftp.isc.org/isc/dhcp/$PKG_VER/dhcp-$PKG_VER.tar.gz
 
-BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL="
-        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    "
+01-dhclient-script-fix-bare-ip.patch
+02-dhclient-script-remove-bashisms.patch
+03-fix-unwind-import.patch
+dhcpd.confd
+dhcpd.initd
+"
 
 DESC="A DHCP server, client and relay"
 
 package () {
+    apply_patches
+    
     sed -i '/o.*dhcp_type/d' server/mdb.c &&
     sed -r '/u.*(local|remote)_port/d'    \
         -i client/dhclient.c              \
@@ -22,52 +27,43 @@ package () {
 
 
 build () {
-    ( export CFLAGS="${CFLAGS:--g -O2} -Wall -fno-strict-aliasing                 \
-        -D_PATH_DHCLIENT_SCRIPT='\"/usr/sbin/dhclient-script\"'     \
-        -D_PATH_DHCPD_CONF='\"/etc/dhcp/dhcpd.conf\"'               \
-        -D_PATH_DHCLIENT_CONF='\"/etc/dhcp/dhclient.conf\"'"        &&
+    # fix ipv6
 
-./configure --prefix=/usr                                           \
-            --sysconfdir=/etc/dhcp                                  \
-            --localstatedir=/var                                    \
-            --with-srv-lease-file=/var/lib/dhcpd/dhcpd.leases       \
-            --with-srv6-lease-file=/var/lib/dhcpd/dhcpd6.leases     \
-            --with-cli-lease-file=/var/lib/dhclient/dhclient.leases \
-            --with-cli6-lease-file=/var/lib/dhclient/dhclient6.leases
-) &&
-make -j1
+    export CFLAGS="$CFLAGS -D_GNU_SOURCE \
+    -D_PATH_DHCLIENT_CONF='\"/etc/dhcp/dhclient.conf\"'"
 
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc/dhcp \
+		--localstatedir=/var \
+		--with-srv-conf-file=/etc/dhcp/dhcpd.conf \
+		--with-srv-lease-file=/var/lib/dhcp/dhcpd.leases \
+		--with-srv6-lease-file=/var/lib/dhcp/dhcpd6.leases \
+		--with-cli-lease-file=/var/lib/dhcp/dhclient.leases \
+		--with-cli6-lease-file=/var/lib/dhcp/dhclient6.leases \
+		--with-srv-pid-file=/run/dhcp/dhcpd.pid \
+		--with-srv6-pid-file=/run/dhcp/dhcpd6.pid \
+		--with-cli-pid-file=/run/dhcp/dhclient.pid \
+		--with-cli6-pid-file=/run/dhcp/dhclient6.pid \
+		--with-relay-pid-file=/run/dhcp/dhcrelay.pid \
+		--with-relay6-pid-file=/run/dhcp/dhcrelay6.pid \
+		--with-libbind=no \
+		--enable-dhcpv4o6 \
+		--enable-paranoia \
+		--enable-log-pid \
+
+    make -j1 -C bind && make
 }
 
 package () {
-    make -C client DESTDIR=$PKG_DEST install             &&
-    install -m755 client/scripts/linux $PKG_DEST/usr/sbin/dhclient-script
+    make DESTDIR=$PKG_DEST install
 
-    install -dm755 /etc/dhcp &&
-        cat > $PKG_DEST/etc/dhcp/dhclient.conf << "EOF"
-# Begin /etc/dhcp/dhclient.conf
-#
-# Basic dhclient.conf(5)
+    install -d $PKG_DEST/var/lib/dhcp
+	install -d $PKG_DEST/run/dhcp
 
-#prepend domain-name-servers 127.0.0.1;
-request subnet-mask, broadcast-address, time-offset, routers,
-        domain-name, domain-name-servers, domain-search, host-name,
-        netbios-name-servers, netbios-scope, interface-mtu,
-        ntp-servers;
-require subnet-mask, domain-name-servers;
-#timeout 60;
-#retry 60;
-#reboot 10;
-#select-timeout 5;
-#initial-interval 2;
 
-# End /etc/dhcp/dhclient.conf
-EOF
-    install -dm 755 $PKG_DEST/var/lib/dhclient
-    
-    tar xf $BOOTSCRIPTS.tar.xz
-    cd $BOOTSCRIPTS
-    make DESTDIR=$PKG_DEST install-service-dhclient
+	install -m755 -D dhcpd.initd $PKG_DEST/etc/init.d/dhcpd
+	install -m644 -D dhcpd.confd $PKG_DEST/etc/conf.d/dhcpd
 
 }
 

@@ -6,10 +6,12 @@ DEPS="jansson libndp curl wpa_supplicant newt nss polkit libpsl dbus gobject-int
 PKG_VER=1.35.5
 SOURCE=https://download.gnome.org/sources/NetworkManager/${PKG_VER%.*}/NetworkManager-$PKG_VER.tar.xz
 
-BOOTSCRIPTS=blfs-bootscripts-20210826
 ADDITIONAL="
-        https://anduin.linuxfromscratch.org/BLFS/blfs-bootscripts/$BOOTSCRIPTS.tar.xz
-    "
+networkmanager.conf
+networkmanager-dispatcher.initd
+networkmanager.initd
+networkmanager.rules
+"
 
 DESC="Network connection manager and user applications"
 
@@ -42,25 +44,13 @@ build () {
 package () {
     DESTDIR=$PKG_DEST ninja install &&
     mv $PKG_DEST/usr/share/doc/NetworkManager \
-     $PKG_DEST/usr/share/doc/NetworkManager-$PKG_VER}
+     $PKG_DEST/usr/share/doc/NetworkManager-$PKG_VER
 
-    # create minimum config file
-    cat >> $PKG_DEST/etc/NetworkManager/NetworkManager.conf << "EOF"
-[main]
-plugins=keyfile
-EOF
-    cat > $PKG_DEST/etc/NetworkManager/conf.d/polkit.conf << "EOF"
-[main]
-auth-polkit=true
-EOF
-
-cat > $PKG_DEST/etc/NetworkManager/conf.d/dhcp.conf << "EOF"
-[main]
-dhcp=dhclient
-EOF
+	install -m644 -D networkmanager.rules \
+		"$PKG_DEST/usr/share/polkit-1/rules.d/01-org.freedesktop.NetworkManager.settings.modify.system.rules"
 
     cd ..
-    tar xf $BOOTSCRIPTS.tar.xz
-    cd $BOOTSCRIPTS
-    make DESTDIR=$PKG_DEST install-networkmanager
+	install -m755 -D networkmanager.initd $PKG_DEST/etc/init.d/networkmanager
+	install -m755 -D networkmanager-dispatcher.initd $PKG_DEST/etc/init.d/networkmanager-dispatcher
+	install -m755 -D networkmanager.conf $PKG_DEST/etc/NetworkManager/NetworkManager.conf
 }

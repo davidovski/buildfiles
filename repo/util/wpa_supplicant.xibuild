@@ -69,9 +69,17 @@ package () {
                      $PKG_DEST/etc/dbus-1/system.d/wpa_supplicant.conf
     
     cd ..
-    tar xf $BOOTSCRIPTS.tar.xz
-    cd $BOOTSCRIPTS
-    make DESTDIR=$PKG_DEST install-service-wpa
+
+    # openrc runscripts
+	install -Dm755 wpa_supplicant.initd \
+		$PKG_DEST/etc/init.d/wpa_supplicant
+	install -Dm644 wpa_supplicant.confd \
+		$PKG_DEST/etc/conf.d/wpa_supplicant
+	install -Dm755 wpa_cli.initd \
+		$PKG_DEST/etc/init.d/wpa_cli
+	install -Dm644 wpa_cli.confd \
+		$PKG_DEST/etc/conf.d/wpa_cli
+
 }
 
 
