@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="gpm acl musl libgcrypt pcre2 zlib"
 
-PKG_VER=8.2.4257
+PKG_VER=8.2.4656
 SOURCE=https://github.com/vim/vim/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="Vi Improved"
 
@@ -18,7 +18,7 @@ build () {
 
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    make -j1 DESTDIR=$PKG_DEST install 
     mkdir -p $PKG_DEST/etc
     cat > $PKG_DEST/etc/vimrc << "EOF"
 " Begin /etc/vimrc

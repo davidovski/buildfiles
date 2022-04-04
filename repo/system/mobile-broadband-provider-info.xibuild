@@ -1,0 +1,18 @@
+#!/bin/sh
+
+MAKEDEPS="autoconf automake libxml2 libxslt"
+DEPS="pkgconf"
+
+PKG_VER=20201225
+SOURCE=https://download.gnome.org/sources/mobile-broadband-provider-info/$PKG_VER/mobile-broadband-provider-info-$PKG_VER.tar.xz
+DESC="Mobile broadband settings for various service providers"
+
+build () {
+    ./configure --prefix=/usr --disable-static &&
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+

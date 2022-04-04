@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MAKEDEPS="python python-cairo libffi"
+DEPS="python libffi cairo glib gobject-introspection musl"
+
+PKG_VER=3.42.0
+SOURCE=https://download.gnome.org/sources/pygobject/${PKG_VER%.*}/pygobject-$PKG_VER.tar.xz
+DESC="Python bindings for the GObject library"
+
+build() {
+    mkdir build &&
+    cd build
+
+    meson \
+		-Dpython=python3 \
+		.. 
+
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

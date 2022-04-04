@@ -1,0 +1,39 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="musl libx11 freetype libpng libxcb libxext libxrender pixman zlib glib"
+
+PKG_VER=1.17.4
+SOURCE=https://cairographics.org/snapshots/cairo-$PKG_VER.tar.xz
+DESC="A vector graphics library"
+
+ADDITIONAL="
+fix-mask-usage-in-image-compositor.patch
+musl-stacksize.patch
+pdf-font-subset-Generate-valid-font-names.patch
+"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--enable-ft \
+		--enable-gobject \
+		--enable-pdf \
+		--enable-png \
+		--enable-ps \
+		--enable-svg \
+		--enable-tee \
+		--enable-x \
+		--enable-xcb \
+		--enable-xcb-shm \
+		--enable-xlib \
+		--enable-xlib-xrender \
+		--disable-xlib-xcb
+	make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

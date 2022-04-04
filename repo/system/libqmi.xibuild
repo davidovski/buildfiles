@@ -1,0 +1,26 @@
+#!/bin/sh
+
+MAKEDEPS="make gtk-doc glib libgudev "
+DEPS="musl libqrtr libmbim "
+
+PKG_VER=1.30.4
+SOURCE=https://www.freedesktop.org/software/libqmi/libqmi-$PKG_VER.tar.xz
+DESC="QMI modem protocol helper library"
+
+build () {
+    ./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-mbim-qmux \
+		--enable-qrtr \
+		--enable-gtk-doc
+	make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

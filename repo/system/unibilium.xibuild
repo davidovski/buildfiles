@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=2.1.1
+SOURCE=https://github.com/neovim/unibilium/archive/v$PKG_VER.tar.gz
+DESC="Terminfo parsing library"
+
+build () {
+    make PREFIX=/usr
+}
+
+check () {
+    make test
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+}

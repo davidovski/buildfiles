@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS="make luajit"
+DEPS="musl libuv"
+
+PKG_VER=1.42.0-0
+SOURCE=https://github.com/luvit/luv/releases/download/$PKG_VER/luv-$PKG_VER.tar.gz
+DESC="Bare libuv bindings for lua"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DWITH_SHARED_LIBUV=ON \
+		-DLUA_BUILD_TYPE=System \
+		-DBUILD_MODULE=OFF \
+		-DBUILD_SHARED_LIBS=ON \
+		-DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

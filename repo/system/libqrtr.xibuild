@@ -1,0 +1,19 @@
+#!/bin/sh
+
+MAKEDEPS="glib gobject-introspection gtk-doc linux-headers meson"
+DEPS="musl glib"
+
+PKG_VER=1.2.2
+SOURCE=https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib/-/archive/$PKG_VER/libqrtr-glib-$PKG_VER.tar.gz
+DESC="Qualcomm IPC Router protocol helper library"
+
+build () {
+    mkdir build &&
+    cd build
+    meson --prefix=/usr ..
+    ninja 
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install 
+}

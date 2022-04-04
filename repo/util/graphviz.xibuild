@@ -1,0 +1,60 @@
+#!/bin/sh
+
+MAKEDEPS="make flex swig m4 libtool libxaw bison lua tcl autoconf automake bash"
+DEPS="cairo expat glib libx11 musl pango zlib"
+
+PKG_VER=2.50.0
+SOURCE=https://gitlab.com/graphviz/graphviz/-/archive/$PKG_VER/graphviz-$PKG_VER.tar.gz
+DESC="Graph Visualization Tools"
+
+
+prepare () {
+	./autogen.sh NOCONFIG
+}
+
+build () {
+    	CONFIG_SHELL=/bin/bash \
+	LIBPOSTFIX=/ \
+	LUA=lua \
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--disable-silent-rules \
+		--disable-static \
+		--disable-dependency-tracking \
+		--enable-ltdl \
+		--enable-sharp=no \
+		--enable-go=no \
+		--enable-guile=no \
+		--enable-java=no \
+		--enable-lua=yes \
+		--enable-ocaml=no \
+		--enable-perl=no \
+		--enable-php=no \
+		--enable-python=yes \
+		--enable-r=no \
+		--enable-ruby=no \
+		--enable-tcl=no \
+		--with-x \
+		--with-rsvg=yes \
+		--with-pangocairo=yes \
+		--with-gdk-pixbuf=yes \
+		--with-libgd=no \
+		--with-ipsepcola=yes
+
+		sed -i -e '/HAVE_SINCOS/d' config.h
+
+	make
+
+}
+
+package () {
+    make -j1 DESTDIR="$PKG_DEST" \
+    pkgconfigdir=/usr/lib/pkgconfig \
+    install
+
+	mkdir -p "$PKG_DEST"/usr/share/doc
+	mv "$PKG_DEST"/usr/share/graphviz/doc \
+		"$PKG_DEST"/usr/share/doc/graphviz
+
+}

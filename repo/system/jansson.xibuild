@@ -1,0 +1,24 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=2.14
+SOURCE=https://github.com/akheron/jansson/releases/download/v$PKG_VER/jansson-$PKG_VER.tar.gz
+
+DESC="Library for encoding, decoding and manipulating JSON data"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+

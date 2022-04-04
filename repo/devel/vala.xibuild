@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MAKEDEPS="libxslt bash flex bison gobject-introspection graphviz"
+DEPS="glib graphviz musl pkgconf"
+
+PKG_VER=0.54.7
+SOURCE=https://download.gnome.org/sources/vala/${PKG_VER%.*}/vala-$PKG_VER.tar.xz
+DESC="Compiler for the GObject type system"
+
+prepare () {
+	sed -i "/constants\/member-access/d" \
+		tests/Makefile.in
+}
+
+build () {
+    ./configure \
+		--prefix=/usr
+	make
+
+}
+package () {
+    make DESTDIR=$PKG_DEST install
+}

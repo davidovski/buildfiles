@@ -22,4 +22,9 @@ package () {
     mkdir -p $PKG_DEST/etc/ssl/certs
     bash make-ca -g --force -D $PKG_DEST
     chmod -R 777 $PKG_DEST || echo "couldnt change permissions for $PKG_DEST"
+
+    install -d $PKG_DEST/usr/bin
+    install -d $PKG_DEST/usr/libexec/make-ca
+    install -m755 make-ca $PKG_DEST/usr/bin/
+    install -m700 copy-trust-modifications $PKG_DEST/usr/libexec/make-ca
 }

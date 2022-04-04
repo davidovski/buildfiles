@@ -7,8 +7,12 @@ DESC="X Terminal Emulator"
 
 PKG_VER=370
 SOURCE=https://invisible-mirror.net/archives/xterm/xterm-$PKG_VER.tgz
+ADDITIONAL="
+    posix-ptys.patch
+"
 
 prepare () {
+    apply_pacthes
     sed -i '/v0/{n;s/new:/new:kb=^?:/}' termcap &&
     printf '\tkbs=\\177,\n' >> terminfo &&
 
@@ -16,7 +20,27 @@ prepare () {
 }
 
 build () {
-    ./configure $XORG_CONFIG 
+    ./configure $XORG_CONFIG \
+        --with-tty-group=tty \
+        --enable-ansi-color \
+        --enable-88-color \
+        --enable-256-color \ 
+        --enable-broken-st \
+        --enable-broken-osc \
+        --enable-load-vt-fonts \
+        --enable-i18n \
+        --enable-wide-chars \
+        --enable-doublechars \
+        --enable-warnings \
+        --enable-tcap-query \ 
+        --enable-logging \
+        --enable-dabbrev \ 
+        --enable-freetype \
+        --enable-luit \
+        --enable-mini-luit \ 
+        --enable-narrowproto \
+        --enable-exec-xterm \
+        --with-utempter
     make
 }
 

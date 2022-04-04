@@ -29,6 +29,7 @@ ADDITIONAL="
 	sysctl.initd
 	machine-id.initd
 	test-networking.sh
+    rc.conf
 "
 
 DESC="Dependency based init system that works with sysvinit"
@@ -102,6 +103,8 @@ package () {
       ln -sf agetty $PKG_DEST/etc/init.d/agetty.$x
     done
 
+    rm $PKG_DEST/etc/rc.conf
+	install -m644 rc.conf $PKG_DEST/etc/rc.conf
 }
 
 postinstall () {

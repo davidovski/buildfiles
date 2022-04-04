@@ -8,7 +8,7 @@ SOURCE=https://github.com/PhilipHazel/pcre2/releases/download/pcre2-$PKG_VER/pcr
 DESC="A library that implements regular expressions in a perl style"
 
 build () {
-    CC=gcc ./configure --prefix=/usr 
+    CC=gcc ./configure --prefix=/usr --enable-utf --enable-unicode-properties
     make
 }
 

@@ -1,0 +1,50 @@
+#!/bin/sh
+
+MAKEDEPS="gobject-introspection gtk-doc vala libgudev polkit libmbim libqmi linux-headers"
+DEPS="dbus musl glib polkit"
+
+PKG_VER=1.18.6
+SOURCE=https://www.freedesktop.org/software/ModemManager/ModemManager-$PKG_VER.tar.xz
+
+ADDITIONAL="
+modemmanager.initd
+modemmanager.rules
+"
+
+DESC="ModemManager library"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--with-polkit=permissive \
+		--enable-plugin-qcom-soc \
+		--enable-gtk-doc \
+		--disable-static \
+		--enable-vala=yes \
+		--with-systemd-suspend-resume=yes
+	make
+
+
+
+}
+
+package () {
+    make DESTDIR="$PKG_DEST" install
+	rm -rf "$PKG_DEST"/usr/share/dbus-1/system-services #systemd-service
+	mkdir -p "$PKG_DEST/usr/share/polkit-1/rules.d"
+	install -m644 -D "modemmanager.rules" \
+		"$PKG_DEST/usr/share/polkit-1/rules.d/01-org.freedesktop.ModemManager.rules"
+	install -m755 -D "modemmanager.initd" \
+		"$PKG_DEST/etc/init.d/modemmanager"
+	mkdir -p "$PKG_DEST/usr/share/doc/modemmanager"
+	cat > $PKG_DEST/usr/share/doc/modemmanager/README <<EOF
+If your USB modem shows up as a Flash drive when you plug it in:
+
+install 'usb-modeswitch' to automatically switch to USB modem mode whenever you plug it in.
+To control your modem without the root password: add your user account to the 'plugdev' group.
+EOF
+}

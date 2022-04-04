@@ -1,0 +1,78 @@
+#!/bin/sh
+
+MAKEDEPS="linux-headers libpcap"
+DEPS="musl"
+
+PKG_VER=2.4.9
+SOURCE=https://github.com/paulusmack/ppp/archive/ppp-$PKG_VER.tar.gz
+
+ADDITIONAL="
+0011-build-sys-don-t-put-connect-errors-log-to-etc-ppp.patch
+fix-paths.patch
+fix-pppd-magic.h.patch
+musl-fix-headers.patch
+pppd.initd
+
+"
+
+DESC="A daemon which implements the PPP protocol for dial-up networking"
+
+prepare () {
+    apply_patches
+    # bug about missing sys/cdefs.h
+    find ./ -name "*.c" -o -name "*.h" | xargs sed -i "s/__BEGIN_DECLS/#ifdef __cplusplus\nextern \"C\" {\n#endif/g"
+    find ./ -name "*.c" -o -name "*.h" | xargs sed -i "s/__END_DECLS/#ifdef __cplusplus\n}\n#endif/g"
+    find ./ -name "*.c" -o -name "*.h" | xargs sed -i "s,#include <sys/cdefs.h>,,g"
+}
+
+build () {
+    # fix CFLAGS
+	# -D_GNU_SOURCE is needed for IPv6 to work apparently
+	export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+	sed -i "s:-O2 -pipe -Wall -g:${CFLAGS}:" pppd/Makefile.linux
+	sed -i "s:-g -O2:${CFLAGS}:" pppd/plugins/Makefile.linux
+	sed -i "s:-O2:${CFLAGS}:" pppstats/Makefile.linux
+	sed -i "s:-O2 -g -pipe:${CFLAGS}:" chat/Makefile.linux
+	sed -i "s:-O:${CFLAGS}:" pppdump/Makefile.linux
+	# enable active filter
+	sed -i "s:^#FILTER=y:FILTER=y:" pppd/Makefile.linux
+	# enable ipv6 support
+	sed -i "s:^#HAVE_INET6=y:HAVE_INET6=y:" pppd/Makefile.linux
+	# Enable Microsoft proprietary Callback Control Protocol
+	sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux
+	sed -i "s:^#CBCP=y:CBCP=y:" pppd/Makefile.linux
+	sed -i "s:^#USE_CRYPT=y:USE_CRYPT=y:" pppd/Makefile.linux
+	./configure \
+		--prefix=/usr \
+		--localstatedir=/var
+	make COPTS="$CFLAGS"
+
+}
+
+package () {
+    make INSTROOT=$PKG_DEST install
+	install -Dm644 include/net/ppp_defs.h \
+		$PKG_DEST/usr/include/net/ppp_defs.h
+	install -D -m755 ip-up $PKG_DEST/etc/ppp/ip-up
+	install -D -m755 ip-down $PKG_DEST/etc/ppp/ip-down
+	install -D -m755 pppd.initd $PKG_DEST/etc/init.d/pppd
+	install -D -m644 etc.ppp/options $PKG_DEST/etc/ppp/options
+	install -D -m600 etc.ppp/pap-secrets $PKG_DEST/etc/ppp/pap-secrets
+	install -D -m600 etc.ppp/chap-secrets $PKG_DEST/etc/ppp/chap-secrets
+
+	# busybox ifup/ifdown needs pon/poff
+	install -D -m644 scripts/pon.1 $PKG_DEST/usr/share/man/man1/pon.1
+	install -D -m755 scripts/pon $PKG_DEST/usr/bin/pon
+	install -D -m755 scripts/poff $PKG_DEST/usr/bin/poff
+
+	install -d $PKG_DEST/usr/share/doc/ppp
+	for i in scripts/*; do
+		case $i in
+		pon|poff|*.1) continue;
+		esac
+		if [ -f "$i" ]; then
+			cp $i $PKG_DEST/usr/share/doc/ppp/
+		fi
+	done
+	install -d $PKG_DEST/etc/ppp/peers
+}

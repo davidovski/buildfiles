@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=1.26.2
+SOURCE=https://www.freedesktop.org/software/libmbim/libmbim-$PKG_VER.tar.xz
+DESC="MBIM modem protocol helper library"
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-introspection=yes
+	make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install 
+}

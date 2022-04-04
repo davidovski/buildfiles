@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=0.22
+SOURCE=http://www.leonerd.org.uk/code/libtermkey/libtermkey-$PKG_VER.tar.gz
+DESC="Library for easy processing of keyboard entry from terminal-based programs"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install 
+}

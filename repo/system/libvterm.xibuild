@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=0.1.4
+SOURCE=http://www.leonerd.org.uk/code/libvterm/libvterm-$PKG_VER.tar.gz
+DESC="Abstract library implementation of a VT220/xterm/ECMA-48 terminal emulator"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR="$PKG_DEST/" install
+	rm -f $PKG_DEST/usr/lib/*.a
+}
