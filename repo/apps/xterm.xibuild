@@ -25,7 +25,6 @@ build () {
         --enable-ansi-color \
         --enable-88-color \
         --enable-256-color \ 
-        --enable-broken-st \
         --enable-broken-osc \
         --enable-load-vt-fonts \
         --enable-i18n \
@@ -33,12 +32,9 @@ build () {
         --enable-doublechars \
         --enable-warnings \
         --enable-tcap-query \ 
-        --enable-logging \
         --enable-dabbrev \ 
-        --enable-freetype \
         --enable-luit \
         --enable-mini-luit \ 
-        --enable-narrowproto \
         --enable-exec-xterm \
         --with-utempter
     make
