@@ -21,22 +21,7 @@ prepare () {
 
 build () {
     ./configure $XORG_CONFIG \
-        --with-tty-group=tty \
-        --enable-ansi-color \
-        --enable-88-color \
-        --enable-256-color \ 
-        --enable-broken-osc \
-        --enable-load-vt-fonts \
-        --enable-i18n \
-        --enable-wide-chars \
-        --enable-doublechars \
-        --enable-warnings \
-        --enable-tcap-query \ 
-        --enable-dabbrev \ 
-        --enable-luit \
-        --enable-mini-luit \ 
-        --enable-exec-xterm \
-        --with-utempter
+        --with-tty-group=tty
     make
 }
 
