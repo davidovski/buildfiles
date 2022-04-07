@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl lua5-1"
+
+PKG_VER=2.1
+SUBVER=20220310
+SOURCE=https://github.com/openresty/luajit2/archive/refs/tags/v$PKG_VER-$SUBVER.tar.gz
+ADDITIONAL="
+module-paths.patch
+"
+
+DESC="OpenResty's branch of LuaJIT"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    local xcflags="-DLUAJIT_ENABLE_LUA52COMPAT -DLUAJIT_NUMMODE=2"
+	[ "$CARCH" = x86_64 ] && xcflags="$xcflags -msse4.2"
+	make amalg PREFIX=/usr XCFLAGS="$xcflags"
+
+}
+
+package () {
+    make install DESTDIR="$PKG_DEST" PREFIX=/usr
+
+	install -Dm644 COPYRIGHT \
+		$PKG_DEST/usr/share/licenses/luajit/COPYRIGHT
+
+}

@@ -1,0 +1,56 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl libmpack"
+
+PKG_VER=1.0.9
+SOURCE=https://github.com/libmpack/libmpack-lua/archive/$PKG_VER.tar.gz
+DESC="Libmpack bindings for Lua"
+ADDITIONAL="
+dont-install-busted.patch
+skip-memleak-test.patch
+"
+
+luaversions="5.1 "
+
+prepare () {
+    apply_patches
+
+    for lver in $luaversions; do
+        tar xf $PKG_VER.tar.gz 
+        mv libmpack-lua-$PKG_VER build-$lver
+	done
+
+}
+
+build () {
+    for lver in $luaversions; do
+        echo "building for lua $lver"
+        make -C build-$lver \
+            FETCH=false \
+            USE_SYSTEM_LUA=yes \
+            USE_SYSTEM_MPACK=yes \
+            LUA=lua$lver \
+            LUA_IMPL=lua$lver
+            #LUA_INCLUDE="$(pkg-config --cflags lua$lver)" \
+            #LUA_LIB="$(pkg-config --libs lua$lver)"
+    done
+
+}
+
+package () {
+    for lver in $luaversions; do
+        echo "building for lua $lver"
+        local rockdir="$PKG_DEST/usr/lib/luarocks/rocks-$lver/mpack/$PKG_VER-0"
+
+        make -C build-$lver \
+            USE_SYSTEM_LUA=yes \
+            USE_SYSTEM_MPACK=yes \
+            LUA_CMOD_INSTALLDIR="$(pkg-config --variable=INSTALL_CMOD lua$lver)" \
+            DESTDIR="$subpkgdir" \
+            install || exit 1
+
+        mkdir -p "$rockdir"
+        echo 'rock_manifest = {}' > "$rockdir"/rock_manifest
+    done
+}

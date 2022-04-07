@@ -1,0 +1,50 @@
+#!/bin/sh
+
+MAKEDEPS="make tar patch lua lua5-1"
+DEPS="musl"
+
+PKG_VER=1.0.2
+SOURCE=http://www.inf.puc-rio.br/~roberto/lpeg/lpeg-$PKG_VER.tar.gz
+DESC="Pattern-matching library for Lua"
+ADDITIONAL="
+    build-static-lib.patch
+    test-fix-setlocale.patch
+"
+
+luaversions="5.1 5.4"
+
+prepare () {
+    apply_patches
+
+#    lver=$(lua -v | cut -d" " -f2 | cut -d. -f-2)
+	sed -i -e 's/^CFLAGS =/CFLAGS +=/' \
+		-e 's/^COPT =/# COPT =/' \
+		makefile
+
+    for lver in $luaversions; do
+        tar xf lpeg-$PKG_VER.tar.gz
+        mv lpeg-$PKG_VER build-$lver
+    done
+}
+
+build () {
+    for lver in $luaversions; do
+        echo building for $lver
+        make -C build-$lver LUADIR=/usr/include/lua$lver
+    done
+}
+
+package () {
+    for lver in $luaversions; do
+        cd build-$lver
+        install -Dm755 lpeg.so \
+            $PKG_DEST/usr/lib/lua/$lver/lpeg.so
+        install -Dm644 re.lua \
+            $PKG_DEST/usr/share/lua/$lver/re.lua
+
+        local rockdir="$PKG_DEST/usr/lib/luarocks/rocks-$lver/lua-lpeg/$PKG_VER-1"
+        mkdir -p "$rockdir"
+        echo 'rock_manifest = {}' > "$rockdir"/rock_manifest
+        cd ..
+    done
+}

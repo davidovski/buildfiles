@@ -7,53 +7,50 @@ PKG_VER=5.4.4
 SOURCE=https://www.lua.org/ftp/lua-$PKG_VER.tar.gz
 ADDITIONAL="
     https://www.linuxfromscratch.org/patches/blfs/svn/lua-$PKG_VER-shared_library-1.patch
+    lua5.4.pc
     "
+
 DESC="A powerful lightweight scripting language"
 
 prepare () {
-    cat > lua.pc << "EOF"
-V=5.4
-R=5.4.4
+    sed -e "s|@MAJOR_VER@|${PKG_VER%.*}|g" \
+		-e "s|@MINOR_VER@|${PKG_VER}|g" \
+		-i lua5.4.pc
 
-prefix=/usr
-INSTALL_BIN=${prefix}/bin
-INSTALL_INC=${prefix}/include
-INSTALL_LIB=${prefix}/lib
-INSTALL_MAN=${prefix}/share/man/man1
-INSTALL_LMOD=${prefix}/share/lua/${V}
-INSTALL_CMOD=${prefix}/lib/lua/${V}
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+    patch -Np1 -i lua-$PKG_VER-shared_library-1.patch
+	cat > configure.ac <<-EOF
+		top_buildir=.
 
-Name: Lua
-Description: An Extensible Extension Language
-Version: ${R}
-Requires:
-Libs: -L${libdir} -llua -lm -ldl
-Cflags: -I${includedir}
-EOF
+		AC_INIT(src/luaconf.h)
+		AC_PROG_LIBTOOL
+		AC_OUTPUT()
+	EOF
+	libtoolize --force --install && aclocal && autoconf
 
-patch -Np1 -i lua-$PKG_VER-shared_library-1.patch
 
 }
 
 build () {
-    make linux
+	./configure \
+		--prefix=/usr
+    cd src
+        CFLAGS="$CFLAGS -DLUA_USE_LINUX -DLUA_COMPAT_5_2" \
+		SYSLDFLAGS="$LDFLAGS" \
+		RPATH="/usr/lib" make
 }
 
 package () {
-    make INSTALL_TOP=/usr \
-    DESTDIR=$PKG_DEST               \
-    INSTALL="install"            \
-    INSTALL_MAN=/usr/share/man/man1 \
-    TO_LIB="liblua.so liblua.so.${PKG_VER} liblua.so.5.4.4" \
-    install &&
+    cd ..
+    sed -i "s/INSTALL= install -p/INSTALL= install/g" Makefile
+    make V=${PKG_VER%.*} \
+		INSTALL_TOP="$PKG_DEST"/usr \
+		INSTALL_INC="$PKG_DEST"/usr/include/lua${PKG_VER%.*} \
+		INSTALL_LIB="$PKG_DEST"/usr/lib/lua${PKG_VER%.*} install
 
-    mkdir -p                      $PKG_DEST/usr/share/doc/lua-$PKG_VER &&
+
+    mkdir -p  $PKG_DEST/usr/share/doc/lua-$PKG_VER 
     for s in html css gif png; do
         cp doc/*.$s $PKG_DEST/usr/share/doc/lua-$PKG_VER 
     done
-
-    install -m644 -D lua.pc $PKG_DEST/usr/lib/pkgconfig/lua.pc
+    install -Dm644 lua5.4.pc "$PKG_DEST"/usr/lib/pkgconfig/lua5.4.pc
 }

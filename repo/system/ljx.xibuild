@@ -1,0 +1,19 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=1.3
+SOURCE=https://github.com/katlogic/ljx/archive/refs/tags/LJX-v$PKG_VER.tar.gz
+
+DESC="LuaJIT experimental 5.2/5.3 port"
+
+
+build () {
+	make PREFIX=/usr 
+
+}
+
+package () {
+    make install DESTDIR="$PKG_DEST" PREFIX=/usr
+}

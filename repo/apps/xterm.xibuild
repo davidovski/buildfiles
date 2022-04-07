@@ -5,8 +5,8 @@ DEPS="libxft libxaw ncurses luit xbitmaps libutempter libxkbfile"
 
 DESC="X Terminal Emulator"
 
-PKG_VER=370
-SOURCE=https://invisible-mirror.net/archives/xterm/xterm-$PKG_VER.tgz
+PKG_VER=371
+SOURCE=ftp://ftp.invisible-island.net/xterm/xterm-$PKG_VER.tgz
 ADDITIONAL="
     posix-ptys.patch
 "
@@ -20,8 +20,37 @@ prepare () {
 }
 
 build () {
-    ./configure $XORG_CONFIG \
-        --with-tty-group=tty
+    ./configure \
+        $XORG_CONFIG \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--with-x \
+		--disable-full-tgetent \
+		--disable-imake \
+		--enable-ansi-color \
+		--enable-88-color \
+		--enable-256-color \
+		--enable-broken-osc \
+		--enable-broken-st \
+		--enable-load-vt-fonts \
+		--enable-i18n \
+		--enable-wide-chars \
+		--enable-doublechars \
+		--enable-warnings \
+		--enable-tcap-query \
+		--enable-logging \
+		--enable-dabbrev \
+		--enable-freetype \
+		--enable-luit \
+		--enable-mini-luit \
+		--enable-narrowproto \
+		--enable-exec-xterm \
+		--enable-sixel-graphics \
+		--with-tty-group=tty \
+		--with-utempter
     make
 }
 
@@ -31,16 +60,4 @@ package () {
 
     mkdir -p $PKG_DEST/usr/share/applications &&
     cp *.desktop $PKG_DEST/usr/share/applications/
-
-
-    mkdir -p $PKG_DEST/etc/X11/app-defaults
-    cat >> $PKG_DEST/etc/X11/app-defaults/XTerm << "EOF"
-*VT100*locale: true
-*VT100*faceName: Monospace
-*VT100*faceSize: 10
-*backarrowKeyIsErase: true
-*ptyInitialErase: true
-EOF
-
-
 }

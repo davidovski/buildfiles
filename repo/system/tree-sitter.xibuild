@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=0.20.6
+SOURCE=https://github.com/tree-sitter/tree-sitter/archive/v$PKG_VER/tree-sitter-$PKG_VER.tar.gz
+DESC="Incremental parsing system for programming tools"
+
+prepare () {
+    cargo fetch --locked
+}
+
+build () {
+    make
+    cargo build -p tree-sitter-cli --frozen --release
+}
+
+package () {
+    make DESTDIR=$PKG_DEST PREFIX=/usr install 
+    install -D -m755 target/release/tree-sitter $PKG_DEST/usr/bin/
+}

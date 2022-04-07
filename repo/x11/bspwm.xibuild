@@ -9,9 +9,9 @@ SOURCE=https://github.com/baskerville/bspwm/archive/refs/tags/$PKG_VER.tar.gz
 DESC="Tiling window manager based on binary space partitioning"
 
 build () {
-    make
+    make PREFIX=/usr
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
 }

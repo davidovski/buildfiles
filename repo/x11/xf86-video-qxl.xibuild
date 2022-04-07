@@ -1,17 +1,26 @@
 #!/bin/sh
 
-MAKEDEPS="make"
+MAKEDEPS="make spice-protocol"
 DEPS="xorg-server"
 
 DESC="X.org qxl video driver"
 
 PKG_VER=0.1.5
 SOURCE=https://www.x.org/pub/individual/driver/xf86-video-qxl-$PKG_VER.tar.bz2
+ADDITIONAL="
+    buildfix.patch
+    convert-xspice-python3.patch
+"
+
+prepare () {
+    apply_patches
+}
 
 build () {
     ./configure $XORG_CONFIG
     make
 }
+
 
 package () {
     make DESTDIR=$PKG_DEST install
