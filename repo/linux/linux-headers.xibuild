@@ -3,7 +3,7 @@
 MAKEDEPS="make cpio bc perl libelf kmod xmlto xz"
 DEPS="pahole"
 
-PKG_VER=5.16.11
+PKG_VER=5.17.2
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$PKG_VER.tar.xz
 DESC="Linux kernel headers"
 

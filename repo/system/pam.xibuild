@@ -5,6 +5,13 @@ DEPS="musl libxcrypt"
 
 PKG_VER=1.5.2
 SOURCE=https://github.com/linux-pam/linux-pam/releases/download/v$PKG_VER/Linux-PAM-$PKG_VER.tar.xz
+ADDITIONAL="
+	system-auth.pamd
+	system-account.pamd
+	system-password.pamd
+	system-session.pamd
+	other.pamd
+"
 DESC="PAM (Pluggable Authentication Modules) library"
 
 prepare () {
@@ -29,53 +36,11 @@ package () {
     make DESTDIR=$PKG_DEST install
     install -m755 -d $PKG_DEST/etc/pam.d
 
-    install -dm755 $PKG_DEST/etc/pam.d 
-    cat > $PKG_DEST/etc/pam.d/system-account << "EOF" 
-# Begin /etc/pam.d/system-account
-
-account   required    pam_unix.so
-
-# End /etc/pam.d/system-account
-EOF
-
-    cat > $PKG_DEST/etc/pam.d/system-auth << "EOF" 
-# Begin /etc/pam.d/system-auth
-
-auth      required    pam_unix.so
-
-# End /etc/pam.d/system-auth
-EOF
-
-    cat > $PKG_DEST/etc/pam.d/system-session << "EOF"
-# Begin /etc/pam.d/system-session
-
-session   required    pam_unix.so
-
-# End /etc/pam.d/system-session
-EOF
-
-    cat > $PKG_DEST/etc/pam.d/system-password << "EOF"
-# Begin /etc/pam.d/system-password
-
-# use sha512 hash for encryption, use shadow, and try to use any previously
-# defined authentication token (chosen password) set by any prior module
-password  required    pam_unix.so       sha512 shadow try_first_pass
-
-# End /etc/pam.d/system-password
-EOF
-    cat > $PKG_DEST/etc/pam.d/other << "EOF"
-# Begin /etc/pam.d/other
-
-auth        required        pam_warn.so
-auth        required        pam_deny.so
-account     required        pam_warn.so
-account     required        pam_deny.so
-password    required        pam_warn.so
-password    required        pam_deny.so
-session     required        pam_warn.so
-session     required        pam_deny.so
-
-# End /etc/pam.d/other
-EOF
-
+    cp system-account.pamd $PKG_DEST/etc/pam.d/system-account
+    cp system-auth.pamd $PKG_DEST/etc/pam.d/system-auth
+    cp system-password.pamd $PKG_DEST/etc/pam.d/system-password
+    cp system-session.pamd $PKG_DEST/etc/pam.d/system-session
+    cp other.pamd $PKG_DEST/etc/pam.d/other
+    [ -d $PKG_DEST/usr/lib/systemd ] && rm -r $PKG_DEST/usr/lib/systemd
+    return 0
 }

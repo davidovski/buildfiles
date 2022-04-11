@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make "
-DEPS="pam libcap readline ncurses libxcrypt utmps iana-etc net-tools"
+MAKEDEPS="make utmps"
+DEPS="pam libcap readline ncurses libxcrypt iana-etc net-tools"
 
 PKG_VER=2.2
 SOURCE=https://ftp.gnu.org/gnu/inetutils/inetutils-$PKG_VER.tar.xz

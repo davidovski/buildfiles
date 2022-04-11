@@ -10,7 +10,7 @@ SOURCE=https://skarnet.org/software/nsss/nsss-$PKG_VER.tar.gz
 DESC="Minimal competing implementation of glibc's Name Switch Service"
 
 build () {
-    ./configure --prefix=/usr              \
+    ./configure --prefix=/usr          \
             --exec-prefix=/usr         \
             --with-dynlib=/usr/lib     \
             --libexecdir=/usr/lib/nsss \

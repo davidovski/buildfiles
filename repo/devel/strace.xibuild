@@ -1,0 +1,33 @@
+#!/bin/sh
+
+MAKEDEPS="autoconf automake binutils-dev elfutils-dev gawk linux-headers"
+DEPS="libelf musl"
+
+PKG_VER=5.17
+SOURCE=https://github.com/strace/strace/releases/download/v$PKG_VER/strace-$PKG_VER.tar.xz
+ADDITIONAL="
+disable-fortify.patch
+nlattr-fix.patch
+"
+
+DESC="Diagnostic, debugging and instructional userspace tracer"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    export CFLAGS="$CFLAGS -Dsigcontext_struct=sigcontext"
+    ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--enable-mpers=no
+	make
+
+}
+
+package () {
+    make -j1 DESTDIR=$PKG_DEST install
+}

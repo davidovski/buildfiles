@@ -53,3 +53,8 @@ EOF
     install -Dm755 dbus.initd $PKG_DEST/etc/init.d/dbus
 	install -Dm644 dbus.confd $PKG_DEST/etc/conf.d/dbus
 }
+
+postinstall () {
+    rc-update add dbus
+    rc-service dbus start
+}

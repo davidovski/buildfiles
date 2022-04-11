@@ -6,10 +6,11 @@ DEPS="pam gperf eudev"
 PKG_VER=246.10
 SOURCE=https://github.com/elogind/elogind/archive/v$PKG_VER/elogind-$PKG_VER.tar.gz
 ADDITIONAL="
-https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/id-nobody.patch
-https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/mips.patch
-https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/ppc64-bad-tuple.patch
-https://raw.githubusercontent.com/void-linux/void-packages/master/srcpkgs/elogind/patches/ppcle.patch
+id-nobody.patch
+mips.patch
+ppc64-bad-tuple.patch
+ppcle.patch
+elogind.initd
 "
 DESC="The standalone logind daemon"
 
@@ -51,6 +52,8 @@ package () {
     ln -sf  libelogind.pc $PKG_DEST/usr/lib/pkgconfig/libsystemd.pc &&
     ln -sf  elogind $PKG_DEST/usr/include/systemd
 
+    install -Dm755 elogind.initd $PKG_DEST/etc/init.d/elogind
+
 
     sed -e '/\[Login\]/a KillUserProcesses=no' \
     -i $PKG_DEST/etc/elogind/logind.conf
@@ -83,4 +86,9 @@ password required    pam_deny.so
 EOF
 
 
+}
+
+postinstall () {
+    rc-update add elogind
+    rc-service elogind start
 }

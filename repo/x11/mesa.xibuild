@@ -6,20 +6,21 @@ DEPS="xorg-libs libdrm"
 PKG_VER=21.3.7
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
 ADDITIONAL="
-    mesa-$PKG_VER-add_xdemos-1.patch
-    mesa-$PKG_VER-nouveau_fixes-1.patch
+    0001-radeonsi-On-Aarch64-force-persistent-buffers-to-GTT.patch
+    add-use-elf-tls.patch
+    disable-rgb10-by-default.patch
+    mesa-21.3.7-add_xdemos-1.patch
+    mesa-21.3.7-nouveau_fixes-1.patch
+    musl-fix-includes.patch
 "
 
 DESC="An implementation of the OpenGL specification"
 
 prepare () {
-    patch -Np1 -i mesa-$PKG_VER-add_xdemos-1.patch
+    apply_patches
 
     export GALLIUM_DRV="crocus,i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
     export DRI_DRIVERS="i965,nouveau"
-
-    patch -Np1 -i mesa-$PKG_VER-nouveau_fixes-1.patch
-
 }
 
 build () {

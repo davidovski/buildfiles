@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make libxml2 pcsc-lite"
-DEPS="libnl openssl readline dbus"
+MAKEDEPS="make libxml2"
+DEPS="libnl openssl readline dbus pcsc-lite libnl"
 
 PKG_VER=2.10
 

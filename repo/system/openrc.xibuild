@@ -54,8 +54,8 @@ check () {
 package () {
 	make LIBEXECDIR=/lib/rc DESTDIR="$PKG_DEST/" MKSYSVINIT=yes install
 
-    # remove -n from ln in mtab
-    sed -i "s/ln -snf/ln -sf/g" $PKG_DEST/etc/init.d/mtab
+    # remove -n from ln in mtab, devfs 
+    sed -i "s/ln -snf/ln -sf/g" $PKG_DEST/etc/init.d/mtab $PKG_DEST/etc/init.d/devfs
 
     ln -s openrc-init $PKG_DEST/sbin/init
 

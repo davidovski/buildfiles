@@ -6,6 +6,16 @@ DEPS="skalibs"
 PKG_VER=0.1.1.0
 SOURCE=https://skarnet.org/software/utmps/utmps-$PKG_VER.tar.gz
 
+ADDITIONAL="
+btmpd.initd
+btmpd.logrotate
+utmpd.initd
+utmp-init.initd
+utmp-prepare.initd
+wtmpd.initd
+wtmpd.logrotate
+"
+
 DESC="Library implementing utmpx.h family of functions"
 
 build () {
@@ -31,8 +41,13 @@ Requires.private: skalibs
 Libs: -lutmps
 Cflags: -I/usr/include/utmps
 EOF
-
-    #ln -s utmps/wtmp /var/log/wtmp
+	install -D -m755 utmp-prepare.initd "$PKG_DEST/etc/init.d/utmp-prepare"
+	install -D -m755 utmpd.initd "$PKG_DEST/etc/init.d/utmpd"
+	install -D -m755 wtmpd.initd "$PKG_DEST/etc/init.d/wtmpd"
+	install -D -m755 btmpd.initd "$PKG_DEST/etc/init.d/btmpd"
+	install -D -m755 utmp-init.initd "$PKG_DEST/etc/init.d/utmp-init"
+	install -D -m644 wtmpd.logrotate "$PKG_DEST/etc/logrotate.d/wtmpd"
+	install -D -m644 btmpd.logrotate "$PKG_DEST/etc/logrotate.d/btmpd"
 }
 
 postinstall () {
@@ -40,8 +55,21 @@ postinstall () {
     command -v useradd || exit 1
     command -v chown || exit 1
 
-    useradd -c "utmps user" -d /run/utmps \
+    grep -q "utmps" /etc/passwd || useradd -c "utmps user" -d /run/utmps \
         -u 984 -g utmp -s /bin/false utmp
     [ -d /var/log/utmps ] || mkdir -p /var/log/utmps
+    [ -d /var/log/wtmp ] && mv /var/log/wtmp /var/log/utmps
     chown -R utmp:utmp /var/log/utmps
+    [ -e /var/log/wtmp ] || ln -s utmps/wtmp /var/log/wtmp
+
+# utmps is broken, dont try to make services with it without s6 ipc
+#    rc-update add utmp-prepare boot
+#    rc-update add utmpd boot
+#    rc-update add wtmpd boot
+#    rc-update add btmpd boot
+#    rc-update add utmp-init boot
+#    rc-service utmp-prepare start
+#    rc-service utmpd start
+#    rc-service wtmpd start
+#    rc-service btmpd start
 }

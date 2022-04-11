@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make "
-DEPS="pam libcap readline ncurses libxcrypt utmps iana-etc net-tools"
+MAKEDEPS="make utmps "
+DEPS="pam libcap readline ncurses libxcrypt iana-etc net-tools"
 
 PKG_VER=2.10
 SOURCE=https://github.com/ecki/net-tools
