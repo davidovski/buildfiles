@@ -1,0 +1,3 @@
+#!/bin/sh
+DEPS="encodings font-adobe-utopia-type1 font-alias font-bh-ttf font-bh-type1 fontconfig font-ibm-type1 font-misc-ethiopic font-util font-xfree86-type1"
+DESC="Base packages needed for xorg"

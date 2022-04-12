@@ -90,5 +90,4 @@ EOF
 
 postinstall () {
     rc-update add elogind
-    rc-service elogind start
 }

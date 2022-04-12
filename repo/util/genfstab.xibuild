@@ -16,6 +16,7 @@ DESC="A tool for generating /etc/fstab files from archlinux"
 
 prepare () {
     apply_patches
+    sed -i "s/realpath -mL/realpath/g" genfstab.in
 }
 
 package () {

@@ -6,8 +6,16 @@ DEPS="gdbm musl bzip2 zlib tar"
 PKG_VER=5.34.0
 SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
 DESC="The Practical Extraction and Report Language"
+ADDITIONAL="
+musl-locale.patch
+musl-skip-dst-test.patch
+musl-stack-size.patch
+skip-test-due-to-busybox-ps.patch
+zlib-test.patch
+"
 
 prepare () {
+    apply_patches
     export BUILD_ZLIB=False
     export BUILD_BZIP2=0
     export CF_OLD=$CFLAGS

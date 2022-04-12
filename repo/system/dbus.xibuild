@@ -56,5 +56,4 @@ EOF
 
 postinstall () {
     rc-update add dbus
-    rc-service dbus start
 }
