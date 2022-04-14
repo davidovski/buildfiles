@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS=""
+DEPS="%deps%"
 
 PKG_VER=%version%
 SOURCE=%url%

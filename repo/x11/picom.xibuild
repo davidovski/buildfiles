@@ -1,0 +1,27 @@
+#!/bin/sh
+
+MAKEDEPS="libx11 libxcomposite libxinerama libxdamage
+	libconfig pcre libxrandr dbus libdrm mesa meson
+	libev libxdg-basedir pixman xcb-util-renderutil
+	xcb-util-image asciidoc uthash"
+DEPS="dbus libconfig libev libx11 libxcb mesa-gl musl pcre pixman xcb-util-image xcb-util-renderutil"
+
+PKG_VER=9.1
+SOURCE=https://github.com/yshui/picom/archive/v$PKG_VER.tar.gz
+
+build () {
+    mkdir build
+    cd build
+    meson \
+		-Dwith_docs=true \
+        ..
+    ninja 
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninmake ja install
+    mkdir -p "$PKG_DEST/usr/share/doc/picom"
+	install -m644 README* "$PKG_DEST/usr/share/doc/picom/"
+	install -D -m644 "picom.sample.conf" "$PKG_DEST/etc/xdg/picom.conf.example"
+
+}

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="musl"
+
+PKG_VER=019
+SOURCE=https://bues.ch/b43/fwcutter/b43-fwcutter-$PKG_VER.tar.bz2
+
+DESC="firmware extractor for the b43 kernel module"
+
+build () {
+    make
+}
+
+package () {
+    install -D -m755 b43-fwcutter "$PKG_DEST"/usr/bin/b43-fwcutter
+	install -D -m644 b43-fwcutter.1 "$PKG_DEST"/usr/share/man/man1/b43-fwcutter.1
+}

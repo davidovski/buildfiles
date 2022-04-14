@@ -1,0 +1,33 @@
+#!/bin/sh
+
+MAKEDEPS="make bc"
+DEPS="sbase kmod"
+
+PKG_VER=5.17.2
+SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
+ADDITIONAL="
+    fix-sbase-coreutils.patch
+    config
+"
+
+DESC="The latest linux kernel (source)"
+
+prepare () {
+    rm linux-$PKG_VER.tar.xz
+    apply_patches
+
+    make mrproper
+    make headers
+
+    mv config .config
+    make olddefconfig
+    make -s kernelrelease > version
+}
+
+package () {
+    local kernver="$(cat version)"
+    srcdir=$PKG_DEST/usr/src/linux
+    mkdir -p $srcdir
+    cp -r ./ $srcdir/
+}
+

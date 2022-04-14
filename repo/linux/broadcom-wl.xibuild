@@ -1,0 +1,43 @@
+#!/bin/sh
+
+MAKEDEPS="linux-src linux-headers"
+DEPS="linux"
+
+PKG_VER=6.30.223.271
+SOURCE=https://docs.broadcom.com/docs-and-downloads/docs/linux_sta/hybrid-v35_64-nodebug-pcoem-$(echo $PKG_VER | sed "s,\.,_,g").tar.gz
+
+DESC="Broadcom's IEEE 802.11a/b/g/n hybrid Linux device driver"
+ADDITIONAL="
+    001-null-pointer-fix.patch
+    002-rdtscl.patch
+    003-linux47.patch
+    004-linux48.patch
+    005-debian-fix-kernel-warnings.patch
+    006-linux411.patch
+    007-linux412.patch
+    008-linux415.patch
+    009-fix_mac_profile_discrepancy.patch
+    010-linux56.patch
+    011-linux59.patch
+    012-linux517.patch
+"
+
+prepare () {
+    apply_patches
+    sed -i -e '/BRCM_WLAN_IFNAME/s/eth/wlan/' src/wl/sys/wl_linux.c
+    sed -i -e "/EXTRA_LDFLAGS/s|\$(src)/lib|/usr/lib/broadcom-wl|" Makefile
+    sed -i '/GE_49 :=/s|:= .*|:= 1|' Makefile
+}
+
+build () {
+    KVER=$(cat /usr/src/linux/version)
+    #KBASE=/lib/modules/$KVER
+    make -C /usr/src/linux timeconst-file
+    make -C /usr/src/linux M=$PWD 
+}
+
+
+package () {
+    ls 
+    read wait
+}

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="libconfig"
+DESC="A simple library for manipulating structured configuration files"
+
+MAKEDEPS="make automake autoconf libtool"
+DEPS="musl"
+
+PKG_VER=1.7.3
+SOURCE="https://github.com/hyperrealm/libconfig/archive/v$PKG_VER.tar.gz"
+
+prepare () {
+    autoreconf -fi
+}
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make -j1 DESTDIR=$PKG_DEST install
+}

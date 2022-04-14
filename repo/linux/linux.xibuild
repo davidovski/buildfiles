@@ -27,17 +27,17 @@ build () {
 
 package () {
     local kernver="$(cat version)"
-    local modulesdir="$PKG_DEST/usr/lib/modules/$PKG_VER"
+    local modulesdir="$PKG_DEST/usr/lib/modules/$kernver"
 
     echo "Installing boot image..."
     mkdir -p $PKG_DEST/boot
 
-    cp arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$PKG_VER
-    cp System.map $PKG_DEST/boot/System.map-$PKG_VER
-    cp .config $PKG_DEST/boot/config-$PKG_VER
+    cp arch/x86/boot/bzImage $PKG_DEST/boot/vmlinuz-$kernver
+    cp System.map $PKG_DEST/boot/System.map-$kernver
+    cp .config $PKG_DEST/boot/config-$kernver
 
-    install -d $PKG_DEST/usr/share/doc/linux-$PKG_VER
-    cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$PKG_VER
+    install -d $PKG_DEST/usr/share/doc/linux-$kernver
+    cp -r Documentation/* $PKG_DEST/usr/share/doc/linux-$kernver
 
     install -m755 -d $PKG_DEST/etc/modprobe.d
     cat > $PKG_DEST/etc/modprobe.d/usb.conf << "EOF"
@@ -51,7 +51,22 @@ EOF
 
   echo "Installing modules..."
   make INSTALL_MOD_PATH="$PKG_DEST/usr" INSTALL_MOD_STRIP=1 modules_install
-  #rm "$modulesdir"/source
-  #rm "$modulesdir"/build
+  builddir=$modulesdir/build
+  rm $modulesdir/source
+  rm $builddir
+  mkdir $builddir
+  echo "Installing build files..."
+  install -D -m644 .config "$builddir" 
+  install -D -m644 Makefile "$builddir" 
+  install -D -m644 Module.symvers "$builddir" 
+  install -D -m644 System.map "$builddir" 
+  install -D -m644 version "$builddir" 
+  install -D -m644 vmlinux "$builddir" 
+  install -D -m644 kernel/Makefile "$builddir/kernel/Makefile" 
+  install -D -m644 arch/x86/Makefile "$builddir/arch/x86/Makefile" 
+  cp -r scripts "$builddir"
+
+  install -D tools/objtool/objtool "$builddir/tools/objtool"
+  install -D tools/bpf/resolve_btfids/resolve_btfids "$builddir/tools/bpf/resolve_btfids" 
 }
 

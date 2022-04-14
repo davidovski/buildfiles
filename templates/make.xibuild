@@ -1,0 +1,7 @@
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKGDEST install
+}

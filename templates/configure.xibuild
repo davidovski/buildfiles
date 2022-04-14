@@ -1,0 +1,12 @@
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
