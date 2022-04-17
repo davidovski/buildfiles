@@ -3,15 +3,16 @@
 MAKEDEPS=""
 DEPS=""
 
-PKG_VER=1.2.2
+PKG_VER=1.2.3
 SOURCE=https://musl.libc.org/releases/musl-$PKG_VER.tar.gz
 
 ADDITIONAL="
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-mlfs/fix-utmp-wtmp-paths.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-mlfs/change-scheduler-functions-Linux-compatib.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/0001-riscv64-define-ELF_NFPREG.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/handle-aux-at_base.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/musl-alpine/syscall-cp-epoll.patch
+0001-riscv64-define-ELF_NFPREG.patch
+change-scheduler-functions-Linux-compatib.patch
+fix-utmp-wtmp-paths.patch
+handle-aux-at_base.patch
+qsort_r.patch
+syscall-cp-epoll.patch
 "   
 
 DESC="Implementation of the C standard library built on top of the Linux system call API"

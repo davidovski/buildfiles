@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="tiff"
+DESC="Provides support for the Tag Image File Format or TIFF"
+
+MAKEDEPS=""
+DEPS="musl xz zlib zstd "
+
+PKG_VER=4.3.0
+SOURCE="https://gitlab.com/libtiff/libtiff/-/archive/v$PKG_VER/libtiff-v$PKG_VER.tar.gz"
+ADDITIONAL="CVE-2018-12900.patch "
+
+prepare () {
+    apply_patches
+    autoreconf -fi
+}
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-cxx
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+

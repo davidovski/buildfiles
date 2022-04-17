@@ -3,8 +3,8 @@ read -p "package name> " name
 repo=$(ls repo/ | fzf --prompt="repo> ")
 read -p "package version> " version
 read -p "description> " desc
+deps=$(find repo -type f | xargs -I % basename % .xibuild | fzf -m --prompt="dependencies> " | tr '\n' ' ')
 read -p "source url> " url
-deps=$(find repo -type f | xargs -I % basename % .xibuild | fzf -m --prompt="dependencies> ")
 read -p "additional urls> " additional
 type=$(find ./templates -type f | xargs -I % basename % .xibuild | fzf --prompt="build type> ")
 
@@ -24,7 +24,7 @@ buildfile=repo/$repo/$name.xibuild
 
 [ -f $buildfile ] && read -p "Buildfile already exists, overwrite? " go
 
-url=$(echo $url | sed "s/$version/\$PKG_VER/g" | sed "s/\$pkgver/\$PKG_VER/g")
+url=$(echo $url | sed "s/$version/\$PKG_VER/g" | sed "s/pkgver/PKG_VER/g")
 makedeps=""
 
 case $type in
@@ -33,6 +33,12 @@ case $type in
         ;;
     meson)
         makedeps="meson ninja $makedeps" 
+        ;;
+    cmake)
+        makedeps="cmake $makedeps" 
+        ;;
+    python)
+        makedeps="python python-setuptools $makedeps" 
         ;;
 esac
 
@@ -61,7 +67,7 @@ EOF
     echo "ADDITIONAL=\"$filenames\"" >> $buildfile
     
     echo $filenames | grep -q ".patch " && {
-    cat > $buildfile << EOF
+    cat >> $buildfile << EOF
 
 prepare () {
     apply_patches
@@ -73,3 +79,8 @@ EOF
 echo >> $buildfile
 cat $template >> $buildfile
 vim $buildfile
+
+# remove any things i may have copied from alpine's build scripts
+sed -i "s/\$pkgname/$name/g" $buildfile
+sed -i "s/\$pkgver/\$PKG_VER/g" $buildfile
+sed -i "s/\$pkgdir/\$PKG_DEST/g" $buildfile

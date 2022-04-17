@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="libmpdclient"
+DESC="An asynchronous API library for interfacing MPD in the C, C++ & Objective C languages"
+
+MAKEDEPS="meson ninja "
+DEPS="musl"
+
+PKG_VER=2.19
+SOURCE="https://www.musicpd.org/download/libmpdclient/${PKG_VER%.*}/libmpdclient-$PKG_VER.tar.xz"
+
+build () {
+    cd build    &&
+    meson --prefix=/usr .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

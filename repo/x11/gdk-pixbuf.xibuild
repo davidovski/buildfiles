@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="gdk-pixbuf"
+DESC="GTK+ image loading library"
+
+MAKEDEPS="meson ninja "
+DEPS="sbase glib shared-mime-info intltool libpng libjpeg-turbo tiff musl"
+
+PKG_VER=2.42.8
+SOURCE="https://download.gnome.org/sources/gdk-pixbuf/${PKG_VER%.*}/gdk-pixbuf-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+    		-Dinstalled_tests=false \
+            -Dpng=disabled \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

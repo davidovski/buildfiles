@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="xdg-utils"
+DESC="Basic desktop integration functions"
+
+MAKEDEPS="make "
+DEPS="file xprop xset "
+
+PKG_VER=1.1.3
+SOURCE="https://portland.freedesktop.org/download/xdg-utils-$PKG_VER.tar.gz"
+ADDITIONAL="xdg-screensaver-mv-T.patch "
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+NAME="font-opensans"
+DESC="Humanist Sans Serif Typeface"
+
+MAKEDEPS="sbase"
+DEPS="fontconfig mkfontscale "
+
+SOURCE="https://github.com/googlefonts/opensans.git"
+
+package() {
+	install -D -m644 fonts/ttf/*.ttf -t $PKG_DEST/usr/share/fonts/TTF/
+}
+
+

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="snappy"
+DESC="Fast compression and decompression library"
+
+MAKEDEPS="cmake"
+DEPS="musl "
+
+PKG_VER=1.1.9
+SOURCE="https://github.com/google/snappy/archive/$PKG_VER.tar.gz"
+ADDITIONAL="rtti.patch fix-inline.patch cmakelists.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=ON \
+        -DBUILD_STATIC_LIBS=OFF \
+        -DSNAPPY_BUILD_BENCHMARKS=OFF
+
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

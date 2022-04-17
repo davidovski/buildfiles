@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="wavpack"
+DESC="Audio compression format with lossless, lossy, and hybrid compression modes"
+
+MAKEDEPS="make "
+DEPS="musl"
+
+PKG_VER=5.4.0
+SOURCE="http://www.wavpack.com/wavpack-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

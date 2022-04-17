@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="startup-notification"
+DESC="Monitor and display application startup"
+
+MAKEDEPS="make "
+DEPS="libx11 libxcb musl xcb-util "
+
+PKG_VER=0.12
+SOURCE="https://www.freedesktop.org/software/startup-notification/releases/startup-notification-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

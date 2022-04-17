@@ -1,0 +1,7 @@
+build () {
+	python3 setup.py build
+}
+
+package () {
+	python3 setup.py install --prefix=/usr --root=$PKG_DEST
+}

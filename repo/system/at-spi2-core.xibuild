@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="at-spi2-core"
+DESC="Protocol definitions and daemon for D-Bus at-spi"
+
+MAKEDEPS="meson ninja "
+DEPS="dbus glib intltool libx11 libxi libxtst musl "
+
+PKG_VER=2.44.0
+SOURCE="https://download.gnome.org/sources/at-spi2-core/${PKG_VER%.*}/at-spi2-core-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+    		-Dx11=yes \
+            -Dintrospection=yes \
+            -Ddocs=true \
+            -Ddbus_daemon=/usr/bin/dbus-daemon \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+    rm -rf $PKG_DEST/usr/lib/systemd
+}

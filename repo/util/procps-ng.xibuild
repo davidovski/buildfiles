@@ -3,16 +3,16 @@
 MAKEDEPS="make utmps"
 DEPS="ncurses"
 
-PKG_VER=3.3.17
+PKG_VER=4.0.0
 SOURCE=https://sourceforge.net/projects/procps-ng/files/Production/procps-ng-$PKG_VER.tar.xz
 DESC="Utilities for monitoring your system and its processes"
 
 ADDITIONAL="
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/procps-mlfs/use_utmpx.patch
+    use_utmpx.patch
 "
 
 prepare () {
-    patch -Np1 -i use_utmpx.patch
+    apply_patches
 
     sed -i '1i#include <langinfo.h>' proc/escape.c
 }
@@ -21,6 +21,7 @@ build () {
     ./configure --prefix=/usr                        \
             --docdir=/usr/share/doc/procps-ng-$PKG_VER \
             --disable-static                         \
+            --disable-w \
             --disable-kill
     make
 }

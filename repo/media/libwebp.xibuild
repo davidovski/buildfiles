@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="libwebp"
+DESC="Libraries for working with WebP images"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=1.2.2
+SOURCE="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$PKG_VER.tar.gz"
+
+prepare() {
+	./autogen.sh
+}
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-libwebpmux \
+		--enable-libwebpdemux \
+		--enable-libwebpdecoder \
+		--disable-tiff 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    mkdir -p $PKG_DEST/usr/share/doc/libwebp
+	install -Dm644 PATENTS README $PKG_DEST/usr/share/doc/libwebp
+}

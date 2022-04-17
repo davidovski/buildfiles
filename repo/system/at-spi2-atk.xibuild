@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="at-spi2-atk"
+DESC="A GTK+ module that bridges ATK to D-Bus at-spi"
+
+MAKEDEPS="meson ninja "
+DEPS="at-spi2-core atk dbus glib "
+
+PKG_VER=2.38.0
+SOURCE="https://download.gnome.org/sources/at-spi2-atk/${PKG_VER%.*}/at-spi2-atk-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="libjpeg-turbo"
+DESC="Accelerated baseline JPEG compression and decompression library"
+
+MAKEDEPS=""
+DEPS="musl "
+
+PKG_VER=2.1.3
+SOURCE="https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DWITH_JPEG8=1 \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

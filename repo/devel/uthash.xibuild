@@ -1,0 +1,15 @@
+#!/bin/sh
+
+NAME="uthash"
+DESC="C macros for hash tables and more"
+
+MAKEDEPS="make "
+DEPS="rxvt-unicode"
+
+PKG_VER=2.3.0
+SOURCE="https://github.com/troydhanson/uthash/archive/v$PKG_VER.tar.gz"
+
+package () {
+	mkdir -p $PKG_DEST/usr/include
+	install -m 0644 src/*.h $PKG_DEST/usr/include/
+}

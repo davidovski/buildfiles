@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="boost"
+DESC="Free peer-reviewed portable C++ source libraries"
+
+MAKEDEPS="make python which zlib icu"
+DEPS="musl gcc bzip2 zlib mpi python icu"
+
+PKG_VER=1.79.0
+SOURCE="https://boostorg.jfrog.io/artifactory/main/release/$PKG_VER/source/boost_$(echo $PKG_VER | sed "s/\./_/g").tar.bz2"
+ADDITIONAL="python-3.10.patch 0001-revert-cease-dependence-on-range.patch boost-1.57.0-python-libpython_dep.patch boost-1.57.0-python-abi_letters.patch "
+
+prepare () {
+    ./bootstrap.sh --prefix=/usr --with-python=python3 
+}
+
+build () {
+    ./b2 --debug-building --no-cmake-config --toolset=gcc runtime-link=shared link=shared,static
+}
+
+package () {
+    ./b2 install --prefix=$PKG_DEST/usr
+}

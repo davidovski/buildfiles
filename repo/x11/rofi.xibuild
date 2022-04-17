@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="rofi"
+DESC="Window switcher, application launcher and dmenu replacement"
+
+MAKEDEPS="meson ninja "
+DEPS="gdk-pixbuf cairo glib libxcb libxkbcommon libxkbfile musl xcb-util xcb-util-cursor xcb-util-wm pango startup-notification"
+
+PKG_VER=1.7.3
+SOURCE="https://github.com/davatorium/rofi/releases/download/$PKG_VER/rofi-$PKG_VER.tar.gz"
+
+libnkutils=d08fa898d71da4c11653284968ec14384dd70b6a
+libgwater=555fa6df92434c1c3c7548b5a583b1d8ec3fabb3
+ADDITIONAL="
+scrollbar-test.patch 
+rofi-sensible-terminal-use-sh.patch 
+https://github.com/sardemff7/libgwater/archive/$libgwater.tar.gz
+https://github.com/sardemff7/libnkutils/archive/$libnkutils.tar.gz
+"
+
+prepare () {
+    apply_patches
+    tar xf $libgwater.tar.gz
+    tar xf $libnkutils.tar.gz
+    rm -rf subprojects/libnkutils subprojects/libgwater
+	mv libnkutils-$libnkutils subprojects/libnkutils
+	mv libgwater-$libgwater subprojects/libgwater
+}
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+    rm -rf $PKG_DEST/usr/share/rofi/themes/iggy.jpg
+}

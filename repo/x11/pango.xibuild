@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="pango"
+DESC="library for layout and rendering of text"
+
+MAKEDEPS="meson ninja"
+DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl"
+
+PKG_VER=1.50.5
+SOURCE="https://download.gnome.org/sources/pango/${PKG_VER%.*}/pango-$PKG_VER.tar.xz"
+ADDITIONAL="disable-broken-test.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

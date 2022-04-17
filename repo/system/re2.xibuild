@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="re2"
+DESC="Efficient, principled regular expression library"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=2022.04.01
+SOURCE="https://github.com/google/re2/archive/$(echo $PKG_VER | sed "s/\./-/g").tar.gz"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKGDEST install
+}

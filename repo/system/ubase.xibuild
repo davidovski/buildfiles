@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make findutils sed"
 DEPS="musl"
 
 SOURCE=https://git.suckless.org/ubase

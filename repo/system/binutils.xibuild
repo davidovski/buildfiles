@@ -6,20 +6,16 @@ DEPS="musl zlib libelf"
 PKG_VER=2.37
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
 
-PATCH_SOURCE="https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/binutils-alpine"
 ADDITIONAL="
-    $PATCH_SOURCE/0001-Revert-PR25882-.gnu.attributes-are-not-checked-for-s.patch
-    $PATCH_SOURCE/bfd-close-file-desriptor-if-there-is-no-archive-fd.patch
-    $PATCH_SOURCE/binutils-ld-fix-static-linking.patch
-    $PATCH_SOURCE/defang-no-split.patch
-    "
+0001-Revert-PR25882-.gnu.attributes-are-not-checked-for-s.patch
+bfd-close-file-desriptor-if-there-is-no-archive-fd.patch
+binutils-ld-fix-static-linking.patch
+"
 
 DESC="Tools for handling object files"
 
 prepare () {
-    for p in *.patch; do
-        patch -Np1 -i $p || true
-    done
+    apply_patches
 
     find . -name '[a-z]*\.[0-9]*' -empty -exec rm -f {} \; 
 }
@@ -27,18 +23,13 @@ prepare () {
 build () {
     mkdir    build
     cd       build
-    case $(uname -m) in
-      x86_64)  export EXTRA_CONFIG=" --enable-targets=x86_64-pep " 
-               ;;
-      i686)    export EXTRA_CONFIG=" --disable-separate-code --enable-targets=x86_64-linux-gnu,x86_64-pep"
-               ;;
-    esac
 
     ../configure \
 		--prefix=/usr \
 		--mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--disable-multilib \
+        --enable-shared \
 		--enable-ld=default \
         --enable-gold \
 		--enable-64-bit-bfd \
@@ -51,8 +42,7 @@ build () {
 		--with-pic \
 		--disable-werror \
 		--disable-nls \
-		--with-mmap \
-		--with-system-zlib
+		--with-mmap
 
     make tooldir=/usr
 }

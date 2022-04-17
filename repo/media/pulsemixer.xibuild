@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="pulsemixer"
+DESC="CLI and curses mixer for PulseAudio"
+
+MAKEDEPS=""
+DEPS="pulseaudio
+python"
+
+PKG_VER=1.5.1
+SOURCE="https://github.com/GeorgeFilipkin/pulsemixer/archive/$PKG_VER.tar.gz"
+
+build () {
+	python3 setup.py build
+}
+
+package () {
+	python3 setup.py install --prefix=/usr --root=$PKG_DEST
+}

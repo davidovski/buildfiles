@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libxkbcommon"
+DESC="keyboard handling library"
+
+MAKEDEPS="meson ninja "
+DEPS="libxml2
+musl
+xkeyboardconfig"
+
+PKG_VER=1.4.0
+SOURCE="https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-$PKG_VER.tar.gz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr	\
+        -Denable-wayland=true \
+		-Denable-docs=false \
+		-Denable-x11=true \
+		-Ddefault_library=both \
+        .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

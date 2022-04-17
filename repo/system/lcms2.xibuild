@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="lcms2"
+DESC="Color Management Engine"
+
+MAKEDEPS="make libjpeg-turbo tiff zlib"
+DEPS="musl "
+
+PKG_VER=2.13.1
+SOURCE="https://github.com/mm2/Little-CMS/releases/download/lcms$PKG_VER/lcms2-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --with-jpeg \
+		--with-tiff \
+		--with-zlib \
+		--with-threads
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

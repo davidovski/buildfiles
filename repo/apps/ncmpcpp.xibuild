@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="ncmpcpp"
+DESC="Ncurses based MPD client inspired by ncmpc"
+
+MAKEDEPS="make "
+DEPS="boost icu curl libmpdclient musl ncurses readline"
+
+PKG_VER=0.9.2
+SOURCE="http://rybczak.net/ncmpcpp/stable/ncmpcpp-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+        BOOST_LIB_SUFFIX=-mt \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-clock \
+        --enable-visualizer 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

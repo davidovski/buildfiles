@@ -34,6 +34,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
+    mv usr/lib/lib*.so.* $PKG_DEST/usr/lib/
 
     chown  root:messagebus $PKG_DEST/usr/libexec/dbus-daemon-launch-helper &&
     chmod       4750       $PKG_DEST/usr/libexec/dbus-daemon-launch-helper

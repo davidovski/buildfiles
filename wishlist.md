@@ -2,19 +2,19 @@
 
 [x] bspwm
 [x] sxhkd
-[ ] picom
-[ ] mpd
-[ ] ncmpcpp
-[ ] pulsemixer
+[?] picom
+[?] mpd
+[?] ncmpcpp
+[?] pulsemixer
 [ ] pavucontrol
 [ ] chromium
 [ ] firefox
 [ ] ffmpeg
-[ ] dmenu
-[ ] rofi
+[?] dmenu
+[?] rofi
 [ ] mpv
 [ ] sxiv
-[ ] feh
+[?] feh
 [ ] gimp
 [ ] lmms
 [ ] ardour
@@ -29,7 +29,7 @@
 [ ] ImageMagick
 [x] nmap
 [ ] exiftool
-[ ] mpc
+[?] mpc
 
 [ ] nvidia drivers
 [x] working xorg

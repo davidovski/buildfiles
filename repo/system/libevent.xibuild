@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libevent"
+DESC="An event notification library"
+
+MAKEDEPS="make "
+DEPS="openssl musl "
+
+PKG_VER=2.1.12
+SOURCE="https://github.com/libevent/libevent/releases/download/release-$PKG_VER-stable/libevent-$PKG_VER-stable.tar.gz"
+
+prepare() {
+	sed -i '1s|^#!/usr/bin/env python$|#!/usr/bin/python3|' event_rpcgen.py
+	sed -i -e "s/@VERSION@/$PKG_VER/" *.pc.in
+}
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make -j1 DESTDIR=$PKG_DEST install
+}
