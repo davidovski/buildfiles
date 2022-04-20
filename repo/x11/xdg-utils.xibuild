@@ -3,7 +3,7 @@
 NAME="xdg-utils"
 DESC="Basic desktop integration functions"
 
-MAKEDEPS="make "
+MAKEDEPS="make docbook-dtd libxml2 libxslt xmlto lynx"
 DEPS="file xprop xset "
 
 PKG_VER=1.1.3

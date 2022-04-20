@@ -4,8 +4,7 @@ NAME="pulsemixer"
 DESC="CLI and curses mixer for PulseAudio"
 
 MAKEDEPS=""
-DEPS="pulseaudio
-python"
+DEPS="pulseaudio python libtool"
 
 PKG_VER=1.5.1
 SOURCE="https://github.com/GeorgeFilipkin/pulsemixer/archive/$PKG_VER.tar.gz"

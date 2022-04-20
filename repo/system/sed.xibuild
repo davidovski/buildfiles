@@ -1,21 +1,17 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make sort"
 DEPS="musl acl attr"
 
-PKG_VER=4.8
-SOURCE=https://ftp.gnu.org/gnu/sed/sed-$PKG_VER.tar.xz
-DESC="GNU stream editor"
+PKG_VER=0.8.6
+SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
+DESC="stream editor from toybox"
 
 build () {
-    ./configure --prefix=/usr
-    make
-    #make html
+    ./configure 
+    make sed
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
-
-    #install -d -m755    $PKG_DEST/usr/share/doc/sed-$PKG_VER
-    #install -m644 doc/sed.html $PKG_DEST/usr/share/doc/sed-$PKG_VER
+    install -Dm755 sed $PKG_DEST/usr/bin/
 }

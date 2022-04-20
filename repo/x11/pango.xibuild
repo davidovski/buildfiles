@@ -4,7 +4,7 @@ NAME="pango"
 DESC="library for layout and rendering of text"
 
 MAKEDEPS="meson ninja"
-DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl"
+DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl fribidi harfbuzz"
 
 PKG_VER=1.50.5
 SOURCE="https://download.gnome.org/sources/pango/${PKG_VER%.*}/pango-$PKG_VER.tar.xz"

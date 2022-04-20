@@ -1,19 +1,30 @@
 #!/bin/sh
 
-MAKEDEPS="python gcc"
+MAKEDEPS="python"
 DEPS="bash"
 
-PKG_VER=70.1
+PKG_VER=71.1
 SOURCE=https://github.com/unicode-org/icu/releases/download/release-$(echo $PKG_VER | sed 's/\./-/g')/icu4c-$(echo $PKG_VER | sed 's/\./_/g')-src.tgz
 DESC="International Components for Unicode library"
+ADDITIONAL="
+fix-ucptrietest-golden-diff.patch
+"
 
 prepare () {
-    cd source                                    &&
+    cd source
+    autoreconf -fi
     sed -i -e 's,DU_HAVE_STRTOD_L=1,DU_HAVE_STRTOD_L=0,' configure
 }
 
 build () {
-    ./configure --prefix=/usr                    &&
+    ./configure \
+        --prefix=/usr \
+		--sysconfdir=/etc \
+		--with-data-packaging=library \
+		--disable-samples \
+		--mandir=/usr/share/man
+
+    mkdir -p data/out
     make
 
 }

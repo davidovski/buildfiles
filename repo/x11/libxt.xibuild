@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make asciidoc xmlto lynx"
-DEPS="fontconfig libxcb elogind"
+DEPS="fontconfig libxcb elogind libsm libice"
 
 PKG_VER=1.2.1
 SOURCE=https://www.x.org/pub/individual/lib/libXt-$PKG_VER.tar.bz2

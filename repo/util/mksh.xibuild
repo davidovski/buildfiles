@@ -1,0 +1,31 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="sbase musl"
+
+PKG_VER=59c
+SOURCE=https://www.mirbsd.org/MirOS/dist/mir/mksh/mksh-R$PKG_VER.tgz
+DESC="MirBSD Korn Shell"
+
+prepare () {
+    rmdir mksh
+	sed -i check.t -e '/^name: selftest-tty-absent$/,/^---$/d'
+}
+
+build () {
+    sh Build.sh -r
+}
+
+package () {
+    install -Dm755 mksh $PKG_DEST/bin/mksh
+	install -Dm644 dot.mkshrc $PKG_DEST/etc/skel/.mkshrc
+	install -Dm644 mksh.1 $PKG_DEST/usr/share/man/man1/mksh.1
+}
+
+postinstall () {
+    command -v mksh || exit 1
+
+    if [ -f /etc/shells ] || grep -vq "mksh" /etc/shells; then
+        echo "/bin/mksh" >> /etc/shells
+    fi
+}

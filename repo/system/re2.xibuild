@@ -14,5 +14,5 @@ build () {
 }
 
 package () {
-    make PREFIX=/usr DESTDIR=$PKGDEST install
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
 }

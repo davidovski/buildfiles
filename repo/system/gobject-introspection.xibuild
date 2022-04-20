@@ -3,17 +3,10 @@
 MAKEDEPS="meson ninja patch flex"
 DEPS="python-mako python-markdown glib"
 
-PKG_VER=1.70.0
+PKG_VER=1.72.0
 SOURCE=https://download.gnome.org/sources/gobject-introspection/$(echo $PKG_VER | cut -d. -f-2)/gobject-introspection-$PKG_VER.tar.xz
-ADDITIONAL="
-        https://www.linuxfromscratch.org/patches/blfs/svn/gobject-introspection-$PKG_VER-build_fix-1.patch
-    "
 
 DESC="Introspection system for GObject-based libraries"
-
-prepare() {
-    patch -Np1 -i gobject-introspection-$PKG_VER-build_fix-1.patch
-}
 
 build () {
     mkdir build &&

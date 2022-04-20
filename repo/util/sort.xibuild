@@ -1,0 +1,22 @@
+#!/bin/sh
+
+MAKEDEPS="make sort"
+DEPS="musl sh"
+
+PKG_VER=0.8.6
+SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
+DESC="Sort from toybox"
+
+prepare () {
+    # remove the -s sort flag missing from sbase
+    sed -i "s/sort -s/sort/g" scripts/*.sh
+}
+
+build () {
+    ./configure 
+    make sort
+}
+
+package () {
+    install -Dm755 sort $PKG_DEST/usr/bin/
+}

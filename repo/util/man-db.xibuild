@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="bash gdbm zlib groff libpipeline less"
+DEPS="gdbm zlib groff libpipeline less"
 
 PKG_VER=2.9.4
 SOURCE=http://download.savannah.nongnu.org/releases/man-db/man-db-$PKG_VER.tar.xz

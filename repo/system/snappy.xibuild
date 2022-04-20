@@ -8,10 +8,17 @@ DEPS="musl "
 
 PKG_VER=1.1.9
 SOURCE="https://github.com/google/snappy/archive/$PKG_VER.tar.gz"
-ADDITIONAL="rtti.patch fix-inline.patch cmakelists.patch "
+
+_googletest_commit=18f8200e3079b0e54fa00cb7ac55d4c39dcf6da6
+ADDITIONAL="
+rtti.patch fix-inline.patch 
+https://github.com/google/googletest/archive/$_googletest_commit.tar.gz"
 
 prepare () {
     apply_patches
+    rmdir third_party/googletest
+    tar xvf $_googletest_commit.tar.gz
+	ln -s ../googletest-$_googletest_commit third_party/googletest
 }
 
 build () {

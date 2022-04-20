@@ -18,6 +18,7 @@ package () {
 
 postinstall () {
     command -v bash || exit 1
+    command -v grep || exit 1
 
     if [ -f /etc/shells ] || grep -vq "bash" /etc/shells; then
         echo "/bin/bash" >> /etc/shells

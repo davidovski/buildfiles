@@ -10,6 +10,7 @@ SOURCE=https://github.com/webmproject/libvpx/archive/v$PKG_VER/libvpx-$PKG_VER.t
 
 prepare () {
     sed -i 's/cp -p/cp/' build/make/Makefile 
+    sed -i 's/diff --version/command -v diff/' configure
 }
 
 build () {

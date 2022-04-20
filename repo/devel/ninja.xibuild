@@ -3,8 +3,8 @@
 MAKEDEPS="python"
 DEPS="musl"
 
-SOURCE=git://github.com/ninja-build/ninja.git
-BRANCH=release
+PKG_VER=1.10.2
+SOURCE=https://github.com/ninja-build/ninja/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="Small build system with a focus on speed"
 
 build () {

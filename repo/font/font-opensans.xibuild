@@ -9,7 +9,9 @@ DEPS="fontconfig mkfontscale "
 SOURCE="https://github.com/googlefonts/opensans.git"
 
 package() {
-	install -D -m644 fonts/ttf/*.ttf -t $PKG_DEST/usr/share/fonts/TTF/
+    for f in fonts/ttf/*.ttf; do
+        install -D -m644 $f $PKG_DEST/usr/share/fonts/TTF/
+    done
 }
 
 

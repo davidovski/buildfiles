@@ -3,8 +3,8 @@
 NAME="harfbuzz"
 DESC="Text shaping library"
 
-MAKEDEPS="meson ninja "
-DEPS="freetype2 glib graphite musl "
+MAKEDEPS="meson ninja gtk-doc python-pygments"
+DEPS="freetype2 glib graphite musl"
 
 PKG_VER=4.2.0
 SOURCE="https://github.com/harfbuzz/harfbuzz/archive/$PKG_VER.tar.gz"

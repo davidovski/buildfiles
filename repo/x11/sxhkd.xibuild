@@ -9,9 +9,9 @@ SOURCE=https://github.com/baskerville/sxhkd/archive/refs/tags/$PKG_VER.tar.gz
 DESC="Simple X HotKey Daemon; reacts to input events by executing commands"
 
 build () {
-    make
+    make PREFIX=/usr
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
 }

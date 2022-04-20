@@ -1,17 +1,19 @@
 #!/bin/sh
 
-MAKEDEPS="make"
+MAKEDEPS="make sort"
 DEPS="musl sh"
 
-PKG_VER=3.8
-SOURCE=https://ftp.gnu.org/gnu/diffutils/diffutils-$PKG_VER.tar.xz
+PKG_VER=0.8.6
+SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
 DESC="Utility programs for creating patch files"
 
 build () {
-    ./configure --prefix=/usr 
-    make
+    make defconfig
+    make diff
+    make cmp
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    install -Dm755 diff $PKG_DEST/usr/bin/
+    install -Dm755 cmp $PKG_DEST/usr/bin/
 }

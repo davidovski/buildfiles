@@ -1,25 +1,5 @@
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -86,6 +86,8 @@
- # it prominent in the GUI.
- option(BUILD_SHARED_LIBS "Build shared libraries(DLLs)." OFF)
- 
-+option(BUILD_STATIC_LIBS "Build static libraries." ON)
-+
- option(SNAPPY_BUILD_TESTS "Build Snappy's own tests." ON)
- 
- option(SNAPPY_BUILD_BENCHMARKS "Build Snappy's benchmarks" ON)
-@@ -98,6 +100,10 @@
- 
- option(SNAPPY_INSTALL "Install Snappy's header and library" ON)
- 
-+if(NOT BUILD_SHARED_LIBS AND BUILD_STATIC_LIBS)
-+  set(BUILD_STATIC_LIBS OFF)
-+endif ()
-+
- include(TestBigEndian)
- test_big_endian(SNAPPY_IS_BIG_ENDIAN)
- 
 @@ -213,19 +219,28 @@
    "snappy-stubs-public.h.in"
    "${PROJECT_BINARY_DIR}/snappy-stubs-public.h")

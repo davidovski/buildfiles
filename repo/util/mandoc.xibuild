@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MAKEDEPS="make "
+DEPS="musl zlib sbase"
+
+PKG_VER=1.14.6
+SOURCE=https://mandoc.bsd.lv/snapshots/mandoc-$PKG_VER.tar.gz
+DESC="mandoc (formerly mdocml) UNIX manpage compiler toolset"
+
+prepare () {
+	cat > configure.local << EOF
+PREFIX=/usr
+MANDIR=/usr/share/man
+LIBDIR=/usr/lib
+CFLAGS="$CFLAGS"
+UTF8_LOCALE="en_US.UTF-8"
+MANPATH_DEFAULT="/usr/share/man:/usr/local/man"
+MANPATH_BASE="/usr/share/man"
+LN="ln -sf"
+HAVE_LESS_T=0
+EOF
+
+}
+
+build () {
+    ./configure
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST base-install lib-install
+}

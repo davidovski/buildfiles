@@ -31,9 +31,13 @@
 [ ] exiftool
 [?] mpc
 
-[ ] nvidia drivers
+[ ] nvidia drivers (LLLLL)
 [x] working xorg
 [x] sshd (openssh)
 [ ] broadcom wl drivers
 [ ] bluetoothctl
 
+!!
+
+[ ] lame
+[ ] mpd-mpc

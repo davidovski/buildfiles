@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl readline zlib bzip2 bash"
+DEPS="musl readline zlib bzip2 sh"
 
 PKG_VER=8.45
 SOURCE=https://sourceforge.net/projects/pcre/files/pcre/$PKG_VER/pcre-$PKG_VER.tar.gz

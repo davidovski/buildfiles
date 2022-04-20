@@ -7,12 +7,13 @@ PKG_VER=4.5
 SOURCE=https://www.docbook.org/xml/$PKG_VER/docbook-xml-$PKG_VER.zip
 DESC="A widely used XML scheme for writing documentation and help"
 
-VERSIONS="4.5 4.4 4.3 4.2"
+VERSIONS="4.5 4.4 4.3 4.2 4.1"
 
 ADDITIONAL="
     https://www.docbook.org/xml/4.4/docbook-xml-4.4.zip
     https://www.docbook.org/xml/4.3/docbook-xml-4.3.zip
     https://www.docbook.org/xml/4.2/docbook-xml-4.2.zip
+    https://www.docbook.org/xml/4.1/docbook-xml-4.1.zip
 "
 
 package () {
@@ -34,7 +35,7 @@ postinstall () {
     for v in $VERSIONS; do 
         if [ ! -e /etc/xml/docbook ]; then
             xmlcatalog --noout --create /etc/xml/docbook
-        fi &&
+        fi
         xmlcatalog --noout --add "public" \
             "-//OASIS//DTD DocBook XML V$v//EN" \
             "http://www.oasis-open.org/docbook/xml/$v/docbookx.dtd" \
@@ -81,7 +82,7 @@ postinstall () {
             /etc/xml/docbook
         if [ ! -e /etc/xml/catalog ]; then
             xmlcatalog --noout --create /etc/xml/catalog
-        fi &&
+        fi 
         xmlcatalog --noout --add "delegatePublic" \
             "-//OASIS//ENTITIES DocBook XML" \
             "file:///etc/xml/docbook" \

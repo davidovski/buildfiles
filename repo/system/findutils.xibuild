@@ -1,20 +1,19 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make sort"
 DEPS="musl sh"
 
-PKG_VER=4.8.0
-SOURCE=https://ftp.gnu.org/gnu/findutils/findutils-$PKG_VER.tar.xz
-DESC="GNU utilities to locate files"
+PKG_VER=0.8.6
+SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
+DESC="toybox utilities to locate files"
 
 build () {
-    case $(uname -m) in
-        i?86)   TIME_T_32_BIT_OK=yes ./configure --prefix=/usr --localstatedir=/var/lib/locate ;;
-        x86_64) ./configure --prefix=/usr --localstatedir=/var/lib/locate ;;
-    esac
-    make
+    make defconfig
+    make xargs
+    make find
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install 
+    install -Dm755 find $PKG_DEST/usr/bin/find
+    install -Dm755 xargs $PKG_DEST/usr/bin/xargs
 }
