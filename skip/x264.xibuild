@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="x264"
+DESC="Free library for encoding H264/AVC video streams"
+
+MAKEDEPS="make libx11 perl nasm sbase bash"
+DEPS="musl "
+
+PKG_VER=0.163_git20210613
+gitrev=master
+SOURCE="https://code.videolan.org/videolan/x264/-/archive/$gitrev/x264-$gitrev.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-shared \
+        --enable-pic \
+        --extra-cflags=-fno-agressive-loop-optimizations
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST bindir=/usr/bin libdir=/usr/lib includedir=/usr/include install
+}

@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="pcmanfm"
+DESC="Extremely fast and lightweight file manager"
+
+MAKEDEPS="make "
+DEPS="gtk3 libfm "
+
+PKG_VER=1.3.2
+SOURCE="https://downloads.sourceforge.net/pcmanfm/pcmanfm-$PKG_VER.tar.xz"
+
+prepare () {
+    # avoid errors building .po files with gettext-tiny
+    sed -e "s/^\(SUBDIRS =.*\)po\(.*\)$/\1\2/" -i Makefile.in 
+    echo "SUBDIRS=src data" > Makefile.am
+    aclocal
+    autoreconf 
+    automake --add-missing
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --with-gtk=3 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    sed -i 's|x-directory/normal|inode/directory|' \
+        "$PKG_DEST"/usr/share/applications/pcmanfm.desktop
+}

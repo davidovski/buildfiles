@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="dav1d"
+DESC="small and fast AV1 Decoder"
+
+MAKEDEPS="meson ninja nasm"
+DEPS="musl "
+
+PKG_VER=1.0.0
+SOURCE="https://code.videolan.org/videolan/dav1d/-/archive/$PKG_VER/dav1d-$PKG_VER.tar.bz2"
+ADDITIONAL="fix-asmcheck.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            -Denable_asm=true \
+            -Dfuzzing_engine=none \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+    mv $PKG_DEST/usr/lib64 $PKG_DEST/usr/lib
+}

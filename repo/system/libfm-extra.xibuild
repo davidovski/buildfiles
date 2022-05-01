@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="libfm-extra"
+DESC="Library for file management (Extra)"
+
+MAKEDEPS="make libtool intltool autoconf automake gtk3"
+DEPS="libexif"
+
+PKG_VER=1.3.2
+SOURCE="https://github.com/lxde/libfm/archive/$PKG_VER.tar.gz"
+
+prepare () {
+    ./autogen.sh
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --with-gtk=3 \
+        --with-extra-only \
+        --with-gnu-ld
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

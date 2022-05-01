@@ -3,9 +3,17 @@
 MAKEDEPS="meson ninja docbook-xsl docbook-dtd"
 DEPS="pcre libffi zlib musl libxslt gdbm"
 
-PKG_VER=2.70.3
+PKG_VER=2.72.1
 SOURCE=https://download.gnome.org/sources/glib/$(echo $PKG_VER | cut -d. -f-2)/glib-$PKG_VER.tar.xz
 DESC="Low level core library"
+ADDITIONAL="
+0001-gquark-fix-initialization-with-c-constructors.patch
+deprecated-no-warn.patch
+musl-libintl.patch"
+
+prepare () {
+    apply_patches
+}
 
 build () {
     mkdir build &&

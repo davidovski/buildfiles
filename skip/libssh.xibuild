@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="libssh"
+DESC="Library for accessing ssh client services through C libraries"
+
+MAKEDEPS="cmake argp-standalone"
+DEPS="openssl "
+
+PKG_VER=0.9.6
+SOURCE="https://www.libssh.org/files/${PKG_VER%.*}/libssh-$PKG_VER.tar.xz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF 
+        -DWITH_GSSAPI=OFF
+        -DUNIT_TESTING=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

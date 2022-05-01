@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="libretls"
+DESC="port of libtls from libressl to openssl"
+
+MAKEDEPS="make "
+DEPS="openssl cacerts "
+
+PKG_VER=3.5.1
+SOURCE="https://causal.agency/libretls/libretls-$PKG_VER.tar.gz"
+
+prepare () {
+    local _current _rev _age
+    IFS=: read _current _rev _age < LIBTLS_VERSION
+    printf "%d:%d:%d\n" $(( $_current - 18 )) $_rev $_age > LIBTLS_VERSION
+
+    autoreconf
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

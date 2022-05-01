@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="mpc-mpd"
+DESC="Minimalist command line interface to MPD"
+
+MAKEDEPS="meson ninja rsync"
+DEPS="musl libmpdclient mpd"
+
+PKG_VER=0.34
+SOURCE="https://www.musicpd.org/download/mpc/${PKG_VER%.*}/mpc-$PKG_VER.tar.xz"
+
+build () {
+    cd build   
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

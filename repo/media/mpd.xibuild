@@ -1,22 +1,48 @@
 #!/bin/sh
 
 NAME="mpd"
-DESC="Minimalist command line interface to MPD"
+DESC="Music daemon that plays MP3, FLAC, Ogg Vorbis files and Audio CDs"
 
-MAKEDEPS="meson ninja "
-DEPS="musl libmpdclient "
+MAKEDEPS="meson ninja boost"
+DEPS="alsa-lib sbase expat faad2 flac fmt icu lame libao bzip2 libid3tag libmad libogg pulseaudio libsamplerate libmpdclient libvorbis musl opus pipewire soxr wavpack zlib sqlite3 ffmpeg4"
 
-PKG_VER=0.34
-SOURCE="https://www.musicpd.org/download/mpc/${PKG_VER%.*}/mpc-$PKG_VER.tar.xz"
+PKG_VER=0.23.6
+SOURCE="https://www.musicpd.org/download/mpd/${PKG_VER%.*}/mpd-$PKG_VER.tar.xz"
+ADDITIONAL="libcdio-paa-version.patch libcdio-paranoia-version.patch mpd.confd mpd.initd"
+
+prepare () {
+    apply_patches
+}
 
 build () {
-    mkdir build &&
-    cd build    &&
+    cd build
     meson --prefix=/usr \
-            .. &&
+		-Dopus=enabled \
+		-Ddocumentation=enabled \
+		-Dlibmpdclient=enabled \
+		-Dpipewire=enabled \
+		-Dwavpack=enabled \
+        -Dffmpeg=enabled \
+        .. &&
+
     ninja
 }
 
 package () {
     DESTDIR=$PKG_DEST ninja install
+    cd ..
+    install -d $PKG_DEST/etc
+	sed	-e 's:\#user.*:user\t\t"mpd":' \
+		-e 's:\#log_file.*:log_file\t\t"syslog":' \
+		doc/mpdconf.example > $PKG_DEST/etc/mpd.conf
+	install -m755 -D mpd.initd \
+		"$PKG_DEST"/etc/init.d/mpd
+	install -m644 -D mpd.confd \
+		"$PKG_DEST"/etc/conf.d/mpd
+	install -d -m775 \
+		"$PKG_DEST"/var/run/mpd \
+		"$PKG_DEST"/var/log/mpd \
+		"$PKG_DEST"/var/lib/mpd \
+		"$PKG_DEST"/var/lib/mpd/playlists \
+		"$PKG_DEST"/var/lib/mpd/music
 }

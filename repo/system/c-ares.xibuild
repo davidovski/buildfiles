@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="c-ares"
+DESC="An asynchronously DNS/names resolver library"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=1.18.1
+SOURCE="https://c-ares.haxx.se/download/c-ares-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

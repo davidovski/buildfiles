@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="adwaita-icon-theme"
+DESC="Adwaita icon theme"
+
+MAKEDEPS="make "
+DEPS="hicolor-icon-theme "
+
+PKG_VER=42.0
+SOURCE="https://download.gnome.org/sources/adwaita-icon-theme/${PKG_VER%.*}/adwaita-icon-theme-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+postinstall () {
+    gtk-update-icon-cache /usr/share/icons/Adwaita/
+}

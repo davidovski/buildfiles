@@ -63,6 +63,7 @@ EOF
         filename=$(basename $l)
         curl -SsL $l > extra/$name/$filename  
         filenames="$filename $filenames"
+        sleep 2
     done
     echo "ADDITIONAL=\"$filenames\"" >> $buildfile
     

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="x264"
+DESC="Free library for encoding H264/AVC video streams"
+
+MAKEDEPS="make libx11 perl nasm sbase bash"
+DEPS="musl "
+
+PKG_VER=0.164.r3081.19856cc
+gitrev=master
+SOURCE="https://code.videolan.org/videolan/x264.git"
+BRANCH=19856cc41ad11e434549fb3cc6a019e645ce1efe
+
+ADDITIONAL="
+    oclobj.h
+"
+
+prepare () {
+    echo '' > ./tools/cltostr.sh
+    mv oclobj.h common/oclobj.h
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --enable-shared \
+        --enable-pic \
+        --enable-lto \
+        --disable-avs
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST bindir=/usr/bin libdir=/usr/lib includedir=/usr/include install-lib-shared install-cli
+}

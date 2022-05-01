@@ -6,7 +6,11 @@ DEPS=""
 PKG_VER=1.6.37
 SOURCE=https://downloads.sourceforge.net/libpng/libpng-$PKG_VER.tar.xz
 DESC="A collection of routines used to create PNG images"
+ADDITIONAL="libpng-1.6.37-apng.patch"
 
+prepare () {
+    apply_patches
+}
 
 build () {
     ./configure --prefix=/usr --disable-static &&
@@ -15,7 +19,7 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install 
-    mkdir /usr/share/doc/libpng-$PKG_VER &&
-    cp README libpng-manual.txt /usr/share/doc/libpng-$PKG_VER
+    mkdir -p $PKG_DEST/usr/share/doc/libpng-$PKG_VER &&
+    cp README libpng-manual.txt $PKG_DEST/usr/share/doc/libpng-$PKG_VER
 
 }

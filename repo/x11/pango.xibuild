@@ -3,7 +3,7 @@
 NAME="pango"
 DESC="library for layout and rendering of text"
 
-MAKEDEPS="meson ninja"
+MAKEDEPS="meson ninja python-pygments git"
 DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl fribidi harfbuzz"
 
 PKG_VER=1.50.5
@@ -17,7 +17,11 @@ prepare () {
 build () {
     mkdir build &&
     cd build    &&
-    meson --prefix=/usr .. &&
+    meson --prefix=/usr \
+        -Dintrospection=enabled \
+		-Dgtk_doc=false \
+        ..
+
     ninja
 }
 

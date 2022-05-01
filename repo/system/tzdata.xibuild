@@ -1,0 +1,56 @@
+#!/bin/sh
+
+NAME="tzdata"
+DESC="Timezone data"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=2022a
+SOURCE="https://www.iana.org/time-zones/repository/releases/tzdata$PKG_VER.tar.gz"
+tzcodever=2022a
+ptzver=0.5
+
+ADDITIONAL="
+https://www.iana.org/time-zones/repository/releases/tzcode$tzcodever.tar.gz
+https://dev.alpinelinux.org/archive/posixtz/posixtz-$ptzver.tar.xz
+0002-fix-implicit-declaration-warnings-by-including-strin.patch 0001-posixtz-ensure-the-file-offset-we-pass-to-lseek-is-o.patch 
+"
+
+timezones="africa antarctica asia australasia europe northamerica \
+	southamerica etcetera backward factory"
+
+prepare () {
+    tar xf tzcode$tzcodever.tar.gz
+    tar xf posixtz-$ptzver.tar.xz
+    apply_patches
+}
+
+
+build() {
+	make cc="${CC:-gcc}" CFLAGS="$CFLAGS -DHAVE_STDINT_H=1"
+		TZDIR="/usr/share/zoneinfo"
+
+	cd posixtz-$ptzver
+	make posixtz
+    cd ..
+}
+
+package () {
+    ./zic -b fat -y ./yearistype -d "$PKG_DEST"/usr/share/zoneinfo $timezones
+	./zic -b fat -y ./yearistype -d "$PKG_DEST"/usr/share/zoneinfo/right -L leapseconds $timezones
+
+	./zic -b fat -y ./yearistype -d "$PKG_DEST"/usr/share/zoneinfo -p America/New_York
+	install -m444 -t "$PKG_DEST"/usr/share/zoneinfo iso3166.tab zone1970.tab zone.tab
+
+	mkdir -p "$PKG_DEST"/usr/sbin
+	install -m755 zic zdump "$PKG_DEST"/usr/sbin
+
+	mkdir -p "$PKG_DEST"/usr/share/man/man8
+	install -m644 zic.8 zdump.8 "$PKG_DEST"/usr/share/man/man8
+
+	rm -f "$PKG_DEST"/usr/share/zoneinfo/localtime
+	install -Dm755 posixtz-$ptzver/posixtz \
+		"$PKG_DEST"/usr/bin/posixtz
+
+}

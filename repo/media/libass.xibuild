@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libass"
+DESC="Portable library for SSA/ASS subtitle rendering"
+
+MAKEDEPS="make "
+DEPS="fontconfig fribidi freetype2 harfbuzz "
+
+PKG_VER=0.15.2
+SOURCE="https://github.com/libass/libass/releases/download/$PKG_VER/libass-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

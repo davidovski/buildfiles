@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="hicolor-icon-theme"
+DESC="Freedesktop.org Hicolor icon theme"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=0.17
+SOURCE="https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+postinstall () {
+    gtk-update-icon-cache /usr/share/icons/hicolor/
+}

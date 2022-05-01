@@ -1,0 +1,14 @@
+#!/bin/sh
+
+NAME="waf"
+DESC="The meta build system"
+
+MAKEDEPS=""
+DEPS="python "
+
+PKG_VER=2.0.22
+SOURCE="https://waf.io/waf-$PKG_VER"
+
+package () {
+    install -Dm755 waf-$PKG_VER "$PKG_DEST"/usr/bin/waf
+}

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="aom"
+DESC="Alliance for Open Media (AOM) AV1 codec SDK"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=3.3.0
+SOURCE="https://aomedia.googlesource.com/aom/+archive/v$PKG_VER.tar.gz"
+ADDITIONAL="fix-stack-size-e53da0b.patch "
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

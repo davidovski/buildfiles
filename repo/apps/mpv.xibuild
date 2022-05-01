@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="mpv"
+DESC="Video player based on MPlayer/mplayer2"
+
+MAKEDEPS="make waf"
+DEPS="alsa-lib faac ffmpeg4 freetype2 lame aom libass libtheora libva libvdpau libxext libxinerama libxkbcommon libxrandr libxscrnsaver libxv libxvmc libxxf86dga lua mesa perl pulseaudio python-docutils python xvidcore zlib "
+
+PKG_VER=0.34.1
+SOURCE="https://github.com/mpv-player/mpv/archive/v$PKG_VER/mpv-$PKG_VER.tar.gz"
+
+prepare () {
+    ln -s /usr/bin/waf waf
+}
+
+build () {
+    python3 waf configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-alsa \
+        --enable-pulse \
+        --enable-libmpv-shared \
+        --enable-wayland \
+        --enable-lua \
+        --enable-test
+    python3 waf build
+}
+
+package () {
+    python3 waf install --destdir=$PKG_DEST
+}

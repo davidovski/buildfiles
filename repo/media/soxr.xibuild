@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="soxr"
+DESC="High quality, one-dimensional sample-rate conversion library"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=0.1.3
+SOURCE="https://sourceforge.net/projects/soxr/files/soxr-$PKG_VER-Source.tar.xz/download"
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

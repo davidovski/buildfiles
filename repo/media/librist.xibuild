@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="librist"
+DESC="Reliable Internet Stream Transport (RIST)"
+
+MAKEDEPS="meson ninja "
+DEPS="linux-headers jsoncpp musl "
+
+PKG_VER=0.2.6
+SOURCE="https://code.videolan.org/rist/librist/-/archive/v$PKG_VER/librist-v$PKG_VER.tar.gz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

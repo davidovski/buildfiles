@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="v4l-utils"
+DESC="Userspace tools and conversion library for Video 4 Linux"
+
+MAKEDEPS="make "
+DEPS="alsa-lib libjpeg-turbo argp-standalone eudev "
+
+PKG_VER=1.22.1
+SOURCE="https://linuxtv.org/downloads/v4l-utils/v4l-utils-$PKG_VER.tar.bz2"
+ADDITIONAL="fix_parse_next_subopt.patch types.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --enable-libdvbv5 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

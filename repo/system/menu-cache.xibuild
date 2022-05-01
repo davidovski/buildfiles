@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="menu-cache"
+DESC="Caching mechanism for freedesktop.org compliant menus"
+
+MAKEDEPS="make libfm-extra"
+DEPS="glib "
+
+PKG_VER=1.1.0
+SOURCE="https://downloads.sourceforge.net/lxde/menu-cache-$PKG_VER.tar.xz"
+ADDITIONAL="menu-cache-1.1.0-0001-Support-gcc10-compilation.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

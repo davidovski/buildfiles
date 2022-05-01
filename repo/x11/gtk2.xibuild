@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="gtk2"
+DESC="The GTK+ Toolkit (v2)"
+
+MAKEDEPS="meson ninja iso-codes libpng shared-mime-info"
+DEPS="atk at-spi2-atk sbase cairo gobject-introspection fontconfig fribidi gdk-pixbuf glib harfbuzz libepoxy intltool libx11 libxcomposite libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr musl pango shared-mime-info wayland "
+
+PKG_VER=2.24.33
+SOURCE="https://download.gnome.org/sources/gtk+/${PKG_VER%.*}/gtk+-$PKG_VER.tar.xz"
+
+prepare () {
+    # don't build demos
+	sed -e "s/^\(SRC_SUBDIRS =.*\)demos\(.*\)$/\1\2/" -i Makefile.am Makefile.in
+    aclocal -I m4
+    autoreconf
+    automake --add-missing
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --with-xinput=yes \
+        --without-libjasper \
+        --with-included-loaders=png \
+        --with-gdktarget=x11 \
+        --enable-man 
+
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0/g' libtool
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+postinstall () {
+    /usr/bin/gtk-query-immodules-2.0 > /etc/gtk-2.0/gtk.immodules
+    /usr/bin/gdk-pixbuf-query-loaders > /etc/gtk-2.0/gdk-pixbuf.loaders
+}

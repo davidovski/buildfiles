@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="glm"
+DESC="C++ mathematics library for graphics programming"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=0.9.9.8
+SOURCE="https://github.com/g-truc/glm/archive/refs/tags/$PKG_VER/glm-$PKG_VER.tar.gz"
+ADDITIONAL="
+fix-endian-test.patch
+glm.pc
+"
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+
+    mkdir -p $PKG_DEST/usr/include/
+    cp -r glm $PKG_DEST/usr/include/
+
+    mkdir -p $PKG_DEST/usr/share/doc/
+    cp -r doc $PKG_DEST/usr/share/doc/glm
+
+    mkdir -p $PKG_DEST/usr/lib/pkgconfig
+    cp glm.pc $PKG_DEST/usr/lib/pkgconfig/
+}

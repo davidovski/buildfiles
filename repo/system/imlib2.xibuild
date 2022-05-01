@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="libtiff giflib bzip2 freetype2 libxext libpng libid3tag libjpeg-turbo libwebp libheif librsvg xz"
+DEPS="tiff giflib bzip2 freetype2 libxext libpng libid3tag libjpeg-turbo libwebp libheif librsvg xz"
 
 PKG_VER=1.8.0
 SOURCE=https://downloads.sourceforge.net/enlightenment/imlib2-$PKG_VER.tar.xz

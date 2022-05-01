@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="nodejs"
+DESC="JavaScript runtime built on V8 engine - LTS version"
+
+MAKEDEPS="make "
+DEPS="brotli sbase sort c-ares cacerts openssl musl libnghttp zlib "
+
+PKG_VER=16.14.2
+SOURCE="https://nodejs.org/dist/v$PKG_VER/node-v$PKG_VER.tar.gz"
+ADDITIONAL="fix-build-with-system-c-ares.patch disable-running-gyp-on-shared-deps.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+
+    python3 configure.py --prefix=/usr \
+		--shared-brotli \
+		--shared-zlib \
+		--shared-openssl \
+		--shared-cares \
+		--shared-nghttp2 \
+		--ninja \
+		--openssl-use-def-ca-store \
+		--with-icu-default-data-dir=$(icu-config --icudatadir) \
+		--with-intl=small-icu \
+		--without-corepack \
+		--without-npm
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

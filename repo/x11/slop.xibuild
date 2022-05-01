@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="slop"
+DESC="Application that queries for a selection from the user and prints the region to stdout"
+
+MAKEDEPS="cmake "
+DEPS="icu libice libsm libx11 libxext libxrender glm glew"
+
+PKG_VER=7.6
+SOURCE="https://github.com/naelstrof/slop/archive/v$PKG_VER.tar.gz"
+
+build () {
+    cmake  \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF .
+    make
+}
+
+package () {
+	make DESTDIR="$PKG_DEST" install 
+}

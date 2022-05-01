@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libexif"
+DESC="library to parse an EXIF file and read the data from those tags"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=0.6.24
+SOURCE="https://github.com/libexif/libexif/releases/download/v$PKG_VER/libexif-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

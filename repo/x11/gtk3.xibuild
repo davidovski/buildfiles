@@ -1,0 +1,43 @@
+#!/bin/sh
+
+NAME="gtk3"
+DESC="The GTK+ Toolkit (v3)"
+
+MAKEDEPS="meson ninja iso-codes gtk2"
+DEPS="atk at-spi2-atk sbase cairo gobject-introspection fontconfig fribidi gdk-pixbuf glib harfbuzz libepoxy intltool libx11 libxcomposite libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr musl pango shared-mime-info wayland adwaita-icon-theme gsettings-desktop-schemas"
+
+PKG_VER=3.24.33
+SOURCE="https://download.gnome.org/sources/gtk+/${PKG_VER%.*}/gtk+-$PKG_VER.tar.xz"
+
+
+prepare () {
+    # don't build demos
+    sed -e "s/^\(SRC_SUBDIRS =.*\)demos\(.*\)$/\1\2/" -i Makefile.am Makefile.in
+    aclocal -I m4
+    autoreconf
+    automake --add-missing
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --with-xinput=yes \
+        --without-libjasper \
+        --with-included-loaders=png \
+        --with-gdktarget=x11 \
+        --enable-man 
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+postinstall () {
+    [ -d /etc/gtk-3.0 ] || mkdir - /etc/gtk-3.0
+    /usr/bin/gtk-query-immodules-3.0 > /etc/gtk-3.0/gtk.immodules
+    /usr/bin/gdk-pixbuf-query-loaders > /etc/gtk-3.0/gdk-pixbuf.loaders
+}

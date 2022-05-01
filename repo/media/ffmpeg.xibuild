@@ -1,0 +1,63 @@
+#!/bin/sh
+
+NAME="ffmpeg"
+DESC="Complete and free Internet live audio and video broadcasting solution for Linux/Unix"
+
+MAKEDEPS="make "
+DEPS="alsa-lib aom gnutls libass bzip2 dav1d libdrm pulseaudio librist libsrt libtheora libva libvorbis libvpx libwebp libx11 libxcb musl opus sdl2 v4l-utils vidstab x264 x265 xvidcore zlib lame soxr"
+
+PKG_VER=5.0.1
+SOURCE="https://ffmpeg.org/releases/ffmpeg-$PKG_VER.tar.xz"
+ADDITIONAL="
+0001-ffbuild-libversion.sh-add-shebang.patch
+0001-libavutil-clean-up-unused-FF_SYMVER-macro.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--enable-avfilter \
+		--enable-gnutls \
+		--enable-gpl \
+		--enable-libass \
+		--enable-libmp3lame \
+		--enable-libpulse \
+		--enable-libvorbis \
+		--enable-libvpx \
+		--enable-libxvid \
+		--enable-libx264 \
+		--enable-libx265 \
+		--enable-libtheora \
+		--enable-libv4l2 \
+		--enable-libdav1d \
+		--enable-lto \
+		--enable-postproc \
+		--enable-pic \
+		--enable-pthreads \
+		--enable-shared \
+		--enable-libxcb \
+		--enable-librist \
+		--enable-libsrt \
+		--enable-libvidstab \
+		--disable-stripping \
+		--disable-static \
+		--disable-librtmp \
+		--enable-libaom \
+		--enable-libopus \
+		--enable-libsoxr \
+		--enable-libwebp \
+		--enable-vaapi \
+		--enable-vdpau \
+		--enable-libdrm
+
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

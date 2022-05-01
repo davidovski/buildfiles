@@ -1,6 +1,6 @@
 build () {
     ./configure \
-        --prefix=/usr
+        --prefix=/usr \
         --bindir=/usr/bin \
         --sysconfdir=/etc \
         --disable-static

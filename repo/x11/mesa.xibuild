@@ -31,8 +31,15 @@ build () {
           --buildtype=release            \
           -Ddri-drivers=$DRI_DRIVERS     \
           -Dgallium-drivers=$GALLIUM_DRV \
+          -Dplatforms=x11,wayland        \
           -Dgallium-nine=false           \
           -Dglx=dri                      \
+          -Dopengl=true                  \
+          -Dosmesa=true                  \
+          -Dshared-glapi=enabled         \
+          -Degl=enabled                  \
+          -Dgles1=disabled               \
+          -Dgles2=disabled               \
           -Dvalgrind=disabled            \
           -Dlibunwind=disabled           \
           ..                             &&

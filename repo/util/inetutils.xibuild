@@ -25,4 +25,5 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install 
     rm $PKG_DEST/usr/bin/hostname
+    chmod u+s $PKG_DEST/usr/bin/ping
 }

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libsrt"
+DESC="Secure Reliable Transport (SRT)"
+
+MAKEDEPS="cmake "
+DEPS="openssl musl"
+
+PKG_VER=1.4.4
+SOURCE="https://github.com/Haivision/srt/archive/v$PKG_VER.tar.gz"
+ADDITIONAL="fix-cmake.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

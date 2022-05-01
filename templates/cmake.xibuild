@@ -1,5 +1,5 @@
 build () {
-    cmake -B build -G Ninja \
+    cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
 		-DBUILD_SHARED_LIBS=True \

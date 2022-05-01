@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="gsettings-desktop-schemas"
+DESC="A collection of GSettings schemas"
+
+MAKEDEPS="meson ninja "
+DEPS="glib base-fonts "
+
+PKG_VER=42.0
+SOURCE="https://download.gnome.org/sources/gsettings-desktop-schemas/${PKG_VER%.*}/gsettings-desktop-schemas-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}
+
+postinstall() {
+   glib-compile-schemas /usr/share/glib-2.0/schemas
+}

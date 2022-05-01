@@ -1,0 +1,53 @@
+#!/bin/sh
+
+NAME="x265"
+DESC="Open Source H265/HEVC video encoder"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=3.5
+SOURCE="https://bitbucket.org/multicoreware/x265_git/downloads/x265_$PKG_VER.tar.gz"
+
+build () {
+    # CMAKE_BUILD_TYPE - Don't change to None! This is a video encoder,
+    #   performance is the most important.
+    cmake -B build-12 -S source -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DHIGH_BIT_DEPTH=TRUE \
+        -DMAIN12=TRUE \
+        -DEXPORT_C_API=FALSE \
+        -DENABLE_CLI=FALSE \
+        -DENABLE_SHARED=FALSE
+    cmake --build build-12
+
+    cmake -B build-10 -S source -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DHIGH_BIT_DEPTH=TRUE \
+        -DEXPORT_C_API=FALSE \
+        -DENABLE_CLI=FALSE \
+        -DENABLE_SHARED=FALSE
+    cmake --build build-10
+
+    cmake -B build -S source -G Ninja \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DEXTRA_LIB='x265_main10.a;x265_main12.a' \
+        -DEXTRA_LINK_FLAGS='-L.' \
+        -DLINKED_10BIT=TRUE \
+        -DLINKED_12BIT=TRUE 
+    ln -s ../build-10/libx265.a build/libx265_main10.a
+    ln -s ../build-12/libx265.a build/libx265_main12.a
+    cmake --build build
+
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

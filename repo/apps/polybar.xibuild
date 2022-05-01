@@ -1,0 +1,44 @@
+#!/bin/sh
+
+NAME="polybar"
+DESC="fast and easy-to-use tool for creating status bars"
+
+MAKEDEPS="cmake "
+DEPS="alsa-lib sbase cairo fontconfig freetype2 jsoncpp curl libmpdclient pulseaudio libuv musl libxcb xcb-util-cursor xcb-util-wm "
+
+PKG_VER=3.6.1
+SOURCE="https://github.com/polybar/polybar/archive/$PKG_VER.tar.gz"
+
+xppver="044e69d05db7f89339bda1ccd1efe0263b01c8f6"
+i3ipcppver="86ddf7102c6903ae0cc543071e2d375403fc0727"
+
+ADDITIONAL="fix-version.patch 
+https://github.com/polybar/xpp/archive/$xppver.tar.gz
+https://github.com/polybar/i3ipcpp/archive/$i3ipcppver.tar.gz
+"
+
+prepare () {
+    tar -xf $xppver.tar.gz
+    tar -xf $i3ipcppver.tar.gz
+
+    mkdir build
+    rm -rf lib/xpp
+    mv xpp-$xppver lib/xpp
+    rm -rf lib/i3ipcpp
+    mv i3ipcpp-$i3ipcpp lib/i3ipcpp
+
+    apply_patches
+}
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

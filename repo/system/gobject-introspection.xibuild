@@ -6,11 +6,16 @@ DEPS="python-mako python-markdown glib"
 PKG_VER=1.72.0
 SOURCE=https://download.gnome.org/sources/gobject-introspection/$(echo $PKG_VER | cut -d. -f-2)/gobject-introspection-$PKG_VER.tar.xz
 
+ADDITIONAL="musl-time64.patch"
 DESC="Introspection system for GObject-based libraries"
+
+prepare () {
+    apply_patches
+}
 
 build () {
     mkdir build &&
-    cd    build &&
+    cd    build
 
     meson --prefix=/usr --buildtype=release .. &&
     ninja

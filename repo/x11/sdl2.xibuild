@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="sdl2"
+DESC="development library designed to provide low level access to audio, keyboard, mouse, joystick and graphics"
+
+MAKEDEPS="cmake "
+DEPS="alsa-lib eudev libx11 libxext libxcursor libxi libxkbcommon libxrender libxscrnsaver libusb pulseaudio wayland "
+
+PKG_VER=2.0.20
+SOURCE="https://www.libsdl.org/release/SDL2-$PKG_VER.tar.gz"
+ADDITIONAL="directfb-cflags.patch "
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF \
+        -DSDL_TEST=OFF \
+        -DSDL_ALSA=ON \
+        -DSDL_CLOCK_GETTIME=ON \
+        -DSDL_ARTS=OFF \
+        -DSDL_ESD=OFF \
+        -DSDL_NAS=OFF \
+        -DSDL_RPATH=OFF \
+        -DSDL_X11=ON \
+        -DSDL_DIRECTFB=ON \
+        -DSDL_WAYLAND=ON \
+        -DSDL_STATIC=OFF \
+        -DSDL_SHARED=ON \
+        -DSDL_PIPEWIRE_SHARED=ON \
+        -DSDL_PULSEAUDIO_SHARED=ON
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

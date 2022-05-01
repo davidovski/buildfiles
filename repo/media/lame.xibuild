@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="lame"
+DESC="An MP3 encoder and graphical frame analyzer"
+
+MAKEDEPS="make nasm"
+DEPS="musl "
+
+PKG_VER=3.100
+SOURCE="https://downloads.sourceforge.net/project/lame/lame/$PKG_VER/lame-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --disable-mp3x \
+        --enable-nasm \
+        --with-pic
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

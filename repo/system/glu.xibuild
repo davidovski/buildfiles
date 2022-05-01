@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="glu"
+DESC="Mesa OpenGL Utility library"
+
+MAKEDEPS="meson ninja "
+DEPS="mesa opengl"
+
+PKG_VER=9.0.2
+SOURCE="https://mesa.freedesktop.org/archive/glu/glu-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            -D default_library=shared \
+            -D gl_provider=osmesa \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

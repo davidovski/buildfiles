@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="vidstab"
+DESC="Video stabilization library"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=1.1.0
+SOURCE="https://github.com/georgmartius/vid.stab/archive/v$PKG_VER/vid.stab-v$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="maim"
+DESC="Utility that takes screenshots of your desktop"
+
+MAKEDEPS="cmake "
+DEPS="mesa icu libxrender libxrandr libxcomposite libjpeg-turbo libpng libwebp slop glm"
+
+PKG_VER=5.7.4
+SOURCE="https://github.com/naelstrof/maim/archive/v$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build -G Ninja \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

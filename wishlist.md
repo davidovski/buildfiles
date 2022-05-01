@@ -9,10 +9,10 @@
 [ ] pavucontrol
 [ ] chromium
 [ ] firefox
-[ ] ffmpeg
-[?] dmenu
-[?] rofi
-[ ] mpv
+[x] ffmpeg
+[x] dmenu
+[x] rofi
+[x] mpv
 [ ] sxiv
 [?] feh
 [ ] gimp
@@ -29,9 +29,9 @@
 [ ] ImageMagick
 [x] nmap
 [ ] exiftool
-[?] mpc
+[x] mpc
 
-[ ] nvidia drivers (LLLLL)
+[-] nvidia drivers (LLLLL)
 [x] working xorg
 [x] sshd (openssh)
 [ ] broadcom wl drivers
@@ -39,5 +39,9 @@
 
 !!
 
-[ ] lame
-[ ] mpd-mpc
+[x] lame
+
+[ ] the one true awk
+[ ] mksh by default
+[ ] full build using clang
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="glew"
+DESC="A cross-platform C/C++ extension loading library"
+
+MAKEDEPS="make "
+DEPS="libxmu libxi mesa glu"
+
+PKG_VER=2.2.0
+SOURCE="https://downloads.sourceforge.net/glew/glew-$PKG_VER.tgz"
+ADDITIONAL="glew.patch "
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib64
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

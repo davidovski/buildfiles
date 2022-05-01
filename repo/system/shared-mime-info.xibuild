@@ -9,7 +9,7 @@ DEPS="sbase glib libxml2 musl pkg-config "
 PKG_VER=2.2
 SOURCE="https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/$PKG_VER/shared-mime-info-$PKG_VER.tar.gz"
 ADDITIONAL="
-https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/shared-mime-info/trunk/MR_162.patch
+    https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/shared-mime-info/trunk/MR_162.patch
 "
 
 prepare () {
@@ -22,7 +22,6 @@ build () {
     meson --prefix=/usr \
     		-Dupdate-mimedb=false \
             .. &&
-    sed -i "s/xmlto /xmlto --skip-validation /g" build.ninja
     ninja
 }
 
@@ -30,3 +29,6 @@ package () {
     DESTDIR=$PKG_DEST ninja install
 }
 
+postinstall () {
+    update-mime-database /usr/share/mime
+}

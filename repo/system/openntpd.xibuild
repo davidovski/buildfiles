@@ -1,0 +1,49 @@
+#!/bin/sh
+
+NAME="openntpd"
+DESC="Lightweight NTP server ported from OpenBSD"
+
+MAKEDEPS="make "
+DEPS="libretls "
+
+PKG_VER=6.8p1
+SOURCE="https://ftp.openbsd.org/pub/OpenBSD/OpenNTPD/openntpd-$PKG_VER.tar.gz"
+ADDITIONAL="libtls-standalone.patch ntp-user.patch 
+openntpd.confd
+openntpd.initd
+"
+
+prepare () {
+    apply_patches
+    autoreconf -vif
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --localstatedir=/var \
+        --mandir=/usr/share/man \
+        --disable-static \
+        --enable-https-constraint \
+        --with-privsep-user=ntp
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    
+    mkdir -p "$PKG_DEST/var/empty"
+    install -Dm755 "openntpd.initd" $PKG_DEST/etc/init.d/openntpd
+    install -Dm755 "openntpd.confd" $PKG_DEST/etc/conf.d/openntpd
+}
+
+postinstall () {
+
+    /usr/sbin/groupadd -fg 129 ntp &&
+    /usr/sbin/useradd -c "ntp daemon owner" -d /var/lib/ntp -u 117 \
+        -g ntp -s /bin/false ntp
+
+    rc-update add openntpd
+}
