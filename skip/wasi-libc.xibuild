@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="wasi-libc"
+DESC="WASI libc implementation for WebAssembly"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=13.0.1
+PKG_VER=0_git20220310
+
+BRANCH=079adff840032c3455eb1cb34dc9ceaa0b2bfc0c
+SOURCE="ssh://github.com/WebAssembly/wasi-libc"
+
+build () {
+    make WASM_CC=/usr/bin/clang
+}
+
+package () {
+    make INSTALL_DIR=$PKG_DEST/usr/share/wasi-sysroot install
+}

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="xclip"
+DESC="Command line interface to the X11 clipboard"
+
+MAKEDEPS="make "
+DEPS="libx11 musl libxmu "
+
+PKG_VER=0.13
+SOURCE="https://github.com/astrand/xclip/archive/$PKG_VER.tar.gz"
+
+prepare () {
+	autoreconf -vif
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

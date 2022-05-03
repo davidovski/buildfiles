@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="gimp"
+DESC="GNU Image Manipulation Program"
+
+MAKEDEPS="make "
+DEPS="babl cairo fontconfig freetype2 gdk-pixbuf gexiv2 glib gtk2 harfbuzz json-glib lcms2 bzip2 libexecinfo intltool libjpeg-turbo libmypaint libpng librsvg libwebp libx11 libxext libxfixes libxmu libxpm musl pango poppler gegl tiff xz zlib python"
+
+PKG_VER=2.10.30
+SOURCE="https://download.gimp.org/pub/gimp/v${PKG_VER%.*}/gimp-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+		--disable-dependency-tracking \
+		--sysconfdir=/etc \
+		--enable-mp \
+		--enable-gimp-console \
+        --disable-python \
+		--without-aa \
+		--disable-check-update
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

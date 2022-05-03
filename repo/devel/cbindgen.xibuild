@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="cbindgen"
+DESC="Tool to generate C bindings from Rust code"
+
+MAKEDEPS=""
+DEPS="gcc "
+
+PKG_VER=0.20.0
+SOURCE="https://crates.io/api/v1/crates/cbindgen/$PKG_VER/download"
+
+build () {
+    cargo build --release --locked --verbose
+}
+
+package () {
+    install -Dm0755 target/release/cbindgen "$PKG_DEST/usr/bin/cbindgen"
+}

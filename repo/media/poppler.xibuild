@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="poppler"
+DESC="PDF rendering library based on xpdf 3.0"
+
+MAKEDEPS="cmake "
+DEPS="fontconfig freetype2 lcms2 libjpeg-turbo libpng musl openjpeg tiff "
+
+PKG_VER=22.03.0
+SOURCE="https://poppler.freedesktop.org/poppler-$PKG_VER.tar.xz"
+ADDITIONAL="dont-enforce-build-type.patch "
+
+build () {
+    cmake -B build \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DENABLE_UNSTABLE_API_ABI_HEADERS=ON \
+		-DBUILD_QT5_TESTS=OFF \
+		-DENABLE_QT5=OFF \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		-DENABLE_BOOST=OFF \
+
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

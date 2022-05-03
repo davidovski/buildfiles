@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="links"
+DESC="Web browser running in text mode only"
+
+MAKEDEPS="make "
+DEPS="bzip2 openssl libevent musl zlib zstd "
+
+PKG_VER=2.25
+SOURCE="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--mandir=/usr/share/man 
+		--disable-javascript \
+		--disable-graphics \
+		--without-x \
+		--disable-nls
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

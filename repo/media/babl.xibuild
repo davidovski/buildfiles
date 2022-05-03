@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="babl"
+DESC="Dynamic, any to any, pixel format conversion library"
+
+MAKEDEPS="meson ninja "
+DEPS="lcms2 "
+
+PKG_VER=0.1.92
+SOURCE="https://ftp.gimp.org/pub/babl/${PKG_VER%.*}/babl-$PKG_VER.tar.xz"
+ADDITIONAL="meson-0.60.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

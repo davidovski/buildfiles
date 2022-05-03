@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libmypaint"
+DESC="library for making brushstrokes"
+
+MAKEDEPS="make "
+DEPS="glib json-c intltool "
+
+PKG_VER=1.6.1
+SOURCE="https://github.com/mypaint/libmypaint/releases/download/v$PKG_VER/libmypaint-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

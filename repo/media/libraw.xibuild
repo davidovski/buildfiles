@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="libraw"
+DESC="Library for reading RAW files obtained from digital photo cameras"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=0.20.2
+SOURCE="https://www.libraw.org/data/LibRaw-$PKG_VER.tar.gz"
+
+prepare () {
+    autoreconf -fi
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="iwd"
+DESC="Internet Wireless Daemon"
+
+MAKEDEPS="make "
+DEPS="dbus musl readline "
+
+PKG_VER=1.27
+SOURCE="https://mirrors.edge.kernel.org/pub/linux/network/wireless/iwd-$PKG_VER.tar.gz"
+ADDITIONAL="iwd.initd iwd.confd main.conf"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --disable-systemd-service \
+		--enable-wired \
+		--enable-tools
+
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    install -m750 -d "$PKG_DEST"/var/lib/iwd
+
+	install -m644 -D main.conf "$PKG_DEST"/etc/iwd/main.conf
+
+	install -m755 -D iwd.initd "$PKG_DEST"/etc/init.d/iwd
+	install -m644 -D iwd.confd "$PKG_DEST"/etc/conf.d/iwd
+
+}

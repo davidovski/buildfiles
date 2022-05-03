@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="gexiv2"
+DESC="GObject-based wrapper around the Exiv2 library"
+
+MAKEDEPS="meson ninja "
+DEPS="exiv2 glib "
+
+PKG_VER=0.14.0
+SOURCE="https://download.gnome.org/sources/gexiv2/${PKG_VER%.*}/gexiv2-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+    		-Dgtk_doc=true \
+            -Dintrospection=true \
+            -Dvapi=true \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

@@ -1,0 +1,138 @@
+#!/bin/sh
+
+NAME="firefox"
+DESC="Firefox web browser"
+
+MAKEDEPS="make rustc cbindgen wasi-sdk"
+DEPS="alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib "
+
+PKG_VER=99.0.1
+releasedate=2022-04-12
+
+SOURCE="https://ftp.mozilla.org/pub/firefox/releases/$PKG_VER/source/firefox-$PKG_VER.source.tar.xz"
+ADDITIONAL="stab.h sandbox-sched_setscheduler.patch sandbox-largefile.patch sandbox-fork.patch mallinfo.patch fix-webrtc-glibcisms.patch fix-rust-target.patch fix-fortify-system-wrappers.patch firefox-safe.desktop disable-neon-in-aom.patch disable-moz-stackwalk.patch avoid-redefinition.patch allow-custom-rust-vendor.patch "
+
+prepare () {
+    apply_patches
+
+    cp stab.h toolkit/crashreporter/google-breakpad/src/
+
+    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/audio_thread_priority/.cargo-checksum.json
+    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/target-lexicon-0.9.0/.cargo-checksum.json
+}
+
+build () {
+    mkdir -p objdir
+    cd objdir
+    export SHELL=/bin/sh
+	export BUILD_OFFICIAL=1
+	export MOZILLA_OFFICIAL=1
+	export USE_SHORT_LIBNAME=1
+	export MACH_USE_SYSTEM_PYTHON=1
+	export MOZBUILD_STATE_PATH=$BUILD_ROOT/mozbuild
+	# disable desktop notifications
+	export MOZ_NOSPAM=1
+	# Find our triplet JSON
+	export RUST_TARGET="x86_64-unknown-linux-musl"
+	# Build with Clang, takes less RAM
+	export CC="clang"
+	export CXX="clang++"
+
+	export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/firefox"
+    	../mach configure \
+		--prefix=/usr \
+        --disable-elf-hack \
+        --enable-rust-simd \
+        --enable-sandbox \
+		\
+		--disable-cargo-incremental \
+		--disable-crashreporter \
+		--disable-install-strip \
+		--disable-jemalloc \
+		--disable-minify \
+		--disable-profiling \
+		--disable-strip \
+		--disable-tests \
+		--disable-updater \
+		\
+		--enable-alsa \
+		--enable-dbus \
+		--enable-default-toolkit=cairo-gtk3-wayland \
+		--enable-dom-streams \
+		--enable-ffmpeg \
+		--enable-hardening \
+		--enable-linker=lld \
+		--enable-necko-wifi \
+		--enable-official-branding \
+		--enable-optimize="$CFLAGS -O2" \
+		--enable-pulseaudio \
+		--enable-release \
+		--enable-system-ffi \
+		--enable-system-pixman \
+		\
+		--with-distribution-id=xilinux \
+		--with-libclang-path=/usr/lib \
+		--with-system-ffi \
+		--with-system-icu \
+		--with-system-jpeg \
+		--with-system-libevent \
+		--with-system-libvpx \
+		--with-system-nspr \
+		--with-system-nss \
+		--with-system-pixman \
+		--with-system-png \
+		--with-system-webp \
+		--with-system-zlib \
+		--with-unsigned-addon-scopes=app,system \
+		--with-wasi-sysroot=/usr/share/wasi-sysroot
+	../mach build
+}
+
+package () {
+
+	DESTDIR="$PKG_DEST" MOZ_MAKE_FLAGS="$MAKEOPTS" ../mach install
+
+	install -m755 -d "$PKG_DEST"/usr/share/applications
+	install -m755 -d "$PKG_DEST"/usr/share/pixmaps
+
+	local _png
+	for _png in ../browser/branding/official/default*.png; do
+		local i=${_png%.png}
+		i=${i##*/default}
+		install -D -m644 "$_png" "$PKG_DEST"/usr/share/icons/hicolor/"$i"x"$i"/apps/firefox.png
+	done
+
+	install -m644 ../browser/branding/official/default48.png \
+		"$PKG_DEST"/usr/share/pixmaps/firefox.png
+	install -m644 ../firefox.desktop "$PKG_DEST"/usr/share/applications/org.mozilla.firefox.desktop
+	install -m644 ../firefox-safe.desktop "$PKG_DEST"/usr/share/applications/org.mozilla.firefox-safe.desktop
+
+	# Add StartupWMClass=firefox on the .desktop files so Desktop Environments
+	# correctly associate the window with their icon, the correct fix is to have
+	# firefox sets its own AppID but this will work for the meantime
+	# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1607399
+	echo "StartupWMClass=firefox" >> $PKG_DEST/usr/share/applications/org.mozilla.firefox.desktop
+	echo "StartupWMClass=firefox" >> $PKG_DEST/usr/share/applications/org.mozilla.firefox-safe.desktop
+
+	# install our vendor prefs
+	install -d $PKG_DEST/usr/lib/firefox/browser/defaults/preferences
+
+	cat >> $PKG_DEST/usr/lib/firefox/browser/defaults/preferences/firefox-branding.js <<- EOF
+	// Use LANG environment variable to choose locale
+	pref("intl.locale.requested", "");
+
+	// Disable default browser checking.
+	pref("browser.shell.checkDefaultBrowser", false);
+
+	// Don't disable our bundled extensions in the application directory
+	pref("extensions.autoDisableScopes", 11);
+	pref("extensions.shownSelectionUI", true);
+	EOF
+
+	# Generate appdata file
+	mkdir "$PKG_DEST"/usr/share/metainfo/
+	export VERSION="$PKG_VER"
+	export DATE="$releasedate"
+	envsubst < "$builddir"/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in > "$PKG_DEST"/usr/share/metainfo/org.mozilla.firefox.appdata.xml
+
+}

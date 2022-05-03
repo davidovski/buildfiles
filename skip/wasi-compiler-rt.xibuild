@@ -1,0 +1,45 @@
+#!/bin/sh
+
+NAME="wasi-compiler-rt"
+DESC="WASI LLVM compiler runtime"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=13.0.1
+wasi_sdk_ver=14
+
+SOURCE="https://github.com/WebAssembly/wasi-sdk/archive/refs/tags/wasi-sdk-$wasi_sdk_ver.tar.gz"
+ADDITIONAL="https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/compiler-rt-$PKG_VER.src.tar.xz"
+
+prepare () {
+    tar xf compiler-rt-$PKG_VER.src.tar.xz
+    mkdir -p wasi-compiler-rt
+    mv compiler-rt-$PKG_VER.src wasi-compiler-rt/compiler-rt
+	mv wasi-sdk.cmake wasi-compiler-rt
+	mv cmake wasi-compiler-rt
+
+}
+
+build () {
+    cd wasi-compiler-rt
+    mkdir build
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_MODULE_PATH=$BUILD_ROOT/wasi-compiler-rt/cmake \
+		-DCMAKE_TOOLCHAIN_FILE=$BUILD_ROOT/wasi-compiler-rt/wasi-sdk.cmake \
+		-DCMAKE_C_COMPILER_WORKS=ON \
+		-DCOMPILER_RT_BAREMETAL_BUILD=ON \
+		-DCOMPILER_RT_INCLUDE_TESTS=OFF \
+		-DCOMPILER_RT_HAS_FPIC_FLAG=OFF \
+		-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON \
+		-DCOMPILER_RT_OS_DIR=wasi \
+		-DWASI_SDK_PREFIX=/usr \
+		-DCMAKE_INSTALL_PREFIX=/usr/lib/clang/$PKG_VER/ \
+        compiler-rt/lib/builtins
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

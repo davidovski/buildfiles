@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="slock"
+DESC="simple X display locker utility"
+
+MAKEDEPS="make "
+DEPS="libx11 "
+
+PKG_VER=master
+SOURCE="https://git.suckless.org/slock"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

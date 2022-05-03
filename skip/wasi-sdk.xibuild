@@ -1,0 +1,13 @@
+#!/bin/sh
+
+NAME="wasi-sdk"
+DESC="WASI-enabled WebAssembly C/C++ toolchain"
+
+MAKEDEPS="cmake "
+DEPS="wasi-compiler-rt wasi-libc wasi-libcxx"
+
+PKG_VER=14.0
+
+package () {
+    mkdir $PKG_DEST
+}

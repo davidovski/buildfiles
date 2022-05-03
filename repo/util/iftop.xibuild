@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="iftop"
+DESC="A tool to display bandwidth usage on an interface"
+
+MAKEDEPS="make "
+DEPS="libpcap musl "
+
+PKG_VER=0.17
+SOURCE="https://www.ex-parrot.com/~pdw/iftop/download/iftop-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

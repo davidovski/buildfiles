@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="xlinks"
+DESC="Web browser running in both graphics and text mode"
+
+MAKEDEPS="make "
+DEPS="bzip2 openssl libevent musl zlib zstd libx11 tiff libpng librsvg"
+
+PKG_VER=2.25
+SOURCE="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
+ADDITIONAL="links.desktop"
+
+build () {
+    ./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--mandir=/usr/share/man \
+        --enable-graphics \
+        --with-x \
+        --with-fb
+		--disable-nls
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    mv $PKG_DEST/usr/bin/links $PKG_DEST/usr/bin/xlinks
+    install -D -m0644 "links.desktop" "$PKG_DEST/usr/share/applications/links.desktop"
+}

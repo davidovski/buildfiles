@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="openjpeg"
+DESC="Open-source implementation of JPEG2000 image codec"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=2.4.0
+SOURCE="https://github.com/uclouvain/openjpeg/archive/v$PKG_VER/openjpeg-v$PKG_VER.tar.gz"
+ADDITIONAL="b4700bc09d55ac17ff6bef9b0a867f6de527be17.patch fix-cmakelists.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

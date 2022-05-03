@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="tmux"
+DESC="Tool to control multiple terminals from a single terminal"
+
+MAKEDEPS="make "
+DEPS="libevent musl ncurses "
+
+PKG_VER=3.2a
+SOURCE="https://github.com/tmux/tmux/releases/download/$PKG_VER/tmux-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+
+    install -D -m644 example_tmux.conf \
+		"$PKG_DEST"/usr/share/doc/tmux/examples/tmux.conf
+
+	for file in CHANGES README; do
+		install -m644 "$file" "$PKG_DEST"/usr/share/doc/tmux/
+	done
+
+}
