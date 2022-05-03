@@ -58,3 +58,7 @@ package () {
 		"$PKG_DEST"/usr/share/doc/graphviz
 
 }
+
+postinstall () {
+    dot -c
+}

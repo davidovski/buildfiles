@@ -34,3 +34,8 @@ package () {
     install -Dm755   sshd.initd $PKG_DEST/etc/init.d/sshd
     install -Dm755   sshd.confd $PKG_DEST/etc/conf.d/sshd
 }
+
+postinstall () {
+    groupadd -g 33 sshd
+    useradd -u 33 -g 33 -c sshd -d / sshd
+}

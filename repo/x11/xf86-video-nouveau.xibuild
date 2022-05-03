@@ -7,9 +7,10 @@ DESC="X.org nouveau video driver"
 
 PKG_VER=1.0.17
 SOURCE=https://www.x.org/pub/individual/driver/xf86-video-nouveau-$PKG_VER.tar.bz2
+ADDITIONAL="xorg-server-21.1.patch"
 
 prepare () {
-    ggrep -rl slave | xargs sed -i s/slave/secondary/
+    apply_patches
 }
 
 build () {
@@ -20,3 +21,4 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
 }
+

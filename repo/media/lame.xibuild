@@ -9,6 +9,16 @@ DEPS="musl "
 PKG_VER=3.100
 SOURCE="https://downloads.sourceforge.net/project/lame/lame/$PKG_VER/lame-$PKG_VER.tar.gz"
 
+prepare () {
+	# fix for parallel builds
+	mkdir -p libmp3lame/i386/.libs
+
+	# fix for pic build with new nasm
+	sed -i -e '/define sp/s/+/ + /g' libmp3lame/i386/nasm.h
+
+	aclocal && automake --force --add-missing
+}
+
 build () {
     ./configure \
         --prefix=/usr

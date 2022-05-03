@@ -14,5 +14,4 @@ build () {
 package () {
     make DESTDIR=$PKG_DEST install
     rm -f $PKG_DEST$XORG_PREFIX/bin/xkeystone
-
 }

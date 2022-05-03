@@ -3,32 +3,32 @@
 [x] bspwm
 [x] sxhkd
 [?] picom
-[?] mpd
-[?] ncmpcpp
-[?] pulsemixer
+[x] mpd
+[x] ncmpcpp
+[x] pulsemixer
 [ ] pavucontrol
-[ ] chromium
+[?] chromium
 [ ] firefox
 [x] ffmpeg
 [x] dmenu
 [x] rofi
 [x] mpv
 [ ] sxiv
-[?] feh
+[x] feh
 [ ] gimp
 [ ] lmms
 [ ] ardour
 [ ] cava
-[ ] pcmanfm
+[x] pcmanfm
 [ ] thunar
 [ ] zathura
-[ ] polybar
+[x] polybar
 
 [ ] gnu screen
 [ ] tmux
 [ ] ImageMagick
 [x] nmap
-[ ] exiftool
+[x] exiftool
 [x] mpc
 
 [-] nvidia drivers (LLLLL)
