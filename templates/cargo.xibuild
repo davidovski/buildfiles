@@ -1,0 +1,7 @@
+build () {
+    cargo build --release --locked --verbose
+}
+
+package () {
+    cargo install --root=$PKG_DEST
+}

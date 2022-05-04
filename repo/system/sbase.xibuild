@@ -29,7 +29,7 @@ package () {
     make PREFIX=/usr DESTDIR=$PKG_DEST install 
 
     # these are provided by other utils
-    for p in tar sed find xargs grep sort; do
+    for p in tar sed find xargs grep sort flock; do
         mv $PKG_DEST/usr/bin/$p $PKG_DEST/usr/bin/s$p
         mv $PKG_DEST/usr/share/man/man1/$p.1 $PKG_DEST/usr/share/man/man1/s$p.1
     done

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="imake"
+DESC="X Windows make utility"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=1.0.8
+SOURCE="https://ftp.x.org/pub/individual/util/imake-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

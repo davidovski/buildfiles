@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="xclock-cat"
+DESC="xclock cat mode"
+
+MAKEDEPS="make"
+DEPS="libx11 motif"
+
+PKG_VER=master
+SOURCE="https://github.com/BarkyTheDog/catclock"
+
+build () {
+    make 
+}
+
+package () {
+    install -Dm755 xclock $PKG_DEST/usr/bin/xclock-cat
+}

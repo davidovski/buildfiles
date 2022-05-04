@@ -1,0 +1,46 @@
+#!/bin/sh
+
+NAME="motif"
+DESC="User interface component toolkit"
+
+MAKEDEPS="make "
+DEPS="libx11 libxft libxt libxpm musl "
+
+PKG_VER=2.3.8
+SOURCE="https://sourceforge.net/projects/motif/files/Motif%20$PKG_VER%20Source%20Code/motif-$PKG_VER.tar.gz/download"
+
+ADDITIONAL="
+02-fix-format-security.patch
+03-no-demos.patch
+06-cast-size_t-to-int.patch
+07-fix_lintian_reported_manpage_typos.patch
+08-fix_hyphen_in_man_pages.patch
+09-fix_typo_in_libxm.patch
+10-fix_manpage-has-bad-whatis-entry.patch
+11-fix_underlinking.patch
+13-fix_hardcoded_x11rgb_path.patch
+15-link_uil_against_libuil.patch
+16-fix-undefined-use-of-sprintf.patch
+17-switch-to-system-iswspace.patch
+18-option-main.patch"
+
+#prepare () {
+#    apply_patches
+#}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-jpeg \
+        --disable-png \
+        --enable-xft \
+        --disable-demos \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

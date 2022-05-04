@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="xorg-cf-files"
+DESC="Data files for the imake utility"
+
+MAKEDEPS="make "
+DEPS=""
+
+PKG_VER=1.0.7
+SOURCE="https://xorg.freedesktop.org/releases/individual/util/xorg-cf-files-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

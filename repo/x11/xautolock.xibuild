@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="xautolock"
+DESC="An automatic X screen-locker/screen-saver"
+
+MAKEDEPS="make imake xorg-cf-files"
+DEPS="libx11 libxscrnsaver musl "
+
+PKG_VER=2.2
+SOURCE="https://www.ibiblio.org/pub/linux/X11/screensavers/xautolock-$PKG_VER.tgz"
+ADDITIONAL="processwait.patch "
+
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    xmkmf
+	make 
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+    make MANPATH=/usr/share/man DESTDIR=$PKG_DEST install.man
+}
