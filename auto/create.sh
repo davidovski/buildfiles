@@ -20,9 +20,11 @@ echo Type: $type
 read -p "Ok? " go
 
 template=./templates/$type.xibuild
-buildfile=repo/$repo/$name.xibuild
+package=repo/$repo/$name
+buildfile=$package/$name.xibuild
 
 [ -f $buildfile ] && read -p "Buildfile already exists, overwrite? " go
+mkdir -p $package
 
 url=$(echo $url | sed "s/$version/\$PKG_VER/g" | sed "s/pkgver/PKG_VER/g")
 makedeps=""
@@ -58,10 +60,10 @@ EOF
  
 [ "${#additional}" = 0 ] || {
     filenames=""
-    mkdir extra/$name
+    mkdir $name
     for l in $additional; do
         filename=$(basename $l)
-        curl -SsL $l > extra/$name/$filename  
+        curl -SsL $l > $package/$filename  
         filenames="$filename $filenames"
         sleep 2
     done
