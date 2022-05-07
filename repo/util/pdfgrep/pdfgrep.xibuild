@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="pdfgrep"
+DESC="Commandline utility to search text in PDF files"
+
+MAKEDEPS="make "
+DEPS="musl pcre poppler "
+
+PKG_VER=2.1.2
+SOURCE="https://pdfgrep.org/download/pdfgrep-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

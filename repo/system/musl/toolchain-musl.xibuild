@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DESC="$DESC - for xibuild toolchain"
+
+build () {
+    export CXX=clang++
+    export CC=clang
+
+    CC=$CC CXX=$CXX ./configure --prefix=/
+    make
+}
+
+package () {
+    make install DESTDIR=$PKG_DEST
+}

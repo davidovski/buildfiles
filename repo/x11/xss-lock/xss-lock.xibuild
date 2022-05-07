@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="xss-lock"
+DESC="Use external locker as X screen saver"
+
+MAKEDEPS="cmake "
+DEPS="glib xcb-util "
+
+PKG_VER=0.3.0
+SOURCE="https://bitbucket.org/raymonad/xss-lock/get/v$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
