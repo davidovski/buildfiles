@@ -33,10 +33,6 @@ build () {
     unset SRCDIR
 }
 
-check () {
-    make test
-}
-
 package () {
     make DESTDIR=$PKG_DEST install
 

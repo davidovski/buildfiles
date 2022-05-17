@@ -23,8 +23,7 @@ build () {
             --enable-shared      \
             --libdir=/usr/lib    \
             --with-dynlib=/lib   \
-            --libexecdir="/lib/utmps" \
-            --with=dynlib=/lib
+            --libexecdir="/lib/utmps" 
     make
 }
 

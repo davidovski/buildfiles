@@ -85,7 +85,6 @@ password required    pam_deny.so
 # End /etc/pam.d/elogind-user
 EOF
 
-
 }
 
 postinstall () {

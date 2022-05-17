@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl bash"
+DEPS="musl"
 
 PKG_VER=4.33
 
