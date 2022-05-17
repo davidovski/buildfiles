@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make check"
+MAKEDEPS="make check soxr speex libx11 libxtst fftw jack speexdsp openssl eudev check libtool"
 DEPS="libsndfile alsa-lib dbus elogind glib libcap speex libxtst gdbm"
 
 DESC="A featureful, general-purpose sound server"
@@ -13,10 +13,28 @@ build () {
     cd    build &&
 
     meson --prefix=/usr       \
-          --buildtype=release \
-          -Ddatabase=gdbm     \
-          -Ddoxygen=false     \
-          -Dbluez5=disabled   &&
+        -Dgcov=false \
+		-Dman=true \
+		-Dtests=true \
+		-Dsystem_user=pulse \
+		-Dsystem_group=pulse \
+		-Ddatabase=tdb \
+		-Dalsa=enabled \
+		-Ddbus=enabled \
+		-Dglib=enabled \
+		-Dgsettings=enabled \
+		-Dgtk=enabled \
+		-Dhal-compat=false \
+		-Dipv6=true \
+        -Ddatabase=gdbm \
+		-Dopenssl=enabled \
+		-Dsamplerate=disabled \
+		-Dsoxr=enabled \
+		-Dsystemd=disabled \
+		-Dudev=enabled \
+		-Dx11=enabled \
+		-Dudevrulesdir=/usr/lib/udev/rules.d \
+		-Ddoxygen=false &&
     ninja
 }
 
