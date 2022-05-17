@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="extremetuxracer"
+DESC="Downhill racing game starring Tux"
+
+MAKEDEPS="make "
+DEPS="glu mesa musl sfml "
+
+PKG_VER=0.8.1
+SOURCE="https://downloads.sourceforge.net/extremetuxracer/etr-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

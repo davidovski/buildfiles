@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="openal-soft"
+DESC="software implementation of OpenAL API"
+
+MAKEDEPS="cmake "
+DEPS="ffmpeg4 musl sdl2 "
+
+PKG_VER=1.22.0
+SOURCE="https://github.com/kcat/openal-soft/archive/$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

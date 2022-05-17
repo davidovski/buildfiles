@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="sfml"
+DESC="Simple and Fast Multimedia Library"
+
+MAKEDEPS="cmake "
+DEPS="eudev freetype2 flac libogg libvorbis libx11 libxrandr mesa musl openal-soft "
+
+PKG_VER=2.5.1
+SOURCE="https://github.com/SFML/SFML/archive/$PKG_VER/sfml-$PKG_VER.tar.gz"
+ADDITIONAL="musl-1.2.3.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
