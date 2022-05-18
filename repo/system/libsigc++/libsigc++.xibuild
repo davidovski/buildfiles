@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="libsigc++"
+DESC="type-safe Signal Framework for C++"
+
+MAKEDEPS="meson ninja "
+DEPS="musl "
+
+PKG_VER=2.10.6
+SOURCE="https://download.gnome.org/sources/libsigc++/${PKG_VER%.*}/libsigc++-$PKG_VER.tar.xz"
+
+build () {
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="atkmm"
+DESC="C++ bindings for atk"
+
+MAKEDEPS="make "
+DEPS="atk glib glibmm libsigc++ musl "
+
+PKG_VER=2.28.0
+SOURCE="https://download.gnome.org/sources/atkmm/${PKG_VER%.*}/atkmm-$PKG_VER.tar.xz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

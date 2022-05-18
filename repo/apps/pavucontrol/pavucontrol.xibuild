@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="pavucontrol"
+DESC="Pulseaudio Volume Control, GTK based mixer for Pulseaudio"
+
+MAKEDEPS="make "
+DEPS="atkmm glib glibmm gtk3 json-glib libcanberra intltool libsigc++ musl pulseaudio gtkmm3"
+
+PKG_VER=5.0
+SOURCE="https://freedesktop.org/software/pulseaudio/pavucontrol/pavucontrol-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --disable-lynx \
+        --disable-nls 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
