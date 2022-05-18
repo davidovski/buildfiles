@@ -1,0 +1,7 @@
+DESC="Simple config file parser"
+
+DEPS="sh"
+
+package () {
+    add_from_main usr/bin/parseconf
+}

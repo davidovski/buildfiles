@@ -1,0 +1,7 @@
+DESC="Simple shell testing suite"
+
+DEPS="xiutils sh"
+
+package () {
+    add_from_main usr/bin/shtests
+}

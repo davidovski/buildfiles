@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="make sort"
+DEPS="musl sh"
+
+SOURCE=https://xi.davidovski.xyz/git/other/stty.git
+DESC="Stty forked"
+
+build () {
+    meson --prefix=/usr build
+    ninja -C build
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja -C build install
+}

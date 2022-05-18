@@ -1,0 +1,14 @@
+#!/bin/sh
+
+DESC="C++ standard library from LLVM"
+
+package () {
+    add_from_main "usr/lib/libunwind.so.*" \
+        usr/lib/libunwind.so \
+        usr/lib/libunwind.a
+
+    add_from_main "usr/include/*unwind*"
+    add_from_main usr/include/mach-o
+    add_from_main usr/share/doc/libunwind
+
+}

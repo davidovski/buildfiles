@@ -1,0 +1,24 @@
+--- /dev/null	2022-05-16 19:50:41.952900736 +0100
++++ build/gnudesignator.patch	2022-05-16 19:52:21.655900238 +0100
+@@ -0,0 +1,11 @@
++--- build-old/harness/cases/13.t	2022-05-16 19:50:41.952900736 +0100
+++++ build/harness/cases/13.t	2022-05-16 19:49:43.896896077 +0100
++@@ -35,7 +35,7 @@
++ 	status |= attempt_io_submit(io_ctx, IOS, iocb_list, IOS);
++ 
++ 	for (i=0; i<IOS; i++) {
++-		struct timespec ts = { tv_sec: 30, tv_nsec: 0 };
+++		struct timespec ts = { tv_sec = 30, tv_nsec = 0 };
++ 		struct io_event event;
++ 		struct iocb *iocb;
++ 
+--- build-old/harness/cases/13.t	2022-05-16 19:50:41.952900736 +0100
++++ build/harness/cases/13.t	2022-05-16 19:52:21.655900238 +0100
+@@ -38 +38 @@
+-		struct timespec ts = { tv_sec: 30, tv_nsec: 0 };
++		struct timespec ts = { .tv_sec = 30, .tv_nsec = 0 };
+--- build-old/libaio.xibuild	2022-05-16 19:50:41.952900736 +0100
++++ build/libaio.xibuild	2022-05-16 19:52:21.655900238 +0100
+@@ -11 +11 @@
+-ADDITIONAL="test.patch test-poll.patch libaio-optional-werror.patch libaio-errno.patch libaio-cppflags.patch "
++ADDITIONAL="test.patch test-poll.patch libaio-optional-werror.patch libaio-errno.patch libaio-cppflags.patch gnudesignator.patch"

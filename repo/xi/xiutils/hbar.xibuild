@@ -1,0 +1,5 @@
+DESC="Horizontal Loading bar"
+
+package () {
+    add_from_main usr/bin/hbar
+}

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="font-noto"
+DESC="Noto font families for Latin, Cyrillic and Greek scripts"
+
+MAKEDEPS="make "
+DEPS="fontconfig "
+
+PKG_VER=0_git20211101
+BRANCH=364fb14e20f82887280f103f638ff6450dbfc525
+SOURCE="https://github.com/googlefonts/noto-fonts/archive/$BRANCH/noto-fonts-$BRANCH.tar.gz"
+ADDITIONAL="noto-meta.json noto-meta fontconfig.xml.erb 58-noto-math.xml "
+
+prepare () {
+    chmod +x ./noto-meta
+}
+
+build () {
+    ./noto-meta gen-font-confs conf.d/
+}
+
+package () {
+	install -D -m644 hinted/ttf/*/*.ttf -t "$PKG_DEST/usr/share/fonts/noto"
+	install -D -m644 conf.d/*.xml -t "$PKG_DEST"/etc/fonts/conf.avail/
+
+	cd "$PKG_DEST"
+
+	mkdir -p etc/fonts/conf.d
+	local f; for f in etc/fonts/conf.avail/*.xml; do
+		ln -s ../conf.avail/${f##*/} "$PKG_DEST"/etc/fonts/conf.d/${f##*/}
+	done
+}

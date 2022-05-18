@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DESC="$DESC - C frontend runtime library"
+
+package () {
+	add_from_main "usr/lib/libclang.so.*"
+    add_from_main "usr/lib/libclang-cpp.so.*"
+}

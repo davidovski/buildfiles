@@ -1,0 +1,11 @@
+#!/bin/sh
+
+MAKEDEPS=""
+DEPS="xiutils parseconf tar unzip"
+
+SOURCE=https://git.davidovski.xyz/xilinux/xib.git
+DESC="Tools for building xipkgs on XiLinux"
+
+package () {
+    make install
+}

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DESC="Low level support for libc++"
+
+package () {
+    add_from_main "usr/lib/libc++abi.so.*" \
+        usr/lib/libc++abi.so \
+        usr/lib/libc++abi.a \
+        "usr/include/*cxxabi*"
+}

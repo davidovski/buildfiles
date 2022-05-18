@@ -68,5 +68,6 @@ EOF
 
   install -D tools/objtool/objtool "$builddir/tools/objtool"
   install -D tools/bpf/resolve_btfids/resolve_btfids "$builddir/tools/bpf/resolve_btfids" 
+  ln -s /usr/src/linux $modulesdir/source
 }
 

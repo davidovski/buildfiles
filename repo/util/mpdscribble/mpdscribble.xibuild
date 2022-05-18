@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="mpdscribble"
+DESC="MPD client which submits information about tracks being played to a scrobbler"
+
+MAKEDEPS="meson ninja "
+DEPS="libmpdclient curl libgcrypt "
+
+PKG_VER=0.24
+SOURCE="https://github.com/MusicPlayerDaemon/mpdscribble/archive/refs/tags/v$PKG_VER.tar.gz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

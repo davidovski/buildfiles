@@ -1,0 +1,23 @@
+#!/bin/sh
+
+DESC="$DESC (source)"
+
+prepare () {
+    rm linux-$PKG_VER.tar.xz
+    apply_patches
+
+    make mrproper
+    make headers
+
+    mv config .config
+    make olddefconfig
+    make -s kernelrelease > version
+}
+
+package () {
+    local kernver="$(cat version)"
+    srcdir=$PKG_DEST/usr/src/linux
+    mkdir -p $srcdir
+    cp -r ./ $srcdir/
+}
+

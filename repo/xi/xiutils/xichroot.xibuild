@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEPS="bash"
+DESC="A script to aid with chrooting on XiLinux"
+
+package () {
+    make DESTDIR=$PKG_DEST install-chroot
+}

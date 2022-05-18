@@ -1,0 +1,24 @@
+#!/bin/sh
+
+DESC="$DESC - Extra Clang Tools"
+
+package () {
+    add_from_main usr/include/clang-tidy
+    add_from_main usr/bin/clang-apply-replacements
+    add_from_main usr/bin/clang-query
+    add_from_main usr/bin/clang-rename
+    add_from_main usr/bin/clang-tidy
+    add_from_main usr/bin/diagtool
+    add_from_main usr/bin/find-all-symbols
+    add_from_main usr/bin/hmaptool
+    add_from_main usr/bin/modularize
+    add_from_main usr/bin/pp-trace
+    add_from_main usr/bin/sancov
+    add_from_main "usr/lib/libclangApplyReplacements*"
+    add_from_main "usr/lib/libclangQuery*"
+    add_from_main "usr/lib/libclangTidy*"
+    add_from_main "usr/share/clang/*tidy*"
+    add_from_main usr/share/doc/clang-tools
+    add_from_main usr/share/man/man1/extraclangtools.1
+    add_from_main usr/share/man/man1/diagtool.1
+}

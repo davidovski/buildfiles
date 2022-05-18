@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEPS="musl"
+DESC="GNU C++ standard library"
+
+package () {
+    add_from_main "usr/lib/libstdc++.so*"
+}

@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="flite"
+DESC="Open source text to speach engine"
+
+MAKEDEPS="make "
+DEPS="musl alsa-lib"
+
+PKG_VER=2.2
+SOURCE="https://github.com/festvox/flite/archive/refs/tags/v$PKG_VER.tar.gz"
+
+prepare () {
+    sed -i "s/-pd/-p/g" main/Makefile
+}
+
+build () {
+    ./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--localstatedir=/var \
+		--with-audio=linux
+    make
+}
+
+package () {
+    make install INSTALLBINDIR="$PKG_DEST"/usr/bin \
+    INSTALLLIBDIR="$PKG_DEST"/usr/lib \
+    INSTALLINCDIR="$PKG_DEST"/usr/include/flite
+}

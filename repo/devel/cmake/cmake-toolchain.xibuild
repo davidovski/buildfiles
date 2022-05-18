@@ -1,0 +1,34 @@
+#!/bin/sh
+
+MAKEDEPS="make"
+DEPS="musl"
+
+DESC="$DESC - xilinux toolchain version"
+
+prepare () {
+    export  CMARGS="
+    -DCMAKE_USE_OPENSSL=OFF 
+    -DBUILD_CursesDialog=ON
+    "
+}
+
+
+build () {
+    ./bootstrap --prefix=/usr \
+        --no-system-jsoncpp \
+        --no-system-librhash \
+        --no-system-curl \
+        --no-system-libarchive \
+        --no-system-nghttp2 \
+        --no-system-expat \
+        --no-system-zlib \
+        --no-system-zstd \
+        --no-system-libuv \
+        -- ${CMARGS}
+    make
+}
+
+package () {
+    echo $PKG_DEST
+    make DESTDIR=$PKG_DEST install 
+}

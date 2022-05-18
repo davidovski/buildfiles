@@ -1,0 +1,11 @@
+#!/bin/sh
+DESC="Device-mapper event daemon"
+
+package() {
+	install -Dm755 dmeventd.initd "$PKG_DEST"/etc/init.d/dmeventd
+
+    add_from_main sbin/dmeventd
+    add_from_main usr/lib/libdevmapper.a "sbin/dm*"
+    add_from_main lib/libdevmapper*
+}
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DESC="$DESC - C language frontend"
+
+package () {
+    add_from_main usr/include/clang
+    add_from_main usr/include/clang-c
+    add_from_main "usr/bin/*clang*"
+    add_from_main usr/bin/c-index-test
+    add_from_main usr/lib/clang
+    add_from_main usr/lib/cmake/clang
+    add_from_main "usr/lib/libclang*.a"
+    add_from_main "usr/lib/libclang*.so"
+    add_from_main usr/share/clang
+    add_from_main usr/share/doc/clang
+    add_from_main usr/share/man/man1/clang.1
+}

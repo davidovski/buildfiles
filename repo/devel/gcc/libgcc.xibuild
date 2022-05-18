@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEPS="musl"
+DESC="GNU C compiler runtime libraries"
+
+package () {
+    add_from_main "usr/lib/libgcc_s.so*"
+}

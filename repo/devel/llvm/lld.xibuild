@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DESC="LLVM linker"
+
+package () {
+    add_from_main usr/bin/lld*
+    add_from_main usr/bin/wasm-ld
+    add_from_main usr/bin/ld.lld*
+    add_from_main usr/bin/ld64.lld*
+    add_from_main usr/share/doc/lld
+
+    add_from_main usr/include/lld
+    add_from_main usr/lib/cmake/lld
+    add_from_main "usr/lib/liblld*a"
+}

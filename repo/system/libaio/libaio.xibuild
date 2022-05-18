@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="libaio"
+DESC="Asynchronous input/output library"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=0.3.112
+SOURCE="https://releases.pagure.org/libaio/libaio-$PKG_VER.tar.gz"
+ADDITIONAL="test.patch test-poll.patch libaio-optional-werror.patch libaio-errno.patch libaio-cppflags.patch gnudesignator.patch"
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    CFLAGS="-Wgnu-designator" make PREFIX=/usr
+}
+
+check() {
+	make partcheck
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+    cd man
+	find ./ -name "*.3" -exec install -Dm 644 {} "$PKG_DEST"/usr/share/man/man3/{} \;
+
+}

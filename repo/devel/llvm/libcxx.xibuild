@@ -1,0 +1,12 @@
+#!/bin/sh
+
+DESC="C++ standard library from LLVM"
+
+package () {
+    add_from_main usr/lib/libc++.so.*
+    add_from_main usr/lib/libc++.a
+    add_from_main usr/lib/libc++experimental.a
+    add_from_main usr/include/c++
+    add_from_main usr/share/doc/libcxx
+
+}

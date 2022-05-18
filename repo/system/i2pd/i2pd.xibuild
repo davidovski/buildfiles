@@ -1,0 +1,46 @@
+#!/bin/sh
+
+NAME="i2pd"
+DESC="I2P Router written in C++"
+
+MAKEDEPS="make "
+DEPS="boost sbase openssl musl "
+
+PKG_VER=2.41.0
+SOURCE="https://github.com/PurpleI2P/i2pd/archive/$PKG_VER/i2pd-$PKG_VER.tar.gz"
+ADDITIONAL="i2pd.initd i2pd.confd "
+
+prepare () {
+    # Makefile.linux assumes some gnu/linux features (expr match)
+    #  so we will use the bsd makefile instead
+    mv Makefile.bsd Makefile.linux
+}
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+	install -D -m 755 i2pd "$PKG_DEST"/usr/sbin/i2pd
+
+	install -dm755 -o i2p \
+		"$PKG_DEST"/etc/i2pd \
+		"$PKG_DEST"/usr/share/i2pd \
+		"$PKG_DEST"/var/lib/i2pd \
+		"$PKG_DEST"/var/log/i2pd
+
+	install -D -m 644 contrib/tunnels.conf "$PKG_DEST"/etc/i2pd/tunnels.conf
+	install -D -m 644 contrib/i2pd.conf "$PKG_DEST"/etc/i2pd/i2pd.conf
+	cp -r contrib/certificates/ "$PKG_DEST"/usr/share/i2pd/certificates
+	ln -s /usr/share/i2pd/certificates "$PKG_DEST"/var/lib/i2pd/certificates
+
+	install -m755 -D i2pd.initd \
+		"$PKG_DEST"/etc/init.d/i2pd
+	install -m644 -D i2pd.confd \
+		"$PKG_DEST"/etc/conf.d/i2pd
+}
+
+postinstall () {
+    adduser -S -D -H -h /var/lib/i2p -s /sbin/nologin -g tor tor 2>/dev/null
+    return 0
+}
