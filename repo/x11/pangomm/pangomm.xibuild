@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="pangomm"
+DESC="C++ bindings for pango"
+
+MAKEDEPS="meson ninja "
+DEPS="cairomm glib glibmm libsigc++ musl pango"
+
+PKG_VER=2.46.2
+SOURCE="https://download.gnome.org/sources/pangomm/${PKG_VER%.*}/pangomm-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

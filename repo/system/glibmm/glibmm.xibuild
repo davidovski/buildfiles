@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="glibmm"
+DESC="C++ wrapper for the GLib toolkit"
+
+MAKEDEPS="meson ninja "
+DEPS="glib libgcc libsigc++ musl"
+
+PKG_VER=2.66.2
+SOURCE="https://download.gnome.org/sources/glibmm/${PKG_VER%.*}/glibmm-$PKG_VER.tar.xz"
+
+build () {
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

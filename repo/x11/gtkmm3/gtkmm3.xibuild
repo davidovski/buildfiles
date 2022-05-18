@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="gtkmm3"
+DESC="C++ wrappers for GTK+"
+
+MAKEDEPS="meson ninja "
+DEPS="atkmm cairomm gdk-pixbuf glib glibmm gtk3 libsigc++ musl pangomm "
+
+PKG_VER=3.24.5
+SOURCE="https://download.gnome.org/sources/gtkmm/${PKG_VER%.*}/gtkmm-$PKG_VER.tar.xz"
+
+build () {
+    cd build    &&
+    meson --prefix=/usr \
+            -Dbuild-demos=false \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

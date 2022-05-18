@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="cairomm"
+DESC="C++ bindings to Cairo vector graphics library"
+
+MAKEDEPS="meson ninja "
+DEPS="cairo libsigc++ "
+
+PKG_VER=1.14.3
+SOURCE="https://www.cairographics.org/releases/cairomm-$PKG_VER.tar.xz"
+
+build () {
+    cd build    &&
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

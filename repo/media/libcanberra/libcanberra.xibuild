@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="libcanberra"
+DESC="Simple audio library for GTK applications"
+
+MAKEDEPS="make "
+DEPS="eudev libvorbis musl libtool "
+
+PKG_VER=0.30
+SOURCE="https://dev.alpinelinux.org/archive/libcanberra/libcanberra-$PKG_VER.tar.xz"
+ADDITIONAL="fix-build-with-no-lynx-installed.patch dont-assume-all-GdkDisplays-are-GdkX11Displays.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static \
+        --disable-oss
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
