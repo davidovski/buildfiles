@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make sort"
+MAKEDEPS="make"
 DEPS="musl sh"
 
 PKG_VER=0.8.6
