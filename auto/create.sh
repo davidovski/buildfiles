@@ -3,7 +3,7 @@ read -p "package name> " name
 repo=$(ls repo/ | fzf --prompt="repo> ")
 read -p "package version> " version
 read -p "description> " desc
-deps=$(find repo -type f | sed "s/.xibuild//g" | rev | cut -f1 -d/ | rev |fzf -m --prompt="dependencies> " | tr '\n' ' ')
+deps=$(find repo -type d -maxdepth 2 -mindepth 2 | sed 's/.*\///g' | rev | cut -f1 -d/ | rev |fzf -m --prompt="dependencies> " | tr '\n' ' ')
 read -p "source url> " url
 read -p "additional urls> " additional
 type=$(find ./templates -type f | sed "s/.xibuild//g" | rev | cut -f1 -d/ | rev | fzf --prompt="build type> ")
@@ -60,7 +60,6 @@ EOF
  
 [ "${#additional}" = 0 ] || {
     filenames=""
-    mkdir $name
     for l in $additional; do
         filename=$(basename $l)
         curl -SsL $l > $package/$filename  

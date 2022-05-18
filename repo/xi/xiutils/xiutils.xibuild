@@ -3,7 +3,7 @@
 MAKEDEPS="make gcc"
 DEPS="musl sh"
 
-PKG_VER=1.3.1
+PKG_VER=1.4.1
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 BRANCH="v$PKG_VER"
 
@@ -18,8 +18,5 @@ check () {
 }
 
 package () {
-    for dir in include bin lib; do
-        mkdir -p $PKG_DEST/usr/$dir
-    done
     make DESTDIR=$PKG_DEST install
 }

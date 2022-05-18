@@ -9,7 +9,7 @@ DESC="Tools for the lzma and xz compression formats"
 
 
 build () {
-    ./autogen.sh
+    autoreconf -fi
     ./configure --prefix=/usr --disable-static --docdir=/usr/share/doc/xz-$PKG_VER
     make
 }

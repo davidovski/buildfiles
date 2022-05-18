@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make autoconf"
-DEPS="perl bash"
+DEPS="perl"
 
 PKG_VER=1.16.5
 SOURCE=https://ftp.gnu.org/gnu/automake/automake-$PKG_VER.tar.xz

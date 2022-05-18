@@ -4,51 +4,85 @@ MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python-setuptools pyth
 DEPS="perl zlib libffi libedit ncurses"
 
 PKG_VER=13.0.0
-SOURCE=https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-$PKG_VER.src.tar.xz
-DESC="Collection of modular and reusable compiler and toolchain technologies"
+SOURCE="https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-project-$PKG_VER.src.tar.xz"
+DESC="Low Level Virtual Machine"
 
-package () {
-    grep -rl '#!.*python' | xargs sed -i '1s/python$/python3/'
+ADDITIONAL="
+clang-001-fix-unwind-chain-inclusion.patch
+clang-002-add-musl-triples.patch
+libcxx-musl.patch
+libcxx-ssp-nonshared.patch
+libcxxabi-dl.patch
+lldb-musl.patch
+llvm-001-musl.patch
+llvm-004-override-opt.patch"
+
+prepare () {
+    apply_patches
+    cd llvm
+    sed -i 's|__ptrace_request|int|g' \
+				../lldb/source/Plugins/Process/Linux/NativeProcessLinux.cpp
+
+    # disable  lldb docs, since they fail to generate
+    sed -i '/add_subdirectory(docs)/d' \
+			../lldb/CMakeLists.txt
+
+
+    sed -i 's,check_library_exists(gcc_s .*,set(LIBCXXABI_HAS_GCC_S_LIB ON),' \
+		../libcxxabi/cmake/config-ix.cmake
+	sed -i 's,check_library_exists(gcc .*,set(LIBCXXABI_HAS_GCC_LIB ON),' \
+		../libcxxabi/cmake/config-ix.cmake
+
+
+    sed -i 's,# Set common link flags.,list(APPEND SANITIZER_COMMON_LINK_LIBS execinfo),' \
+				../compiler-rt/CMakeLists.txt
+
+    export CFLAGS="$CFLAGS -g1"
+    export CXXFLAGS="$CXXFLAGS -g1"
 }
 
 build () {
     mkdir build
     cd build
-    CC=gcc CXX=g++                                  \
-    cmake                                           \
-    		-DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=/usr \
+    cmake \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DENABLE_LINKER_BUILD_ID=YES \
+            -DLLVM_USE_LINKER=lld \
+            -DLLDB_USE_SYSTEM_SIX=YES \
+            -DLIBCXX_CXX_ABI=libcxxabi \
+            -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=YES \
+            -DLIBCXXABI_USE_LLVM_UNWINDER=YES \
+            -DLIBCXXABI_ENABLE_STATIC_UNWINDER=YES \
+            -DLIBOMP_ENABLE_SHARED=YES \
+            -DLIBOMP_INSTALL_ALIASES=NO \
+            -DLLVM_INCLUDE_DOCS=YES \
+            -DLLVM_INSTALL_UTILS=YES \
+            -DLLVM_BUILD_LLVM_DYLIB=YES \
+            -DLLVM_LINK_LLVM_DYLIB=YES \
+            -DLLVM_ENABLE_RTTI=YES \
+            -DLLVM_ENABLE_FFI=YES \
             -DLLVM_BINUTILS_INCDIR=/usr/include \
+            -DCMAKE_INSTALL_PREFIX=/usr \
             -DLLVM_BUILD_DOCS=OFF \
+            -DLIBCXX_HAS_MUSL_LIBC=YES \
             -DLLVM_BUILD_EXAMPLES=OFF \
-            -DLLVM_BUILD_EXTERNAL_COMPILER_RT=ON \
-            -DLLVM_BUILD_LLVM_DYLIB=ON \
             -DLLVM_BUILD_TESTS=ON \
             -DLLVM_DEFAULT_TARGET_TRIPLE="x86_64-linux-musl" \
             -DLLVM_ENABLE_ASSERTIONS=OFF \
-            -DLLVM_ENABLE_FFI=ON \
-            -DLLVM_ENABLE_LIBCXX=OFF \
             -DLLVM_ENABLE_PIC=ON \
-            -DLLVM_ENABLE_RTTI=ON \
             -DLLVM_ENABLE_SPHINX=OFF \
             -DLLVM_ENABLE_TERMINFO=ON \
             -DLLVM_ENABLE_ZLIB=ON \
             -DLLVM_HOST_TRIPLE="x86_64-linux-musl" \
             -DLLVM_INCLUDE_EXAMPLES=OFF \
-            -DLLVM_INSTALL_UTILS=ON \
-            -DLLVM_LINK_LLVM_DYLIB=ON \
             -DLLVM_APPEND_VC_REV=OFF \
-          -Wno-dev -G Ninja ..                      &&
-    ninja llvm-tblgen &&
-    ninja &&
-    cd ..
+            -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;libcxx;libcxxabi;libunwind;lldb;lld;openmp" \
+            -Wno-dev -G Ninja ..                      &&
 
-    python3 utils/lit/setup.py build
+    ninja llvm-tblgen &&
+    ninja
 }
 
 package () {
-    DESTDIR=$PKG_DEST ninja -C build install
-
-    cd build
-	python3 ../utils/lit/setup.py install --prefix=/usr --root=$PKG_DEST
+    DESTDIR=$PKG_DEST ninja install
 }

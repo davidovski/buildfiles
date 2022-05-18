@@ -2,11 +2,10 @@
 
 MAKEDEPS="make cpio bc perl libelf kmod xmlto xz"
 DEPS="pahole"
-
-PKG_VER=5.17.2
-SOURCE=https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-$PKG_VER.tar.xz
 DESC="Linux kernel headers"
 
+PKG_VER=5.17.6
+SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 
 build () {
     make mrproper
@@ -19,3 +18,4 @@ package () {
     mkdir -p $PKG_DEST/usr/include
     cp -r usr/include/* $PKG_DEST/usr/include/
 }
+
