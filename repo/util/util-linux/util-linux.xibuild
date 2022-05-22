@@ -12,7 +12,7 @@ build () {
             --libdir=/usr/lib    \
             --docdir=/usr/share/doc/util-linux-$PKG_VER\
             --disable-static     \
-            runstatedir=/run
+            --runstatedir=/run
     make
 }
 

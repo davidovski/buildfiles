@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make libxml2 texlive"
-DEPS="freetype2 json"
+MAKEDEPS="make libxml2"
+DEPS="freetype2"
 
 PKG_VER=2.13.1
 SOURCE=https://www.freedesktop.org/software/fontconfig/release/fontconfig-$PKG_VER.tar.bz2

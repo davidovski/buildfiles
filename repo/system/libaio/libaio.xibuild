@@ -15,7 +15,7 @@ prepare () {
 }
 
 build () {
-    CFLAGS="-Wgnu-designator" make PREFIX=/usr
+    make PREFIX=/usr
 }
 
 check() {

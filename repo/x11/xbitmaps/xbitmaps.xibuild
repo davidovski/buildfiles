@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="util-macros"
+DEPS="xorg-util-macros"
 
 PKG_VER=1.1.2
 SOURCE=https://www.x.org/pub/individual/data/xbitmaps-$PKG_VER.tar.bz2

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="cmake"
-DEPS="musl libgl libvdpau libx11 libva"
+DEPS="musl libvdpau libx11 libva"
 
 DESC="VPAU driver with OpenGL backend"
 

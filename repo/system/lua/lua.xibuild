@@ -6,18 +6,22 @@ DEPS="readline"
 PKG_VER=5.4.4
 SOURCE=https://www.lua.org/ftp/lua-$PKG_VER.tar.gz
 ADDITIONAL="
-    https://www.linuxfromscratch.org/patches/blfs/svn/lua-$PKG_VER-shared_library-1.patch
     lua5.4.pc
+
+CVE-2022-28805.patch
+extern-c-for-cpp.patch
+fix-double-free.patch
+lua-5.4.4-shared_library-1.patch
     "
 
 DESC="A powerful lightweight scripting language"
 
 prepare () {
+    apply_patches 
     sed -e "s|@MAJOR_VER@|${PKG_VER%.*}|g" \
 		-e "s|@MINOR_VER@|${PKG_VER}|g" \
 		-i lua5.4.pc
 
-    patch -Np1 -i lua-$PKG_VER-shared_library-1.patch
 	cat > configure.ac <<-EOF
 		top_buildir=.
 

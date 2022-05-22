@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-flake8 python-mypy python-docutils-python-stubs python-pytest"
+DEPS=""
 
 PKG_VER=1.0.2
 SOURCE=https://files.pythonhosted.org/packages/9f/01/ad9d4ebbceddbed9979ab4a89ddb78c9760e74e6757b1880f1b2760e8295/sphinxcontrib-applehelp-$PKG_VER.tar.gz

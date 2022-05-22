@@ -13,7 +13,7 @@ fix-ucptrietest-golden-diff.patch
 prepare () {
     cd source
     autoreconf -fi
-    sed -i -e 's,DU_HAVE_STRTOD_L=1,DU_HAVE_STRTOD_L=0,' configure
+    #sed -i -e 's,DU_HAVE_STRTOD_L=1,DU_HAVE_STRTOD_L=0,' configure
 }
 
 build () {

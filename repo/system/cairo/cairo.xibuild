@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="musl libx11 freetype libpng libxcb libxext libxrender pixman zlib glib"
+DEPS="musl libx11 freetype2 libpng libxcb libxext libxrender pixman zlib glib"
 
 PKG_VER=1.17.4
 SOURCE=https://cairographics.org/snapshots/cairo-$PKG_VER.tar.xz

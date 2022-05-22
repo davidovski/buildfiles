@@ -9,7 +9,7 @@ SOURCE=https://www.lysator.liu.se/~nisse/misc/argp-standalone-$PKG_VER.tar.gz
 DESC="Standalone implementation for the argp interface"
 
 build () {
-    CFLAGS=" -fPIC" ./configure \
+    CFLAGS=" -std=c89 -fPIC" ./configure \
         --prefix=/usr           \
         --disable-static        \
         --sysconfdir=/etc       \

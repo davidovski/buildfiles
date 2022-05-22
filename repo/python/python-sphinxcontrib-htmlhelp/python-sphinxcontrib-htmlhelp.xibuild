@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-flake8 python-mypy python-docutils-python-stubs python-pytest python-html5lib"
+DEPS=""
 
 PKG_VER=2.0.0
 SOURCE=https://files.pythonhosted.org/packages/eb/85/93464ac9bd43d248e7c74573d58a791d48c475230bcf000df2b2700b9027/sphinxcontrib-htmlhelp-$PKG_VER.tar.gz

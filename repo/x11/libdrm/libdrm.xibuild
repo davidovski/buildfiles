@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja docbook-xml docbook-xsl docutils libxslt"
+MAKEDEPS="meson ninja docbook-xml docbook-xsl python-docutils libxslt"
 DEPS="libpciaccess"
 
 PKG_VER=2.4.109

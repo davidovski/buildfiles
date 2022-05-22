@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja xmlto docbook-xml-4.5 docbook-xsl libxslt"
+MAKEDEPS="meson ninja xmlto docbook4-xml docbook-xsl libxslt"
 DEPS="libxml2"
 
 PKG_VER=1.20.0

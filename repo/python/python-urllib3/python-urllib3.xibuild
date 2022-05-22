@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-brotlipy python-pyOpenSSL python-cryptography python-idna python-certifi python-ipaddress python-PySocks"
+DEPS="python-idna python-certifi "
 
 PKG_VER=1.26.8
 SOURCE=https://files.pythonhosted.org/packages/b0/b1/7bbf5181f8e3258efae31702f5eab87d8a74a72a0aa78bc8c08c1466e243/urllib3-$PKG_VER.tar.gz

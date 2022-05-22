@@ -6,16 +6,21 @@ DEPS="musl"
 SOURCE=https://github.com/google/brotli
 DESC="A generic-purpose lossless compression algorithm"
 
+prepare () {
+    sed -i 's,/usr/bin/env bash,/bin/sh,' tests/*.sh
+	sh ./bootstrap
+}
+
 build () {
-    mkdir out && cd out
-    ../configure-cmake
+    ./configure \
+		--prefix=/usr \
+        --disable-static
     make 
 }
 check () {
-    make test
+    make check
 }
 
 package () {
     make DESTDIR=$PKG_DEST install
-    mv $PKG_DEST/usr/local/* $PKG_DEST/usr/
 }

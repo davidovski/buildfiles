@@ -1,9 +1,9 @@
 #!/bin/sh
 
-MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python-setuptools python-sphinx"
+MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python-sphinx binutils lua python-six"
 DEPS="perl zlib libffi libedit ncurses"
 
-PKG_VER=13.0.0
+PKG_VER=13.0.1
 SOURCE="https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-project-$PKG_VER.src.tar.xz"
 DESC="Low Level Virtual Machine"
 
@@ -13,19 +13,20 @@ clang-002-add-musl-triples.patch
 libcxx-musl.patch
 libcxx-ssp-nonshared.patch
 libcxxabi-dl.patch
-lldb-musl.patch
 llvm-001-musl.patch
 llvm-004-override-opt.patch"
 
 prepare () {
+    enabled_projects="clang;clang-tools-extra;libcxx;libcxxabi;libunwind;openmp;lld"
+
     apply_patches
     cd llvm
-    sed -i 's|__ptrace_request|int|g' \
-				../lldb/source/Plugins/Process/Linux/NativeProcessLinux.cpp
+    #sed -i 's|__ptrace_request|int|g' \
+				#../lldb/source/Plugins/Process/Linux/NativeProcessLinux.cpp
 
     # disable  lldb docs, since they fail to generate
-    sed -i '/add_subdirectory(docs)/d' \
-			../lldb/CMakeLists.txt
+    #sed -i '/add_subdirectory(docs)/d' \
+			#../lldb/CMakeLists.txt
 
 
     sed -i 's,check_library_exists(gcc_s .*,set(LIBCXXABI_HAS_GCC_S_LIB ON),' \
@@ -47,7 +48,6 @@ build () {
     cmake \
             -DCMAKE_BUILD_TYPE=Release \
             -DENABLE_LINKER_BUILD_ID=YES \
-            -DLLVM_USE_LINKER=lld \
             -DLLDB_USE_SYSTEM_SIX=YES \
             -DLIBCXX_CXX_ABI=libcxxabi \
             -DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=YES \
@@ -76,7 +76,7 @@ build () {
             -DLLVM_HOST_TRIPLE="x86_64-linux-musl" \
             -DLLVM_INCLUDE_EXAMPLES=OFF \
             -DLLVM_APPEND_VC_REV=OFF \
-            -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;libcxx;libcxxabi;libunwind;lldb;lld;openmp" \
+            -DLLVM_ENABLE_PROJECTS="$enabled_projects" \
             -Wno-dev -G Ninja ..                      &&
 
     ninja llvm-tblgen &&

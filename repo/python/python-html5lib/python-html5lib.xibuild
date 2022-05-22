@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-six python-webencodings python-genshi python-chardet python-lxml python-chardet python-genshi python-lxml"
+DEPS="python-six python-webencodings python-chardet python-lxml python-chardet python-lxml"
 
 PKG_VER=1.1
 SOURCE=https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-$PKG_VER.tar.gz

@@ -3,7 +3,7 @@
 NAME="harfbuzz"
 DESC="Text shaping library"
 
-MAKEDEPS="meson ninja gtk-doc python-pygments gobject-introspection"
+MAKEDEPS="cairo meson ninja gtk-doc python-pygments gobject-introspection"
 DEPS="freetype2 glib graphite musl "
 
 PKG_VER=4.2.0

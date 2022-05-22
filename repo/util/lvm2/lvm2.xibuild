@@ -1,6 +1,6 @@
 #!/bin/sh
 
-NAME="llvm2"
+NAME="lvm2"
 DESC="Logical Volume Manager 2 utilities"
 
 MAKEDEPS="make "
@@ -12,6 +12,7 @@ ADDITIONAL="mlockall-default-config.patch mallinfo.patch lvm.initd lvm.confd fix
 
 prepare () {
     apply_patches
+    autoreconf -fi
 }
 
 build () {

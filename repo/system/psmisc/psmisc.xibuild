@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make gettext-tiny libintl"
+MAKEDEPS="make gettext"
 DEPS="ncurses"
 
 PKG_VER=23.4

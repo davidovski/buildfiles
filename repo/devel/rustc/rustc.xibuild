@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="cmake llvm clang llvm-ar"
+MAKEDEPS="cmake clang llvm-ar"
 DEPS="curl libssh2 openssl"
 
 PKG_VER=1.58.1

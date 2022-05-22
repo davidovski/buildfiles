@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="unzip patch"
-DEPS="libxml2 sgml-common"
+DEPS="libxml2"
 
 PKG_VER=0.6.3
 SOURCE=https://sourceware.org/ftp/docbook-tools/new-trials/SOURCES/sgml-common-$PKG_VER.tgz

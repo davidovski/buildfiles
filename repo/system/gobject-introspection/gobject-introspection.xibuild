@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="meson ninja patch flex"
-DEPS="python-mako python-markdown glib"
+DEPS="python-mako glib"
 
 PKG_VER=1.72.0
 SOURCE=https://download.gnome.org/sources/gobject-introspection/$(echo $PKG_VER | cut -d. -f-2)/gobject-introspection-$PKG_VER.tar.xz

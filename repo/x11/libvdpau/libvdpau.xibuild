@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson doxygen texlive"
+MAKEDEPS="meson doxygen"
 DEPS="libxext graphviz"
 
 DESC="X.org amdgpu video driver"
