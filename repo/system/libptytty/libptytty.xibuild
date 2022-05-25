@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson cmake"
+MAKEDEPS="meson cmake utmps"
 DEPS="musl"
 
 PKG_VER=2.0
@@ -13,7 +13,9 @@ build () {
 
     cmake -DCMAKE_INSTALL_PREFIX=/usr     \
           -DCMAKE_BUILD_TYPE=Release      \
-          -DPT_UTMP_FILE:STRING=/run/utmp \
+          -DUTMP_SUPPORT=OFF \
+	      -DWTMP_SUPPORT=OFF \
+  	      -DLASTLOG_SUPPORT=OFF \
           .. &&
     make
 

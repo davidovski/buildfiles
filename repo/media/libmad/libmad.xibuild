@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libmad"
+DESC="A high-quality MPEG audio decoder"
+
+MAKEDEPS="make"
+DEPS="musl"
+
+PKG_VER=0.15.1b
+SOURCE="https://downloads.sourceforge.net/sourceforge/mad/libmad-$PKG_VER.tar.gz"
+ADDITIONAL="md_size.patch mad.pc libmad.thumb.patch libmad-0.15.1b-cflags.patch libmad-0.15.1b-cflags-O2.patch length-check.patch automake.patch Provide-Thumb-2-alternative-code-for-MAD_F_MLN.patch "
+
+prepare () {
+    apply_patches
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

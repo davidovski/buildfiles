@@ -3,9 +3,12 @@
 MAKEDEPS=""
 DEPS="xiutils parseconf tar unzip"
 
-SOURCE=https://git.davidovski.xyz/xilinux/xib.git
+PKG_VER=1.1
+SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
+BRANCH=v$PKG_VER
+
 DESC="Tools for building xipkgs on XiLinux"
 
 package () {
-    make install
+    make DESTDIR=$PKG_DEST install
 }

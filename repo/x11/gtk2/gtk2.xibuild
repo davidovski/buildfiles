@@ -3,7 +3,7 @@
 NAME="gtk2"
 DESC="The GTK+ Toolkit (v2)"
 
-MAKEDEPS="meson ninja iso-codes libpng shared-mime-info"
+MAKEDEPS="meson ninja libpng shared-mime-info"
 DEPS="atk at-spi2-atk sbase cairo gobject-introspection fontconfig fribidi gdk-pixbuf glib harfbuzz libepoxy intltool libx11 libxcomposite libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr musl pango shared-mime-info wayland "
 
 PKG_VER=2.24.33

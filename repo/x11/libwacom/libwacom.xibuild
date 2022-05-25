@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="meson libxml2"
-DEPS="glib2 libgudev librsvg"
+DEPS="glib libgudev librsvg"
 
 DESC="Library to identify Wacom tablets and their features"
 

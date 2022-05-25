@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEPS="rust lld wasi-sdk"
+DESC="WebAssembly targets for rust"
+
+package () {
+    add_from_main "usr/lib/rustlib/wasm32-*"
+}

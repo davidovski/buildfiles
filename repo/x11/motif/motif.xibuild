@@ -22,13 +22,22 @@ ADDITIONAL="
 15-link_uil_against_libuil.patch
 16-fix-undefined-use-of-sprintf.patch
 17-switch-to-system-iswspace.patch
-18-option-main.patch"
+18-option-main.patch
+update-automake.patch
+"
 
-#prepare () {
-#    apply_patches
-#}
+prepare () {
+    apply_patches
+    # dont build demos
+    sed -i '30s/\\//' Makefile.am
+    sed -i '31d' Makefile.am
+
+    touch NEWS AUTHORS
+    autoreconf -fi
+}
 
 build () {
+    export LDFLAGS="$LDFLAGS -lX11"
     ./configure \
         --prefix=/usr \
         --bindir=/usr/bin \

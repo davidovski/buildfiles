@@ -1,0 +1,18 @@
+--- build/configure.ac	2022-05-24 14:36:41.034651348 +0100
++++ build2/configure.ac	2022-05-24 14:35:31.484247422 +0100
+@@ -1,5 +1,5 @@
+ dnl Process this file with autoconf to produce a configure script.
+-AC_INIT(motif,2.3.8,no-define)
++AC_INIT
+ AC_CONFIG_SRCDIR([lib/Xm/Form.c])
+ AC_PREREQ(2.52)
+ AC_CONFIG_AUX_DIR(.)
+@@ -22,7 +22,7 @@
+ AC_SUBST(AGE)
+ 
+ dnl This is really dumb but it seems to be bug
+-AM_INIT_AUTOMAKE
++AM_INIT_AUTOMAKE(motif,2.3.8,no-define)
+ 
+ LIBTOOL_VERSION=$CURRENT:$REVISION:$AGE
+ 

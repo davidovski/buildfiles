@@ -4,7 +4,7 @@ NAME="glu"
 DESC="Mesa OpenGL Utility library"
 
 MAKEDEPS="meson ninja "
-DEPS="mesa opengl"
+DEPS="mesa"
 
 PKG_VER=9.0.2
 SOURCE="https://mesa.freedesktop.org/archive/glu/glu-$PKG_VER.tar.xz"

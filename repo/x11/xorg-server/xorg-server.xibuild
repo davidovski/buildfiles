@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja doxygen xmlto fop"
+MAKEDEPS="meson ninja doxygen xmlto"
 DEPS="libxcvt pixman font-util xkeyboardconfig elogind libepoxy libtirpc polkit acpid nettle libgcrypt xcb-util-keysyms xcb-util-image xcb-util-renderutil xcb-util-wm xkbcomp"
 
 PKG_VER=21.1.3

@@ -11,16 +11,16 @@ create() {
     printf "DEPS=\""
     while read repo; do
         [ -d repo/$repo ] && [ ! "$repo" = "meta" ] &&
-            for file in $(ls repo/$repo/*.xibuild); do
-                local name=$(basename -s ".xibuild" $file)
-                printf " $name"
+            for name in $(ls -d repo/$repo/*); do
+                printf " $(basename $name)"
             done
     done
 
     printf "\"\n"
 }
 
-ls repo | create 'AlL tHe pacKageS!!' > repo/meta/all.xibuild
+mkdir -p repo/meta/all/
+ls repo | create 'AlL tHe pacKageS!!' > repo/meta/all/all.xibuild
 
 skip="skip meta"
 
@@ -29,7 +29,8 @@ for repo in $(ls repo); do
     if echo $skip | grep -q $repo; then
         echo "Skipping $repo"
     else
-        echo $repo | create "All the the packages available in $repo" > repo/meta/$pkg_name.xibuild
+        mkdir -p repo/meta/$pkg_name
+        echo $repo | create "All the the packages available in $repo" > repo/meta/$pkg_name/$pkg_name.xibuild
         echo "Generated $pkg_name.xibuild"
     fi
 done

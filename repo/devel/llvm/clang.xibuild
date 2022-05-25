@@ -1,6 +1,7 @@
 #!/bin/sh
 
 DESC="$DESC - C language frontend"
+DEPS="libclang"
 
 package () {
     add_from_main usr/include/clang

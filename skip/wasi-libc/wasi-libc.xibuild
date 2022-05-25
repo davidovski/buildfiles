@@ -13,7 +13,7 @@ BRANCH=079adff840032c3455eb1cb34dc9ceaa0b2bfc0c
 SOURCE="ssh://github.com/WebAssembly/wasi-libc"
 
 build () {
-    make WASM_CC=/usr/bin/clang
+    make 
 }
 
 package () {

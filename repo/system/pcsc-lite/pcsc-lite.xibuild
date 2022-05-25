@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make perl lipcap-ng"
+MAKEDEPS="make perl libcap-ng"
 DEPS="musl sbase eudev"
 
 PKG_VER=1.9.4

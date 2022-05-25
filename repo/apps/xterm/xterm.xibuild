@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="libxft libxaw ncurses luit xbitmaps libutempter libxkbfile"
+DEPS="libxft libxaw ncurses luit xbitmaps libxkbfile"
 
 DESC="X Terminal Emulator"
 

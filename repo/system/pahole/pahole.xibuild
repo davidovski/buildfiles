@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="cmake-modules python make "
-DEPS="libelf python elfutils libdwarf musl-obstack argp-standalone libbpf"
+DEPS="libelf python elfutils libdwarf musl-obstack argp-standalone"
 
 PKG_VER=1.22
 SOURCE=https://git.kernel.org/pub/scm/devel/pahole/pahole.git

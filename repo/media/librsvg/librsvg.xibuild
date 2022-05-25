@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="librsvg"
+DESC="SAX-based renderer for SVG files into a GdkPixbuf"
+
+MAKEDEPS="make rust cargo vala"
+DEPS="cairo gdk-pixbuf glib libxml2 musl pango "
+
+PKG_VER=2.54.1
+SOURCE="https://download.gnome.org/sources/librsvg/${PKG_VER%.*}/librsvg-$PKG_VER.tar.xz"
+ADDITIONAL="target.patch"
+
+prepare () {
+    apply_patches
+    export RUSTFLAGS="$RUSTFLAGS -C debuginfo=2"
+    export CARGO_PROFILE_RELEASE_LTO=true
+    export CARGO_PROFILE_RELEASE_CODEGEN_UNITS=1
+}
+
+
+build () {
+    export CFLAGS="-fPIC" CXXFLAGS="-fPIC" 
+
+    ./configure --prefix=/usr  \
+		--libexecdir=/usr/lib/librsvg \
+        --disable-static \
+        --enable-vala
+    sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
+
+    make -j1
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}
+
+postinstall () {
+    gdk-pixbuf-query-loaders --update-cache
+}

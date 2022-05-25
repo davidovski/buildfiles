@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="autoconf automake binutils-dev elfutils-dev gawk linux-headers"
+MAKEDEPS="autoconf automake binutils elfutils gawk linux-headers"
 DEPS="libelf musl"
 
 PKG_VER=5.17

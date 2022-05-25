@@ -22,8 +22,8 @@ build () {
             --disable-doxygen-docs               \
             --disable-xml-docs                   \
             --disable-static                     \
-            --with-systemduserunitdir=no         \
-            --with-systemdsystemunitdir=no       \
+            --with-systemduserunitdir=$BUILD_ROOT/no         \
+            --with-systemdsystemunitdir=$BUILD_ROOT/no       \
             --docdir=/usr/share/doc/dbus-$PKG_VER \
             --with-console-auth-dir=/run/console \
             --with-system-pid-file=/run/dbus/pid \

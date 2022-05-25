@@ -31,8 +31,6 @@ prepare () {
 }
 
 build () {
-    export CC="clang"
-    export CXX="clang++"
     export CFLAGS="$CFLAGS -fno-exceptions --sysroot=/usr/share/wasi-sysroot"
 	export CXXFLAGS="$CXXFLAGS -fno-exceptions --sysroot=/usr/share/wasi-sysroot"
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="libxslt bash flex bison gobject-introspection graphviz"
-DEPS="glib graphviz musl pkgconf"
+DEPS="glib graphviz musl pkg-config"
 
 PKG_VER=0.54.7
 SOURCE=https://download.gnome.org/sources/vala/${PKG_VER%.*}/vala-$PKG_VER.tar.xz

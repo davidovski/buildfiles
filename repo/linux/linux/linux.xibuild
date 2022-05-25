@@ -12,7 +12,7 @@ ADDITIONAL="
 
 prepare () {
     apply_patches
-    mv config .config
+    cp config .config
 
     export GREP="ggrep"
 
@@ -22,7 +22,7 @@ prepare () {
 }
 
 build () {
-    make LLVM=1 all 
+    make all 
 }
 
 package () {

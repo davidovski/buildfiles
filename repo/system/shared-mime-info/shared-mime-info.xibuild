@@ -3,7 +3,7 @@
 NAME="shared-mime-info"
 DESC="Freedesktop.org Shared MIME Info"
 
-MAKEDEPS="meson ninja itstool libxml2-utils xmlto libxml2 glib"
+MAKEDEPS="meson ninja itstool xmlto libxml2 glib"
 DEPS="sbase glib libxml2 musl pkg-config "
 
 PKG_VER=2.2

@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in xi"
-DEPS=" mkinitramfs sysconfigs xib xichroot xipkg xiutils"
+DEPS=" sysconfigs xib xibuild xipkg xiutils"

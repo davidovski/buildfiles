@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="make check soxr speex libx11 libxtst fftw jack speexdsp openssl eudev check libtool"
-DEPS="libsndfile alsa-lib dbus elogind glib libcap speex libxtst gdbm"
+MAKEDEPS="make check soxr libx11 libxtst openssl eudev check libtool gtk3"
+DEPS="libsndfile alsa-lib dbus elogind glib libcap libxtst gdbm"
 
 DESC="A featureful, general-purpose sound server"
 

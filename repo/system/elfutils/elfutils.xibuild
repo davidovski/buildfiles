@@ -1,17 +1,17 @@
 #!/bin/sh
 
-MAKEDEPS="bison flex zlib bzip2 xz argp-standalone libtool fts musl-obstack"
+MAKEDEPS="bison flex zlib bzip2 xz argp-standalone libtool musl-obstack"
 DEPS="musl zlib"
 
 PKG_VER=0.186
 SOURCE=https://sourceware.org/elfutils/ftp/$PKG_VER/elfutils-$PKG_VER.tar.bz2
 ADDITIONAL="
-        files/error.h
-        patches/fix-aarch64_fregs.patch
-        patches/fix-uninitialized.patch
-        patches/musl-macros.patch
-        patches/musl-strndupa.patch
-        patches/musl-asm-ptrace-h.patch
+        error.h
+        fix-aarch64_fregs.patch
+        fix-uninitialized.patch
+        musl-macros.patch
+        musl-strndupa.patch
+        musl-asm-ptrace-h.patch
 "
 
 DESC="Utilities and DSOs to handle ELF files and DWARF data"

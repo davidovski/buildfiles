@@ -11,10 +11,10 @@ SOURCE="https://downloads.sourceforge.net/glew/glew-$PKG_VER.tgz"
 ADDITIONAL="glew.patch "
 
 build () {
-    make PREFIX=/usr
+    make GLEW_DEST=$PKG_DEST
 }
 
 package () {
-    mkdir -p $PKG_DEST/usr/lib64
-    make PREFIX=/usr DESTDIR=$PKG_DEST install
+    make GLEW_DEST=$PKG_DEST/usr install
+    mv $PKG_DEST/usr/lib64/* $PKG_DEST/usr/lib/
 }

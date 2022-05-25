@@ -1,15 +1,16 @@
 #!/bin/sh
 
-MAKEDEPS="gcc autoconf2-13 icu rustc zlib which zip clang llvm patch make python-six python-mach"
+MAKEDEPS="gcc autoconf2-13 icu rust zlib which zip clang llvm patch make python-six python-mach"
 DEPS="readline nspr bash zlib"
 
 PKG_VER=78.15.0
 SOURCE=https://archive.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz
 ADDITIONAL="
-    patches/disable-jslint.patch
-    patches/fd6847c9416f9eebde636e21d794d25d1be8791d.patch
-    patches/fix-musl-build.patch
-    patches/fix-python3.10-compilation.patch
+    disable-jslint.patch
+    fd6847c9416f9eebde636e21d794d25d1be8791d.patch
+    fix-musl-build.patch
+    fix-python3.10-compilation.patch
+    fix-rust-target.patch
     "
 
 DESC="JavaScript interpreter and libraries - Version 78"
@@ -19,9 +20,8 @@ prepare () {
     export LDFLAGS="$LDFLAGS -Wl,-z,stack-size=1048576"
 
     mountpoint -q /dev/shm || mount -t tmpfs devshm /dev/shm
-    export PATH=/opt/rustc/bin:$PATH
-    export LD_LIBRARY_PATH=/opt/rustc/lib:$LD_LIBRARY_PATH
-    export RUST_TARGET="x86_64"
+    export RUST_TARGET="x86_64-unknown-linux-musl"
+    export CFLAGS="$CFLAGS -no-pie" CXXFLAGS="$CXXFLAGS -no-pie"
 }
 
 build () {
@@ -31,7 +31,6 @@ build () {
     SHELL=/bin/bash PYTHON=/usr/bin/python3 \
         ../js/src/configure --prefix=/usr \
                 --with-intl-api \
-                --with-libclang-path=/usr/lib \
                 --with-system-icu \
                 --with-system-nspr \
                 --with-system-zlib \
@@ -47,7 +46,6 @@ build () {
                 --disable-debug-symbols \
                 --disable-jemalloc \
                 --disable-strip
-
 
     make
 }

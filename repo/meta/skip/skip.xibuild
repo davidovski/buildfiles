@@ -1,5 +1,0 @@
-#!/bin/sh
-# This file was automatically generated, do not edit!
-
-DESC="All the the packages available in skip"
-DEPS=" cacert-utils fakechroot fakeroot icecream"

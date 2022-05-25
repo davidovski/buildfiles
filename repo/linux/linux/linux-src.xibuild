@@ -2,22 +2,12 @@
 
 DESC="$DESC (source)"
 
-prepare () {
-    rm linux-$PKG_VER.tar.xz
-    apply_patches
-
-    make mrproper
-    make headers
-
-    mv config .config
-    make olddefconfig
-    make -s kernelrelease > version
-}
-
 package () {
-    local kernver="$(cat version)"
-    srcdir=$PKG_DEST/usr/src/linux
+    srcdir=$PKG_DEST/usr/src/
     mkdir -p $srcdir
-    cp -r ./ $srcdir/
+    tar -xf linux-$PKG_VER.tar.xz -C $srcdir
+    make -C $srcdir/linux-$PKG_VER mrproper
+    cp config $srcdir/linux-$PKG_VER/.config
+    make -C $srcdir/linux-$PKG_VER olddefconfig
 }
 

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DEPS="rust"
+DESC="Rust package manager"
+
+package () {
+    add_from_main "usr/bin/cargo"
+}

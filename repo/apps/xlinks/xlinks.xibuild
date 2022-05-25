@@ -4,7 +4,7 @@ NAME="xlinks"
 DESC="Web browser running in both graphics and text mode"
 
 MAKEDEPS="make "
-DEPS="bzip2 openssl libevent musl zlib zstd libx11 tiff libpng librsvg"
+DEPS="bzip2 openssl libevent musl zlib zstd libx11 tiff libpng "
 
 PKG_VER=2.25
 SOURCE="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"

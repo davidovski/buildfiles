@@ -1,27 +1,26 @@
 #!/bin/sh
 
-MAKEDEPS="cmake clang llvm-ar"
-DEPS="curl libssh2 openssl"
+MAKEDEPS="cmake libclang clang llvm curl"
+DEPS="libssh2 openssl"
 
-PKG_VER=1.58.1
+PKG_VER=1.59.0
 SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 
 ADDITIONAL="
-    patches/0006-Prefer-libgcc_eh-over-libunwind-for-musl.patch
-    patches/0007-do-not-install-libunwind-source.patch
-    patches/install-template-shebang.patch
-    patches/link-musl-dynamically.patch
-    patches/musl-fix-linux_musl_base.patch
-    patches/need-rpath.patch
-    patches/need-ssp_nonshared.patch
+    0006-Prefer-libgcc_eh-over-libunwind-for-musl.patch
+    0007-do-not-install-libunwind-source.patch
+    install-template-shebang.patch
+    link-musl-dynamically.patch
+    musl-fix-linux_musl_base.patch
+    need-rpath.patch
+    need-ssp_nonshared.patch
 "
 
 prepare () {
     apply_patches
     sed -i /LD_LIBRARY_PATH/d src/bootstrap/bootstrap.py
     sed -i 's/\("files":{\)[^}]*/\1/' vendor/libc/.cargo-checksum.json
-
 }
 
 build () {
@@ -48,16 +47,16 @@ build () {
 		--set="target.$target.llvm-config=/usr/bin/llvm-config" \
 		--set="target.$target.musl-root=/usr" \
 		--set="target.$target.crt-static=false" \
-		--set="target.$target.cc=clang" \
-		--set="target.$target.cxx=clang++" \
-		--set="target.$target.ar=llvm-ar" \
-		--set="target.$target.linker=clang" \
+		--set="target.$target.cc=gcc" \
+		--set="target.$target.cxx=g++" \
+		--set="target.$target.ar=ar" \
+		--set="target.$target.linker=gcc" \
 		--set="target.$build.musl-root=/usr" \
 		--set="target.$build.crt-static=false" \
-		--set="target.$build.cc=clang" \
-		--set="target.$build.cxx=clang++" \
-		--set="target.$build.ar=llvm-ar" \
-		--set="target.$build.linker=clang"
+		--set="target.$build.cc=gcc" \
+		--set="target.$build.cxx=g++" \
+		--set="target.$build.ar=ar" \
+		--set="target.$build.linker=gcc" \
 
     	sed 's/#deny-warnings = .*/deny-warnings = false/' -i config.toml
         sed 's|deny(warnings,|deny(|' -i src/bootstrap/lib.rs
@@ -73,22 +72,4 @@ package () {
 
     chown -R root:root install &&
     cp -a install/* $PKG_DEST
-
-    mkdir -p $PKG_DEST/etc/profile.d/
-    cat > $PKG_DEST/etc/profile.d/rustc.sh << "EOF"
-# Begin /etc/profile.d/rustc.sh
-
-pathprepend /opt/rustc/bin           PATH
-
-# End /etc/profile.d/rustc.sh
-EOF
-    mkdir -p $PKG_DEST/etc/ld.so.conf.d
-cat >> $PKG_DEST/etc/ld.so.conf.d/rustc.conf << EOF
-# Begin rustc addition
-
-/opt/rustc/lib
-
-# End rustc addition
-EOF
-
 }

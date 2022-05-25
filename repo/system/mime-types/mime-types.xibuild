@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="mime-types"
+DESC="Helper application for MIME types"
+
+MAKEDEPS="make "
+DEPS="xterm "
+
+PKG_VER=2.1.53
+SOURCE="https://releases.pagure.org/mailcap/mailcap-$PKG_VER.tar.xz"
+
+prepare () {
+    sed -i 's/-Dpm/-Dm/' Makefile
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+    rm -Rf $PKG_DEST/etc/nginx
+}
