@@ -3,7 +3,7 @@
 NAME="gexiv2"
 DESC="GObject-based wrapper around the Exiv2 library"
 
-MAKEDEPS="meson ninja "
+MAKEDEPS="meson ninja python-gobject"
 DEPS="exiv2 glib "
 
 PKG_VER=0.14.0

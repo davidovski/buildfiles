@@ -4,7 +4,7 @@ NAME="mpd"
 DESC="Music daemon that plays MP3, FLAC, Ogg Vorbis files and Audio CDs"
 
 MAKEDEPS="meson ninja boost"
-DEPS="alsa-lib sbase expat faad2 flac fmt icu lame libao bzip2 libid3tag libmad libogg pulseaudio libsamplerate libmpdclient libvorbis musl opus pipewire soxr wavpack zlib sqlite3 ffmpeg4"
+DEPS="alsa-lib sbase expat faad2 flac fmt icu lame bzip2 libid3tag libmad libogg pulseaudio libsamplerate libmpdclient libvorbis musl opus pipewire soxr wavpack zlib sqlite3 ffmpeg4"
 
 PKG_VER=0.23.6
 SOURCE="https://www.musicpd.org/download/mpd/${PKG_VER%.*}/mpd-$PKG_VER.tar.xz"

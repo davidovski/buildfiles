@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl iptables libelf"
+DEPS="musl libelf"
 
 SOURCE=https://git.kernel.org/pub/scm/network/iproute2/iproute2.git
 DESC="IP Routing Utilities"

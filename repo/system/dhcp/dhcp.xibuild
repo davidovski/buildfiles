@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="bash iproute2 openldap"
+MAKEDEPS="bash iproute2 libldap"
 DEPS="musl libldap"
 
 PKG_VER=4.4.3b1

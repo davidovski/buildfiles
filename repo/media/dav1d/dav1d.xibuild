@@ -26,5 +26,4 @@ build () {
 
 package () {
     DESTDIR=$PKG_DEST ninja install
-    mv $PKG_DEST/usr/lib64 $PKG_DEST/usr/lib
 }

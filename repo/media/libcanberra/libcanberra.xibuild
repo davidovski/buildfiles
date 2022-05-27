@@ -12,6 +12,7 @@ ADDITIONAL="fix-build-with-no-lynx-installed.patch dont-assume-all-GdkDisplays-a
 
 prepare () {
     apply_patches
+    autoreconf -if
 }
 
 build () {
@@ -19,8 +20,11 @@ build () {
         --prefix=/usr \
         --bindir=/usr/bin \
         --sysconfdir=/etc \
-        --disable-static \
-        --disable-oss
+        --enable-alsa \
+        --enable-null \
+        --disable-lynx \
+        --disable-oss \
+        --with-builtin=dso
     make
 }
 

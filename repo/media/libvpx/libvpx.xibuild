@@ -10,14 +10,13 @@ SOURCE=https://github.com/webmproject/libvpx/archive/v$PKG_VER/libvpx-$PKG_VER.t
 
 prepare () {
     sed -i 's/cp -p/cp/' build/make/Makefile 
+    sed -i 's/cat -n/cat/' build/make/configure.sh 
     sed -i 's/diff --version/command -v diff/' configure
 }
 
 build () {
-    mkdir libvpx-build            &&
-    cd    libvpx-build            &&
 
-    ../configure --prefix=/usr    \
+    ./configure --prefix=/usr    \
                  --enable-shared  \
                  --disable-static &&
     make

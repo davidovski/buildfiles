@@ -1,9 +1,0 @@
-#!/bin/sh
-
-DESC="$DESC (jmods)"
-
-DEPS=""
-
-package () {
-    add_from_main $java_home/jmods
-}

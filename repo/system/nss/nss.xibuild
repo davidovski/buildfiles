@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make gyp perl mercurial python patch"
+MAKEDEPS="make perl python patch"
 DEPS="nspr libp11-kit sh zlib sqlite3"
 
 PKG_VER=3.74

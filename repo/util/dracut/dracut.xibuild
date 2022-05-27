@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make asciidoc musl-fts"
-DEPS="bash sbase cpio findutils grep gzip kmod pkgconf procps-ng sed util-linux xz"
+DEPS="bash sbase cpio findutils grep gzip kmod pkg-config procps-ng sed util-linux xz"
 
 DESC="An initramfs infastructure aimin gto have as little possible hardcoded into the initramfs"
 

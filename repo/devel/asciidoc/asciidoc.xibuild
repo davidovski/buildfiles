@@ -3,13 +3,24 @@
 MAKEDEPS="python "
 DEPS="python libxslt docbook-xsl"
 
-PKG_VER=10.1.1
+PKG_VER=10.2.0
 SOURCE=https://github.com/asciidoc-py/asciidoc-py/releases/download/$PKG_VER/asciidoc-$PKG_VER.tar.gz
 DESC="Text document format for short documents, articles, books and UNIX man pages"
 
-package () {
-    pip install -t $PKG_DEST/usr/lib/python3.10/site-packages/ asciidoc
-    mkdir -p $PKG_DEST/usr/bin
-    ln -s /usr/lib/python3.10/site-packages/bin/asciidoc $PKG_DEST/usr/bin/asciidoc
-    ln -s /usr/lib/python3.10/site-packages/bin/a2x $PKG_DEST/usr/bin/a2x
+prepare () {
+    autoreconf -fi
 }
+
+build () {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+package () {
+    make DESTDIR="$PKG_DEST" install
+}
+

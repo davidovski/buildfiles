@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in media"
-DEPS=" alsa-firmware alsa-lib alsa-plugins alsa-tools alsa-utils aom audiofile babl dav1d exiv2 faac faad2 fdk-aac ffmpeg ffmpeg4 flac gexiv2 lame libass libcanberra libjpeg-turbo libmad libmpdclient libmypaint libogg libraw librist librsvg libsamplerate libsndfile libsrt libtheora libvorbis libvpx libwebp mpc-mpd mpd openal-soft openjpeg opus pipewire poppler pulseaudio pulsemixer sfml soxr tiff v4l-utils vidstab wavpack x264 x265 xvidcore"
+DEPS=" alsa-firmware alsa-lib alsa-plugins alsa-tools alsa-utils aom audiofile babl dav1d exiv2 faac faad2 fdk-aac ffmpeg ffmpeg4 flac gexiv2 giflib lame libass libcanberra libid3tag libjpeg-turbo libmad libmpdclient libmypaint libogg libraw librist librsvg libsamplerate libsndfile libsrt libtheora libvorbis libvpx libwebp mpc-mpd mpd openal-soft openjpeg opus pipewire poppler pulseaudio pulsemixer sfml soxr tiff v4l-utils vidstab wavpack x264 x265 xvidcore"

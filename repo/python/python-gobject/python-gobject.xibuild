@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="python python-cairo libffi"
+MAKEDEPS="python python libffi"
 DEPS="python libffi cairo glib gobject-introspection musl"
 
 PKG_VER=3.42.0

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="autoconf automake libxml2 libxslt"
-DEPS="pkgconf"
+DEPS="pkg-config"
 
 PKG_VER=20201225
 SOURCE=https://download.gnome.org/sources/mobile-broadband-provider-info/$PKG_VER/mobile-broadband-provider-info-$PKG_VER.tar.xz

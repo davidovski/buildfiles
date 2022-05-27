@@ -1,9 +1,0 @@
-#!/bin/sh
-
-DESC="$DESC (JDK)"
-
-DEPS="musl openjdk11-jmods openjdk11-jre openjdk11-jre-headless"
-
-package () {
-    add_from_main $java_home/man
-}

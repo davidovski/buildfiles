@@ -3,7 +3,7 @@
 NAME="font-noto"
 DESC="Noto font families for Latin, Cyrillic and Greek scripts"
 
-MAKEDEPS="make "
+MAKEDEPS="make ruby"
 DEPS="fontconfig "
 
 PKG_VER=0_git20211101
@@ -20,8 +20,13 @@ build () {
 }
 
 package () {
-	install -D -m644 hinted/ttf/*/*.ttf -t "$PKG_DEST/usr/share/fonts/noto"
-	install -D -m644 conf.d/*.xml -t "$PKG_DEST"/etc/fonts/conf.avail/
+    for f in hinted/ttf/*/*.ttf; do 
+        install -D -m644  $f "$PKG_DEST/usr/share/fonts/noto"
+    done
+
+    for f in conf.d/*.xml; do 
+        install -D -m644 $f "$PKG_DEST"/etc/fonts/conf.avail/
+    done
 
 	cd "$PKG_DEST"
 

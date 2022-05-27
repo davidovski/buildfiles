@@ -15,4 +15,8 @@ build () {
 
 package () {
     make DESTDIR=$PKG_DEST install
+    mv "$PKG_DEST/etc/alsa/conf.d/99-pulseaudio-default.conf.example" \
+    "$PKG_DEST/usr/share/alsa/alsa.conf.d/99-pulseaudio-default.conf"
+
 }
+

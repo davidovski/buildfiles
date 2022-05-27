@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="sh xz gettext device-mapper efibootmgr freetype2"
+DEPS="sh xz gettext efibootmgr freetype2"
 
 PKG_VER=2.06
 SOURCE=https://ftp.gnu.org/gnu/grub/grub-$PKG_VER.tar.xz

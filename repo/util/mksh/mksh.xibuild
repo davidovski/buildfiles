@@ -4,7 +4,7 @@ MAKEDEPS="make "
 DEPS="sbase musl"
 
 PKG_VER=59c
-SOURCE=https://www.mirbsd.org/MirOS/dist/mir/mksh/mksh-R$PKG_VER.tgz
+SOURCE=http://www.mirbsd.org/MirOS/dist/mir/mksh/mksh-R$PKG_VER.tgz
 DESC="MirBSD Korn Shell"
 
 prepare () {
