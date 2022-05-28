@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="$DESC (demos)"
+
+DEPS=""
+
+package () {
+    add_from_main $java_home/demo
+}

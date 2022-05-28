@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="giflib"
+DESC="A library for reading and writing GIF images"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=5.2.1
+SOURCE="https://downloads.sourceforge.net/sourceforge/giflib/giflib-$PKG_VER.tar.gz"
+ADDITIONAL="giflib-restore-deprecated-functions.patch "
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

@@ -3,14 +3,28 @@
 NAME="firefox"
 DESC="Firefox web browser"
 
-MAKEDEPS="make rustc cbindgen wasi-sdk"
-DEPS="alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib "
+MAKEDEPS="make rust cbindgen"
+DEPS="nodejs alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib dbus-glib"
 
-PKG_VER=99.0.1
-releasedate=2022-04-12
+PKG_VER=100.0.2
 
 SOURCE="https://ftp.mozilla.org/pub/firefox/releases/$PKG_VER/source/firefox-$PKG_VER.source.tar.xz"
-ADDITIONAL="stab.h sandbox-sched_setscheduler.patch sandbox-largefile.patch sandbox-fork.patch mallinfo.patch fix-webrtc-glibcisms.patch fix-rust-target.patch fix-fortify-system-wrappers.patch firefox-safe.desktop disable-neon-in-aom.patch disable-moz-stackwalk.patch avoid-redefinition.patch allow-custom-rust-vendor.patch "
+ADDITIONAL="
+allow-custom-rust-vendor.patch
+avoid-redefinition.patch
+disable-moz-stackwalk.patch
+disable-neon-in-aom.patch
+firefox-safe.desktop
+firefox.desktop
+fix-fortify-system-wrappers.patch
+fix-rust-target.patch
+fix-webrtc-glibcisms.patch
+mallinfo.patch
+sandbox-fork.patch
+sandbox-largefile.patch
+sandbox-sched_setscheduler.patch
+stab.h
+"
 
 prepare () {
     apply_patches
@@ -39,12 +53,12 @@ build () {
 	export CXX="clang++"
 
 	export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/firefox"
-    	../mach configure \
+    ../mach configure \
+        --without-wasm-sandboxed-libraries \
 		--prefix=/usr \
         --disable-elf-hack \
         --enable-rust-simd \
         --enable-sandbox \
-		\
 		--disable-cargo-incremental \
 		--disable-crashreporter \
 		--disable-install-strip \
@@ -54,14 +68,12 @@ build () {
 		--disable-strip \
 		--disable-tests \
 		--disable-updater \
-		\
 		--enable-alsa \
 		--enable-dbus \
 		--enable-default-toolkit=cairo-gtk3-wayland \
 		--enable-dom-streams \
 		--enable-ffmpeg \
 		--enable-hardening \
-		--enable-linker=lld \
 		--enable-necko-wifi \
 		--enable-official-branding \
 		--enable-optimize="$CFLAGS -O2" \
@@ -69,7 +81,6 @@ build () {
 		--enable-release \
 		--enable-system-ffi \
 		--enable-system-pixman \
-		\
 		--with-distribution-id=xilinux \
 		--with-libclang-path=/usr/lib \
 		--with-system-ffi \
@@ -83,8 +94,7 @@ build () {
 		--with-system-png \
 		--with-system-webp \
 		--with-system-zlib \
-		--with-unsigned-addon-scopes=app,system \
-        --without-wasm-sandboxed-libraries
+		--with-unsigned-addon-scopes=app,system  &&
 	../mach build
 }
 
@@ -128,11 +138,4 @@ package () {
 	pref("extensions.autoDisableScopes", 11);
 	pref("extensions.shownSelectionUI", true);
 	EOF
-
-	# Generate appdata file
-	mkdir "$PKG_DEST"/usr/share/metainfo/
-	export VERSION="$PKG_VER"
-	export DATE="$releasedate"
-	envsubst < "$builddir"/taskcluster/docker/firefox-flatpak/org.mozilla.firefox.appdata.xml.in > "$PKG_DEST"/usr/share/metainfo/org.mozilla.firefox.appdata.xml
-
 }

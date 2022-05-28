@@ -1,0 +1,16 @@
+#!/bin/sh
+
+NAME="poppler-data"
+DESC="encoding data for the poppler PDF rendering library"
+
+MAKEDEPS="make "
+DEPS="pkg-config "
+
+PKG_VER=0.4.11
+SOURCE="https://poppler.freedesktop.org/poppler-data-$PKG_VER.tar.gz"
+
+package () {
+    make prefix=/usr DESTDIR=$PKG_DEST install
+    mkdir -p $PKG_DEST/usr/lib
+    mv $PKG_DEST/usr/share/pkgconfig $PKG_DEST/usr/lib/pkgconfig
+}

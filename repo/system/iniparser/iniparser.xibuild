@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="iniparser"
+DESC="C library for parsing INI-style files"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=4.1
+SOURCE="https://github.com/ndevilla/iniparser/archive/v$PKG_VER.tar.gz"
+ADDITIONAL="rpath.patch "
+
+build () {
+    make 
+}
+
+package () {
+    install -d "$PKG_DEST"/usr/lib "$PKG_DEST"/usr/include
+	install -m 644 src/dictionary.h "$PKG_DEST"/usr/include/dictionary.h
+	install -m 644 src/iniparser.h "$PKG_DEST"/usr/include/iniparser.h
+	install -m 755 libiniparser.so.1 "$PKG_DEST"/usr/lib/libiniparser.so.1
+	ln -s libiniparser.so.1 "$PKG_DEST"/usr/lib/libiniparser.so
+
+}

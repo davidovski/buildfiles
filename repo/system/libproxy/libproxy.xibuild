@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="libproxy"
+DESC="Library handling all the details of proxy configuration"
+
+MAKEDEPS="cmake "
+DEPS="musl libgcc libstdc++"
+
+PKG_VER=0.4.17
+SOURCE="https://github.com/libproxy/libproxy/archive/$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIBEXEC_INSTALL_DIR=lib \
+		-DMODULE_INSTALL_DIR=/usr/lib/libproxy/$PKG_VER/modules \
+		-DWITH_PERL=OFF \
+		-DWITH_PYTHON3=ON \
+		-DPYTHON3_EXECUTABLE=/usr/bin/python3
+
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

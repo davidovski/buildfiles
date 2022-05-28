@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="cava"
+DESC="Console-based Audio Visualizer for ALSA"
+
+MAKEDEPS="make "
+DEPS="alsa-lib fftw iniparser musl ncurses "
+
+PKG_VER=0.8.2
+SOURCE="https://github.com/karlstav/cava/archive/$PKG_VER.tar.gz"
+
+prepare () {
+    ./autogen.sh
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

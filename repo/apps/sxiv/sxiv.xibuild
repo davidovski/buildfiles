@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="sxiv"
+DESC="Simple X Image Viewer"
+
+MAKEDEPS="make"
+DEPS="fontconfig giflib imlib2 libexif libx11 libxft musl "
+
+PKG_VER=26
+SOURCE="https://github.com/muennich/sxiv/archive/v$PKG_VER.tar.gz"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

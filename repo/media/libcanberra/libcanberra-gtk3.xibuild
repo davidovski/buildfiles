@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DESC="GTK+3.0 bindings for libcanberra"
+DEPS="glib gtk3 libcanberra libx11 musl"
+
+package () {
+    add_from_main usr/bin/canberra-gtk-play
+    add_from_main usr/lib/gtk-3.0/*
+	add_from_main usr/lib/gnome-settings-daemon-3.0/*
+	add_from_main usr/lib/libcanberra-gtk3.so.*
+	add_from_main usr/share/gdm/*
+	add_from_main usr/share/gnome/*
+}

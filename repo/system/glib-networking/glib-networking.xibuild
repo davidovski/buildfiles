@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="glib-networking"
+DESC="Networking support for GLib"
+
+MAKEDEPS="meson ninja "
+DEPS="glib cacerts gnutls gsettings-desktop-schemas intltool musl libproxy"
+
+PKG_VER=2.72.0
+SOURCE="https://download.gnome.org/sources/glib-networking/${PKG_VER%.*}/glib-networking-$PKG_VER.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+    		-Dopenssl=disabled \
+            -Dgnutls=enabled \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

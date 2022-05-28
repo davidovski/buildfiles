@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in apps"
-DEPS=" arandr chromium feh firefox gimp links lynx mpv ncmpcpp neovim pavucontrol pcmanfm polybar rxvt-unicode vim xclock-cat xlinks xterm"
+DEPS=" arandr cava chromium feh firefox gimp links lynx mpv ncmpcpp neovim pcmanfm polybar rxvt-unicode sxiv vim xclock-cat xlinks xterm"

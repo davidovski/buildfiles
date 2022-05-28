@@ -1,0 +1,65 @@
+#!/bin/sh
+
+NAME="openjdk11"
+DESC="Oracle OpenJDK 11"
+
+MAKEDEPS="make bash gawk grep make zip alsa-lib elfutils fontconfig freetype2 lcms2 libexecinfo libffi libjpeg-turbo libx11 cups libxext libxrandr libxrender libxt libxtst zlib"
+
+DEPS="musl"
+
+PKG_VER=11.0.16+2
+SOURCE="https://github.com/openjdk/jdk11u/archive/jdk-$PKG_VER.tar.gz"
+
+bootstrapjdk="OpenJDK11U-jdk_x64_alpine-linux_hotspot_11.0.15_10"
+bootstrapjdk_url="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.15%2B10/$bootstrapjdk.tar.gz"
+
+ADDITIONAL="$bootstrapjdk_url
+    build.patch
+    fix-bootjdk-check.patch
+    fix-musl.patch
+    fix-sbase-commands.patch
+"
+
+java_home="/usr/lib/jvm/java-11-openjdk"
+
+prepare () {
+    apply_patches
+    tar xf $bootstrapjdk.tar.gz
+    bootjdk=jdk-11.0.15+10
+}
+
+build () {
+    bash ./configure \
+        --with-boot-jdk=$bootjdk \
+        --with-toolchain-type=clang \
+		--prefix="$java_home" \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--with-extra-cflags="$CFLAGS" \
+		--with-extra-cxxflags="$CXXFLAGS" \
+		--with-extra-ldflags="$LDFLAGS" \
+		--with-zlib=system \
+		--with-libjpeg=system \
+		--with-libpng=system \
+		--with-lcms=system \
+		--with-jobs=${JOBS:-4} \
+		--with-test-jobs=${JOBS:-4} \
+		--with-native-debug-symbols=none \
+		--disable-warnings-as-errors \
+		--disable-precompiled-headers \
+		--enable-dtrace=no \
+		--with-jvm-variants=server \
+		--with-debug-level=release \
+		--with-version-pre= \
+		--with-version-opt="xilinux" \
+		--with-version-build=${pkgver} \
+		--with-vendor-name="XiLinux" 
+    MAKEFLAGS="" make images
+}
+
+package () {
+    mkdir -p "$PKG_DEST/$java_home"
+    cp -r build/*-normal-server-release/images/jdk/* "$PKG_DEST/$java_home"
+}

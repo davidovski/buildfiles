@@ -1,0 +1,54 @@
+#!/bin/sh
+
+NAME="fftw"
+DESC="Discrete Fourier transform (DFT) library"
+
+MAKEDEPS="make tar"
+DEPS="musl "
+
+PKG_VER=3.3.10
+SOURCE="http://www.fftw.org/fftw-$PKG_VER.tar.gz"
+ADDITIONAL="cycle.h.patch "
+
+precisions="single double long-double"
+
+prepare () {
+    for i in $precisions; do
+        mkdir $i
+        tar -xf fftw-$PKG_VER.tar.gz -C $i
+    done
+}
+
+build () {
+	local i; for i in $precisions; do
+		case "$i" in
+			single) cf="--enable-single";;
+			double) cf="";;
+			long-double) cf="--enable-long-double";;
+		esac
+
+		case "$i" in
+			single | double)
+				cf="$cf --enable-sse2 --enable-avx";;
+		esac
+
+		printf "Building for $i precision ($cf)"
+		cd $BUILD_ROOT/$i/fftw-$PKG_VER
+		./configure \
+			--prefix=/usr \
+			--sysconfdir=/etc \
+			--mandir=/usr/share/man \
+			--infodir=/usr/share/info \
+			--enable-shared \
+			--enable-threads \
+			$cf
+		make
+	done
+}
+
+package () {
+    for i in $precisions; do 
+		cd $BUILD_ROOT/$i/fftw-$PKG_VER
+        make DESTDIR=$PKG_DEST install
+    done
+}

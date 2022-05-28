@@ -8,15 +8,14 @@ SOURCE=https://ftp.barfooze.de/pub/sabotage/tarballs/gettext-tiny-$PKG_VER.tar.x
 DESC="Lightweight replacement for tools used in the GNU gettext suite"
 
 ADDITIONAL="
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/gettext-tiny-adiele/line-length.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/gettext-tiny-adiele/respect-cflags.patch
-    https://raw.githubusercontent.com/dslm4515/Musl-LFS/master/patches/gettext-tiny-adiele/stop-doing-macro-crap.patch
+	line-length.patch
+	respect-cflags.patch
+	flip-macro-logic.patch
+    fix-xgettext-version-string.patch
 "
 
 prepare () {
-    for p in *.patch;  do
-        patch -Np1 -i $p || true
-    done
+    apply_patches
 }
 
 build () {

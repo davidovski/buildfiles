@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="dbus-glib"
+DESC="GLib bindings for DBUS"
+
+MAKEDEPS="make "
+DEPS="dbus glib expat musl "
+
+PKG_VER=0.112
+SOURCE="https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-$PKG_VER.tar.gz"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --enable-static=no \
+        --enable-bash-completion=no
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

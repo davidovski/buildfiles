@@ -2,12 +2,12 @@
 
 [x] bspwm
 [x] sxhkd
-[?] picom
+[x] picom
 [x] mpd
 [x] ncmpcpp
 [x] pulsemixer
 [ ] pavucontrol
-[?] chromium
+[x] chromium
 [ ] firefox
 [x] ffmpeg
 [x] dmenu
@@ -15,7 +15,7 @@
 [x] mpv
 [ ] sxiv
 [x] feh
-[ ] gimp
+[x] gimp
 [ ] lmms
 [ ] ardour
 [ ] cava
@@ -25,7 +25,7 @@
 [x] polybar
 
 [ ] gnu screen
-[ ] tmux
+[x] tmux
 [ ] ImageMagick
 [x] nmap
 [x] exiftool

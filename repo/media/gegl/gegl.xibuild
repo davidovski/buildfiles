@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="gegl"
+DESC="Graph based image processing framework"
+
+# TODO onlly install the fonts actually needed
+
+MAKEDEPS="encodings font-adobe-utopia-type1 font-alias font-bh-ttf font-bh-type1 fontconfig font-ibm-type1 font-misc-ethiopic font-util font-xfree86-type1 meson ninja graphviz libexecinfo"
+DEPS="babl cairo ffmpeg4 gdk-pixbuf glib json-glib lcms2 intltool libjpeg-turbo libpng libraw librsvg libwebp musl pango tiff libexecinfo"
+
+PKG_VER=0.4.36
+SOURCE="https://download.gimp.org/pub/gegl/${PKG_VER%.*}/gegl-${PKG_VER}.tar.xz"
+
+build () {
+    mkdir build &&
+    cd build    &&
+    export LDFLAGS="$LDFLAGS -lexecinfo"
+    meson --prefix=/usr \
+            .. &&
+    ninja
+}
+
+package () {
+    DESTDIR=$PKG_DEST ninja install
+}

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="libucontext"
+DESC="ucontext function implementations"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=1.2
+SOURCE="https://distfiles.dereferenced.org/libucontext/libucontext-$PKG_VER.tar.xz"
+
+build () {
+    make PREFIX=/usr
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

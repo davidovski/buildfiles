@@ -3,7 +3,7 @@
 NAME="chromium"
 DESC="Chromium webbrowser (ungoogled)"
 
-MAKEDEPS="meson ninja hwids compiler-rt lld pciutils"
+MAKEDEPS="meson ninja hwids lld pciutils"
 DEPS="alsa-lib at-spi2-atk at-spi2-core atk cairo dbus eudev expat ffmpeg4 flac font-opensans fontconfig freetype2 glib gtk3 harfbuzz lcms2 libdrm libevent libjpeg-turbo libpng pulseaudio libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxkbcommon libxml2 libxrandr libxslt mesa musl nspr nss opus pango re2 snappy wayland xdg-utils nodejs"
 
 PKG_VER=100.0.4896.127

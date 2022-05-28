@@ -1,0 +1,11 @@
+--- a/src/xgettext.sh	2020-04-06 11:43:29.000000000 +0100
++++ b/src/xgettext.sh	2020-04-06 11:43:29.000000000 +0100
+@@ -16,7 +16,7 @@
+ }
+ 
+ show_version() {
+-	printf "%s\n", "xgettext (GNU gettext-tools compatible) 99.9999.9999\n"
++	printf "%s\n\n" "xgettext (GNU gettext-tools) 0.19.8.1"
+ 	exit 0
+ }
+ 

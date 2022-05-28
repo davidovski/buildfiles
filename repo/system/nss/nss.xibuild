@@ -3,7 +3,7 @@
 MAKEDEPS="make perl python patch"
 DEPS="nspr libp11-kit sh zlib sqlite3"
 
-PKG_VER=3.74
+PKG_VER=3.76
 
 SOURCE=https://archive.mozilla.org/pub/security/nss/releases/NSS_$(echo $PKG_VER | sed 's/\./_/g')_RTM/src/nss-$PKG_VER.tar.gz
 

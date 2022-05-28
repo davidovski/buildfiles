@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libid3tag"
+DESC="MAD ID3 tagger for MP3 audio files"
+
+MAKEDEPS="cmake "
+DEPS="musl "
+
+PKG_VER=0.16.1
+SOURCE="https://github.com/tenacityteam/libid3tag/archive/refs/tags/$PKG_VER.tar.gz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

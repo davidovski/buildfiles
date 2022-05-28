@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="Config files required for alsa to work with pulseaudio"
+DESP="alsa-plugins"
+
+package () {
+    mkdir -p $PKG_DEST/etc/alsa/conf.d
+    ln -s /usr/share/alsa.conf.d/99-pulseaudio-default.conf $PKG_DEST/etc/alsa/conf.d/
+}
