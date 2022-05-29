@@ -3,7 +3,7 @@
 NAME="arandr"
 DESC="ARandR provides a simple visual front end for XRandR"
 
-MAKEDEPS="python python-setuptools "
+MAKEDEPS="python"
 DEPS="xrandr cairo python-gobject python "
 
 PKG_VER=0.1.10
