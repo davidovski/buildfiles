@@ -2,4 +2,4 @@
 # This file was automatically generated, do not edit!
 
 DESC="All the the packages available in devel"
-DEPS=" asciidoc autoconf autoconf-archive autoconf2-13 automake bc bison boost cbindgen check cmake cmake-extra cmake-modules dejagnu distcc docbook-dtd docbook-xml docbook-xsl docbook4-xml doxygen expect flex gcc gdb git go gtk-doc help2man icecream imake itstool libexecinfo llvm m4 make meson mpc nasm ninja patch pkg-config rust scdoc sgml-common strace swig texinfo uthash vala waf xmlto xorg-cf-files"
+DEPS=" asciidoc autoconf autoconf-archive autoconf2-13 automake bc bison boost cabal cbindgen check cmake cmake-extra cmake-modules dejagnu distcc docbook-dtd docbook-xml docbook-xsl docbook4-xml doxygen expect flex gcc gdb git go gtk-doc help2man icecream imake itstool libexecinfo llvm m4 make meson mpc nasm ninja patch pkg-config rust scdoc sgml-common strace swig texinfo uthash vala waf xmlto xorg-cf-files"
