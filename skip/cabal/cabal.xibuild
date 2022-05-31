@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="cabal"
+DESC="The Haskell Cabal"
+
+MAKEDEPS="cabal-stage0"
+DEPS="gmp libffi musl zlib "
+
+PKG_VER=3.6.2.0
+SOURCE="https://hackage.haskell.org/package/cabal-install-$PKG_VER/cabal-install-$PKG_VER.tar.gz"
+ADDITIONAL="cabal.project.freeze "
+
+
+prepare () {
+    export cabal_home="$BUILD_ROOT/dist"
+
+	ln -sf cabal.project.freeze \
+		"cabal.project.freeze"
+}
+
+build () {
+    HOME="$cabal_home" cabal v2-update
+	HOME="$cabal_home" cabal v2-build all \
+		--allow-newer \
+		--jobs=${JOBS:-1} \
+		--prefix=/usr \
+		--docdir=/usr/share/doc/cabal \
+		--sysconfdir=/etc
+}
+
+package () {
+    HOME="$cabal_home" cabal list-bin --allow-newer all:exes | \
+    xargs install -Dm755 -t "$PKG_DEST"/usr/bin
+
+	mkdir -p "$PKG_DEST"/usr/share/man/man1
+	HOME="$cabal_home" cabal man --raw \
+		> "$PKG_DEST"/usr/share/man/man1/cabal.1
+
+	install -Dm644 LICENSE "$PKG_DEST/usr/share/licenses/cabal/LICENSE"
+}

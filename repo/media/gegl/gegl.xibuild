@@ -16,6 +16,7 @@ build () {
     cd build    &&
     export LDFLAGS="$LDFLAGS -lexecinfo"
     meson --prefix=/usr \
+        -Ddocs=false \
             .. &&
     ninja
 }

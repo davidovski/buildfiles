@@ -1,0 +1,284 @@
+#!/bin/sh
+
+NAME="chromium"
+DESC="Chromium webbrowser (ungoogled)"
+
+MAKEDEPS="meson ninja hwids lld pciutils"
+DEPS="alsa-lib at-spi2-atk at-spi2-core atk cairo dbus eudev expat ffmpeg4 flac font-opensans fontconfig freetype2 glib gtk3 harfbuzz lcms2 libdrm libevent libjpeg-turbo libpng pulseaudio libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxkbcommon libxml2 libxrandr libxslt mesa musl nspr nss opus pango re2 snappy wayland xdg-utils nodejs"
+
+PKG_VER=100.0.4896.127
+
+SOURCE="https://commondatastorage.googleapis.com/chromium-browser-official/chromium-$PKG_VER.tar.xz"
+
+fonts_package=cd96fc55dc243f6c6f4cb63ad117cad6cd48dceb 
+_launcher_ver=8
+ADDITIONAL="
+https://github.com/Eloston/ungoogled-chromium/archive/$PKG_VER-1.tar.gz
+https://chromium-fonts.storage.googleapis.com/$fonts_package      
+
+chromium-VirtualCursor-standard-layout.patch
+chromium-revert-drop-of-system-java.patch
+chromium-use-alpine-target.patch
+chromium.conf
+chromium-launcher.sh
+chromium.desktop
+credentials-header.patch
+default-pthread-stacksize.patch
+elf-arm.patch
+fix-narrowing-cast.patch
+fix-unittests-sandbox.patch
+gcc-arm.patch
+gdbinit.patch
+google-api.keys
+media-base.patch
+memory-tagging-arm64.patch
+musl-crashpad.patch
+musl-fixes.patch
+musl-hacks.patch
+musl-sandbox.patch
+musl-stat.patch
+musl-tid-caching.patch
+musl-v8-monotonic-pthread-cont_timedwait.patch
+nasm.patch
+no-execinfo.patch
+no-getcontext.patch
+no-mallinfo.patch
+quiche-arena-size.patch
+resolver.patch
+revert-use-ffile-compilation-dir.patch
+scoped-file.patch
+system-opus.patch
+use-deprecated-ffmpeg-api.patch
+unbundle-ffmpeg-av_stream_get_first_dts.patch
+use-oauth2-client-switches-as-default.patch
+wayland-egl.patch
+webcodecs-stop-using-AudioOpusEncoder.patch
+"
+
+prepare () {
+    apply_patches
+
+    # Congratulations, you have found a bug! The bug is in the application that uses this internal glibc header
+    files="third_party/libsync/src/include/sync/sync.h
+    third_party/crashpad/crashpad/compat/linux/sys/ptrace.h
+    base/allocator/allocator_shim_internals.h"
+    for f in $files; do 
+        sed -i "s/__BEGIN_DECLS/#ifdef __cplusplus\nextern \"C\" {\n#endif/g" $f
+        sed -i "s/__END_DECLS/#ifdef __cplusplus\n}\n#endif/g" $f
+        sed -i "s,#include <sys/cdefs.h>,," $f
+    done
+
+    # prevent annoying errors when regenerating gni
+	sed -i 's,^update_readme$,#update_readme,' \
+		third_party/libvpx/generate_gni.sh
+
+	# allow system dependencies in "official builds"
+	sed -i 's/OFFICIAL_BUILD/GOOGLE_CHROME_BUILD/' \
+		tools/generate_shim_headers/generate_shim_headers.py
+
+
+    tar xf chromium-launcher-$_launcher_ver.tar.gz
+    tar xf $fonts_package
+    tar xf $PKG_VER-1.tar.gz
+    ungoogled_repo="ungoogled-chromium-$PKG_VER-1"
+    utils="${ungoogled_repo}/utils"
+
+    python "$utils/prune_binaries.py" ./ "$ungoogled_repo/pruning.list"
+    python "$utils/patches.py" apply ./ "$ungoogled_repo/patches"
+    python "$utils/domain_substitution.py" apply -r "$ungoogled_repo/domain_regex.list" \
+        -f "$ungoogled_repo/domain_substitution.list" -c domainsubcache.tar.gz ./
+    
+    mv test_fonts ./third_party/test_fonts
+
+    sed 's|//third_party/usb_ids/usb.ids|/usr/share/hwdata/usb.ids|g' \
+        -i services/device/public/cpp/usb/BUILD.gn
+
+    mkdir -p third_party/node/linux/node-linux-x64/bin
+    ln -s /usr/bin/node third_party/node/linux/node-linux-x64/bin/
+
+    # Remove bundled libraries for which we will use the system copies; this
+    # *should* do what the remove_bundled_libraries.py script does, with the
+    # added benefit of not having to list all the remaining libraries
+
+    local use_system="
+    ffmpeg
+    flac
+    fontconfig
+    freetype
+    harfbuzz-ng
+    libdrm
+    libevent
+    libjpeg
+    libwebp
+    libxml
+    libxslt
+    opus
+    re2
+    snappy
+    "
+
+    local _lib
+    for _lib in ${use_system}; do
+        for f in $(find "third_party/$_lib/chromium" "third_party/$_lib/google" -type f \( -name "*.gn" -or -name "*.gni" -or -name "*.isolate" \)); do
+            echo "removing $f to use system $_lib"
+            rm $f
+        done
+    done
+
+    python build/linux/unbundle/replace_gn_files.py \
+        --system-libraries ${use_system}
+    python third_party/libaddressinput/chromium/tools/update-strings.py
+}
+
+build () {
+    #export CC=clang
+    #export CXX=clang++
+    #export LD=clang++
+    #export AR=ar
+    #export NM=nm
+    export LDFLAGS="-stdlib=libstdc++"
+
+    flags="
+custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
+host_toolchain=\"//build/toolchain/linux/unbundle:default\" 
+enable_nacl=false
+use_sysroot=false
+gold_path=\"/usr/bin/ld.gold\"
+use_custom_libcxx=false
+use_gold=false
+is_debug=false
+blink_symbol_level=0
+symbol_level=0
+icu_use_data_file=true
+use_allocator=\"none\"
+use_allocator_shim=false
+enable_widevine=true
+use_system_harfbuzz=false
+use_system_wayland_scanner=true
+use_cups=false
+use_gnome_keyring=false
+use_vaapi=true
+enable_js_type_check=true
+use_pulseaudio=true
+link_pulseaudio=true
+rtc_use_pipewire=true
+proprietary_codecs=false
+ffmpeg_branding=\"Chrome\"
+fatal_linker_warnings=false
+disable_fieldtrial_testing_config=true
+is_official_build=true
+is_cfi=false
+use_thin_lto=false
+use_cfi_icall=false
+chrome_pgo_phase=0
+    "
+
+    # Append ungoogled chromium flags to _flags array
+    flags="$flags
+    $(cat "ungoogled-chromium-$PKG_VER-1/flags.gn")
+    "
+
+    # Facilitate deterministic builds (taken from build/config/compiler/BUILD.gn)
+    CFLAGS="$CFLAGS   -Wno-builtin-macro-redefined"
+    CXXFLAGS="$CXXFLAGS -Wno-builtin-macro-redefined"
+    CPPFLAGS="$CPPFLAGS -D__DATE__=  -D__TIME__=  -D__TIMESTAMP__="
+
+    # Do not warn about unknown warning options
+    CFLAGS="$CFLAGS   -Wno-unknown-warning-option"
+    CXXFLAGS="$CXXFLAGS -Wno-unknown-warning-option"
+
+    python3 tools/gn/bootstrap/bootstrap.py -s -v --skip-generate-buildfiles
+
+    ./out/Release/gn gen out/Release --args="$flags"
+
+	ninja -C out/Release mksnapshot
+	ninja -C out/Release v8_context_snapshot_generator
+
+    ulimit -n 2048
+    ninja -C out/Release chrome chrome_sandbox chromedriver
+}
+
+package () {
+    install -Dm755 chromium-launcher.sh \
+        "$PKG_DEST"/usr/lib/chromium/chromium-launcher.sh
+
+    install -D out/Release/chrome "$PKG_DEST/usr/lib/chromium/chromium"
+    install -D out/Release/chromedriver "$PKG_DEST/usr/bin/chromedriver"
+    install -Dm4755 out/Release/chrome_sandbox "$PKG_DEST/usr/lib/chromium/chrome-sandbox"
+
+    install -Dm644 ../chromium-drirc-disable-10bpc-color-configs.conf \
+    "$PKG_DEST/usr/share/drirc.d/10-chromium.conf"
+
+    install -Dm644 chrome/installer/linux/common/desktop.template \
+        "$PKG_DEST/usr/share/applications/chromium.desktop"
+    install -Dm644 chrome/app/resources/manpage.1.in \
+        "$PKG_DEST/usr/share/man/man1/chromium.1"
+    sed -i \
+        -e 's/@@MENUNAME@@/Chromium/g' \
+        -e 's/@@PACKAGE@@/chromium/g' \
+        -e 's/@@USR_BIN_SYMLINK_NAME@@/chromium/g' \
+        "$PKG_DEST/usr/share/applications/chromium.desktop" \
+        "$PKG_DEST/usr/share/man/man1/chromium.1"
+
+    install -Dm644 chrome/installer/linux/common/chromium-browser/chromium-browser.appdata.xml \
+        "$PKG_DEST/usr/share/metainfo/chromium.appdata.xml"
+    sed -ni \
+    -e 's/chromium-browser\.desktop/chromium.desktop/' \
+    -e '/<update_contact>/d' \
+    -e '/<p>/N;/<p>\n.*\(We invite\|Chromium supports Vorbis\)/,/<\/p>/d' \
+    -e '/^<?xml/,$p' \
+    "$PKG_DEST/usr/share/metainfo/chromium.appdata.xml"
+
+    local toplevel_files="
+chrome_100_percent.pak
+chrome_200_percent.pak
+chrome_crashpad_handler
+resources.pak
+v8_context_snapshot.bin
+snapshot_blob.bin
+xdg-mime
+xdg-settings
+libEGL.so
+libGLESv2.so
+libvk_swiftshader.so
+vk_swiftshader_icd.json
+icudtl.dat
+libvulkan.so.1
+    "
+
+    mkdir -p "$PKG_DEST/usr/lib/chromium"
+    mkdir -p "$PKG_DEST/usr/lib/chromium/locales"
+    mkdir -p "$PKG_DEST/usr/lib/chromium/swiftshader"
+
+    for file in $toplevel_files; do
+        cp out/Release/$file "$PKG_DEST/usr/lib/chromium/"
+    done
+
+    for locale in out/Release/locales/* ; do
+        install -Dm644 $locale "$PKG_DEST/usr/lib/chromium/locales" 
+    done
+    for shader in out/Release/swiftshader/*.so; do 
+        install -Dm755 $shader "$PKG_DEST/usr/lib/chromium/swiftshader"
+    done
+
+    for size in 24 48 64 128 256; do
+        install -Dm644 "chrome/app/theme/chromium/product_logo_$size.png" \
+            "$PKG_DEST/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+    done
+
+    for size in 16 32; do
+        install -Dm644 "chrome/app/theme/default_100_percent/chromium/product_logo_$size.png" \
+            "$PKG_DEST/usr/share/icons/hicolor/${size}x${size}/apps/chromium.png"
+    done
+ 
+    install -Dm644 LICENSE "$PKG_DEST/usr/share/licenses/chromium/LICENSE"
+
+    mkdir -p "$PKG_DEST"/usr/bin
+    ln -sf /usr/lib/chromium/chromium-launcher.sh "$PKG_DEST"/usr/bin/chromium-browser
+    install -Dm644 chromium.conf \
+        "$PKG_DEST"/etc/chromium/chromium.conf
+
+    install -Dm644 chromium.desktop \
+        "$PKG_DEST"/usr/share/applications/chromium.desktop
+
+}

@@ -6,7 +6,7 @@ DESC="GNU Image Manipulation Program"
 MAKEDEPS="make gettext"
 DEPS="babl cairo fontconfig freetype2 gdk-pixbuf gexiv2 glib gtk2 harfbuzz json-glib lcms2 bzip2 libexecinfo intltool libjpeg-turbo libmypaint mypaint-brushes libpng librsvg libwebp libx11 libxext libxfixes libxmu libxpm musl pango poppler-glib gegl tiff xz zlib python glib-networking poppler-data"
 
-PKG_VER=2.10.30
+PKG_VER=2.10.28
 SOURCE="https://download.gimp.org/pub/gimp/v${PKG_VER%.*}/gimp-$PKG_VER.tar.bz2"
 
 build () {

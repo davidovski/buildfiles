@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="cabal-stage0"
+DESC="Cabal version used for bootstrapping"
+
+MAKEDEPS="make ghc"
+DEPS="gmp libffi musl zlib "
+
+PKG_VER=5b4258cbfa536b6362c4e20578ced51676206ea8
+SOURCE="https://github.com/haskell/cabal"
+BRANCH=$PKG_VER
+
+ADDITIONAL="linux-9.0.1.json depends-for-ghc-9.0.1.patch "
+
+prepare () {
+    apply_patches
+    cp linux-9.0.1.json "bootstrap"
+}
+
+build () {
+    ./bootstrap/bootstrap.py \
+    -d ./bootstrap/linux-9.0.1.json \
+		-w "$(command -v ghc)"
+}
+
+package () {
+    install -m 755 -D _build/bin/cabal "$PKG_DEST/usr/bin/cabal"
+	install -Dm644 LICENSE "$PKG_DEST/usr/share/licenses/cabal-stage0/LICENSE"
+}

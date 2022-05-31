@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make"
-DEPS="xiutils parseconf tar unzip"
+DEPS="xiutils parseconf tar unzip hbar"
 
 PKG_VER=1.3
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git

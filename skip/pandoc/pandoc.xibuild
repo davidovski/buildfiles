@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="pandoc"
+DESC="universal markup converter"
+
+MAKEDEPS="cabal"
+DEPS="gmp libffi musl zlib "
+
+PKG_VER=2.16.2
+SOURCE="https://hackage.haskell.org/package/pandoc-$PKG_VER/pandoc-$PKG_VER.tar.gz"
+ADDITIONAL="cabal.project.freeze "
+
+prepare () {
+	cp "$srcdir/cabal.project.freeze" .  
+	cabal update
+	cabal configure \
+		--prefix='/usr' \
+		--enable-tests \
+		--enable-split-sections \
+		--ghc-option="-split-sections" \
+		--ghc-option="-j" \
+		--ghc-option="-O1" \
+		--flags="+embed_data_files -trypandoc +static"
+}
+
+build () {
+    cabal install --only-dependencies
+	cabal build --jobs=${JOBS:-1}
+}
+
+package () {
+    bindir="$PKG_DEST/usr/bin"
+	mkdir -p "$bindir"
+	cabal install \
+		--installdir="$bindir" \
+		--install-method=copy
+	install -Dm644 man/pandoc.1 "$PKG_DEST"/usr/share/man/man1/pandoc.1
+}

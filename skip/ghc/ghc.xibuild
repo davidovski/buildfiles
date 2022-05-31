@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="ghc"
+DESC="The Glasgow Haskell Compiler"
+
+MAKEDEPS="make "
+DEPS="sbase gcc gmp libffi llvm musl ncurses perl "
+
+PKG_VER=9.0.1
+SOURCE="https://downloads.haskell.org/~ghc/$PKG_VER/ghc-$PKG_VER-src.tar.xz"
+ADDITIONAL="tests-use-iterable-from-collections-abc.patch skip-tests.patch 0006-Optimiser-Correctly-deal-with-strings-starting-with-unicode.patch 0005-buildpath-abi-stability.patch 0005-Set-min-LLVM-version-to-9-and-make-version-checking-.patch 0004-Fix-autoconf-after-6d6edb1bbb.patch 0003-llvmGen-Accept-range-of-LLVM-versions.patch 0002-configure-fix-the-use-of-some-obsolete-macros-19189.patch 0001-Replace-more-autotools-obsolete-macros-19189.patch 0000-bootstrap.patch "
+
+prepare () {
+    apply_patches
+
+	cp mk/build.mk.sample mk/build.mk
+
+	cat >> mk/build.mk <<-EOF
+		BuildFlavour         = perf-llvm
+	EOF
+    autoreconf -fi
+}
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --with-system-libffi \
+		--disable-ld-override
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

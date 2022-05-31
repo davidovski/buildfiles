@@ -1,0 +1,78 @@
+#!/bin/sh
+
+NAME="qt5-qtbase"
+DESC="Qt5 - QtBase components"
+
+MAKEDEPS="make libexecinfo"
+DEPS="dbus glib icu openssl pcre2 xdg-utils zlib zstd musl "
+
+PKG_VER=5.15.4
+commit="e0a15c11b853954d4189b2e30aa2450184de0987"
+SOURCE="https://invent.kde.org/qt/qt/qtbase/-/archive/$commit/qtbase-$commit.tar.gz"
+ADDITIONAL="
+compile-with-libexecinfo-enabled.patch
+qt-musl-iconv-no-bom.patch
+qt5-base-cflags.patch
+qt5-base-nostrip.patch
+qt5-qtbase.xibuild
+"
+
+qt5_prefix=/usr/lib/qt5
+qt5_datadir=/usr/share/qt5
+
+prepare () {
+    apply_patches
+    sed -i -e "s|-O2|$CXXFLAGS|" \
+    -e "/^QMAKE_RPATH/s| -Wl,-rpath,||g" \
+    -e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
+		mkspecs/common/*.conf
+
+	mkdir .git
+}
+
+build () {
+    	./configure -confirm-license -opensource \
+		-archdatadir "$qt5_prefix" \
+		-bindir  "$qt5_prefix"/bin \
+		-datadir "$qt5_datadir" \
+		-dbus-linked \
+		-docdir /usr/share/doc/qt5 \
+		-examplesdir /usr/share/doc/qt5/examples \
+		-glib \
+		-headerdir /usr/include/qt5 \
+		-icu \
+		-importdir "$qt5_prefix"/imports \
+		-libexecdir "$qt5_prefix"/libexec \
+		-no-rpath \
+		-no-separate-debug-info \
+		-no-pch \
+		-nomake examples \
+        -opengl \
+		-openssl-linked \
+		-optimized-qmake \
+		-plugin-sql-sqlite \
+		-plugindir "$qt5_prefix"/plugins \
+		-prefix /usr \
+		-sysconfdir /etc/xdg \
+		-system-libjpeg \
+		-system-libpng \
+		-system-sqlite \
+		-system-zlib \
+		-translationdir "$qt5_datadir"/translations \
+		-no-reduce-relocations 
+    export LDFLAGS="-lexecinfo"
+	make
+}
+
+package () {
+    make INSTALL_ROOT=$PKG_DEST install
+    install -d $PKG_DEST/usr/bin
+	for i in "$PKG_DEST"/"$qt5_prefix"/bin/*; do
+		name=${i##*/}
+		case $_name in
+		*.*)	dest="$PKG_DEST"/usr/bin/${name%.*}-qt5.${name##*.};;
+		*)	dest="$PKG_DEST"/usr/bin/${name%.*}-qt5;;
+		esac
+		ln -s ../lib/qt5/bin/"$name" "$dest"
+	done
+}
