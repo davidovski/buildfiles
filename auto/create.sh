@@ -1,16 +1,14 @@
 #!/bin/sh
 read -p "package name> " name
-repo=$(ls repo/ | fzf --prompt="repo> ")
 read -p "package version> " version
 read -p "description> " desc
-deps=$(find repo -type d -maxdepth 2 -mindepth 2 | sed 's/.*\///g' | rev | cut -f1 -d/ | rev |fzf -m --prompt="dependencies> " | tr '\n' ' ')
+deps=$(find repo -type d -maxdepth 1 -mindepth 1 | sed 's/.*\///g' | rev | cut -f1 -d/ | rev |fzf -m --prompt="dependencies> " | tr '\n' ' ')
 read -p "source url> " url
 read -p "additional urls> " additional
 type=$(find ./templates -type f | sed "s/.xibuild//g" | rev | cut -f1 -d/ | rev | fzf --prompt="build type> ")
 
 clear
 echo Name: $name
-echo Repo: $repo
 echo Deps: $deps
 echo Desc: $desc
 echo Vers: $version
@@ -20,7 +18,7 @@ echo Type: $type
 read -p "Ok? " go
 
 template=./templates/$type.xibuild
-package=repo/$repo/$name
+package=repo/$name
 buildfile=$package/$name.xibuild
 
 [ -f $buildfile ] && read -p "Buildfile already exists, overwrite? " go
