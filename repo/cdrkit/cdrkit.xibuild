@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="cdrkit"
+DESC="Suite of programs for CD/DVD recording, ISO image creation, and audio CD extraction"
+
+MAKEDEPS="make "
+DEPS="bzip2 file libcap musl zlib "
+
+PKG_VER=1.1.11
+SOURCE="https://dev.alpinelinux.org/archive/cdrkit/cdrkit-$PKG_VER.tar.gz"
+ADDITIONAL="gcc10.patch "
+
+prepare () {
+    sed -i include/xconfig.h.in -e "s/#define HAVE_RCMD 1/#undef HAVE_RCMD/g"
+    apply_patches
+}
+
+build () {
+    export CFLAGS="$CFLAGS -D__THROW=''"
+    make 
+}
+
+package () {
+    make PREFIX="$PKG_DEST/usr" install
+	cd "$PKG_DEST/usr/bin"
+	ln -s wodim cdrecord
+	ln -s readom readcd
+	ln -s genisoimage mkisofs
+	ln -s genisoimage mkhybrid
+	ln -s icedax cdda2wav
+	cd "$PKG_DEST/usr/share/man/man1"
+	ln -s wodim.1 cdrecord.1
+	ln -s readom.1 readcd.1
+	ln -s genisoimage.1 mkisofs.1
+	ln -s genisoimage.1 mkhybrid.1
+	ln -s icedax.1 cdda2wav.1
+}

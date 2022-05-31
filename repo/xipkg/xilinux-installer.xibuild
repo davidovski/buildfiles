@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DESC="Installer for xilinux"
+DEPS="xilib xiutils xipkg curl util-linux dosfstools xichroot xitui"
+
+package () {
+    install -Dm755 scripts/installer.sh $PKG_DEST/usr/bin/xilinux-install
+}
