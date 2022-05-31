@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="yt-dlp"
+DESC="A youtube-dl fork with additional features and fixes"
+
+MAKEDEPS="make "
+DEPS="python ffmpeg brotli cacerts musl "
+
+PKG_VER=2022.05.18
+SOURCE="https://github.com/yt-dlp/yt-dlp/archive/refs/tags/$PKG_VER.tar.gz"
+
+build () {
+    make PREFIX=/usr yt-dlp
+}
+
+package () {
+    install -Dm755 yt-dlp $PKG_DEST/usr/bin/yt-dlp
+    # man pages require pandoc to be built, saving that headache for later
+    #install -Dm644 yt-dlp.1 $PKG_DEST/usr/man/man1/yt-dlp.1
+
+    #install -Dm644 completions/bash/yt-dlp $PKG_DEST/usr/share/bash-completion/completions/yt-dlp
+	#install -Dm644 completions/zsh/_yt-dlp $PKG_DEST/usr/share/zsh/site-functions/_yt-dlp
+	#install -Dm644 completions/fish/yt-dlp.fish $PKG_DEST/usr/share/fish/vendor_completions.d/yt-dlp.fish
+}
