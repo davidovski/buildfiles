@@ -84,3 +84,5 @@ vim $buildfile
 sed -i "s/\$pkgname/$name/g" $buildfile
 sed -i "s/\$pkgver/\$PKG_VER/g" $buildfile
 sed -i "s/\$pkgdir/\$PKG_DEST/g" $buildfile
+sed -i "s/\$srcdir/\$BUILD_ROOT/g" $buildfile
+sed -i "s/\$builddir/\$BUILD_ROOT/g" $buildfile

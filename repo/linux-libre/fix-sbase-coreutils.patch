@@ -1,0 +1,137 @@
+diff -rNu a/arch/arc/boot/Makefile b/arch/arc/boot/Makefile
+--- a/arch/arc/boot/Makefile	2022-03-08 18:11:18.465678852 +0000
++++ b/arch/arc/boot/Makefile	2022-03-08 19:14:39.092796488 +0000
+@@ -7,7 +7,7 @@
+ OBJCOPYFLAGS= -O binary -R .note -R .note.gnu.build-id -R .comment -S
+ 
+ LINUX_START_TEXT = $$($(READELF) -h vmlinux | \
+-			grep "Entry point address" | grep -o 0x.*)
++			grep "Entry point address" | ggrep -o 0x.*)
+ 
+ UIMAGE_LOADADDR    = $(CONFIG_LINUX_LINK_BASE)
+ UIMAGE_ENTRYADDR   = $(LINUX_START_TEXT)
+diff -rNu a/arch/x86/Makefile b/arch/x86/Makefile
+--- a/arch/x86/Makefile	2022-03-08 18:11:18.639015396 +0000
++++ b/arch/x86/Makefile	2022-03-08 22:31:30.242604366 +0000
+@@ -252,7 +252,7 @@
+ endif
+ 	$(Q)$(MAKE) $(build)=$(boot) $(KBUILD_IMAGE)
+ 	$(Q)mkdir -p $(objtree)/arch/$(UTS_MACHINE)/boot
+-	$(Q)ln -fsn ../../x86/boot/bzImage $(objtree)/arch/$(UTS_MACHINE)/boot/$@
++	$(Q)ln -fs ../../x86/boot/bzImage $(objtree)/arch/$(UTS_MACHINE)/boot/$@
+ 
+ $(BOOT_TARGETS): vmlinux
+ 	$(Q)$(MAKE) $(build)=$(boot) $@
+diff -rNu a/Documentation/devicetree/bindings/Makefile b/Documentation/devicetree/bindings/Makefile
+--- a/Documentation/devicetree/bindings/Makefile	2022-03-08 18:11:18.385677370 +0000
++++ b/Documentation/devicetree/bindings/Makefile	2022-03-08 19:14:39.092796488 +0000
+@@ -15,7 +15,7 @@
+ 		  echo "Current PATH is:" >&2; \
+ 		  echo "$$PATH" >&2; false; }
+ 	@{ echo $(DT_SCHEMA_MIN_VERSION); \
+-	$(DT_DOC_CHECKER) --version 2>/dev/null || echo 0; } | sort -Vc >/dev/null || \
++	$(DT_DOC_CHECKER) --version 2>/dev/null || echo 0; } | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n -c >/dev/null || \
+ 	{ echo "ERROR: dtschema minimum version is v$(DT_SCHEMA_MIN_VERSION)" >&2; false; }
+ 
+ quiet_cmd_extract_ex = DTEX    $@
+diff -rNu a/Makefile b/Makefile
+--- a/Makefile	2022-03-08 18:11:18.462345457 +0000
++++ b/Makefile	2022-03-08 22:30:31.351528535 +0000
+@@ -579,7 +579,7 @@
+ 		echo >&2 "***"; \
+ 		false; \
+ 	fi
+-	$(Q)ln -fsn $(srctree) source
++	$(Q)ln -fs $(srctree) source
+ 	$(call cmd,makefile)
+ 	$(Q)test -e .gitignore || \
+ 	{ echo "# this is build directory, ignore it"; echo "*"; } > .gitignore
+@@ -1695,7 +1695,7 @@
+ PHONY += scripts_gdb
+ scripts_gdb: prepare0
+ 	$(Q)$(MAKE) $(build)=scripts/gdb
+-	$(Q)ln -fsn $(abspath $(srctree)/scripts/gdb/vmlinux-gdb.py)
++	$(Q)ln -fs $(abspath $(srctree)/scripts/gdb/vmlinux-gdb.py)
+ 
+ ifdef CONFIG_GDB_SCRIPTS
+ all: scripts_gdb
+diff -rNu a/scripts/gdb/linux/Makefile b/scripts/gdb/linux/Makefile
+--- a/scripts/gdb/linux/Makefile	2022-03-08 18:11:19.369028916 +0000
++++ b/scripts/gdb/linux/Makefile	2022-03-08 22:31:15.895675602 +0000
+@@ -5,7 +5,7 @@
+ symlinks := $(patsubst $(srctree)/$(src)/%,%,$(wildcard $(srctree)/$(src)/*.py))
+ 
+ quiet_cmd_symlink = SYMLINK $@
+-      cmd_symlink = ln -fsn $(patsubst $(obj)/%,$(abspath $(srctree))/$(src)/%,$@) $@
++      cmd_symlink = ln -fs $(patsubst $(obj)/%,$(abspath $(srctree))/$(src)/%,$@) $@
+ 
+ always-y += $(symlinks)
+ $(addprefix $(obj)/, $(symlinks)): FORCE
+diff -rNu a/tools/lib/bpf/Makefile b/tools/lib/bpf/Makefile
+--- a/tools/lib/bpf/Makefile	2022-03-08 18:11:19.425696632 +0000
++++ b/tools/lib/bpf/Makefile	2022-03-08 19:14:39.056129138 +0000
+@@ -6,8 +6,8 @@
+ 
+ VERSION_SCRIPT := libbpf.map
+ LIBBPF_VERSION := $(shell \
+-	grep -oE '^LIBBPF_([0-9.]+)' $(VERSION_SCRIPT) | \
+-	sort -rV | head -n1 | cut -d'_' -f2)
++	ggrep -oE '^LIBBPF_([0-9.]+)' $(VERSION_SCRIPT) | \
++	sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n -r | head -n1 | cut -d'_' -f2)
+ LIBBPF_MAJOR_VERSION := $(word 1,$(subst ., ,$(LIBBPF_VERSION)))
+ LIBBPF_MINOR_VERSION := $(word 2,$(subst ., ,$(LIBBPF_VERSION)))
+ 
+@@ -130,7 +130,7 @@
+ VERSIONED_SYM_COUNT = $(shell readelf --dyn-syms --wide $(OUTPUT)libbpf.so | \
+ 			      sed 's/\[.*\]//' | \
+ 			      awk '/GLOBAL/ && /DEFAULT/ && !/UND/ {print $$NF}' | \
+-			      grep -Eo '[^ ]+@LIBBPF_' | cut -d@ -f1 | sort -u | wc -l)
++			      ggrep -Eo '[^ ]+@LIBBPF_' | cut -d@ -f1 | sort -u | wc -l)
+ 
+ CMD_TARGETS = $(LIB_TARGET) $(PC_FILE)
+ 
+@@ -193,7 +193,7 @@
+ 		readelf --dyn-syms --wide $(OUTPUT)libbpf.so |		 \
+ 		    sed 's/\[.*\]//' |					 \
+ 		    awk '/GLOBAL/ && /DEFAULT/ && !/UND/ {print $$NF}'|  \
+-		    grep -Eo '[^ ]+@LIBBPF_' | cut -d@ -f1 |		 \
++		    ggrep -Eo '[^ ]+@LIBBPF_' | cut -d@ -f1 |		 \
+ 		    sort -u > $(OUTPUT)libbpf_versioned_syms.tmp; 	 \
+ 		diff -u $(OUTPUT)libbpf_global_syms.tmp			 \
+ 		     $(OUTPUT)libbpf_versioned_syms.tmp;		 \
+@@ -202,8 +202,8 @@
+ 		exit 1;							 \
+ 	fi
+ 
+-HDR_MAJ_VERSION := $(shell grep -oE '^$(pound)define LIBBPF_MAJOR_VERSION ([0-9]+)$$' libbpf_version.h | cut -d' ' -f3)
+-HDR_MIN_VERSION := $(shell grep -oE '^$(pound)define LIBBPF_MINOR_VERSION ([0-9]+)$$' libbpf_version.h | cut -d' ' -f3)
++HDR_MAJ_VERSION := $(shell ggrep -oE '^$(pound)define LIBBPF_MAJOR_VERSION ([0-9]+)$$' libbpf_version.h | cut -d' ' -f3)
++HDR_MIN_VERSION := $(shell ggrep -oE '^$(pound)define LIBBPF_MINOR_VERSION ([0-9]+)$$' libbpf_version.h | cut -d' ' -f3)
+ 
+ check_version: $(VERSION_SCRIPT) libbpf_version.h
+ 	@if [ "$(HDR_MAJ_VERSION)" != "$(LIBBPF_MAJOR_VERSION)" ]; then        \
+diff -rNu a/tools/objtool/Makefile b/tools/objtool/Makefile
+--- a/tools/objtool/Makefile	2022-03-08 18:11:19.429030027 +0000
++++ b/tools/objtool/Makefile	2022-03-08 19:14:39.056129138 +0000
+@@ -34,7 +34,7 @@
+ LDFLAGS  += $(LIBELF_LIBS) $(LIBSUBCMD) $(KBUILD_HOSTLDFLAGS)
+ 
+ # Allow old libelf to be used:
+-elfshdr := $(shell echo '$(pound)include <libelf.h>' | $(CC) $(CFLAGS) -x c -E - | grep elf_getshdr)
++elfshdr := $(shell echo '$(pound)include <libelf.h>' | $(CC) $(CFLAGS) -x c -E - | ggrep elf_getshdr)
+ CFLAGS += $(if $(elfshdr),,-DLIBELF_USE_DEPRECATED)
+ 
+ AWK = awk
+diff -rNu a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+--- a/scripts/link-vmlinux.sh	2022-03-12 19:18:55.306065317 +0000
++++ b/scripts/link-vmlinux.sh	2022-03-12 19:17:31.794505850 +0000
+@@ -231,7 +231,7 @@
+ 		--strip-all ${1} ${2} 2>/dev/null
+ 	# Change e_type to ET_REL so that it can be used to link final vmlinux.
+ 	# Unlike GNU ld, lld does not allow an ET_EXEC input.
+-	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 status=none
++	printf '\1' | dd of=${2} conv=notrunc bs=1 seek=16 
+ }
+ 
+ # Create ${2} .S file with all symbols from the ${1} object file
+

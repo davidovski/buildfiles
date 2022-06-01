@@ -4,7 +4,7 @@ NAME="poppler"
 DESC="PDF rendering library based on xpdf 3.0"
 
 MAKEDEPS="cmake "
-DEPS="fontconfig freetype2 lcms2 libjpeg-turbo libpng musl openjpeg tiff "
+DEPS="fontconfig freetype2 lcms2 libjpeg-turbo libpng musl openjpeg tiff openjpeg"
 
 PKG_VER=22.05.0
 SOURCE="https://poppler.freedesktop.org/poppler-$PKG_VER.tar.xz"

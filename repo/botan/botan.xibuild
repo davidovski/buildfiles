@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="botan"
+DESC="Crypto and TLS for C++11"
+
+MAKEDEPS="make boost bzip2 openssl sqlite xz zlib"
+DEPS="musl libstdc++ libgcc"
+
+PKG_VER=2.19.1
+SOURCE="https://botan.randombit.net/releases/Botan-$PKG_VER.tar.xz"
+
+build () {
+    CXXFLAGS="$CXXFLAGS -O3"
+    python3 ./configure.py \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --with-boost \
+		--with-bzip2 \
+		--with-lzma \
+		--with-openmp \
+		--with-openssl \
+		--with-sqlite3 \
+		--with-zlib \
+		--with-os-feature=getrandom \
+        --disable-static
+    make
+}
+
+check() {
+	LD_LIBRARY_PATH="$BUILD_ROOT" ./botan-test
+}
+
+
+package () {
+    make DESTDIR=$PKG_DEST install
+    rm -rf "$PKG_DEST"/usr/lib/python*
+}

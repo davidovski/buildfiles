@@ -3,7 +3,7 @@
 MAKEDEPS=""
 DEPS="linux"
 
-PKG_VER=5.15.14
+PKG_VER=5.18.1
 SOURCE=https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
 BRANCH=0c6a7b3bf728b95c8b7b95328f94335e2bb2c967
 

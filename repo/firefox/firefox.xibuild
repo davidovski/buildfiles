@@ -4,7 +4,7 @@ NAME="firefox"
 DESC="Firefox web browser"
 
 MAKEDEPS="make rust cbindgen"
-DEPS="nodejs alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib dbus-glib"
+DEPS="libseccomp nodejs alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib dbus-glib"
 
 PKG_VER=100.0.2
 

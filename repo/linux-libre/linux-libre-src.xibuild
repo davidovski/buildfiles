@@ -1,0 +1,13 @@
+#!/bin/sh
+
+DESC="$DESC (source)"
+
+package () {
+    srcdir=$PKG_DEST/usr/src/
+    mkdir -p $srcdir
+    tar -xf linux-$PKG_VER.tar.xz -C $srcdir
+    make -C $srcdir/linux-$PKG_VER mrproper
+    cp config $srcdir/linux-$PKG_VER/.config
+    make -C $srcdir/linux-$PKG_VER olddefconfig
+}
+

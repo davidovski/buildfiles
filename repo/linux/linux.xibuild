@@ -3,7 +3,7 @@
 MAKEDEPS="make bc"
 DEPS="sbase kmod"
 
-PKG_VER=5.17.6
+PKG_VER=5.18.1
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 ADDITIONAL="
     fix-sbase-coreutils.patch

@@ -1,0 +1,121 @@
+#!/bin/sh
+
+NAME="thunderbird"
+DESC="Thunderbird email client"
+
+MAKEDEPS="make "
+DEPS="atk botan cairo cairomm dbus-glib dbus ffmpeg4 fontconfig freetype2 gdk-pixbuf glib gtk3 icu json-c libevent libffi libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrender musl nspr nss pango pixman zlib llvm "
+
+PKG_VER=99.0b2
+SOURCE="https://ftp.mozilla.org/pub/thunderbird/releases/$PKG_VER/source/thunderbird-$PKG_VER.source.tar.xz"
+ADDITIONAL="vendor-prefs.js thunderbird.desktop stab.h sandbox-sched_setscheduler.patch sandbox-largefile.patch sandbox-fork.patch metainfo.patch mallinfo.patch fix-webrtc-glibcisms.patch fix-tools.patch fix-rust-target.patch fix-fortify-system-wrappers.patch distribution.ini disable-neon-in-aom.patch disable-moz-stackwalk.patch avoid-redefinition.patch allow-custom-rust-vendor.patch "
+
+app_dir=/usr/lib/thunderbird
+
+prepare () {
+    apply_patches
+
+    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/audio_thread_priority/.cargo-checksum.json
+    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/target-lexicon-0.9.0/.cargo-checksum.json
+}
+
+build () {
+    export SHELL=/bin/sh
+	export BUILD_OFFICIAL=1
+	export MOZILLA_OFFICIAL=1
+	export USE_SHORT_LIBNAME=1
+	export MACH_USE_SYSTEM_PYTHON=1
+	export MOZBUILD_STATE_PATH=$BUILD_ROOT/mozbuild
+	# Build with Clang, takes less RAM
+	export CC="clang"
+	export CXX="clang++"
+
+    export LDFLAGS="$LDFLAGS -Wl,-rpath,$app_dir"
+
+	./mach configure \
+		--prefix=/usr \
+        --disable-elf-hack \
+        --enable-rust-simd \
+		\
+		--disable-crashreporter \
+		--disable-install-strip \
+		--disable-jemalloc \
+		--disable-profiling \
+		--disable-strip \
+		--disable-tests \
+		--disable-updater \
+		\
+		--enable-alsa \
+		--enable-application=comm/mail \
+		--enable-dbus \
+		--enable-default-toolkit=cairo-gtk3-wayland \
+		--enable-ffmpeg \
+		--enable-hardening \
+		--enable-necko-wifi \
+		--enable-official-branding \
+		--enable-openpgp \
+		--enable-optimize="$CFLAGS -O2" \
+		--enable-pulseaudio \
+		--enable-release \
+		--enable-smoosh \
+		--enable-system-ffi \
+		--enable-system-pixman \
+		\
+		--with-system-botan \
+		--with-system-ffi \
+		--with-system-icu \
+		--with-system-jpeg \
+		--with-system-jsonc \
+		--with-system-libevent \
+		--with-system-libvpx \
+		--with-system-nspr \
+		--with-system-nss \
+		--with-system-pixman \
+		--with-system-webp \
+		--with-system-zlib \
+		--with-libclang-path=/usr/lib \
+		\
+		--with-unsigned-addon-scopes=app,system \
+        --without-wasm-sandboxed-libraries \
+		--allow-addon-sideload
+		#--disable-gold \
+	./mach build
+}
+
+package () {
+    DESTDIR="$PKG_DEST" ./mach install
+
+	local _png
+	for _png in "$BUILD_ROOT"/comm/mail/branding/thunderbird/default*.png; do
+		local i=${_png%.png}
+		i=${i##*/default}
+		install -Dm644 "$_png" "$PKG_DEST"/usr/share/icons/hicolor/"$i"x"$i"/apps/thunderbird.png
+	done
+
+	install -Dm644 "$BUILD_ROOT"/comm/mail/branding/thunderbird/TB-symbolic.svg \
+		"$PKG_DEST"/usr/share/icons/hicolor/symbolic/apps/thunderbird-symbolic.svg
+
+	install -Dm644 "$BUILD_ROOT"/comm/mail/branding/thunderbird/net.thunderbird.Thunderbird.appdata.xml \
+		-t "$PKG_DEST"/usr/share/metainfo
+
+	install -Dm644 "$BUILD_ROOT"/thunderbird.desktop \
+		-t "$PKG_DEST"/usr/share/applications
+
+	install -Dm644 "$BUILD_ROOT"/vendor-prefs.js \
+		-t "$PKG_DEST"/$app_dir/defaults/pref
+	install -Dm644 "$BUILD_ROOT"/distribution.ini \
+		-t "$PKG_DEST"/$app_dir/distribution
+
+	# Use system-provided dictionaries
+	ln -Tsfv /usr/share/hunspell "$PKG_DEST"/usr/lib/thunderbird/dictionaries
+	ln -Tsfv /usr/share/hyphen "$PKG_DEST"/usr/lib/thunderbird/hyphenation
+
+	# Replace duplicate binary with wrapper
+	# https://bugzilla.mozilla.org/show_bug.cgi?id=658850
+	install -Dm755 /dev/stdin "$PKG_DEST"/usr/bin/thunderbird <<- EOF
+	#!/bin/sh
+	exec /usr/lib/thunderbird/thunderbird "\$@"
+	EOF
+	rm "$PKG_DEST"/$app_dir/thunderbird-bin
+	ln -sfv /usr/bin/thunderbird "$PKG_DEST"/$app_dir/thunderbird-bin
+}

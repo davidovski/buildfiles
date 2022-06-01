@@ -8,17 +8,17 @@
 [x] pulsemixer
 [ ] pavucontrol
 [x] chromium
-[ ] firefox
+[x] firefox
 [x] ffmpeg
 [x] dmenu
 [x] rofi
 [x] mpv
-[ ] sxiv
+[x] sxiv
 [x] feh
 [x] gimp
 [ ] lmms
 [ ] ardour
-[ ] cava
+[x] cava
 [x] pcmanfm
 [ ] thunar
 [ ] zathura
