@@ -1,39 +1,18 @@
 #!/bin/sh
 
-NAME="sed"
-DESC="GNU stream editor"
+MAKEDEPS="make sort"
+DEPS="musl acl attr"
 
-MAKEDEPS=" perl"
+PKG_VER=0.8.6
+SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
+DESC="stream editor from toybox"
 
-PKG_VER=4.8
-#SOURCE="https://ftp.gnu.org/pub/gnu/sed/sed-$PKG_VER.tar.xz"
-SOURCE="https://ftp.heanet.ie/mirrors/ftp.gnu.org/gnu/sed/sed-$PKG_VER.tar.xz"
-
-ADDITIONAL="
-sed.post-deinstall
-"
-
-build() {
-	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
-		--prefix=/usr \
-		--bindir=/bin \
-		--mandir=/usr/share/man \
-		--infodir=/usr/share/info \
-		--disable-i18n \
-		--disable-nls
-	make
+build () {
+    ./configure 
+    make sed
 }
 
-check() {
-	make check
-}
-
-package() {
-	make DESTDIR="$PKG_DEST" install
-
-	rm -rf "$PKG_DEST"/usr/lib/charset.alias || true
-	rmdir -p "$PKG_DEST"/usr/lib 2>/dev/null || true
+package () {
+    install -Dm755 sed $PKG_DEST/usr/bin/
 }
 

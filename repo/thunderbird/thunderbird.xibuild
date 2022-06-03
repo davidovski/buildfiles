@@ -153,18 +153,17 @@ package() {
 
 	cat >> "$PKG_DEST"/$mozappdir/distribution/distribution.ini <<- EOF
 	[Global]
-	id=alpinelinux
+	id=xilinux
 	version=1.0
-	about=Mozilla Thunderbird for Alpine Linux
+	about=Mozilla Thunderbird for XiLinux
 
 	[Preferences]
-	app.distributor=alpinelinux
+	app.distributor=xilinux
 	app.distributor.channel=thunderbird
-	app.partner.alpinelinux=alpinelinux
 	EOF
 
 	# Replace duplicate binary with wrapper
 	# https://bugzilla.mozilla.org/show_bug.cgi?id=658850
-	ln -snf thunderbird "$PKG_DEST/$mozappdir/thunderbird-bin"
+	ln -sf thunderbird "$PKG_DEST/$mozappdir/thunderbird-bin"
 }
 

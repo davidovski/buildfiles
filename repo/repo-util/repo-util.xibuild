@@ -1,5 +1,0 @@
-#!/bin/sh
-# This file was automatically generated, do not edit!
-
-DESC="All the the packages available in util"
-DEPS=" acpi base64 bash cpio curl dash diffutils dosfstools dracut e2fsprogs file flite fmt fzf gawk genfstab graphviz grep groff htop iftop ifupdown-ng inetutils iproute2 iw iwd keyutils less lm-sensors man-db mandoc mksh mpdscribble neofetch net-tools nmap openssh pandoc pciutils pdfgrep pm-utils procps-ng rhash rsync sort stty sudo tmux unzip usbutils util-linux webfs wget which wireless-tools wpa_supplicant"
