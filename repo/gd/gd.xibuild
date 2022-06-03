@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="gd"
+DESC="Library for the dynamic creation of images by programmers"
+
+MAKEDEPS=" libjpeg-turbo libpng libwebp freetype2 zlib"
+
+PKG_VER=2.3.3
+SOURCE="https://github.com/libgd/libgd/releases/download/gd-$PKG_VER/libgd-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--without-fontconfig \
+		--disable-werror
+	make
+}
+
+check() {
+	TMPDIR=/tmp make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

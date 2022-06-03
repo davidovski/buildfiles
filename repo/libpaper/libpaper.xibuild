@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="libpaper"
+DESC="Library for handling paper characteristics"
+
+MAKEDEPS=" automake autoconf libtool"
+
+PKG_VER=1.1.28
+SOURCE="https://deb.debian.org/debian/pool/main/libp/libpaper/libpaper_$PKG_VER.tar.gz"
+
+prepare() {
+	cd "$BUILD_ROOT"
+	autoreconf -fi
+}
+
+build() {
+	cd "$BUILD_ROOT"
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--mandir="$PKG_DEST"/usr/share/man
+	make
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make prefix="$PKG_DEST"/usr install
+}
+

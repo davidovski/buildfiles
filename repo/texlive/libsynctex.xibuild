@@ -1,0 +1,6 @@
+#!/bin/sh
+DESC="Library for synchronization between TeX files and resulting file"
+
+package() {
+	add_from_main usr/lib/libsynctex.so.*
+}

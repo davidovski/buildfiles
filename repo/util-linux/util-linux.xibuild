@@ -9,6 +9,7 @@ DESC="System Utilities for Linux"
 
 build () {
     ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime   \
+            --bindir=/usr/bin    \
             --libdir=/usr/lib    \
             --docdir=/usr/share/doc/util-linux-$PKG_VER\
             --disable-static     \

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="pcre2-32"
+DESC="PCRE2 with 32 bit character support"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=10.39
+SOURCE="https://github.com/PhilipHazel/pcre2/releases/download/pcre2-$PKG_VER/pcre2-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+		CFLAGS="$CFLAGS -O3" \
+		--prefix=/usr \
+		--docdir=/usr/share/doc/pcre2-32-$PKG_VER \
+		--htmldir=/usr/share/doc/pcre2-32-$PKG_VER/html \
+		--enable-pcre2-16 \
+		--enable-pcre2-32 \
+		--enable-pcre2grep-libz \
+		--enable-pcre2test-libedit \
+		--with-match-limit-depth=8192 
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

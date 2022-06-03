@@ -22,8 +22,6 @@ create() {
 mkdir -p repo/meta/all/
 ls repo | create 'AlL tHe pacKageS!!' > repo/meta/all/all.xibuild
 
-skip="skip meta"
-
 for repo in $(ls repo); do
     pkg_name=repo-$repo
     if echo $skip | grep -q $repo; then

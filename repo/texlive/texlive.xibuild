@@ -1,0 +1,114 @@
+#!/bin/sh
+
+NAME="texlive"
+DESC="Comprehensive TeX document production system"
+
+MAKEDEPS="cairo fontconfig freetype2 gd gmp graphite harfbuzz icu libpaper libpng libxaw libxmu motif mpfr pixman poppler zlib zziplib"
+
+PKG_VER=20210628.59744
+SOURCE="https://github.com/TeX-Live/texlive-source/archive/f398692b64d6462c35939ec9489694d0828edee5.tar.gz"
+
+prepare() {
+    sed -i '/AC_SEARCH_LIBS/a KPSE_KPATHSEA_FLAGS' texk/bibtex-x/configure.ac
+	(cd texk/bibtex-x && autoreconf)
+
+	sed -i s/SELFAUTOPARENT/TEXMFROOT/ texk/tex4htk/t4ht.c
+}
+
+build() {
+	mkdir -p "$BUILD_ROOT"/build && cd "$BUILD_ROOT"/build
+
+	# builders keep failing when -jN == nproc
+	export MAKEFLAGS="$MAKEFLAGS -j$((JOBS<16 ? JOBS : 16))"
+
+	../configure -C \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--datarootdir=/usr/share \
+		--datadir=/usr/share \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--enable-biber \
+		--enable-dvipng \
+		--enable-dvipsk \
+		--enable-epsfwin \
+		--enable-ipc \
+		--enable-luatex \
+		--enable-mftalkwin \
+		--enable-ps2eps \
+		--enable-psutils \
+		--enable-regiswin \
+		--enable-shared \
+		--enable-tektronixwin \
+		--enable-unitermwin \
+		--enable-xetex \
+        --disable-lcdf-typetools \
+		--disable-aleph \
+		--disable-bibtexu \
+		--disable-dialog \
+		--disable-dump-share \
+		--disable-dvi2tty \
+		--disable-dvisvgm \
+		--disable-largefile \
+		--disable-multiplatform \
+		--disable-native-texlive-build \
+		--disable-pdfopen \
+		--disable-ps2pkm \
+		--disable-static \
+		--disable-t1utils \
+		--disable-tex4htk \
+		--disable-ttf2pk2 \
+		--disable-xindy \
+		--disable-xindy-docs \
+		--disable-xindy-rules \
+		--disable-xpdfopen \
+		--disable-xz \
+		--with-clisp-runtime=default \
+		--with-freetype2-include=/usr/include/freetype2 \
+		--with-freetype2-libdir=/usr/lib \
+		--with-ps=gs \
+		--with-system-cairo \
+		--with-system-freetype2 \
+		--with-system-gd \
+		--with-system-gmp \
+		--with-system-graphite \
+		--with-system-graphite2 \
+		--with-system-harfbuzz \
+		--with-system-icu \
+		--with-system-libpaper \
+		--with-system-libpng \
+		--with-system-mpfr \
+		--with-system-ncurses \
+		--with-system-pixman \
+		--with-system-pnglib \
+		--with-system-poppler \
+		--with-system-potrace \
+		--with-system-t1lib \
+		--with-system-zlib \
+		--with-system-zziplib \
+		--with-x-dvi-toolkit=xaw \
+		--without-texinfo
+
+	make
+}
+
+package() {
+	cd $BUILD_ROOT/build
+
+	make DESTDIR="$PKG_DEST" install
+
+	local texcmd; for texcmd in $_pdftex; do
+		ln -s pdftex "$PKG_DEST"/usr/bin/$texcmd
+	done
+	ln -s eptex "$PKG_DEST"/usr/bin/platex
+	ln -s euptex "$PKG_DEST"/usr/bin/uplatex
+
+	# As Alpine has packaged all TeXlive packages, there is no need for a
+	# separate package manager. apk should be used to get and update texmf-dist
+	rm "$PKG_DEST"/usr/bin/tlmgr
+
+	# texmf-dist is not platform dependent, those are packaged in the
+	# texmf-dist package
+	rm -rf "$PKG_DEST"/usr/share/texmf-dist
+}
+

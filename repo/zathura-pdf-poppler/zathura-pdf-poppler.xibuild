@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="zathura-pdf-poppler"
+DESC="Poppler plugin adds PDF support to zathura"
+
+MAKEDEPS="zathura poppler meson ninja"
+DEPS="zathura poppler"
+
+PKG_VER=0.3.0
+SOURCE="https://git.pwmt.org/pwmt/zathura-pdf-poppler/-/archive/$PKG_VER/zathura-pdf-poppler-$PKG_VER.tar.gz"
+
+build() {
+	meson --prefix=/usr \
+         build
+	meson compile ${JOBS:+-j ${JOBS}} -C build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C build
+}
+

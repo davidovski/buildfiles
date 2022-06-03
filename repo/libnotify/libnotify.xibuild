@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="libnotify"
+DESC="Desktop notification library"
+
+MAKEDEPS="meson gdk-pixbuf dbus gtk3 gobject-introspection"
+
+PKG_VER=0.7.9
+SOURCE="https://download.gnome.org/sources/libnotify/${PKG_VER%.*}/libnotify-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		-Dtests=true \
+		-Dintrospection=enabled \
+		-Dgtk_doc=false \
+		-Dman=false \
+		output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}

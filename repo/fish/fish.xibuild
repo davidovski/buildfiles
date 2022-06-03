@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="fish"
+DESC="Modern interactive commandline shell"
+
+MAKEDEPS="cmake "
+DEPS="bc sbase pcre2-32 musl ncurses "
+
+PKG_VER=3.4.1
+SOURCE="https://github.com/fish-shell/fish-shell/releases/download/$PKG_VER/fish-$PKG_VER.tar.xz"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+check() {
+	cd build
+	./fish_tests
+    cd ..
+}
+
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

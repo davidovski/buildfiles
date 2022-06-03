@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="asciidoctor"
+DESC="Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats"
+
+MAKEDEPS="ruby"
+
+PKG_VER=2.0.17
+SOURCE="https://rubygems.org/downloads/asciidoctor-$PKG_VER.gem"
+
+package() {
+	local gemdir="$(ruby -e 'puts Gem.default_dir')"
+
+	gem install \
+		--local \
+		--install-dir "$PKG_DEST"/$gemdir \
+		--ignore-dependencies \
+		--verbose \
+		--no-document \
+		"$BUILD_ROOT"/asciidoctor-$PKG_VER.gem
+
+	rm -rf "$PKG_DEST"/$gemdir/cache
+
+	cd "$PKG_DEST"
+	local i; for i in usr/lib/ruby/gems/*/bin/*; do
+		if [ -e "$i" ]; then
+			mkdir -p "$PKG_DEST"/usr/bin
+			ln -s /$i "$PKG_DEST"/usr/bin/
+		fi
+	done
+}
+

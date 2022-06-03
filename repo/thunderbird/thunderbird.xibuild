@@ -3,41 +3,66 @@
 NAME="thunderbird"
 DESC="Thunderbird email client"
 
-MAKEDEPS="make "
-DEPS="atk botan cairo cairomm dbus-glib dbus ffmpeg4 fontconfig freetype2 gdk-pixbuf glib gtk3 icu json-c libevent libffi libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrender musl nspr nss pango pixman zlib llvm "
+MAKEDEPS=" alsa-lib automake botan cargo cbindgen clang dbus-glib gettext gtk3 icu json-c libevent libffi libjpeg-turbo libnotify libogg libtheora libtool libvorbis libvpx libwebp libxcomposite libxt llvm m4 mesa nasm nodejs nspr nss pipewire pulseaudio python sed wireless-tools zip"
 
-PKG_VER=99.0b2
+PKG_VER=91.8.0
 SOURCE="https://ftp.mozilla.org/pub/thunderbird/releases/$PKG_VER/source/thunderbird-$PKG_VER.source.tar.xz"
-ADDITIONAL="vendor-prefs.js thunderbird.desktop stab.h sandbox-sched_setscheduler.patch sandbox-largefile.patch sandbox-fork.patch metainfo.patch mallinfo.patch fix-webrtc-glibcisms.patch fix-tools.patch fix-rust-target.patch fix-fortify-system-wrappers.patch distribution.ini disable-neon-in-aom.patch disable-moz-stackwalk.patch avoid-redefinition.patch allow-custom-rust-vendor.patch "
 
-app_dir=/usr/lib/thunderbird
+ADDITIONAL="
+allow-custom-rust-vendor.patch
+avoid-redefinition.patch
+disable-moz-stackwalk.patch
+disable-neon-in-aom.patch
+fix-fortify-system-wrappers.patch
+fix-rust-target.patch
+fix-tools.patch
+fix-webrtc-glibcisms.patch
+mallinfo.patch
+sandbox-fork.patch
+sandbox-largefile.patch
+sandbox-sched_setscheduler.patch
+stab.h
+thunderbird.desktop
+"
 
-prepare () {
-    apply_patches
+mozappdir=/usr/lib/thunderbird
 
-    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/audio_thread_priority/.cargo-checksum.json
-    sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/target-lexicon-0.9.0/.cargo-checksum.json
+_clear_vendor_checksums() {
+	sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/$1/.cargo-checksum.json
 }
 
-build () {
-    export SHELL=/bin/sh
+prepare() {
+    apply_patches
+	cp "$BUILD_ROOT"/stab.h toolkit/crashreporter/google-breakpad/src/
+
+	_clear_vendor_checksums audio_thread_priority
+	_clear_vendor_checksums target-lexicon-0.9.0
+}
+
+build() {
+	mkdir -p "$BUILD_ROOT"/objdir
+	cd "$BUILD_ROOT"/objdir
+
+	export SHELL=/bin/sh
 	export BUILD_OFFICIAL=1
 	export MOZILLA_OFFICIAL=1
 	export USE_SHORT_LIBNAME=1
 	export MACH_USE_SYSTEM_PYTHON=1
-	export MOZBUILD_STATE_PATH=$BUILD_ROOT/mozbuild
+	export MOZBUILD_STATE_PATH="$BUILD_ROOT"/mozbuild
 	# Build with Clang, takes less RAM
 	export CC="clang"
 	export CXX="clang++"
 
-    export LDFLAGS="$LDFLAGS -Wl,-rpath,$app_dir"
+	# set rpath so linker finds the libs
+	export LDFLAGS="$LDFLAGS -Wl,-rpath,$mozappdir"
 
-	./mach configure \
+	../mach configure \
 		--prefix=/usr \
         --disable-elf-hack \
         --enable-rust-simd \
 		\
 		--disable-crashreporter \
+		--disable-gold \
 		--disable-install-strip \
 		--disable-jemalloc \
 		--disable-profiling \
@@ -71,51 +96,75 @@ build () {
 		--with-system-nspr \
 		--with-system-nss \
 		--with-system-pixman \
+		--with-system-png \
 		--with-system-webp \
 		--with-system-zlib \
-		--with-libclang-path=/usr/lib \
-		\
-		--with-unsigned-addon-scopes=app,system \
-        --without-wasm-sandboxed-libraries \
-		--allow-addon-sideload
-		#--disable-gold \
-	./mach build
+		--with-libclang-path=/usr/lib
+	../mach build
 }
 
-package () {
-    DESTDIR="$PKG_DEST" ./mach install
+package() {
+	cd "$BUILD_ROOT"/objdir
+
+	DESTDIR="$PKG_DEST" MOZ_MAKE_FLAGS="$MAKEOPTS" ../mach install
+
+	install -m755 -d "$PKG_DEST"/usr/share/applications
+	install -m755 -d "$PKG_DEST"/usr/share/pixmaps
 
 	local _png
 	for _png in "$BUILD_ROOT"/comm/mail/branding/thunderbird/default*.png; do
 		local i=${_png%.png}
 		i=${i##*/default}
-		install -Dm644 "$_png" "$PKG_DEST"/usr/share/icons/hicolor/"$i"x"$i"/apps/thunderbird.png
+		install -D -m644 "$_png" "$PKG_DEST"/usr/share/icons/hicolor/"$i"x"$i"/apps/thunderbird.png
 	done
 
 	install -Dm644 "$BUILD_ROOT"/comm/mail/branding/thunderbird/TB-symbolic.svg \
-		"$PKG_DEST"/usr/share/icons/hicolor/symbolic/apps/thunderbird-symbolic.svg
+		"$PKG_DEST/usr/share/icons/hicolor/symbolic/apps/thunderbird-symbolic.svg"
+	install -Dm644 "$BUILD_ROOT"/comm/mail/branding/thunderbird/default48.png \
+		$PKG_DEST/usr/share/pixmaps/thunderbird.png
 
-	install -Dm644 "$BUILD_ROOT"/comm/mail/branding/thunderbird/net.thunderbird.Thunderbird.appdata.xml \
-		-t "$PKG_DEST"/usr/share/metainfo
+	install -m644 "$BUILD_ROOT"/thunderbird.desktop "$PKG_DEST"/usr/share/applications/thunderbird.desktop
 
-	install -Dm644 "$BUILD_ROOT"/thunderbird.desktop \
-		-t "$PKG_DEST"/usr/share/applications
+	# Add StartupWMClass=firefox on the .desktop files so Desktop Environments
+	# correctly associate the window with their icon, the correct fix is to have
+	# thunderbird sets its own AppID but this will work for the meantime
+	# See: https://bugzilla.mozilla.org/show_bug.cgi?id=1607399
+	echo "StartupWMClass=thunderbird" >> "$PKG_DEST"/usr/share/applications/thunderbird.desktop
 
-	install -Dm644 "$BUILD_ROOT"/vendor-prefs.js \
-		-t "$PKG_DEST"/$app_dir/defaults/pref
-	install -Dm644 "$BUILD_ROOT"/distribution.ini \
-		-t "$PKG_DEST"/$app_dir/distribution
+	# install our vendor prefs
+	install -d "$PKG_DEST"/$mozappdir/defaults/preferences
 
-	# Use system-provided dictionaries
-	ln -Tsfv /usr/share/hunspell "$PKG_DEST"/usr/lib/thunderbird/dictionaries
-	ln -Tsfv /usr/share/hyphen "$PKG_DEST"/usr/lib/thunderbird/hyphenation
+	cat >> "$PKG_DEST"/$mozappdir/defaults/preferences/vendor.js <<- EOF
+	// Use LANG environment variable to choose locale
+	pref("intl.locale.requested", "");
+
+	// Use system-provided dictionaries
+	pref("spellchecker.dictionary_path", "/usr/share/hunspell");
+
+	// Disable default mailer checking.
+	pref("mail.shell.checkDefaultMail", false);
+
+	// Don't disable our bundled extensions in the application directory
+	pref("extensions.autoDisableScopes", 11);
+	pref("extensions.shownSelectionUI", true);
+	EOF
+
+	install -d "$PKG_DEST"/$mozappdir/distribution
+
+	cat >> "$PKG_DEST"/$mozappdir/distribution/distribution.ini <<- EOF
+	[Global]
+	id=alpinelinux
+	version=1.0
+	about=Mozilla Thunderbird for Alpine Linux
+
+	[Preferences]
+	app.distributor=alpinelinux
+	app.distributor.channel=thunderbird
+	app.partner.alpinelinux=alpinelinux
+	EOF
 
 	# Replace duplicate binary with wrapper
 	# https://bugzilla.mozilla.org/show_bug.cgi?id=658850
-	install -Dm755 /dev/stdin "$PKG_DEST"/usr/bin/thunderbird <<- EOF
-	#!/bin/sh
-	exec /usr/lib/thunderbird/thunderbird "\$@"
-	EOF
-	rm "$PKG_DEST"/$app_dir/thunderbird-bin
-	ln -sfv /usr/bin/thunderbird "$PKG_DEST"/$app_dir/thunderbird-bin
+	ln -snf thunderbird "$PKG_DEST/$mozappdir/thunderbird-bin"
 }
+

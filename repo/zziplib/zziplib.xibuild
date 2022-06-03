@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="zziplib"
+DESC="Lightweight library to easily extract data from zip files"
+
+MAKEDEPS=" cmake zlib python bash ninja"
+
+PKG_VER=0.13.72
+SOURCE="https://github.com/gdraheim/zziplib/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DBUILD_STATIC_LIBS=False \
+		-DBUILD_TESTS=OFF \
+		-DMSVC_STATIC_RUNTIME=OFF \
+		-DZZIPSDL=OFF \
+		-DZZIPTEST=OFF \
+		-DZZIPWRAP=OFF \
+		.
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" ninja -C build install
+}

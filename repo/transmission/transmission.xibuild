@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="transmission"
+DESC="Lightweight GTK BitTorrent client"
+
+MAKEDEPS="cmake curl dbus-glib ninja gtk3 intltool libevent libnotify openssl tar"
+
+PKG_VER=3.00
+SOURCE="https://github.com/transmission/transmission-releases/raw/master/transmission-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+disable-missing-lang.patch
+fix-gettext-sigsegv.patch
+transmission-daemon.confd
+transmission-daemon.initd
+"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DENABLE_GTK=TRUE \
+		-DENABLE_CLI=TRUE \
+        -DENABLE_NLS=FALSE \
+		-DENABLE_TESTS=FALSE \
+		-DWITH_SYSTEMD=FALSE \
+		-DINSTALL_LIB=TRUE
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+
+	install -D -m755 "$BUILD_ROOT"/transmission-daemon.initd \
+		"$PKG_DEST"/etc/init.d/transmission-daemon
+	install -D -m644 "$BUILD_ROOT"/transmission-daemon.confd \
+		"$PKG_DEST"/etc/conf.d/transmission-daemon
+}

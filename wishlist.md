@@ -6,7 +6,7 @@
 [x] mpd
 [x] ncmpcpp
 [x] pulsemixer
-[ ] pavucontrol
+[?] pavucontrol
 [x] chromium
 [x] firefox
 [x] ffmpeg
@@ -21,7 +21,7 @@
 [x] cava
 [x] pcmanfm
 [ ] thunar
-[ ] zathura
+[x] zathura
 [x] polybar
 
 [ ] gnu screen

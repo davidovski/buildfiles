@@ -3,42 +3,44 @@
 NAME="tor"
 DESC="Anonymous network connectivity"
 
-MAKEDEPS="make "
-DEPS="libcap libseccomp libevent openssl cacerts zlib xz zstd "
+MAKEDEPS=" libcap libseccomp libevent openssl1.1-compat ca-certificates zlib xz zstd"
 
-PKG_VER=0.4.7.7
+PKG_VER=0.4.6.10
 SOURCE="https://www.torproject.org/dist/tor-$PKG_VER.tar.gz"
-ADDITIONAL="torrc.sample.patch tor.initd tor.confd"
+
+ADDITIONAL="
+0002-disable-wildcard-escaping-test_patch
+tor.confd
+tor.initd
+torrc.sample.patch
+"
 
 prepare () {
     apply_patches
 }
 
-build () {
-    ./configure \
+build() {
+	./configure \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--localstatedir=/var \
 		--mandir=/usr/share/man \
-		--disable-html-manual
+		--disable-html-manual \
+        --enable-zstd
 	make
-
 }
 
-package () {
-    make DESTDIR="$PKG_DEST" install
 
-	install -dm0755 -o "tor" \
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	install -dm0755 -o "$pkgusers" \
 		"$PKG_DEST"/var/lib/"tor" \
 		"$PKG_DEST"/var/log/"tor"
 
-	install -Dm0755 "tor".initd \
+	install -Dm0755 "$BUILD_ROOT"/"tor".initd \
 		"$PKG_DEST"/etc/init.d/"tor"
-	install -Dm0644 "tor".confd \
+	install -Dm0644 "$BUILD_ROOT"/"tor".confd \
 		"$PKG_DEST"/etc/conf.d/"tor"
 }
 
-postinstall () {
-    adduser -S -D -H -h /var/lib/tor -s /sbin/nologin -g tor tor 2>/dev/null
-    return 0
-}

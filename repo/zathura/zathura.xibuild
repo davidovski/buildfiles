@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="zathura"
+DESC="highly customizable and functional document viewer"
+
+MAKEDEPS="girara file sqlite3 intltool check libseccomp python-docutils ncurses meson ninja python-sphinx texlive libsynctex"
+
+PKG_VER=0.4.9
+SOURCE="https://git.pwmt.org/pwmt/zathura/-/archive/$PKG_VER/zathura-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-fish-completion.patch
+"
+
+build() {
+	meson --prefix=/usr \
+         build
+	meson compile ${JOBS:+-j ${JOBS}} -C build
+}
+
+check() {
+	meson test --no-rebuild -v -C build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C build
+}

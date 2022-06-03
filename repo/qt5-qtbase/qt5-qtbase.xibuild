@@ -10,7 +10,6 @@ PKG_VER=5.15.4
 commit="e0a15c11b853954d4189b2e30aa2450184de0987"
 SOURCE="https://invent.kde.org/qt/qt/qtbase/-/archive/$commit/qtbase-$commit.tar.gz"
 ADDITIONAL="
-compile-with-libexecinfo-enabled.patch
 qt-musl-iconv-no-bom.patch
 qt5-base-cflags.patch
 qt5-base-nostrip.patch
