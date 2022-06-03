@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="fluidsynth"
+DESC="A real-time software synthesizer based on the SoundFont 2 specifications"
+
+MAKEDEPS="alsa-lib dbus glib jack libsndfile pulseaudio readline cmake doxygen graphviz"
+
+PKG_VER=2.2.5
+SOURCE="https://github.com/fluidsynth/fluidsynth/archive/v$PKG_VER/fluidsynth-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_INSTALL_DIR=lib \
+		-DFLUID_DAEMON_ENV_FILE=/etc/conf.d/fluidsynth
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

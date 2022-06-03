@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="serd"
+DESC="lightweight C library for RDF syntax"
+
+MAKEDEPS="python"
+
+PKG_VER=0.30.10
+SOURCE="http://download.drobilla.net/serd-$PKG_VER.tar.bz2"
+
+build() {
+	python3 waf configure --prefix=/usr
+	python3 waf build
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

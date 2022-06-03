@@ -17,7 +17,7 @@
 [x] feh
 [x] gimp
 [ ] lmms
-[ ] ardour
+[?] ardour
 [x] cava
 [x] pcmanfm
 [ ] thunar

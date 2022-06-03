@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="vamp-sdk"
+DESC="Framework for audio analysis and feature extraction"
+
+MAKEDEPS="libsndfile"
+
+PKG_VER=2.9.0
+SOURCE="https://code.soundsoftware.ac.uk/attachments/download/2588/vamp-plugin-sdk-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+}
+

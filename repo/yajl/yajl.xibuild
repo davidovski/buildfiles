@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="yajl"
+DESC="Yet Another JSON Library (YAJL)"
+
+MAKEDEPS=" cmake"
+
+PKG_VER=2.1.0
+SOURCE="https://dev.alpinelinux.org/archive/yajl/yajl-$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build . \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_INSTALL_PREFIX=/usr
+	make -C build
+}
+
+package() {
+	make install -C build DESTDIR="$PKG_DEST"
+
+	mkdir -p "$PKG_DEST"/usr/lib
+	mv "$PKG_DEST"/usr/share/pkgconfig "$PKG_DEST"/usr/lib/
+}
+
+

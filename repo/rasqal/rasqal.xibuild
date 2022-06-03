@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="rasqal"
+DESC="RDF query library"
+
+MAKEDEPS="raptor2"
+
+PKG_VER=0.9.33
+SOURCE="https://download.librdf.org/source/rasqal-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="gcovr"
+DESC="Generates a simple report that summarizes the gcc code coverage"
+
+MAKEDEPS=""
+
+PKG_VER=5.1
+SOURCE="https://github.com/gcovr/gcovr/archive/$PKG_VER.tar.gz"
+
+build() {
+	python3 setup.py build
+}
+
+check() {
+	py.test-3 -v gcovr
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}
+

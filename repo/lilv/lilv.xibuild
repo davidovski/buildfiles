@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="lilv"
+DESC="C library for simpler use of LV2 plugins"
+
+MAKEDEPS="lv2 python serd libsndfile sord sratom"
+
+PKG_VER=0.24.12
+SOURCE="http://download.drobilla.net/lilv-$PKG_VER.tar.bz2"
+
+build() {
+	python3 waf configure --prefix=/usr
+	python3 waf build
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

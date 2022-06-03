@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="sratom"
+DESC="library for serialising LV2 atoms to and from RDF"
+
+MAKEDEPS="python serd sord lv2"
+
+PKG_VER=0.6.8
+SOURCE="http://download.drobilla.net/sratom-$PKG_VER.tar.bz2"
+
+build() {
+	python3 waf configure --prefix=/usr
+	python3 waf build
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

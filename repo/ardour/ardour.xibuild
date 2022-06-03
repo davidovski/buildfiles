@@ -1,0 +1,41 @@
+#!/bin/sh
+
+NAME="ardour"
+DESC="professional-grade digital audio workstation"
+
+MAKEDEPS="alsa-lib atkmm aubio boost fftw gtk2 gtkmm itstool jack libarchive libexecinfo liblo libpng libsamplerate libsigc++ libsndfile lilv lrdf lv2 pulseaudio python readline redland rubberband serd sratom taglib vamp-sdk fluidsynth hidapi"
+
+PKG_VER=6.9.0
+SOURCE="https://community.ardour.org/src/Ardour-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+always-link-execinfo.patch
+disable-backtrace.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	python3 waf configure \
+		--prefix=/usr \
+		--cxx11 \
+		--keepflags \
+		--optimize \
+		--freedesktop \
+		--no-phone-home \
+		--with-backends=pulseaudio,jack,alsa,dummy
+		#FIXME: add missing dependencies
+		# --use-external-libs
+	python3 waf build
+}
+
+check() {
+	python3 waf test
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

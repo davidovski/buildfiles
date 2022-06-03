@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="sord"
+DESC="C library for storing RDF data in memory"
+
+MAKEDEPS="python pcre serd"
+
+PKG_VER=0.16.8
+SOURCE="http://download.drobilla.net/sord-$PKG_VER.tar.bz2"
+
+build() {
+	python3 waf configure --prefix=/usr --test
+	python3 waf build
+}
+
+check() {
+	python3 waf test
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

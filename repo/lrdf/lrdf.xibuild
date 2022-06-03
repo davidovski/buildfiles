@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="lrdf"
+DESC="RDF library for accessing plugin metadata in the LADSPA plugin system"
+
+MAKEDEPS="autoconf automake libtool raptor2"
+
+PKG_VER=0.6.1
+SOURCE="https://github.com/swh/LRDF/archive/v$PKG_VER.tar.gz"
+
+prepare() {
+	autoreconf -if
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

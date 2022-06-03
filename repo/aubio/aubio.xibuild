@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="aubio"
+DESC="tool designed for the extraction of annotations from audio signals"
+
+MAKEDEPS="ffmpeg4 fftw jack libsamplerate libsndfile python"
+
+PKG_VER=0.4.9
+SOURCE="https://aubio.org/pub/aubio-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+unversioned-python.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	python3 waf configure --prefix=/usr
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+

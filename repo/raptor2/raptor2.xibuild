@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="raptor2"
+DESC="RDF parser toolkit for Redland"
+
+MAKEDEPS="curl libxml2 libxslt yajl"
+
+PKG_VER=2.0.15
+SOURCE="https://download.librdf.org/source/raptor2-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+CVE-2017-18926.patch
+CVE-2020-25713.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

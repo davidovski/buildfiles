@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="liblo"
+DESC="Open Sound Control protocol implementation for POSIX systems"
+
+MAKEDEPS=""
+
+PKG_VER=0.31
+SOURCE="http://downloads.sourceforge.net/liblo/liblo-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

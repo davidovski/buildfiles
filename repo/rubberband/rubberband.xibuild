@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="rubberband"
+DESC="library for audio time-stretching and pitch-shifting"
+
+MAKEDEPS="fftw ladspa libsamplerate libsndfile lv2 meson vamp-sdk"
+
+PKG_VER=2.0.2
+SOURCE="https://breakfastquay.com/files/releases/rubberband-$PKG_VER.tar.bz2"
+
+build() {
+	meson --prefix=/usr \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--buildtype=plain \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

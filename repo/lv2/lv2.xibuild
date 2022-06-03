@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="lv2"
+DESC="extensible open standard for audio plugins"
+
+MAKEDEPS="python gtk2 libsndfile gcovr"
+
+PKG_VER=1.18.2
+SOURCE="http://lv2plug.in/spec/lv2-$PKG_VER.tar.bz2"
+
+build() {
+	python3 waf configure --prefix=/usr -T
+	python3 waf build
+}
+
+check() {
+	python3 waf test
+}
+
+package() {
+	python3 waf install --destdir="$PKG_DEST"
+}
+
