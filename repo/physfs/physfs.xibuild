@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="physfs"
+DESC="Library providing access to various archives, for use in video games"
+
+MAKEDEPS="cmake"
+
+PKG_VER=3.0.2
+SOURCE="https://icculus.org/physfs/downloads/physfs-$PKG_VER.tar.bz2"
+
+build() {
+	cmake \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		-DPHYSFS_BUILD_TEST=OFF 
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

@@ -1,0 +1,73 @@
+#!/bin/sh
+
+NAME="gnupg"
+DESC="GNU Privacy Guard 2 - meta package for full GnuPG suite"
+
+MAKEDEPS=" autoconf automake bzip2 gettext gnutls libassuan libgcrypt libgpg-error libksba libtool libusb npth openldap pinentry sqlite texinfo zlib"
+
+PKG_VER=2.2.34
+SOURCE="https://gnupg.org/ftp/gcrypt/gnupg/gnupg-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+0001-Include-sys-select.h-for-FD_SETSIZE.patch
+0010-avoid-beta-warning.patch
+0020-avoid-regenerating-defsincdate-use-shipped-file.patch
+0110-avoid-simple-memory-dumps-via-ptrace.patch
+0210-dirmngr-hkp-avoid-potential-race-condition-when-some-host-die.patch
+0220-dirmngr-avoid-need-for-hkp-housekeeping.patch
+0230-dirmngr-avoid-automatically-checking-upstream-swdb.patch
+0310-gpg-default-to-3072-bit-keys.patch
+0320-gpg-default-to-aes256.patch
+0330-gpg-default-to-sha512-for-all-signature-types-on-rsa-keys.patch
+0340-gpg-prefer-sha512-and-sha384-in-personal-digest.patch
+0410-make-gpg-zip-use-tar-from-path.patch
+0420-gpg-drop-import-clean-from-default-keyserver-import-options.patch
+60-scdaemon.rules
+fix-i18n.patch
+gnupg-scdaemon.pre-install
+"
+
+prepare() {
+    apply_patches
+
+	autoreconf -vif
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--disable-nls \
+		--enable-bzip2 \
+		--enable-tofu \
+		--enable-scdaemon \
+		--enable-ccid-driver
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	install -m755 tools/gpg-zip "$PKG_DEST"/usr/bin/gpg-zip
+	install -Dm644 -t "$PKG_DEST"/lib/udev/rules.d/ "$BUILD_ROOT"/60-scdaemon.rules
+
+	cd "$PKG_DEST"
+
+	# install compat symlink
+	ln -s gpg  usr/bin/gpg2
+	ln -s gpgv usr/bin/gpgv2
+
+	# Remove docs for systemd-user
+	rm -rf usr/share/doc/gnupg/examples/systemd-user
+
+	# Remove gpg scheme interpreter - an internal tool used in gpg tests
+	rm -rf usr/bin/gpgscm
+}
+

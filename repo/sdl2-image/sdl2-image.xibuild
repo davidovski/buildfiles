@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="sdl2-image"
+DESC="A simple library to load images of various formats as SDL surfaces"
+
+MAKEDEPS=" sdl2 libpng libjpeg-turbo libwebp tiff zlib"
+
+PKG_VER=2.0.5
+SOURCE="https://www.libsdl.org/projects/SDL_image/release/SDL2_image-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+CVE-2019-13616.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--enable-png \
+		--enable-png-shared \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

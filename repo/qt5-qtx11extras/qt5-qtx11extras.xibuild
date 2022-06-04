@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="qt5-qtx11extras"
+DESC="Provides platform-specific APIs for X11"
+
+MAKEDEPS=" qt5-qtbase"
+
+PKG_VER=5.15.3_git20201027
+_commit="3898f5484fd4864b047729bfeda9a1222f32364f"
+SOURCE="https://invent.kde.org/qt/qt/qtx11extras/-/archive/$_commit/qtx11extras-$_commit.tar.gz"
+
+prepare() {
+	# We need to make the build system think we're running in a git repository
+	# so it correctly symlinks during the build
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtx11extras
+}
+

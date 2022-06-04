@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="sxmo-dmenu"
+DESC="Dmenu fork for Sxmo UI; supports highlight, centering, volume-key navigation and more"
+
+MAKEDEPS=" libx11 libxinerama libxft"
+
+PKG_VER=5.0.13
+SOURCE="https://git.sr.ht/~mil/sxmo-dmenu/archive/$PKG_VER.tar.gz"
+
+prepare() {
+	default_prepare
+	sed -i -e '/CFLAGS/{s/-Os//;s/=/+=/}' \
+		-e '/LDFLAGS/{s/=/+=/}' \
+		"$BUILD_ROOT"/config.mk
+}
+
+build() {
+	make X11INC=/usr/include/X11 \
+		X11LIB=/usr/lib/X11 \
+		FREETYPEINC=/usr/include/freetype2 \
+		-C "$BUILD_ROOT"
+}
+
+package() {
+	make DESTDIR=$PKG_DEST PREFIX=/usr \
+		-C "$BUILD_ROOT" install
+}
+

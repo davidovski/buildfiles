@@ -1,0 +1,72 @@
+#!/bin/sh
+
+NAME="bluez"
+DESC="Tools for the Bluetooth protocol stack"
+
+MAKEDEPS="dbus libusb eudev json-c libical readline glib linux-headers autoconf automake libtool python-docutils"
+
+PKG_VER=5.64
+SOURCE="https://www.kernel.org/pub/linux/bluetooth/bluez-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+001-bcm43xx-Add-bcm43xx-3wire-variant.patch
+002-bcm43xx-The-UART-speed-must-be-reset-after-the-firmw.patch
+003-Increase-firmware-load-timeout-to-30s.patch
+004-Move-the-43xx-firmware-into-lib-firmware.patch
+005-hostname-Use-phone-class-for-handhelds.patch
+bluetooth.initd
+disable-lock-test.patch
+fix-endianness.patch
+fix-musl.patch
+mpris-proxy.desktop
+musl.patch
+org.bluez.obex.service
+rfcomm.confd
+rfcomm.initd
+test-mesh-crypto.patch
+"
+
+prepare() {
+    apply_patches
+	autoreconf -vif
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--libexecdir=/usr/lib \
+		--disable-systemd \
+		--enable-library \
+		--enable-deprecated \
+		--enable-hid2hci \
+		--enable-mesh \
+		--enable-sixaxis \
+		--with-dbusconfdir=/usr/share
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+	install -D -m644 src/main.conf "$PKG_DEST"/etc/bluetooth/main.conf
+
+	install -Dm755 "$BUILD_ROOT"/bluetooth.initd "$PKG_DEST"/etc/init.d/bluetooth
+	install -Dm755 "$BUILD_ROOT"/rfcomm.initd "$PKG_DEST"/etc/init.d/rfcomm
+	install -Dm644 "$BUILD_ROOT"/rfcomm.confd "$PKG_DEST"/etc/conf.d/rfcomm
+
+	# Fix shebang for the installed binary
+	sed 's|^#!/usr/bin/python$|#!/usr/bin/env python3|g' -i test/simple-agent
+	install -Dm755 test/simple-agent "$PKG_DEST"/usr/bin/bluez-simple-agent
+
+	# Autostart mpris-proxy to pass through MPRIS control over BlueZ
+	install -Dm644 "$BUILD_ROOT"/mpris-proxy.desktop -t "$PKG_DEST"/etc/xdg/autostart/
+
+	# Bluez tool for the Bluetooth Management API
+	install -Dm755 "$BUILD_ROOT"/tools/btmgmt "$PKG_DEST"/usr/bin/btmgmt
+}

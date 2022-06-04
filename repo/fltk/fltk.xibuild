@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="fltk"
+DESC="A cross-platform C++ GUI toolkit"
+
+MAKEDEPS="libx11 libxext libxft mesa libxinerama libpng libjpeg-turbo"
+
+PKG_VER=1.3.8
+SOURCE="http://fltk.org/pub/fltk/$PKG_VER/fltk-$PKG_VER-source.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--enable-threads \
+		--with-optim="$CXXFLAGS"
+	make V=1
+
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	# remove static libs
+	rm "$PKG_DEST"/usr/lib/*.a
+}

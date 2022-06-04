@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="zynaddsubfx"
+DESC="Opensource software synthesizer capable of making a countless number of instruments."
+
+MAKEDEPS="cmake jack fltk portaudio mxml sndio bash-completion liblo"
+DEPS="less "
+
+PKG_VER=3.0.6
+SOURCE="https://downloads.sourceforge.net/project/zynaddsubfx/zynaddsubfx/$PKG_VER/zynaddsubfx-$PKG_VER.tar.bz2"
+ADDITIONAL="
+"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib 
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

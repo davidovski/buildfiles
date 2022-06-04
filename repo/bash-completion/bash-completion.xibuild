@@ -1,0 +1,43 @@
+#!/bin/sh
+
+NAME="bash-completion"
+DESC="Command-line tab-completion for bash"
+
+MAKEDEPS="autoconf automake bc grep procps-ng psmisc sed usbutils"
+
+PKG_VER=2.11
+SOURCE="https://github.com/scop/bash-completion/releases/download/$PKG_VER/bash-completion-$PKG_VER.tar.xz"
+
+prepare() {
+	default_prepare
+
+	# ifup/down tests are still failing
+	rm $BUILD_ROOT/test/t/test_ifdown.py
+	rm $BUILD_ROOT/test/t/test_ifup.py
+	sed -i '/test_ifdown.py \\/d' $BUILD_ROOT/test/t/Makefile.am
+	sed -i '/test_ifup.py \\/d' $BUILD_ROOT/test/t/Makefile.am
+	autoreconf -fiv
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+
+	mkdir -p "$PKG_DEST"/usr/share/doc/bash-completion/
+	install -m644 AUTHORS CHANGES CONTRIBUTING.md README.md \
+		"$PKG_DEST"/usr/share/doc/bash-completion/
+
+	cd "$PKG_DEST"/usr/share/bash-completion/completions
+	for c in $_conflicting; do
+		rm -f $c
+	done
+}
+

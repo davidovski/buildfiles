@@ -1,0 +1,70 @@
+#!/bin/sh
+
+NAME="ghostscript"
+DESC="An interpreter for the PostScript language and for PDF"
+
+MAKEDEPS="make freetype openjpeg libpng zlib tiff cups jbig2dec"
+DEPS="musl "
+
+PKG_VER=9.56.1
+SOURCE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9561/ghostscript-$PKG_VER.tar.gz"
+ADDITIONAL="ghostscript-system-zlib.patch fix-sprintf.patch "
+
+prepare () {
+    apply_patches
+    	rm -r jpeg libpng zlib tiff lcms2mt cups/libs jbig2dec \
+		freetype
+
+	# fix parallel builds
+	sed -i -e 's/ECHO_XE/ECHOGS_XE/g' \
+		-e 's/^\($(GLOBJ)md5.$(OBJ) :.*\)/\1 $(ECHOGS_XE)/' \
+		base/lib.mak
+	aclocal && autoconf --force
+
+	cd $BUILD_ROOT/ijs
+	libtoolize --force && aclocal && autoconf && automake --add-missing
+	update_config_sub
+}
+
+build () {
+    # build ijs
+	cd "$BUILD_ROOT"/ijs
+	./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--disable-static
+	make
+
+	cd "$BUILD_ROOT"
+
+	# --disable-compile-inits is needed to link with system-zlib
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--docdir=/usr/share/doc/ghostscript \
+		--enable-dynamic \
+		--with-system-libtiff \
+		--with-ijs \
+		--with-jbig2dec \
+		--without-libpaper \
+		--without-versioned-path \
+		--enable-gtk \
+		--with-drivers=ALL \
+		--with-fontpath=/usr/share/fonts/Type1:/usr/share/fonts \
+		--disable-compile-inits
+	make obj/arch.h # workaround parallel build issue
+	make so all
+}
+
+package () {
+    make -j1 DESTDIR="$PKG_DEST" install soinstall
+
+	cd "$BUILD_ROOT"/ijs
+	make -j1 DESTDIR="$PKG_DEST" install
+	cd ..
+
+	# create empty dir for future fonts
+	mkdir -p "$PKG_DEST"/usr/share/fonts/Type1
+}

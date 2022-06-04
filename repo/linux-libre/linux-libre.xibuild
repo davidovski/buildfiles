@@ -13,12 +13,12 @@ ADDITIONAL="
 "
 
 prepare () {
+    make mrproper
+    apply_patches
+
     sh deblob-${PKG_VER%.*} --force
 
-    apply_patches
     cp config .config
-
-    export GREP="ggrep"
 
     make olddefconfig
     make -s kernelrelease > version

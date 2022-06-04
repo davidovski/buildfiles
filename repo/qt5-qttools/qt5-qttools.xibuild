@@ -1,0 +1,69 @@
+#!/bin/sh
+
+NAME="qt5-qttools"
+DESC="Qt5 - QtTool components"
+
+MAKEDEPS=" clang qt5-qtbase"
+
+PKG_VER=5.15.3_git20201202
+_commit="33693a928986006d79c1ee743733cde5966ac402"
+SOURCE="https://invent.kde.org/qt/qt/qttools/-/archive/$_commit/qttools-$_commit.tar.gz"
+
+ADDITIONAL="
+assistant-qt5.desktop
+designer-qt5.desktop
+linguist-qt5.desktop
+qdbusviewer-qt5.desktop
+"
+
+_qt5_prefix=/usr/lib/qt5
+prepare() {
+
+	# We need to make the build system think we're running in a git repository
+	# so it correctly symlinks during the build
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+package() {
+	make install INSTALL_ROOT="$PKG_DEST"
+
+	# -qt5 symlinks
+	mkdir -p "$PKG_DEST"/usr/bin/
+	for i in "$PKG_DEST"/"$_qt5_prefix"/bin/*; do
+		ln -s ../lib/qt5/bin/${i##*/} "$PKG_DEST"/usr/bin/${i##*/}-qt5
+	done
+
+	for i in $source; do
+		case $i in
+		*.desktop) install -Dm644 "$BUILD_ROOT"/$i \
+			"$PKG_DEST"/usr/share/applications/$i ;;
+		esac
+	done
+
+	# icons
+	install -m644 -p -D src/assistant/assistant/images/assistant.png \
+		"$PKG_DEST"/usr/share/icons/hicolor/32x32/apps/assistant-qt5.png
+	install -m644 -p -D src/assistant/assistant/images/assistant-128.png \
+		"$PKG_DEST"/usr/share/icons/hicolor/128x128/apps/assistant-qt5.png
+	install -m644 -p -D src/designer/src/designer/images/designer.png \
+		"$PKG_DEST"/usr/share/icons/hicolor/32x32/apps/designer-qt5.png
+	install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer.png \
+		"$PKG_DEST"/usr/share/icons/hicolor/32x32/apps/qdbusviewer-qt5.png
+	install -m644 -p -D src/qdbus/qdbusviewer/images/qdbusviewer-128.png \
+		"$PKG_DEST"/usr/share/icons/hicolor/128x128/apps/qdbusviewer-qt5.png
+	# linguist icons
+	for icon in src/linguist/linguist/images/icons/linguist-*-32.png ; do
+		size=$(echo ${icon##*/} | cut -d- -f2)
+	    install -p -m644 -D $icon \
+		"$PKG_DEST"/usr/share/icons/hicolor/"$size"x"$size"/apps/linguist.png
+	done
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+}

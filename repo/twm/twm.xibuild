@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="twm"
+DESC="Tom's or Tab Window Manager for the X Window System"
+
+MAKEDEPS=" bison xorg-util-macros libxext libx11 libxt libice libxmu"
+
+PKG_VER=1.0.11
+SOURCE="https://www.x.org/releases/individual/app/twm-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--datarootdir=/usr/share
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

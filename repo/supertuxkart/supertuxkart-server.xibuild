@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DESC="Server for supertuxkart"
+DEPS="supertuxkart-data"
+
+package () {
+	cd "$BUILD_ROOT"
+	DESTDIR="$PKG_DEST" cmake --install build-server
+
+	mv "$PKG_DEST"/usr/bin/supertuxkart \
+		"$PKG_DEST"/usr/bin/supertuxkart-server
+
+	rm -r "${PKG_DEST:?}"/usr/share/
+
+	install -Dm644 "$BUILD_ROOT"/server_config.xml \
+		"$PKG_DEST"/usr/share/supertuxkart/data/server_config.xml
+}

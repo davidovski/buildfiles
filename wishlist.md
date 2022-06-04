@@ -16,17 +16,20 @@
 [x] sxiv
 [x] feh
 [x] gimp
-[ ] lmms
+[x] lmms
 [?] ardour
 [x] cava
 [x] pcmanfm
 [ ] thunar
 [x] zathura
 [x] polybar
+[x] berry
+[x] openbox
+[x] i3wm
 
 [ ] gnu screen
 [x] tmux
-[ ] ImageMagick
+?[ ] ImageMagick
 [x] nmap
 [x] exiftool
 [x] mpc
@@ -35,13 +38,9 @@
 [x] working xorg
 [x] sshd (openssh)
 [ ] broadcom wl drivers
-[ ] bluetoothctl
+?[ ] bluetoothctl
 
-!!
 
-[x] lame
 
 [ ] the one true awk
-[ ] mksh by default
-[ ] full build using clang
-
+[x] mksh by default

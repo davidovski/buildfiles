@@ -3,7 +3,7 @@
 NAME="fluidsynth"
 DESC="A real-time software synthesizer based on the SoundFont 2 specifications"
 
-MAKEDEPS="alsa-lib dbus glib jack libsndfile pulseaudio readline cmake doxygen graphviz"
+MAKEDEPS="alsa-lib dbus glib libsndfile pulseaudio readline cmake doxygen graphviz"
 
 PKG_VER=2.2.5
 SOURCE="https://github.com/fluidsynth/fluidsynth/archive/v$PKG_VER/fluidsynth-v$PKG_VER.tar.gz"

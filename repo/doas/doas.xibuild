@@ -1,0 +1,44 @@
+#!/bin/sh
+
+NAME="doas"
+DESC="OpenBSD's temporary privilege escalation tool"
+
+MAKEDEPS="bison"
+
+PKG_VER=6.8.2
+SOURCE="https://github.com/Duncaen/OpenDoas/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+configuration-directory.patch
+manpage-example-path.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--without-pam \
+		--with-timestamp \
+		--with-doas-confdir
+	make
+}
+
+check() {
+	# doas -v returns 1
+	./doas -v || test $? = 1
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+	install -d "$PKG_DEST"/usr/share/doc/doas
+	cat > "$PKG_DEST"/usr/share/doc/doas/doas.conf.example <<-EOF
+	# see doas.conf(5) for configuration details
+
+	# Uncomment to allow group "wheel" to become root
+	# permit persist :wheel
+	EOF
+}
+

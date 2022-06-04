@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DESC="Datafiles for SuperTuxKart"
+
+package () {
+    add_from_main usr/share/supertuxkart/data
+}

@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="lmms"
+DESC="Cross-platform music production software"
+
+MAKEDEPS="alsa-lib cmake fftw libsamplerate libsndfile pulseaudio qt5-qttools qt5-qtx11extras qt5-qtbase sdl2 xcb-util xcb-util-keysyms opus fluidsynth libgig sndio"
+
+PKG_VER=1.2.2
+SOURCE="https://github.com/LMMS/lmms/releases/download/v$PKG_VER/lmms_$PKG_VER.tar.xz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DWANT_QT5=On \
+		-DWANT_PULSEAUDIO=On \
+        .
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --build build --target install
+}
+

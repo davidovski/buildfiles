@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="sxmo-dwm"
+DESC="Dwm fork for Sxmo UI; supports volume-key hotkeys, swallow, keyboard, among other patches"
+
+MAKEDEPS=" libxft libx11 libxinerama"
+
+PKG_VER=6.2.16
+SOURCE="https://git.sr.ht/~mil/sxmo-dwm/archive/$PKG_VER.tar.gz"
+
+prepare() {
+	default_prepare
+	sed -i -e '/CFLAGS/{s/-Os//;s/=/+=/}' \
+		-e '/LDFLAGS/{s/=/+=/}' \
+		"$BUILD_ROOT"/config.mk
+}
+
+build() {
+	make X11INC=/usr/include/X11 \
+		X11LIB=/usr/lib/X11 \
+		FREETYPEINC=/usr/include/freetype2 \
+		-C "$BUILD_ROOT"
+}
+
+package() {
+	make PREFIX=/usr DESTDIR="$PKG_DEST" \
+		-C "$BUILD_ROOT" install
+}
+

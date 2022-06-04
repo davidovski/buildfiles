@@ -3,45 +3,47 @@
 NAME="qt5-qtbase"
 DESC="Qt5 - QtBase components"
 
-MAKEDEPS="make libexecinfo"
-DEPS="dbus glib icu openssl pcre2 xdg-utils zlib zstd musl "
+MAKEDEPS="dbus fontconfig freetype2 glib libice libpng libsm libx11 libxext mesa openssl perl sqlite3 zlib at-spi2-atk bison cups eudev flex gawk gperf gtk2 hicolor-icon-theme icu libinput libjpeg-turbo libxi libxkbcommon libxrandr libxrender libxslt libxv mtdev pcre2 xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm"
 
-PKG_VER=5.15.4
-commit="e0a15c11b853954d4189b2e30aa2450184de0987"
-SOURCE="https://invent.kde.org/qt/qt/qtbase/-/archive/$commit/qtbase-$commit.tar.gz"
+PKG_VER=5.15.3_git20220217
+_commit="f36c2233fad0bfddf9350305a6bdc6de022d3635"
+SOURCE="https://invent.kde.org/qt/qt/qtbase/-/archive/$_commit/qtbase-$_commit.tar.gz"
+
 ADDITIONAL="
 qt-musl-iconv-no-bom.patch
 qt5-base-cflags.patch
 qt5-base-nostrip.patch
-qt5-qtbase.xibuild
 "
 
-qt5_prefix=/usr/lib/qt5
-qt5_datadir=/usr/share/qt5
+_qt5_prefix=/usr/lib/qt5
+_qt5_datadir=/usr/share/qt5
 
-prepare () {
+prepare() {
     apply_patches
-    sed -i -e "s|-O2|$CXXFLAGS|" \
-    -e "/^QMAKE_RPATH/s| -Wl,-rpath,||g" \
-    -e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
+
+	sed -i -e "s|-O2|$CXXFLAGS|" \
+		-e "/^QMAKE_RPATH/s| -Wl,-rpath,||g" \
+		-e "/^QMAKE_LFLAGS\s/s|+=|+= $LDFLAGS|g" \
 		mkspecs/common/*.conf
 
+	# Make configure think we are running in a git directory
+	# This makes it symlink the include files to the right directory
 	mkdir .git
 }
 
-build () {
-    	./configure -confirm-license -opensource \
-		-archdatadir "$qt5_prefix" \
-		-bindir  "$qt5_prefix"/bin \
-		-datadir "$qt5_datadir" \
+build() {
+	./configure -confirm-license -opensource \
+		-archdatadir "$_qt5_prefix" \
+		-bindir  "$_qt5_prefix"/bin \
+		-datadir "$_qt5_datadir" \
 		-dbus-linked \
 		-docdir /usr/share/doc/qt5 \
 		-examplesdir /usr/share/doc/qt5/examples \
 		-glib \
 		-headerdir /usr/include/qt5 \
 		-icu \
-		-importdir "$qt5_prefix"/imports \
-		-libexecdir "$qt5_prefix"/libexec \
+		-importdir "$_qt5_prefix"/imports \
+		-libexecdir "$_qt5_prefix"/libexec \
 		-no-rpath \
 		-no-separate-debug-info \
 		-no-pch \
@@ -50,28 +52,36 @@ build () {
 		-openssl-linked \
 		-optimized-qmake \
 		-plugin-sql-sqlite \
-		-plugindir "$qt5_prefix"/plugins \
+		-plugindir "$_qt5_prefix"/plugins \
 		-prefix /usr \
 		-sysconfdir /etc/xdg \
 		-system-libjpeg \
 		-system-libpng \
 		-system-sqlite \
 		-system-zlib \
-		-translationdir "$qt5_datadir"/translations \
+		-translationdir "$_qt5_datadir"/translations \
 		-no-reduce-relocations 
-    export LDFLAGS="-lexecinfo"
 	make
 }
 
-package () {
-    make INSTALL_ROOT=$PKG_DEST install
-    install -d $PKG_DEST/usr/bin
-	for i in "$PKG_DEST"/"$qt5_prefix"/bin/*; do
-		name=${i##*/}
-		case $_name in
-		*.*)	dest="$PKG_DEST"/usr/bin/${name%.*}-qt5.${name##*.};;
-		*)	dest="$PKG_DEST"/usr/bin/${name%.*}-qt5;;
-		esac
-		ln -s ../lib/qt5/bin/"$name" "$dest"
-	done
+check() {
+	make check
 }
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+	mkdir -p "$PKG_DEST"/usr/bin/
+	for i in "$PKG_DEST"/"$_qt5_prefix"/bin/*; do
+		_name=${i##*/}
+		case $_name in
+		*.*)	_dest="$PKG_DEST"/usr/bin/${_name%.*}-qt5.${_name##*.};;
+		*)	_dest="$PKG_DEST"/usr/bin/${_name%.*}-qt5;;
+		esac
+		ln -s ../lib/qt5/bin/"$_name" "$_dest"
+	done
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+}
+

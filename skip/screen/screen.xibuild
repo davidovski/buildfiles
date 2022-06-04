@@ -1,0 +1,43 @@
+#!/bin/sh
+
+NAME="screen"
+DESC="Window manager that multiplexes a physical terminal"
+
+MAKEDEPS="autoconf automake utmps ncurses ncurses libutempter"
+
+PKG_VER=4.9.0
+SOURCE="https://ftp.gnu.org/gnu/screen/screen-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+utmpx.patch
+"
+
+prepare() {
+	./autogen.sh
+}
+
+build() {
+	CFLAGS="$CFLAGS -DNONETHACK -DGETUTENT -I/usr/include/utmps" \
+	LIBS="-lutmps -lskarnet" ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--with-sys-screenrc=/etc/screenrc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--enable-colors256 \
+		--enable-telnet \
+		--enable-rxvt_osc
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+
+	# remove suid root
+	find "$PKG_DEST" -type f -perm -u+s \
+		| xargs chmod -s
+
+	install -Dm644 etc/etcscreenrc "$PKG_DEST"/etc/screenrc
+	install -Dm644 etc/screenrc "$PKG_DEST"/etc/skel/.screenrc
+}
+

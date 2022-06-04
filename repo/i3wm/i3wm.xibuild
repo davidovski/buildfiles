@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="i3wm"
+DESC="Improved dynamic tiling window manager"
+
+MAKEDEPS=" meson bash bison cairo flex libev libxcb libxkbcommon pango pcre perl startup-notification xcb-util-cursor xcb-util-keysyms xcb-util-wm xcb-util-xrm yajl"
+
+PKG_VER=4.20.1
+SOURCE="https://i3wm.org/downloads/i3-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+ . output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

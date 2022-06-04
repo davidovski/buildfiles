@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="gjs"
+DESC="GNOME javascript library"
+
+MAKEDEPS="dbus gobject-introspection js91 gtk3 cairo meson libffi"
+
+PKG_VER=1.72.0
+SOURCE="https://download.gnome.org/sources/gjs/${PKG_VER%.*}/gjs-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		-Dprofiler=disabled \
+		-Dinstalled_tests=false \
+		output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

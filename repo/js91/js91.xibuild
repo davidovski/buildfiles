@@ -1,0 +1,75 @@
+#!/bin/sh
+
+NAME="js91"
+DESC="Standalone Mozilla JavaScript engine (91 ESR)"
+
+MAKEDEPS="icu libffi nspr readline autoconf2-13 cargo clang linux-headers lld llvm perl python rust sed zlib"
+
+PKG_VER=91.8.0
+SOURCE="https://ftp.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz"
+
+ADDITIONAL="
+fix-i386-fdlibm.patch
+fix-musl-build.patch
+fix-rust-target.patch
+"
+
+prepare() {
+    apply_patches
+	mkdir "$BUILD_ROOT/mozbuild"
+
+	cat > .mozconfig <<- END
+	ac_add_options --enable-application=js
+	mk_add_options MOZ_OBJDIR='${PWD}'/obj
+	ac_add_options --prefix=/usr
+	ac_add_options --enable-release
+	ac_add_options --enable-hardening
+	ac_add_options --enable-optimize="$CFLAGS -O2"
+	ac_add_options --enable-rust-simd
+	ac_add_options --enable-linker=lld
+	ac_add_options --disable-bootstrap
+	ac_add_options --disable-debug
+	ac_add_options --disable-debug-symbols
+	ac_add_options --disable-jemalloc
+	ac_add_options --disable-strip
+
+	# System libraries
+	ac_add_options --with-system-zlib
+	ac_add_options --with-system-icu
+
+	# Features
+	ac_add_options --enable-readline
+	ac_add_options --enable-shared-js
+	ac_add_options --enable-tests
+	ac_add_options --with-intl-api
+	END
+}
+
+build() {
+	export LDFLAGS="$LDFLAGS -Wl,-z,stack-size=1048576"
+
+	# FF doesn't have SIMD available on armhf/v7
+    echo 'ac_add_options --enable-rust-simd' >> .mozconfig
+
+	export MACH_USE_SYSTEM_PYTHON=1
+	export MOZBUILD_STATE_PATH="$BUILD_ROOT/mozbuild"
+	export MOZ_NOSPAM=1
+	export PYTHON=/usr/bin/python
+	export SHELL=/bin/ash
+
+	./mach build
+}
+
+check() {
+	obj/dist/bin/jsapi-tests \
+		--format=none \
+		--exclude-random \
+		basic
+}
+
+package() {
+	cd obj
+	make DESTDIR="$PKG_DEST" install
+	rm -f "$PKG_DEST"/usr/lib/*.ajs
+}
+

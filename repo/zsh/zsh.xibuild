@@ -4,7 +4,6 @@ NAME="zsh"
 DESC="Very advanced and programmable command interpreter (shell)"
 
 MAKEDEPS="make "
-DEPS="sbase libcap musl ncurses "
 
 PKG_VER=5.8.1
 SOURCE="https://download.sourceforge.net/project/zsh/zsh/$PKG_VER/zsh-$PKG_VER.tar.xz"

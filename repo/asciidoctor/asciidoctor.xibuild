@@ -4,6 +4,7 @@ NAME="asciidoctor"
 DESC="Converter for AsciiDoc to HTML5, DocBook 5 (or 4.5) and other formats"
 
 MAKEDEPS="ruby"
+DEPS="ruby"
 
 PKG_VER=2.0.17
 SOURCE="https://rubygems.org/downloads/asciidoctor-$PKG_VER.gem"

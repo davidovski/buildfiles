@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="supertux"
+DESC="Open-source classic 2D jump'n run sidescroller game"
+
+MAKEDEPS="boost cmake curl freetype2 glew libpng libvorbis openal-soft physfs sdl2 glm sdl2-image"
+
+PKG_VER=0.6.3
+SOURCE="https://github.com/SuperTux/supertux/releases/download/v$PKG_VER/SuperTux-v$PKG_VER-Source.tar.gz"
+
+ADDITIONAL="
+missing-include-for-FLT_EPSILON.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	cmake -B build \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		-DINSTALL_SUBDIR_BIN=bin 
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --build build --target install
+}

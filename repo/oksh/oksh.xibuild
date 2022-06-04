@@ -4,7 +4,6 @@ NAME="oksh"
 DESC="Portable OpenBSD ksh, based on the Public Domain KornShell (pdksh)"
 
 MAKEDEPS="make "
-DEPS="sbase musl "
 
 PKG_VER=7.1
 SOURCE="https://github.com/ibara/oksh/archive/oksh-$PKG_VER.tar.gz"

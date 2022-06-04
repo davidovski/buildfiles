@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="jack"
+DESC="The Jack Audio Connection Kit"
+
+MAKEDEPS="alsa-lib dbus expat libsamplerate libsndfile ncurses readline python linux-headers"
+
+PKG_VER=1.9.20
+SOURCE="https://github.com/jackaudio/jack2/archive/v$PKG_VER/jack2-v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-execinfo.patch
+increase-api-version.patch
+"
+prepare () {
+    apply_patches
+}
+
+build() {
+	./waf configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man/man1 \
+		--libdir=/usr/lib \
+		--dbus \
+		--alsa \
+		--classic
+
+	./waf build -v
+}
+
+package() {
+	./waf --destdir="$PKG_DEST" install
+}
+

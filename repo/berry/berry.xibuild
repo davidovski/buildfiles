@@ -1,22 +1,22 @@
 #!/bin/sh
 
 NAME="berry"
-DESC="A healthy, byte-sized window manager"
+DESC="a healthy, byte-sized window manager"
 
-MAKEDEPS="make "
-DEPS="libx11 libxft libxinerama "
+MAKEDEPS="libx11 libxft libxinerama"
 
-PKG_VER=0.1.11
-SOURCE="https://github.com/JLErvin/berry/archive/refs/tags/$PKG_VER.tar.gz"
+PKG_VER=0.1.9
+SOURCE="https://github.com/JLErvin/berry/archive/$PKG_VER.tar.gz"
 
-build () {
-    make prefix=/usr
+ADDITIONAL="
+fix_prefix.patch
+"
+
+build() {
+    make
 }
 
-package () {
-    make prefix=/usr DESTDIR=$PKG_DEST install
-    
-    install -Dm644 examples/sxhkdrc $PKG_DEST/usr/share/doc/berry/examples/
-    install -Dm644 examples/autostart $PKG_DEST/usr/share/doc/berry/examples/
-
+package() {
+    make DESTDIR=$PKG_DEST install
 }
+

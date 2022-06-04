@@ -1,20 +1,15 @@
 #!/bin/sh
 
-MAKEDEPS="make"
-DEPS="musl"
-
-PKG_VER=1.42
-SOURCE=https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$PKG_VER.tar.bz2
+NAME="libgpg-error"
 DESC="Support library for libgcrypt"
 
-prepare() {
-	default_prepare
-	aclocal
-	automake
-}
+MAKEDEPS=" automake autoconf"
 
-build () {
-    ./configure \
+PKG_VER=1.45
+SOURCE="https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
@@ -22,11 +17,12 @@ build () {
 		--enable-static \
 		--disable-nls
 	make
-
 }
 
-package () {
-    make DESTDIR=$PKG_DEST install
+check() {
+	make -C "$BUILD_ROOT" check
 }
 
-
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

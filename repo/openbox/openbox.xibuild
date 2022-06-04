@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="openbox"
+DESC="A highly configurable and standards-compliant X11 window manager"
+
+MAKEDEPS="libxcursor libxrandr libxinerama startup-notification pango libxml2 imlib2 librsvg gettext"
+
+PKG_VER=3.6.1
+SOURCE="http://openbox.org/dist/openbox/openbox-$PKG_VER.tar.gz"
+ADDITIONAL="https://icculus.org/openbox/tools/setlayout.c"
+
+build() {
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--disable-static
+	make
+	gcc $CFLAGS $LDFLAGS -o setlayout "$BUILD_ROOT"/setlayout.c -lX11
+}
+
+check() {
+	make check
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+	install "$BUILD_ROOT"/setlayout "$PKG_DEST"/usr/bin/setlayout
+}
+

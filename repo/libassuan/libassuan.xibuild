@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="libassuan"
+DESC="IPC library used by some GnuPG related software"
+
+MAKEDEPS=" libgpg-error"
+
+PKG_VER=2.5.5
+SOURCE="https://www.gnupg.org/ftp/gcrypt/libassuan/libassuan-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

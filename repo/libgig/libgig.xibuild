@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libgig"
+DESC="C++ library for loading, modifying and creating .gig, .ksf, .kmp, .sf2 and DLS files"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=4.3.0
+SOURCE="https://download.linuxsampler.org/packages/libgig-$PKG_VER.tar.bz2"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

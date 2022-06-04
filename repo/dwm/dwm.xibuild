@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="dwm"
+DESC="dwm - dynamic window manager"
+
+MAKEDEPS=" libxft libx11 libxinerama"
+DEPS="sxmo-demenu st"
+
+PKG_VER=6.3
+SOURCE="https://dl.suckless.org/dwm/dwm-$PKG_VER.tar.gz"
+
+prepare() {
+	default_prepare
+	sed -i -e '/CFLAGS/{s/-Os//;s/=/+=/}' \
+		-e '/LDFLAGS/{s/=/+=/}' \
+		"$BUILD_ROOT"/config.mk
+}
+
+build() {
+	make X11INC=/usr/include/X11 \
+		X11LIB=/usr/lib/X11 \
+		FREETYPEINC=/usr/include/freetype2
+}
+
+package() {
+	make PREFIX=/usr DESTDIR="$PKG_DEST" install
+}
+

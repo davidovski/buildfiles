@@ -1,0 +1,58 @@
+#!/bin/sh
+
+NAME="imagemagick"
+DESC="Collection of tools and libraries for many image formats"
+
+MAKEDEPS="chrpath fontconfig freetype ghostscript lcms2 libheif libjpeg-turbo libpng libjxl libtool libwebp libx11 libxext libxml2 perl tiff zlib librsvg"
+
+PKG_VER=7.1.0.30
+version=${PKG_VER%.*}-${PKG_VER##*.}
+SOURCE="https://download.imagemagick.org/ImageMagick/download/releases/ImageMagick-$version.tar.xz"
+
+build() {
+
+	# fix doc dir, Gentoo bug 91911
+	sed -i -e \
+		's:DOCUMENTATION_PATH="$DATA_DIR/doc/$DOCUMENTATION_RELATIVE_PATH":DOCUMENTATION_PATH="/usr/share/doc/imagemagick":g' \
+		configure
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--enable-static \
+		--disable-openmp \
+		--with-threads \
+		--with-x \
+		--with-jxl \
+		--with-tiff \
+		--with-rsvg \
+		--with-png \
+		--with-webp \
+		--with-gslib \
+		--with-gs-font-dir=/usr/share/fonts/Type1 \
+		--with-heic \
+		--with-modules \
+		--with-xml \
+		--with-perl \
+		--with-perl-options="PREFIX=/usr INSTALLDIRS=vendor" 
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+	if ! [ -e "$PKG_DEST"/usr/lib/libMagickCore-7.Q16HDRI.so ]; then
+		echo "Has ABI verision changed? (current is 7)"
+		return 1
+	fi
+
+	find "$PKG_DEST" \( -name '.packlist' -o -name 'perllocal.pod' \
+		-o -name '*.bs' \) -delete
+}
+

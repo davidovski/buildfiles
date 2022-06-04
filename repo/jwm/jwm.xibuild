@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="jwm"
+DESC="A lightweight window manager for the X11 Window System"
+
+MAKEDEPS=" libx11 libxext libxft libxmu libxinerama libxpm libxrender libjpeg-turbo libpng librsvg pango"
+
+PKG_VER=2.4.1
+SOURCE="http://joewing.net/projects/jwm/releases/jwm-$PKG_VER.tar.xz"
+
+prepare() {
+	# not replaced for some reason..
+	sed -i "s|@mkdir_p@|mkdir -p|g" \
+		po/Makefile.in.in
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--disable-rpath
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

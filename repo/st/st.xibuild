@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="st"
+DESC="Simple terminal emulator for X"
+
+MAKEDEPS="fontconfig freetype libx11 libxext libxft"
+
+PKG_VER=0.8.5
+SOURCE="https://dl.suckless.org/st/st-$PKG_VER.tar.gz"
+
+prepare() {
+	default_prepare
+	sed -i '/tic/d' Makefile
+}
+
+build() {
+	make
+}
+
+package() {
+	make install PREFIX=/usr DESTDIR="$PKG_DEST"
+	mkdir -p "$PKG_DEST"/usr/share/applications
+
+	cat > "$PKG_DEST"/usr/share/applications/st.desktop <<-EOF
+		[Desktop Entry]
+		Name=st
+		Comment=st is a simple virtual terminal emulator for X which sucks less
+		Exec=st
+		Terminal=false
+		Type=Application
+		Icon=gnome-xterm
+		Categories=System;TerminalEmulator;
+	EOF
+}
+

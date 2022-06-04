@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="libutempter"
+DESC="Library interface to record user sessions in utmp/wtmp files"
+
+MAKEDEPS="utmps"
+
+PKG_VER=1.2.1
+SOURCE="https://github.com/altlinux/libutempter/archive/$PKG_VER-alt1.tar.gz"
+
+prepare  () {
+    cd libutempter
+    sed -i 's/ -p -m/ -m/g' Makefile
+}
+
+build() {
+	make CFLAGS="-I/usr/include/utmps" LDLIBS="-Wl,--no-as-needed -lutmps -lskarnet -Wl,--as-needed"
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	chown root "$PKG_DEST/usr/lib/utempter/utempter"
+	chmod 2755 "$PKG_DEST/usr/lib/utempter/utempter"
+}
+

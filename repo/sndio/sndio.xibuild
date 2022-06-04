@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="sndio"
+DESC="Small audio and MIDI framework part of the OpenBSD project"
+
+MAKEDEPS="alsa-lib"
+
+PKG_VER=1.8.1
+SOURCE="https://sndio.org/sndio-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+sndiod.initd
+"
+
+build() {
+	./configure --prefix=/usr
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	mkdir -p "$PKG_DEST"/usr/sbin
+	mv "$PKG_DEST"/usr/bin/sndiod "$PKG_DEST"/usr/sbin/
+	install -D -m 644 contrib/default.sndiod \
+		"$PKG_DEST"/etc/conf.d/sndiod
+	install -m755 -D "$BUILD_ROOT"/sndiod.initd \
+		"$PKG_DEST"/etc/init.d/sndiod
+}
+

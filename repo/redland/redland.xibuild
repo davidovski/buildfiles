@@ -3,7 +3,7 @@
 NAME="redland"
 DESC="high-level RDF library"
 
-MAKEDEPS="raptor2 rasqal sqlite perl"
+MAKEDEPS="raptor2 rasqal sqlite3 perl"
 
 PKG_VER=1.0.17
 SOURCE="https://download.librdf.org/source/redland-$PKG_VER.tar.gz"

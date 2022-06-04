@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="portaudio"
+DESC="A cross-platform, open-source C language library for real-time audio input and output"
+
+MAKEDEPS=" alsa-lib autoconf automake jack libtool linux-headers"
+
+PKG_VER=19.7.0
+SOURCE="https://github.com/PortAudio/portaudio/archive/v$PKG_VER/portaudio-v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+portaudio-audacity.patch
+portaudio-pkgconfig-alsa.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--with-jack \
+		--with-alsa \
+		--enable-cxx
+	make -j1
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+}
