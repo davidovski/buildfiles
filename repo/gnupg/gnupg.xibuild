@@ -3,7 +3,7 @@
 NAME="gnupg"
 DESC="GNU Privacy Guard 2 - meta package for full GnuPG suite"
 
-MAKEDEPS=" autoconf automake bzip2 gettext gnutls libassuan libgcrypt libgpg-error libksba libtool libusb npth openldap pinentry sqlite3 texinfo zlib"
+MAKEDEPS=" autoconf automake bzip2 gettext gnutls libassuan libgcrypt libgpg-error libksba libtool libusb npth libldap pinentry sqlite3 texinfo zlib"
 
 PKG_VER=2.2.34
 SOURCE="https://gnupg.org/ftp/gcrypt/gnupg/gnupg-$PKG_VER.tar.bz2"

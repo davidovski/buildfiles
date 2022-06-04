@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="npth"
+DESC="The New GNU Portable Threads library"
+
+MAKEDEPS=""
+
+PKG_VER=1.6
+SOURCE="https://gnupg.org/ftp/gcrypt/npth/npth-$PKG_VER.tar.bz2"
+
+build() {
+	cd "$BUILD_ROOT"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	cd "$BUILD_ROOT"
+	make check
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make DESTDIR="$PKG_DEST" install
+}
+
