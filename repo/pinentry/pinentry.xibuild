@@ -1,0 +1,57 @@
+#!/bin/sh
+
+NAME="pinentry"
+DESC="Collection of simple PIN or passphrase entry dialogs which utilize the Assuan protocol"
+
+MAKEDEPS=" ncurses libcap libgpg-error libassuan gcr libsecret"
+
+PKG_VER=1.2.0
+SOURCE="https://gnupg.org/ftp/gcrypt/pinentry/pinentry-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+pinentry-curses-ss.post-install
+pinentry.post-install
+pinentry.post-upgrade
+"
+
+prepare() {
+	default_prepare
+
+	cp -ar "$BUILD_ROOT" "$BUILD_ROOT-libsecret"
+}
+
+build() {
+	_build \
+		--disable-libsecret \
+		--enable-pinentry-curses \
+		--enable-pinentry-tty
+
+	cd "$BUILD_ROOT-libsecret"
+	_build \
+		--enable-libsecret \
+		--enable-pinentry-curses \
+		--disable-pinentry-tty
+}
+
+_build() {
+	./configure \
+		--prefix=/usr \
+		--disable-pinentry-gtk2 \
+		--disable-pinentry-gnome3 \
+		--disable-pinentry-qt \
+		--enable-fallback-curses \
+		"$@"
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make -C "$BUILD_ROOT" DESTDIR="$PKG_DEST" install
+
+	# created by post install scripts so we can override with other UI versions
+	rm -f "$PKG_DEST"/usr/bin/pinentry
+}
+
