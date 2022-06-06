@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="lmdb"
+DESC="Lightning Memory-Mapped Database"
+
+MAKEDEPS=""
+
+PKG_VER=0.9.29
+SOURCE="https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_$PKG_VER.tar.gz"
+
+ADDITIONAL="
+cacheflush.patch
+lmdb-make.patch
+lmdb.pc
+"
+
+prepare() {
+    cd libraries/liblmdb
+    apply_patches
+	sed -i "s|@@VERSION@@|$PKG_VER|" -i "$BUILD_ROOT"/*.pc
+}
+
+build() {
+	make CFLAGS="$CFLAGS -fPIC"
+}
+
+check() {
+	LD_LIBRARY_PATH="$PWD" make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" prefix=/usr install
+
+    cd $BUILD_ROOT
+    for f in *.pc; do 
+        install -Dm0644 $f "$PKG_DEST"/usr/lib/pkgconfig/$f
+    done
+}

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="libmodplug"
+DESC="A MOD playing library"
+
+MAKEDEPS=""
+
+PKG_VER=0.8.9.0
+SOURCE="https://downloads.sourceforge.net/modplug-xmms/libmodplug-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--enable-static
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -D -m644 COPYING $PKG_DEST/usr/share/licenses/libmodplug/LICENSE
+}
+

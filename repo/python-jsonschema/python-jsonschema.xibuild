@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="python-jsonschema"
+DESC="An implementation of JSON Schema validation for Python"
+
+MAKEDEPS="python python-build python-tomli python-setuptools-scm python-wheel"
+
+PKG_VER=4.4.0
+SOURCE="https://files.pythonhosted.org/packages/source/j/jsonschema/jsonschema-$PKG_VER.tar.gz"
+
+build() {
+	python3 -m build --no-isolation --wheel
+}
+
+package() {
+	python3 -m installer -d "$PKG_DEST" \
+		dist/jsonschema-$PKG_VER-py3-none-any.whl
+
+	# Add version suffix to executable files.
+	local path; for path in "$PKG_DEST"/usr/bin/*; do
+		mv "$path" "$path"-3
+	done
+
+	ln -s jsonschema-3 "$PKG_DEST"/usr/bin/jsonschema
+}
+

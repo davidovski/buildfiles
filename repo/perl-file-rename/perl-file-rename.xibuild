@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="perl-file-rename"
+DESC="Perl extension for renaming multiple files"
+
+MAKEDEPS=" perl-module-build"
+
+PKG_VER=1.30
+SOURCE="https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Rename-$PKG_VER.tar.gz"
+
+build() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	perl Build.PL --installdirs=vendor
+	./Build
+}
+
+check() {
+	./Build test
+}
+
+package() {
+	./Build install --destdir="$PKG_DEST"
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+	mv $PKG_DEST/usr/bin/rename $PKG_DEST/usr/bin/perl-rename
+	chmod 0755 $PKG_DEST/usr/bin/perl-rename
+}
+

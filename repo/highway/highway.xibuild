@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="highway"
+DESC="Performance-portable, length-agnostic SIMD with runtime dispatch"
+
+MAKEDEPS=""
+
+PKG_VER=0.16.0
+SOURCE="https://github.com/google/highway/archive/$PKG_VER/highway-$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr 
+
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

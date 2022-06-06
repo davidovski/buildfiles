@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="cppzmq"
+DESC="High-level C++ binding for ZeroMQ"
+
+MAKEDEPS="cmake zeromq catch2"
+
+PKG_VER=4.8.1
+SOURCE="https://github.com/zeromq/cppzmq/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_VERBOSE_MAKEFILE=ON \
+		-DCPPZMQ_BUILD_TESTS=OFF \
+		$CMAKE_CROSSOPTS .
+	make -C build
+}
+
+package() {
+    cd $BUILD_ROOT
+	make -C build DESTDIR="$PKG_DEST" install
+
+	mkdir -p "$PKG_DEST"/usr/lib
+	mv "$PKG_DEST"/usr/share/cmake "$PKG_DEST"/usr/lib
+}
+

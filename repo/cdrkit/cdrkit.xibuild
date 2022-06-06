@@ -3,25 +3,33 @@
 NAME="cdrkit"
 DESC="Suite of programs for CD/DVD recording, ISO image creation, and audio CD extraction"
 
-MAKEDEPS="make "
-DEPS="bzip2 file libcap musl zlib "
+MAKEDEPS=" cmake libcap bzip2 zlib"
 
 PKG_VER=1.1.11
 SOURCE="https://dev.alpinelinux.org/archive/cdrkit/cdrkit-$PKG_VER.tar.gz"
-ADDITIONAL="gcc10.patch "
 
-prepare () {
-    sed -i include/xconfig.h.in -e "s/#define HAVE_RCMD 1/#undef HAVE_RCMD/g"
+ADDITIONAL="
+gcc10.patch
+"
+
+prepare() {
+	# disable rcmd, it is security risk and not implemented in musl
+	sed -i include/xconfig.h.in -e "s/#define HAVE_RCMD 1/#undef HAVE_RCMD/g"
     apply_patches
 }
 
-build () {
-    export CFLAGS="$CFLAGS -D__THROW=''"
-    make 
+build() {
+	export CFLAGS="$CFLAGS -D__THROW=''"
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
 }
 
-package () {
-    make PREFIX="$PKG_DEST/usr" install
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
 	cd "$PKG_DEST/usr/bin"
 	ln -s wodim cdrecord
 	ln -s readom readcd
@@ -35,3 +43,4 @@ package () {
 	ln -s genisoimage.1 mkhybrid.1
 	ln -s icedax.1 cdda2wav.1
 }
+

@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="graphene"
+DESC="A thin layer of graphic data types"
+
+MAKEDEPS="meson glib gobject-introspection"
+
+PKG_VER=1.10.8
+SOURCE="https://github.com/ebassi/graphene/archive/$PKG_VER/graphene-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+0001-meson-don-t-install-introspection-file-with-installe.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	meson --prefix=/usr \
+		-Darm_neon=true \
+		-Dinstalled_tests=false \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

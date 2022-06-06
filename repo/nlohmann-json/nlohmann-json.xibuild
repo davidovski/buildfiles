@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="nlohmann-json"
+DESC="JSON for Modern C++"
+
+MAKEDEPS=" cmake"
+
+PKG_VER=3.10.5
+SOURCE="https://github.com/nlohmann/json/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DJSON_MultipleHeaders=ON
+	cmake --build build
+
+	make -C doc
+}
+
+check() {
+	cd build
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest -E "cmake_fetch_content_(configure|build)"
+    cd $BUILD_ROOT
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+
+	install -dm755 "$PKG_DEST"/usr/share/doc/nlohmann-json
+	mv doc/mkdocs "$PKG_DEST"/usr/share/doc/nlohmann-json/
+}
+

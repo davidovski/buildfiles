@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="openpgm"
+DESC="An implementation of the PGM reliable multicast protocol"
+
+MAKEDEPS="python perl"
+
+PKG_VER=5.2.122
+SOURCE="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/openpgm/libpgm-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+libpgm-fix-pkgconfig.patch
+openpgm-fix-includes.patch
+python3.patch
+"
+
+prepare() {
+    cd openpgm/pgm
+    for p in $BUILD_ROOT/*.patch; do
+        patch -Np1 -i $p
+    done
+}
+
+build() {
+	CFLAGS="$CFLAGS -D_GNU_SOURCE" \
+	./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--disable-static \
+		PYTHON=python3
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+}
+

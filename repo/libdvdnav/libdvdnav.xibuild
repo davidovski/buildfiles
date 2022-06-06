@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="libdvdnav"
+DESC="a library for sophisticated DVD navigation features"
+
+MAKEDEPS="libdvdread"
+
+PKG_VER=6.1.1
+SOURCE="https://download.videolan.org/pub/videolan/libdvdnav/$PKG_VER/libdvdnav-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--enable-shared
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+NAME="python-installer"
+DESC="low-level library for installing from a Python wheel distribution"
+
+MAKEDEPS="python"
+
+PKG_VER=0.5.1
+SOURCE="https://files.pythonhosted.org/packages/source/i/installer/installer-$PKG_VER.tar.gz"
+
+build () {
+    python3 setup.py build
+}
+
+package() {
+    python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}

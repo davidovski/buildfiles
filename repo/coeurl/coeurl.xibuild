@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="coeurl"
+DESC="Asynchronous wrapper around libcurl"
+
+MAKEDEPS=" cmake curl libevent meson spdlog"
+
+PKG_VER=0.2.0
+SOURCE="https://nheko.im/nheko-reborn/coeurl/-/archive/v$PKG_VER/coeurl-v$PKG_VER.tar.bz2"
+
+build() {
+	meson --prefix=/usr \
+ . output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

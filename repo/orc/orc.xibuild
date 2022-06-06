@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="orc"
+DESC="The Oil Run-time Compiler"
+
+MAKEDEPS="linux-headers meson"
+
+PKG_VER=0.4.32
+SOURCE="https://gstreamer.freedesktop.org/src/orc/orc-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		-Dorc-test=disabled \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+
+

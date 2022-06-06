@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="qt5-qtkeychain"
+DESC="Qt API to store passwords and other secret data"
+
+MAKEDEPS="cmake qt5-qttools libsecret ninja"
+
+PKG_VER=0.13.2
+SOURCE="https://github.com/frankosterfeld/qtkeychain/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS"
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

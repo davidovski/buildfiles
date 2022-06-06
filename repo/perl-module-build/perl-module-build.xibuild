@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="perl-module-build"
+DESC="Build and install Perl modules"
+
+MAKEDEPS=" perl"
+
+PKG_VER=0.4231
+SOURCE="https://cpan.metacpan.org/authors/id/L/LE/LEONT/Module-Build-$PKG_VER.tar.gz"
+
+prepare() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	perl Build.PL installdirs=vendor
+}
+
+build() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	./Build
+}
+
+check() {
+	./Build test
+}
+
+
+package() {
+	./Build install destdir="$PKG_DEST"
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

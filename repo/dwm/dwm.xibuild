@@ -4,7 +4,7 @@ NAME="dwm"
 DESC="dwm - dynamic window manager"
 
 MAKEDEPS=" libxft libx11 libxinerama"
-DEPS="sxmo-demenu st"
+DEPS="dmenu st"
 
 PKG_VER=6.3
 SOURCE="https://dl.suckless.org/dwm/dwm-$PKG_VER.tar.gz"

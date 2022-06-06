@@ -131,12 +131,12 @@ prepare () {
 }
 
 build () {
-    #export CC=clang
-    #export CXX=clang++
-    #export LD=clang++
+    export CC=clang
+    export CXX=clang++
+    export LD=clang++
     #export AR=ar
     #export NM=nm
-    export LDFLAGS="-stdlib=libstdc++"
+    #export LDFLAGS="-stdlib=libstdc++"
 
     flags="
 custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
@@ -144,7 +144,7 @@ host_toolchain=\"//build/toolchain/linux/unbundle:default\"
 enable_nacl=false
 use_sysroot=false
 gold_path=\"/usr/bin/ld.gold\"
-use_custom_libcxx=false
+use_custom_libcxx=true
 use_gold=false
 is_debug=false
 blink_symbol_level=0

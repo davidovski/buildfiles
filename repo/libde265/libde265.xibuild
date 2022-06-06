@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="libde265"
+DESC="Open h.265 video codec implementation"
+
+MAKEDEPS=" autoconf automake libtool"
+
+PKG_VER=1.0.8
+SOURCE="https://github.com/strukturag/libde265/releases/download/v$PKG_VER/libde265-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+disable_tools.patch
+export-only-decoder-api.patch
+"
+
+prepare() {
+    apply_patches
+	autoreconf -fvi
+}
+
+build() {
+	# This is en/decoder, so performance matters more than size.
+	export CPPFLAGS="$CPPFLAGS -O2"
+	export CXXFLAGS="$CXXFLAGS -O2"
+
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man \
+		--disable-sherlock265
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	# The upstream do the same in their Ubuntu/PPA packages.
+	mv "$PKG_DEST"/usr/bin/dec265 "$PKG_DEST"/usr/bin/libde265-dec265
+}

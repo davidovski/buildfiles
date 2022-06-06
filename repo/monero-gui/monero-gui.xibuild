@@ -1,0 +1,44 @@
+#!/bin/sh
+
+NAME="monero-gui"
+DESC="QT GUI wallet for Monero: the secure, private, untraceable peer-to-peer currency"
+
+MAKEDEPS="cmake monero git qt5-qtquickcontrols2 qt5-qtdeclarative qt5-qtbase qt5-qtsvg libgpg-error"
+DEPS="musl "
+
+PKG_VER=musl
+SOURCE="https://github.com/monero-project/monero-gui"
+ADDITIONAL="
+easylogging.patch
+monero-gui.desktop
+monero-gui.xibuild
+system-miniupnpc.patch
+version-string.patch
+"
+
+prepare () {
+    git submodule update --init --force --recursive
+    cp *.patch monero/
+    cd monero 
+    apply_patches
+    cd $BUILD_ROOT
+}
+
+build () {
+    cmake -B build \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DARCH=default \
+          -DWITH_DESKTOP_ENTRY=OFF \
+          -DSTACK_TRACE=OFF \
+          .
+	cmake --build build
+}
+
+package () {
+  install -Dm755 build/bin/monero-wallet-gui "${PKG_DEST}/usr/bin/monero-wallet-gui"
+
+  install -Dm644 monero-gui.desktop "${PKG_DEST}/usr/share/applications"
+  for x in 16 24 32 48 64 96 128 256; do
+    install -Dm644 "images/appicons/${x}x${x}.png" "${PKG_DEST}/usr/share/icons/hicolor/${x}x${x}/apps/monero-gui.png"
+  done
+}

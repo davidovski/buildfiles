@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="vo-aacenc"
+DESC="VisualOn AAC encoder from Android"
+
+MAKEDEPS=""
+
+PKG_VER=0.1.3
+SOURCE="https://netcologne.dl.sourceforge.net/project/opencore-amr/vo-aacenc/vo-aacenc-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

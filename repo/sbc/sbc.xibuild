@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="sbc"
+DESC="Bluetooth Subband Codec (SBC) library"
+
+MAKEDEPS="libsndfile linux-headers flac libvorbis libogg opus"
+
+PKG_VER=1.5
+SOURCE="https://www.kernel.org/pub/linux/bluetooth/sbc-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+fix-build-on-non-x86.patch
+"
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--disable-static
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

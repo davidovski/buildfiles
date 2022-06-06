@@ -6,12 +6,14 @@ DESC="JBIG2 image compression format decoder"
 MAKEDEPS="autoconf automake libtool"
 
 PKG_VER=0.19
-SOURCE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/$_gsver/jbig2dec-$PKG_VER.tar.gz"
+SOURCE="https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9531/jbig2dec-$PKG_VER.tar.gz"
+
+prepare () {
+    autoreconf -vif
+}
 
 build() {
 	./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \

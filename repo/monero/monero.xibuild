@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="monero"
+DESC="Secure, private, untraceable cryptocurrency"
+
+MAKEDEPS=" boost cmake cppzmq hidapi libsodium miniupnpc openpgm openssl rapidjson readline unbound zeromq "
+
+PKG_VER=0.17.3.0
+_ver_randomx=ae8e98b681766f31d49ac562dd6974906156e07b
+_ver_supercop=633500ad8c8759995049ccd022107d1fa8a1bbc9
+SOURCE="https://github.com/monero-project/monero/archive/refs/tags/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+easylogging.patch
+system-miniupnpc.patch
+version-string.patch
+
+https://github.com/tevador/RandomX/archive/$_ver_randomx.tar.gz
+https://github.com/monero-project/supercop/archive/$_ver_supercop.tar.gz"
+
+
+prepare() {
+    apply_patches
+
+	rm -fr external/randomx external/supercop
+	ln -s $BUILD_ROOT/RandomX-$_ver_randomx external/randomx
+	ln -s $BUILD_ROOT/supercop-$_ver_supercop external/supercop
+}
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DSTACK_TRACE=OFF \
+		-DMANUAL_SUBMODULES=1
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

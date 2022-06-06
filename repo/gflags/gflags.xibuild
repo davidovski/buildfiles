@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="gflags"
+DESC="The gflags package contains a C++ library that implements commandline flags processing."
+
+MAKEDEPS="cmake"
+
+PKG_VER=2.2.2
+SOURCE="https://github.com/gflags/gflags/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build . \
+		-DCMAKE_BUILD_TYPE=None \
+		-DBUILD_STATIC_LIBS=ON \
+		-DBUILD_SHARED_LIBS=ON \
+		-DBUILD_TESTING=ON \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DREGISTER_INSTALL_PREFIX=OFF
+	make -C build
+}
+
+check() {
+	make -C build test
+}
+
+package() {
+	make -C build DESTDIR="$PKG_DEST" install
+}
+

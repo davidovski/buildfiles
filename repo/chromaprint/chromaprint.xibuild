@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="chromaprint"
+DESC="C library for generating audio fingerprints used by AcoustID"
+
+MAKEDEPS="cmake fftw ffmpeg4 ninja"
+
+PKG_VER=1.5.1
+SOURCE="https://github.com/acoustid/chromaprint/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DBUILD_TOOLS=ON .
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

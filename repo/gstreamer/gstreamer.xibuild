@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="gstreamer"
+DESC="GStreamer streaming media framework"
+
+MAKEDEPS="libxml2 bison flex glib gobject-introspection libcap meson perl"
+
+PKG_VER=1.20.1
+SOURCE="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		-Dintrospection=enabled \
+		-Dbash-completion=disabled \
+		-Dptp-helper-permissions=capabilities \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}

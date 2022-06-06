@@ -27,10 +27,6 @@ build() {
 	make
 }
 
-check() {
-	make check
-}
-
 package() {
 	make DESTDIR="$PKG_DEST" install
 }

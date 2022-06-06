@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="spdlog"
+DESC="Fast C++ logging library"
+
+MAKEDEPS="cmake fmt"
+
+PKG_VER=1.9.2
+SOURCE="https://github.com/gabime/spdlog/archive/v$PKG_VER/spdlog-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DSPDLOG_BUILD_BENCH=OFF \
+		-DSPDLOG_BUILD_TESTS=ON \
+		-DSPDLOG_SANITIZE_ADDRESS=OFF \
+		-DSPDLOG_FMT_EXTERNAL=ON \
+		-DSPDLOG_BUILD_SHARED=ON \
+		-DSPDLOG_BUILD_EXAMPLE=OFF
+	cmake --build build
+}
+
+check() {
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+	sed -e 's|.*#define SPDLOG_FMT_EXTERNAL|#define SPDLOG_FMT_EXTERNAL|' \
+		-i "$PKG_DEST"/usr/include/spdlog/tweakme.h
+}
+

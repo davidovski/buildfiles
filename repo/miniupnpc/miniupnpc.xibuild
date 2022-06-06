@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="miniupnpc"
+DESC="Library and tool to control NAT in UPnP-enabled routers"
+
+MAKEDEPS="python"
+
+PKG_VER=2.2.3
+SOURCE="http://miniupnp.free.fr/files/miniupnpc-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-makefile-install.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	make
+	python3 setup.py build
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" PREFIX=/usr install
+}
+

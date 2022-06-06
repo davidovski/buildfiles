@@ -1,0 +1,41 @@
+#!/bin/sh
+
+NAME="cdparanoia"
+DESC="An audio CD extraction application"
+
+MAKEDEPS="libtool autoconf automake linux-headers"
+
+PKG_VER=10.2
+SOURCE="http://downloads.xiph.org/releases/cdparanoia/cdparanoia-III-$PKG_VER.src.tgz"
+
+ADDITIONAL="
+fix-includes.patch
+gcc.patch
+no-cuserid.patch
+"
+
+
+
+prepare() {
+    apply_patches
+
+	mv configure.guess config.guess
+	mv configure.sub config.sub
+	sed -i -e '/configure.\(guess\|sub\)/d' configure.in
+	aclocal && autoconf
+	libtoolize
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make -j1
+}
+
+package() {
+	make prefix="$PKG_DEST"/usr MANDIR="$PKG_DEST"/usr/share/man install
+}
+

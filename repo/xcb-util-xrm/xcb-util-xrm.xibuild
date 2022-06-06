@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="xcb-util-xrm"
+DESC="Utility functions for the X resource manager"
+
+MAKEDEPS="m4 libxcb xorg-util-macros xcb-util musl-legacy-compat"
+
+PKG_VER=1.3
+SOURCE="https://github.com/Airblader/xcb-util-xrm/releases/download/v$PKG_VER/xcb-util-xrm-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

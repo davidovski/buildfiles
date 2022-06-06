@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="nheko"
+DESC="Qt5-based client for Matrix protocol"
+
+MAKEDEPS=" asciidoctor cmake ninja boost lmdb lmdbxx tweeny qt5-qtbase qt5-qttools qt5-qtmultimedia qt5-qtsvg qt5-qtdeclarative qt5-qtquickcontrols2 qt5-qtkeychain zlib openssl olm nlohmann-json cmark spdlog mtxclient gst-plugins-base gst-plugins-bad xcb-util-wm gstreamer libevent fmt coeurl"
+DEPS="qt5-qtgraphicaleffects qt5-qtbase qt5-qtmultimedia qt5-qtkeychain qt5-qtsvg"
+
+PKG_VER=0.9.3
+SOURCE="https://github.com/Nheko-Reborn/nheko/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="remove-fatal-secrets-error.patch"
+
+prepare() {
+    apply_patches
+
+	sed -e '/-Wall/d' \
+		-e '/-Wextra/d' \
+		-e '/-Werror/d' \
+		-e '/-pedantic/d' \
+		-e '/-pipe/d' \
+		-i CMakeLists.txt
+}
+
+build() {
+	cmake -B build \
+		-GNinja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_SKIP_RPATH=True \
+		-DCMAKE_BUILD_TYPE=None \
+        .
+	ninja -C build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" ninja -C build install
+}
+

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="gtkmm2"
+DESC="C++ wrappers for GTK+"
+
+MAKEDEPS="atkmm glibmm pangomm intltool gtk2"
+
+PKG_VER=2.24.5
+SOURCE="https://download.gnome.org/sources/gtkmm/${PKG_VER%.*}/gtkmm-$PKG_VER.tar.xz"
+
+build() {
+	CXXFLAGS="$CXXFLAGS -std=c++11" \
+	./configure \
+		--prefix=/usr
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+}

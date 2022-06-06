@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="lzip"
+DESC="Lzip is a lossless data compressor"
+
+MAKEDEPS=""
+
+PKG_VER=1.23
+SOURCE="https://download.savannah.gnu.org/releases/lzip/lzip-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr 
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR=$PKG_DEST install
+}
+

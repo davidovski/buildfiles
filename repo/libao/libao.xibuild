@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="libao"
+DESC="Cross-platform audio output library and plugins"
+
+MAKEDEPS=" alsa-lib automake autoconf libtool pulseaudio"
+
+PKG_VER=1.2.2
+SOURCE="https://github.com/xiph/libao/archive/$PKG_VER.tar.gz"
+
+ADDITIONAL="
+CVE-2017-11548.patch
+"
+
+prepare() {
+    apply_patches
+	autoreconf -fi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-esd \
+		--disable-arts \
+		--enable-alsa-mmap \
+        --enable-pulse
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+        # No need for the liboss plugin
+        rm -f "$PKG_DEST"/usr/lib/ao/plugins-4/liboss.so
+}

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="catch2"
+DESC="A modern, C++-native, header-only, test framework for unit-tests"
+
+MAKEDEPS="cmake python"
+
+PKG_VER=2.13.8
+SOURCE="https://github.com/catchorg/Catch2/archive/v$PKG_VER/catch2-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=TRUE
+	cmake --build build
+}
+
+check() {
+	cd build
+	# ApprovalTests is broken https://github.com/catchorg/Catch2/issues/1780
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest -E "ApprovalTests"
+}
+
+package() {
+    cd $BUILD_ROOT
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

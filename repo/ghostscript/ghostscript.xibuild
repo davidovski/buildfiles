@@ -3,7 +3,7 @@
 NAME="ghostscript"
 DESC="An interpreter for the PostScript language and for PDF"
 
-MAKEDEPS="make freetype openjpeg libpng zlib tiff cups jbig2dec"
+MAKEDEPS="make freetype2 openjpeg libpng zlib tiff cups jbig2dec"
 DEPS="musl "
 
 PKG_VER=9.56.1
@@ -23,7 +23,6 @@ prepare () {
 
 	cd $BUILD_ROOT/ijs
 	libtoolize --force && aclocal && autoconf && automake --add-missing
-	update_config_sub
 }
 
 build () {

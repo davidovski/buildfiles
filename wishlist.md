@@ -26,6 +26,7 @@
 [x] berry
 [x] openbox
 [x] i3wm
+[ ] nheko
 
 [ ] gnu screen
 [x] tmux

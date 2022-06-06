@@ -1,0 +1,64 @@
+#!/bin/sh
+
+NAME="unbound"
+DESC="Unbound is a validating, recursive, and caching DNS resolver"
+
+MAKEDEPS=" expat libevent openssl python swig linux-headers"
+
+PKG_VER=1.15.0
+SOURCE="https://unbound.net/downloads/unbound-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+conf.patch
+migrate-dnscache-to-unbound
+unbound.confd
+unbound.initd
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	PYTHON_VERSION=3 ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--with-username=unbound \
+		--with-run-dir="" \
+		--with-pidfile="" \
+		--with-rootkey-file=/usr/share/dnssec-root/trusted-key.key \
+		--with-libevent \
+		--with-pthreads \
+		--disable-static \
+		--disable-rpath \
+		--with-ssl \
+		--without-pythonmodule \
+		--with-pyunbound
+
+	# do not link to libpython
+	sed -i -e '/^LIBS=/s/-lpython.*[[:space:]]/ /' Makefile
+
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	make DESTDIR="$PKG_DEST" unbound-event-install
+
+	install -Dm755 contrib/update-anchor.sh \
+		"$PKG_DEST"/usr/share/unbound/update-anchor.sh
+
+	mkdir -p "$PKG_DEST"/usr/share/doc/unbound/
+	install -m644 doc/CREDITS doc/Changelog doc/FEATURES \
+		doc/README doc/TODO "$PKG_DEST"/usr/share/doc/unbound/
+
+	install -Dm755 "$BUILD_ROOT"/unbound.initd $PKG_DEST/etc/init.d/unbound
+	install -Dm644 "$BUILD_ROOT"/unbound.confd $PKG_DEST/etc/conf.d/unbound
+}
+

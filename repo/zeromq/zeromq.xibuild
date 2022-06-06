@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="zeromq"
+DESC="The ZeroMQ messaging library and tools"
+
+MAKEDEPS="util-linux libsodium perl asciidoc xmlto autoconf automake"
+
+PKG_VER=4.3.4
+SOURCE="https://github.com/zeromq/libzmq/releases/download/v$PKG_VER/zeromq-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+test-driver.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--with-libsodium
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

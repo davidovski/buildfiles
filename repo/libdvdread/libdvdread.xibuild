@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libdvdread"
+DESC="Simple foundation for reading DVD video disks"
+
+MAKEDEPS="libdvdcss"
+
+PKG_VER=6.1.2
+SOURCE="https://download.videolan.org/pub/videolan/libdvdread/$PKG_VER/libdvdread-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--enable-shared \
+		--with-libdvdcss
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

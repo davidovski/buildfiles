@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="python-cffi"
+DESC="Foreign function interface for calling C code from Python3"
+
+MAKEDEPS="python libffi"
+
+PKG_VER=1.15.0
+SOURCE="https://files.pythonhosted.org/packages/source/c/cffi/cffi-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+musl-compat.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	python3 setup.py build
+}
+
+check() {
+	python3 setup.py build_ext -i
+	python3 -m pytest --disable-pytest-warnings c/ testing/ || true
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}
+

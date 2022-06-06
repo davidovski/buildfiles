@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="glade"
+DESC="User Interface Designer for GTK+ and GNOME"
+
+MAKEDEPS="gtk3 libxml2 itstool intltool python-gobject gobject-introspection meson python gjs"
+
+PKG_VER=3.38.2
+SOURCE="https://download.gnome.org/sources/glade/${PKG_VER%.*}/glade-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+duplicate-linguas.patch
+meson-0.60.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	meson --prefix=/usr \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+    # this one index is missing, so copy it from another language
+    mkdir output/help/hi/
+
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}

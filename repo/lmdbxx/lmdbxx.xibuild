@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="lmdbxx"
+DESC="C++17 wrapper for the LMDB database library"
+
+MAKEDEPS="doxygen"
+
+PKG_VER=1.0.0
+SOURCE="https://github.com/hoytech/lmdbxx/archive/$PKG_VER/lmdbxx-$PKG_VER.tar.gz"
+
+build() {
+	make doxygen
+}
+
+
+package() {
+	make DESTDIR="$PKG_DEST" PREFIX=/usr install
+	install -dm755 "$PKG_DEST"/usr/share/doc/lmdbxx
+	mv .doxygen/html "$PKG_DEST"/usr/share/doc/lmdbxx/
+}
+

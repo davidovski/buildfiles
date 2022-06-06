@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="mercurial"
+DESC="Scalable distributed SCM tool"
+
+MAKEDEPS="python"
+
+PKG_VER=6.1.1
+SOURCE="https://www.mercurial-scm.org/release/mercurial-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+blacklist.txt
+"
+
+build() {
+	HGPYTHON3=1 python3 setup.py build
+}
+
+package() {
+	HGPYTHON3=1 python3 setup.py install --root="$PKG_DEST"
+	install -m755 contrib/hgk contrib/hg-ssh hgeditor "$PKG_DEST"/usr/bin
+
+	local man
+	for man in doc/*.?; do
+		install -Dm644 "$man" \
+			"$PKG_DEST"/usr/share/man/man${man##*.}/${man##*/}
+	done
+}

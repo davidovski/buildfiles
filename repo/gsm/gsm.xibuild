@@ -1,0 +1,44 @@
+#!/bin/sh
+
+NAME="gsm"
+DESC="Shared libraries for GSM speech compressor"
+
+MAKEDEPS=""
+
+PKG_VER=1.0.19
+SOURCE="http://www.quut.com/gsm/gsm-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+gsm-64bit.patch
+gsm-makefile.patch
+"
+_soname=1.0.12
+
+build() {
+	export RPM_OPT_FLAGS="$CFLAGS -fPIC"
+	make all
+}
+
+check() {
+	make addtst
+}
+
+package() {
+	mkdir -p "$PKG_DEST"/usr/bin \
+		"$PKG_DEST"/usr/include/gsm \
+		"$PKG_DEST"/usr/lib \
+		"$PKG_DEST"/usr/share/man/man1 \
+		"$PKG_DEST"/usr/share/man/man3
+
+	make -j1 install \
+		INSTALL_ROOT="$PKG_DEST"/usr \
+		GSM_INSTALL_INC="$PKG_DEST"/usr/include/gsm \
+		GSM_INSTALL_LIB="$PKG_DEST"/usr/lib
+	cp -p lib/libgsm.so.$_soname "$PKG_DEST"/usr/lib/
+	ln -s libgsm.so.$_soname "$PKG_DEST"/usr/lib/libgsm.so.1
+	ln -s libgsm.so.$_soname "$PKG_DEST"/usr/lib/libgsm.so
+
+	ln -s gsm/gsm.h "$PKG_DEST"/usr/include/
+	rm -f "$PKG_DEST"/usr/lib/lib*.a
+}
+

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="libsrtp"
+DESC="implementation of the Secure Real-time Transport Protocol (SRTP)"
+
+MAKEDEPS="doxygen libpcap meson ninja openssl"
+
+PKG_VER=2.4.2
+SOURCE="https://github.com/cisco/libsrtp/archive/v$PKG_VER.tar.gz"
+
+build() {
+	meson --prefix=/usr \
+		-Dcrypto-library=openssl \
+		builddir .
+	meson compile -C builddir
+}
+
+check() {
+	meson test --no-rebuild -v -C builddir
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C builddir
+}

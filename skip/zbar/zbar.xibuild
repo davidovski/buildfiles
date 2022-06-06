@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="zbar"
+DESC="Port of ZBAR BAR CODE READER"
+
+MAKEDEPS=" imagemagick gtk3 qt5-qtx11extras lcms2 automake autoconf libtool xmlto docbook-xsl libxv python3 gettext gobject-introspection"
+
+PKG_VER=0.23.90
+SOURCE="
+	https://github.com/mchehab/zbar/archive/$PKG_VER.tar.gz
+    "
+
+prepare () {
+    autoreconf -fi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-video \
+		--with-python=python3 \
+		--with-gtk=gtk3 \
+		--with-gir \
+		--with-dbusconfdir=/usr/share
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	rm -rf "$PKG_DEST"/usr/lib/*.a
+}
+

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="python-setuptools-scm"
+DESC="The blessed package to manage your versions by scm tags"
+
+MAKEDEPS="python-packaging python-tomli"
+DEPS="python-packaging python-tomli "
+
+PKG_VER=6.4.2
+SOURCE="https://files.pythonhosted.org/packages/source/s/setuptools_scm/setuptools_scm-$PKG_VER.tar.gz"
+ADDITIONAL="test_integration.patch deprecation-warning.patch "
+
+prepare () {
+    apply_patches
+}
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

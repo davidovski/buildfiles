@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="cmark"
+DESC="C reference implementation of CommonMark, a rationalized Markdown spec"
+
+MAKEDEPS=" cmake re2c"
+
+PKG_VER=0.30.2
+SOURCE="https://github.com/commonmark/cmark/archive/$PKG_VER/cmark-$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	cd build
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest
+    cd $BUILD_ROOT
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

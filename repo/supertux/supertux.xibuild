@@ -4,6 +4,7 @@ NAME="supertux"
 DESC="Open-source classic 2D jump'n run sidescroller game"
 
 MAKEDEPS="boost cmake curl freetype2 glew libpng libvorbis openal-soft physfs sdl2 glm sdl2-image"
+DEPS="sdl2-image physfs"
 
 PKG_VER=0.6.3
 SOURCE="https://github.com/SuperTux/supertux/releases/download/v$PKG_VER/SuperTux-v$PKG_VER-Source.tar.gz"

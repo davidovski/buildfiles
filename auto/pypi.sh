@@ -31,7 +31,7 @@ echo DESC: $desc
 echo SOURCE: $url
 echo DEPS: $package_deps
 
-file=repo/python/python-$name.xibuild
+file=repo/python-$name.xibuild
 
 inp=templates/pypi.xibuild
 if [ -f $file ]; then

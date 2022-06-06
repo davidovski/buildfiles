@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="oniguruma"
+DESC="a regular expressions library"
+
+MAKEDEPS=" automake autoconf libtool"
+
+PKG_VER=6.9.7.1
+SOURCE="https://github.com/kkos/oniguruma/archive/v$PKG_VER.tar.gz"
+
+prepare() {
+	autoreconf -vfi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--enable-posix-api
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

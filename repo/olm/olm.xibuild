@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="olm"
+DESC="Implementation of the olm and megolm cryptographic ratchets"
+
+MAKEDEPS="cmake python python-cffi"
+
+PKG_VER=3.2.10
+SOURCE="https://gitlab.matrix.org/matrix-org/olm/-/archive/$PKG_VER/olm-$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+
+	cd python
+	python3 setup.py build
+}
+
+package() {
+    cd ..
+	DESTDIR="$PKG_DEST" cmake --install build
+}

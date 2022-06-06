@@ -1,0 +1,51 @@
+#!/bin/sh
+
+NAME="qt5-qtdeclarative"
+DESC="Qt5 - QtDeclarative component"
+
+MAKEDEPS=" python qt5-qtbase "
+
+PKG_VER=5.15.3_git20220209
+_commit="29ee9a0e9f02ec74153a2cf09dc63722bc273544"
+SOURCE="https://invent.kde.org/qt/qt/qtdeclarative/-/archive/$_commit/qtdeclarative-$_commit.tar.gz"
+
+ADDITIONAL="
+link-libatomic-on-rv64.patch
+qt-musl-stackbottom.patch
+"
+
+prepare() {
+    apply_patches
+	mkdir .git
+
+    export CFLAGS="$CFLAGS -O2"
+    export CPPFLAGS="$CPPFLAGS -O2"
+    export CXXFLAGS="$CXXFLAGS -O2"
+}
+
+
+build() {
+	# HACK so calls to "python" get what we want
+	ln -s /usr/bin/python3 python
+	export PATH="$(pwd):$PATH"
+
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make install INSTALL_ROOT="$PKG_DEST"
+
+	mkdir -p "$PKG_DEST"/usr/bin/
+	for i in "$PKG_DEST"/"$_qt5_prefix"/bin/*; do
+		ln -s ../lib/qt5/bin/${i##*/} "$PKG_DEST"/usr/bin/${i##*/}-qt5
+	done
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+}

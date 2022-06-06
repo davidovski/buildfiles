@@ -3,10 +3,10 @@
 NAME="ardour"
 DESC="professional-grade digital audio workstation"
 
-MAKEDEPS="alsa-lib atkmm aubio boost fftw gtk2 gtkmm itstool jack libarchive libexecinfo liblo libpng libsamplerate libsigc++ libsndfile lilv lrdf lv2 pulseaudio python readline redland rubberband serd sratom taglib vamp-sdk fluidsynth hidapi"
+MAKEDEPS="alsa-lib atkmm aubio boost fftw gtk2 gtkmm3 itstool jack libarchive libexecinfo liblo libpng libsamplerate libsigc++ libsndfile lilv lrdf lv2 pulseaudio python readline redland rubberband serd sratom taglib vamp-sdk fluidsynth hidapi soundtouch gtkmm2"
 
 PKG_VER=6.9.0
-SOURCE="https://community.ardour.org/src/Ardour-$PKG_VER.tar.bz2"
+SOURCE="https://dev.alpinelinux.org/archive/ardour/Ardour-$PKG_VER.tar.bz2"
 
 ADDITIONAL="
 always-link-execinfo.patch

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="chrpath"
+DESC="Modify rpath of compiled programs"
+
+MAKEDEPS=""
+
+PKG_VER=0.16
+SOURCE="https://alioth-archive.debian.org/releases/chrpath/chrpath/$PKG_VER/chrpath-$PKG_VER.tar.gz"
+
+build() {
+	cd "$BUILD_ROOT"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	cd "$BUILD_ROOT"
+	make check
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make DESTDIR="$PKG_DEST" docdir=/usr/share/doc/chrpath-$PKG_VER \
+		install
+}
+

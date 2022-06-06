@@ -17,6 +17,7 @@ additional=$(ls $pkgbuild | grep -v ^APKBUILD$)
 
 
 name=$pkgname
+name=$(echo $pkgname | sed 's/py3-/python-/' )
 
 version=$pkgver
 
@@ -29,15 +30,15 @@ for dep in $makedepends; do
     makedeps="$makedeps $(echo $dep | sed -E 's/(-dev|-lib|-doc)$//g')"
 done
 
-builddir="repo/$package"
-buildfile="$builddir/$package.xibuild"
+builddir="repo/$name"
+buildfile="$builddir/$name.xibuild"
 mkdir -p $builddir
 touch $buildfile
 
 cat > $buildfile << EOF
 #!/bin/sh
 
-NAME="$pkgname"
+NAME="$name"
 DESC="$pkgdesc"
 
 MAKEDEPS="$makedeps"

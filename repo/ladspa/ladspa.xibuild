@@ -13,6 +13,8 @@ fix-memleak-in-plugin-scanning.patch
 "
 
 prepare () {
+    mv *.patch src
+    cd src
     apply_patches
 }
 

@@ -1,17 +1,29 @@
 #!/bin/sh
 
-MAKEDEPS="make"
-DEPS="musl sh"
+NAME="fmt"
+DESC="Open-source formatting library for C++"
 
-PKG_VER=0.8.6
-SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
-DESC="fmt from toybox"
+MAKEDEPS="cmake doxygen python ninja"
 
-build () {
-    ./configure 
-    make fmt
+PKG_VER=8.1.1
+SOURCE="https://github.com/fmtlib/fmt/releases/download/$PKG_VER/fmt-$PKG_VER.zip"
+
+build() {
+	cmake -B . -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		$CMAKE_CROSSOPTS
+	cmake --build .
 }
 
-package () {
-    install -Dm755 fmt $PKG_DEST/usr/bin/
+check() {
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest
 }
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install .
+}
+

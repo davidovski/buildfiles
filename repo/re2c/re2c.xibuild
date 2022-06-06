@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="re2c"
+DESC="Lexer generator for C, C++ and Go"
+
+MAKEDEPS=""
+
+PKG_VER=2.1.1
+SOURCE="https://github.com/skvadrik/re2c/releases/download/$PKG_VER/re2c-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

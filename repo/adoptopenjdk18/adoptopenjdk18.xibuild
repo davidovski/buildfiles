@@ -8,7 +8,7 @@ DEPS="less "
 
 PKG_VER=18.0.1
 RELEASE=10
-SOURCE="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-$PKG_VER%2B10/OpenJDK${PKG_VER%%.*}U-jdk_x64_alpine-linux_hotspot_${PKG_VER}_${RELEASE}.tar.gz"
+SOURCE="https://github.com/adoptium/temurin18-binaries/releases/download/jdk-$PKG_VER%2B10/OpenJDK${PKG_VER%%.*}U-jdk_x64_alpine-linux_hotspot_${PKG_VER}_${RELEASE}.tar.gz"
 
 package () {
     out=$PKG_DEST/usr/lib/jvm/adoptopenjdk${PKG_VER%%.*}

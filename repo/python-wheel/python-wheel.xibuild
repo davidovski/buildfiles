@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="python-wheel"
+DESC="built-package format for Python"
+
+MAKEDEPS="python "
+DEPS="python-packaging "
+
+PKG_VER=0.37.1
+SOURCE="https://files.pythonhosted.org/packages/source/w/wheel/wheel-$PKG_VER.tar.gz"
+ADDITIONAL="use-system-packaging.patch "
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	rm -rf src/wheel/vendored
+
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}

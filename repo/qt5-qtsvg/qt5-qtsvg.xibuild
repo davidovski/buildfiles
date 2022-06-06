@@ -1,0 +1,39 @@
+#!/bin/sh
+
+NAME="qt5-qtsvg"
+DESC="Qt5 - Support for rendering and displaying SVG"
+
+MAKEDEPS=" qt5-qtbase zlib"
+
+PKG_VER=5.15.3_git20200406
+_commit="95990cbeebc0ab9959e2a925a93ad4897416bbb7"
+SOURCE="https://invent.kde.org/qt/qt/qtsvg/-/archive/$_commit/qtsvg-$_commit.tar.gz"
+
+prepare() {
+	default_prepare
+
+	# We need to make the build system think we're running in a git repository
+	# so it correctly symlinks during the build
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtsvg
+}
+

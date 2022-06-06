@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="qt5-qtgraphicaleffects"
+DESC="Qt5 - QtGraphicalEffects component"
+
+MAKEDEPS=" qt5-qtbase qt5-qtdeclarative"
+
+PKG_VER=5.15.3_git20201105
+_commit="c36998dc1581167b12cc3de8e4ac68c2a5d9f76e"
+SOURCE="https://invent.kde.org/qt/qt/qtgraphicaleffects/-/archive/$_commit/qtgraphicaleffects-$_commit.tar.gz"
+
+prepare() {
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make install INSTALL_ROOT="$PKG_DEST"
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtgraphicaleffects
+}
+

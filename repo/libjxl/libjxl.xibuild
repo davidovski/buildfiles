@@ -3,15 +3,19 @@
 NAME="libjxl"
 DESC="JPEG XL image format reference implementation"
 
-MAKEDEPS="asciidoc brotli cmake gdk-pixbuf giflib lcms2 libjpeg-turbo libpng openexr zlib gimp"
+MAKEDEPS="asciidoc brotli cmake gdk-pixbuf giflib lcms2 libjpeg-turbo libpng openexr zlib gimp highway gflags"
 
-SOURCE="github.com/libjxl/libjxl"
+SOURCE="http://github.com/libjxl/libjxl"
+
+prepare () {
+    ./deps.sh
+}
 
 build() {
 	cmake -B build \
-		-DCMAKE_BUILD_TYPE=None \
+        -DCMAKE_BUILD_TYPE=None \
 		-DCMAKE_INSTALL_PREFIX=/usr \
-		-DBUILD_TESTING=ON \
+		-DBUILD_TESTING=OFF \
 		-DJPEGXL_ENABLE_BENCHMARK=OFF \
 		-DJPEGXL_ENABLE_COVERAGE=OFF \
 		-DJPEGXL_ENABLE_EXAMPLES=OFF \
@@ -19,9 +23,7 @@ build() {
 		-DJPEGXL_ENABLE_SJPEG=OFF \
 		-DJPEGXL_ENABLE_SKCMS=OFF \
 		-DJPEGXL_ENABLE_VIEWERS=OFF \
-		-DJPEGXL_FORCE_SYSTEM_GTEST=ON \
-		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
-		-DJPEGXL_FORCE_SYSTEM_HWY=ON
+		-DJPEGXL_FORCE_SYSTEM_BROTLI=ON 
 	cmake --build build
 }
 

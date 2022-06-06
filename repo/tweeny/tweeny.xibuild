@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="tweeny"
+DESC="Modern C++ tweening library"
+
+MAKEDEPS=" cmake doxygen"
+
+PKG_VER=3.2.0
+SOURCE="https://github.com/mobius3/tweeny/archive/v$PKG_VER/tweeny-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DTWEENY_BUILD_DOCUMENTATION=ON
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DESC="Orc compiler"
+
+package () {
+	add_from_main usr/bin 
+}

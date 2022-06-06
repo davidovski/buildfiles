@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="mtxclient"
+DESC="Client API library for Matrix, built on top of Boost.Asio"
+
+MAKEDEPS="boost coeurl libsodium nlohmann-json olm openssl zlib cmake"
+
+PKG_VER=0.7.0
+SOURCE="https://github.com/nheko-reborn/mtxclient/archive/v$PKG_VER/mtxclient-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_LIB_EXAMPLES=OFF
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+
+

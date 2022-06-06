@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="libdvdcss"
+DESC="Library for accessing DVDs like a block device without having to bother about the decryption"
+
+MAKEDEPS="file linux-headers"
+
+PKG_VER=1.4.3
+SOURCE="https://download.videolan.org/pub/libdvdcss/$PKG_VER/libdvdcss-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+replace-error.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure --prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+check() {
+	make check
+}
+
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+
