@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for cis"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r cis $PKG_DEST/usr/lib/firmware/
+}

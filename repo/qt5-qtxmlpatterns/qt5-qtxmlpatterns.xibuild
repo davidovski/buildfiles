@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="qt5-qtxmlpatterns"
+DESC="Qt5 - QtXmlPatterns component"
+
+MAKEDEPS=" qt5-qtbase qt5-qtdeclarative"
+
+PKG_VER=5.15.3_git20201028
+_commit="189e28d0aff1f3d7960228ba318b83e3cadac98c"
+SOURCE="https://invent.kde.org/qt/qt/qtxmlpatterns/-/archive/$_commit/qtxmlpatterns-$_commit.tar.gz"
+
+prepare() {
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtxmlpatterns
+}
+

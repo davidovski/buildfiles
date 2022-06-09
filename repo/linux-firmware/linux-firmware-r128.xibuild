@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for r128"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r r128 $PKG_DEST/usr/lib/firmware/
+}

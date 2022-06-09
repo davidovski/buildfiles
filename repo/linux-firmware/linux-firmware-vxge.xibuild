@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for vxge"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r vxge $PKG_DEST/usr/lib/firmware/
+}

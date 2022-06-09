@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="onefetch"
+DESC="Git repository summary on your terminal"
+
+MAKEDEPS="cargo libgit zlib"
+
+PKG_VER=2.12.0
+SOURCE="https://crates.io/api/v1/crates/onefetch/$PKG_VER/download"
+
+build() {
+	cargo build --release --locked
+}
+
+check() {
+	cargo test --release --locked
+}
+
+package() {
+	install -Dm0755 target/release/onefetch "$PKG_DEST"/usr/bin/onefetch
+}
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for cadence"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r cadence $PKG_DEST/usr/lib/firmware/
+}

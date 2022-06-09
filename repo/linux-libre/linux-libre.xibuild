@@ -1,9 +1,9 @@
 #!/bin/sh
 
-MAKEDEPS="make bc"
+MAKEDEPS="make bc linux-headers cpio"
 DEPS="sbase kmod"
 
-PKG_VER=5.18.1
+PKG_VER=5.18.2
 SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 ADDITIONAL="
     fix-sbase-coreutils.patch

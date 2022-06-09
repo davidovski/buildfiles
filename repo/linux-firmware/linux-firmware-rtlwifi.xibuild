@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for rtlwifi"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r rtlwifi $PKG_DEST/usr/lib/firmware/
+}

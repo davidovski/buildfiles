@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for 3com"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r 3com $PKG_DEST/usr/lib/firmware/
+}

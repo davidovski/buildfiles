@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for rsi"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r rsi $PKG_DEST/usr/lib/firmware/
+}

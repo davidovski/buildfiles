@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="lshw"
+DESC="Hardware Lister"
+
+MAKEDEPS="sqlite3 linux-headers"
+
+PKG_VER=B.02.19.2
+SOURCE="https://ezix.org/software/files/lshw-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+15565229509455527de9ce7cbb9530e2b31d043b.patch
+2b1c730b493d647bbab4854713571458e82a81e7.patch
+fix-musl-sc_long_bit.patch
+wrapper-for-basename.patch
+"
+
+prepare () {
+    apply_patches
+    sed -i 's/install -p/install/' src/Makefile
+}
+
+build() {
+	make RPM_OPT_FLAGS=-DNONLS
+}
+
+check() {
+	./src/lshw -version
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

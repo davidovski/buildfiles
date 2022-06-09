@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for kaweth"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r kaweth $PKG_DEST/usr/lib/firmware/
+}

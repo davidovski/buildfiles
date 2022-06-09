@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for RTL8192E"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r RTL8192E $PKG_DEST/usr/lib/firmware/
+}

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="qt5-qtquick3d"
+DESC="Qt module and API for defining 3D content in Qt Quick"
+
+MAKEDEPS=" assimp qt5-qtbase qt5-qtdeclarative"
+
+PKG_VER=5.15.3_git20210104
+_commit="68b30bb23e34426e7d6a4c243a42ae57dfe45c6b"
+SOURCE="https://invent.kde.org/qt/qt/qtquick3d/-/archive/$_commit/qtquick3d-$_commit.tar.gz"
+
+ADDITIONAL="
+qtquick3d-assimp.patch
+"
+
+prepare() {
+    apply_patches
+
+	# We need to make the build system think we're running in a git repository
+	# so it correctly symlinks during the build
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtquick3d
+}

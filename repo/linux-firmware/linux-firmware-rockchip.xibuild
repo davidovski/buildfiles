@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for rockchip"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r rockchip $PKG_DEST/usr/lib/firmware/
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for amd-ucode"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r amd-ucode $PKG_DEST/usr/lib/firmware/
+}

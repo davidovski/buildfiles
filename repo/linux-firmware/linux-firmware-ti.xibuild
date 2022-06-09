@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ti"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ti $PKG_DEST/usr/lib/firmware/
+}

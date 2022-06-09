@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for dpaa2"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r dpaa2 $PKG_DEST/usr/lib/firmware/
+}

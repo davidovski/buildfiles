@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ositech"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ositech $PKG_DEST/usr/lib/firmware/
+}

@@ -1,0 +1,39 @@
+#!/bin/sh
+
+NAME="libgit"
+DESC="linkable library for Git"
+
+MAKEDEPS="http-parser"
+
+PKG_VER=1.4.3
+SOURCE="https://github.com/libgit2/libgit2/archive/v$PKG_VER.tar.gz"
+
+prepare() {
+	mkdir -p "$BUILD_ROOT"/build
+}
+
+build() {
+	cd "$BUILD_ROOT"/build
+
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DUSE_HTTP_PARSER=system \
+		-DUSE_HTTPS=OpenSSL \
+		-DREGEX_BACKEND=pcre \
+		-DUSE_BUNDLED_ZLIB=OFF \
+		-DUSE_SSH=ON \
+		-DCMAKE_C_FLAGS="$CFLAGS"
+	make
+}
+
+check() {
+	cd "$BUILD_ROOT"/build
+	ctest -E 'offline|online'
+}
+
+package() {
+    cd "$BUILD_ROOT"
+	make -C build DESTDIR="$PKG_DEST" install
+}

@@ -3,8 +3,8 @@
 NAME="monero-gui"
 DESC="QT GUI wallet for Monero: the secure, private, untraceable peer-to-peer currency"
 
-MAKEDEPS="cmake monero git qt5-qtquickcontrols2 qt5-qtdeclarative qt5-qtbase qt5-qtsvg libgpg-error"
-DEPS="musl "
+MAKEDEPS="cmake monero git qt5-qtquickcontrols qt5-qtdeclarative qt5-qtbase qt5-qtsvg libgpg-error qt5-qttools"
+DEPS="musl qt5-qtquickcontrols qt5-qtxmlpatterns "
 
 PKG_VER=musl
 SOURCE="https://github.com/monero-project/monero-gui"

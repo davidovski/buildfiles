@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="http-parser"
+DESC="HTTP request/response parser for C"
+
+MAKEDEPS=""
+
+PKG_VER=2.9.4
+SOURCE="https://github.com/nodejs/http-parser/archive/v$PKG_VER/http-parser-$PKG_VER.tar.gz"
+
+build() {
+	make library
+}
+
+check() {
+	make test
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST" PREFIX="/usr"
+}
+

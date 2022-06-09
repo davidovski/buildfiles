@@ -4,16 +4,20 @@ NAME="adoptopenjdk11"
 DESC="AdoptOpenJDK Java 11 binaries"
 
 MAKEDEPS="make "
-DEPS="less "
+DEPS="default-jvm less "
 
 PKG_VER=11.0.15
 RELEASE=10
 SOURCE="https://github.com/adoptium/temurin11-binaries/releases/download/jdk-$PKG_VER%2B10/OpenJDK${PKG_VER%%.*}U-jdk_x64_alpine-linux_hotspot_${PKG_VER}_${RELEASE}.tar.gz"
 
 package () {
-    out=$PKG_DEST/usr/lib/jvm/adoptopenjdk${PKG_VER%%.*}
+    out=$PKG_DEST/usr/lib/jvm/$NAME
     mkdir -p $out
     for f in NOTICE bin conf include jmods legal lib man release; do
         mv $f $out/
     done
+}
+
+postinstall () {
+    default-jvm || default-jvm $NAME
 }

@@ -3,13 +3,15 @@
 MAKEDEPS=""
 DEPS="linux"
 
-PKG_VER=5.18.1
+PKG_VER=5.18.2
 SOURCE=https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git
-BRANCH=0c6a7b3bf728b95c8b7b95328f94335e2bb2c967
+BRANCH=02c69863c885db963f8c0121b533f2816ef5be3b
 
 DESC="All firmware files for linux"
 
 package () {
-    mkdir -p $PKG_DEST/usr/lib/firmware
-    cp -r * $PKG_DEST/usr/lib/firmware
+    fw="$PKG_DEST/usr/lib/firmware"
+    mkdir -p $fw
+    cp *.bin *.fw *.txt *.inp *.ucode *.dat *.dlmem $fw/
+    cp LICENSE.* $fw/
 }

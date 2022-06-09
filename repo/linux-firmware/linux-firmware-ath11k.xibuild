@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ath11k"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ath11k $PKG_DEST/usr/lib/firmware/
+}

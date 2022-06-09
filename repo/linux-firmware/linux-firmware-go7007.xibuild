@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for go7007"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r go7007 $PKG_DEST/usr/lib/firmware/
+}

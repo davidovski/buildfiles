@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ene-ub6250"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ene-ub6250 $PKG_DEST/usr/lib/firmware/
+}

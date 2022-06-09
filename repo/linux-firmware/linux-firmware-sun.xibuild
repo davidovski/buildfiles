@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for sun"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r sun $PKG_DEST/usr/lib/firmware/
+}

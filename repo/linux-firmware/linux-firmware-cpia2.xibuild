@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for cpia2"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r cpia2 $PKG_DEST/usr/lib/firmware/
+}

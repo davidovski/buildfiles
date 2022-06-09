@@ -4,7 +4,7 @@ NAME="adoptopenjdk18"
 DESC="AdoptOpenJDK Java 18 binaries"
 
 MAKEDEPS="make "
-DEPS="less "
+DEPS="default-jvm"
 
 PKG_VER=18.0.1
 RELEASE=10
@@ -16,4 +16,8 @@ package () {
     for f in NOTICE bin conf include jmods legal lib man release; do
         mv $f $out/
     done
+}
+
+postinstall () {
+    default-jvm || default-jvm $NAME
 }

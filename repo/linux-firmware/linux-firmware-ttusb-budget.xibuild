@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ttusb-budget"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ttusb-budget $PKG_DEST/usr/lib/firmware/
+}

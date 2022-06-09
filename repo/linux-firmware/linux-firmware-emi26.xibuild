@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for emi26"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r emi26 $PKG_DEST/usr/lib/firmware/
+}

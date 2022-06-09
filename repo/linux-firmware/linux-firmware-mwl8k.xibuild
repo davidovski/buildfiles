@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for mwl8k"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r mwl8k $PKG_DEST/usr/lib/firmware/
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for cypress"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r cypress $PKG_DEST/usr/lib/firmware/
+}

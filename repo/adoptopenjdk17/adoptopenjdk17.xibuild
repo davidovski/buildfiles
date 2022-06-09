@@ -4,6 +4,7 @@ NAME="adoptopenjdk17"
 DESC="AdoptOpenJDK Java 17 binaries"
 
 MAKEDEPS="make "
+DEPS="default-jvm"
 
 PKG_VER=17.0.3
 RELEASE=7
@@ -15,4 +16,8 @@ package () {
     for f in NOTICE bin conf include jmods legal lib man release; do
         mv $f $out/
     done
+}
+
+postinstall () {
+    default-jvm || default-jvm $NAME
 }

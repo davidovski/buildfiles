@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for microchip"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r microchip $PKG_DEST/usr/lib/firmware/
+}

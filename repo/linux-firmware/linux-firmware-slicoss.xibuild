@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for slicoss"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r slicoss $PKG_DEST/usr/lib/firmware/
+}

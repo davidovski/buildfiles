@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ath9k_htc"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ath9k_htc $PKG_DEST/usr/lib/firmware/
+}

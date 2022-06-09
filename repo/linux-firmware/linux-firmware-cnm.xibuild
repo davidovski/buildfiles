@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for cnm"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r cnm $PKG_DEST/usr/lib/firmware/
+}

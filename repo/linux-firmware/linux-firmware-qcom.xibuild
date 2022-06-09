@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for qcom"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r qcom $PKG_DEST/usr/lib/firmware/
+}

@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for dsp56k"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r dsp56k $PKG_DEST/usr/lib/firmware/
+}

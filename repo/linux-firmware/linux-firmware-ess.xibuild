@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for ess"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r ess $PKG_DEST/usr/lib/firmware/
+}

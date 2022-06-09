@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="xiutils parseconf tar unzip hbar"
 
-PKG_VER=1.5
+PKG_VER=1.5.1
 SOURCE=https://git.davidovski.xyz/xilinux/xibuild.git
 BRANCH=v$PKG_VER
 

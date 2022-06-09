@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for rtw89"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r rtw89 $PKG_DEST/usr/lib/firmware/
+}

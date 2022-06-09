@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for amphion"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r amphion $PKG_DEST/usr/lib/firmware/
+}

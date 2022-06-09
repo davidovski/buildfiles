@@ -1,0 +1,9 @@
+#!/bin/sh
+
+DESC="linux firmware files for qlogic"
+DEPS=""
+
+package () {
+    mkdir -p $PKG_DEST/usr/lib/firmware
+    cp -r qlogic $PKG_DEST/usr/lib/firmware/
+}
