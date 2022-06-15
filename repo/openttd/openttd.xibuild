@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="openttd"
+DESC="Open source version of the Transport Tycoon Deluxe simulator"
+
+MAKEDEPS="cmake fontconfig fluidsynth freetype2 icu libpng lzo ninja sdl2 xz zlib"
+
+PKG_VER=12.2
+SOURCE="https://cdn.openttd.org/openttd-releases/$PKG_VER/openttd-$PKG_VER-source.tar.xz"
+
+build() {
+	cmake -B build \
+		-G "Ninja" \
+		-DCMAKE_INSTALL_BINDIR=bin \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_DATADIR=share/games \
+		-DGLOBAL_DATA_DIR=share/games/openttd \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DReleaseBuild=ON
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --build build --target install
+}

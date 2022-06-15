@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-ipaddress python-mock python-enum34 python-pywin32 python-wmi"
+
+PKG_VER=5.9.1
+SOURCE=https://files.pythonhosted.org/packages/source/p/psutil/psutil-$PKG_VER.tar.gz
+DESC="Cross-platform lib for process and system monitoring in Python."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

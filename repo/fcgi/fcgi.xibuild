@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="fcgi"
+DESC="FAST CGI(fcgi) is a language independent, high performant extension to CGI"
+
+MAKEDEPS="libtool autoconf automake"
+
+PKG_VER=2.4.2
+SOURCE="https://github.com/FastCGI-Archives/fcgi2/archive/$PKG_VER.tar.gz"
+
+build() {
+	export LIBS="-lm"
+	./autogen.sh
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--enable-shared
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

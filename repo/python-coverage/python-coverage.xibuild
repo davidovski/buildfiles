@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-tomli"
+
+PKG_VER=6.4.1
+SOURCE=https://files.pythonhosted.org/packages/source/c/coverage/coverage-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Code coverage measurement for Python"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

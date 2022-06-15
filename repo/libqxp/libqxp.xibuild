@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="libqxp"
+DESC="Library that parses the file format of QuarkXPress documents."
+
+MAKEDEPS="librevenge icu doxygen"
+
+PKG_VER=0.0.2
+SOURCE="https://dev-www.libreoffice.org/src/libqxp/libqxp-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+        --prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

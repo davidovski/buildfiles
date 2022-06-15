@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="zxing-cpp"
+DESC="C++ port of ZXing"
+
+MAKEDEPS="cmake"
+
+PKG_VER=1.2.0
+SOURCE="https://github.com/nu-book/zxing-cpp/archive/v$PKG_VER/zxing-cpp-v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	cd build
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest
+    cd $BUILD_ROOT
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

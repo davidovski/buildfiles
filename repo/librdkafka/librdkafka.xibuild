@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="librdkafka"
+DESC="The Apache Kafka C/C++ library"
+
+MAKEDEPS="bash openssl libsasl lz4 zlib zstd rapidjson"
+
+PKG_VER=1.8.2
+SOURCE="https://github.com/edenhill/librdkafka/archive/v$PKG_VER.tar.gz"
+
+build() {
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

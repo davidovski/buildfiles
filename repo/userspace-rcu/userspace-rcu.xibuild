@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="userspace-rcu"
+DESC="Userspace RCU (read-copy-update) library"
+
+MAKEDEPS="bash perl"
+
+PKG_VER=0.12.2
+SOURCE="https://lttng.org/files/urcu/userspace-rcu-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make V=1
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -Dm644 LICENSE "$PKG_DEST"/usr/share/licenses/userspace-rcu/LICENSE
+}

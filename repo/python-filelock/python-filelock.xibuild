@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-furo python-sphinx python-sphinx-python-autodoc-python-typehints python-covdefaults python-coverage python-pytest python-pytest-python-cov python-pytest-python-timeout"
+
+PKG_VER=3.7.1
+SOURCE=https://files.pythonhosted.org/packages/source/f/filelock/filelock-$PKG_VER.tar.gz
+DESC="A platform independent file lock."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

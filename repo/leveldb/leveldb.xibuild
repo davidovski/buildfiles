@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="leveldb"
+DESC="A fast and lightweight key/value database library by Google"
+
+MAKEDEPS=" cmake snappy"
+
+PKG_VER=1.22
+SOURCE="https://github.com/google/leveldb/archive/$PKG_VER.tar.gz"
+
+build() {
+	mkdir build && cd build
+	cmake .. \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DLEVELDB_BUILD_TESTS=ON \
+		-DLEVELDB_INSTALL=ON \
+		-DBUILD_SHARED_LIBS=ON
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	mkdir -p "$PKG_DEST"/usr/share/doc
+	cp -a ../doc "$PKG_DEST"/usr/share/doc/leveldb
+}
+

@@ -1,0 +1,120 @@
+#!/bin/sh
+
+NAME="ceph"
+DESC="Ceph is a distributed object store and file system"
+
+MAKEDEPS="acl argp-standalone bc boost btrfs-progs bzip2 cmake cryptsetup cunit curl cython diffutils doxygen eudev expat fcgi flex fmt fuse fuse git graphviz grep gperf jq keyutils leveldb libaio libcap-ng libedit librdkafka libnl libtirpc libtool libxml2 linux-headers lua lvm2 lz4 nodejs nss oath-toolkit libldap openssl procps-ng python python-prettytable python-sphinx rabbitmq-c readline ninja snappy sqlite3 userspace-rcu xfsprogs xmlstarlet yarn yasm cryptsetup e2fsprogs parted util-linux xfsprogs fuse snappy lz4 lvm2 xmlstarlet python-coverage python-flake8 python-nodeenv python-nose python-pytest python-tox "
+
+PKG_VER=16.2.9
+SOURCE="https://download.ceph.com/tarballs/ceph_$PKG_VER.orig.tar.gz"
+
+ADDITIONAL="
+10-musl-fixes.patch
+11-dump_time_header_impl.patch
+11-parse_rfc1123_alt.patch
+11-s3_expiration_header.patch
+12-package.json-resolutions.patch
+20-pci.patch
+32-PurgeQueue.cc-cast.patch
+32-upstream32bit.patch
+32-upstream32bitcleanup.patch
+35-fix_ErasureCodeShec.patch
+37-fix_tests.patch
+42-no-virtualenvs.patch
+43-LogClock.h.patch
+44-aarch64-erasure.patch
+44-cmake-buildtype.patch
+44-missing-include.patch
+44-staticcast.patch
+ceph.confd
+ceph.initd
+"
+
+_py3_sitelib() {
+	python -c "import site; print(site.getsitepackages()[0])"
+}
+
+prepare() {
+    apply_patches
+
+	# delete bundled boost as >300mb and using system boost
+	rm -rf src/boost
+}
+
+build() {
+	export CEPH_BUILD_VIRTUALENV="$BUILD_ROOT"
+
+	# builders keep failing when -jN == nproc
+	export MAKEFLAGS="$MAKEFLAGS -j$((JOBS<12 ? JOBS : 12))"
+
+	# use alternate registry as original can timeout for arm32bit
+	export NPM_REGISTRY=https://registry.npmjs.org
+
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DLUA_LIBRARIES=/usr/lib/liblua.so \
+		-DALLOCATOR=libc \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DCMAKE_INSTALL_LOCALSTATEDIR=/var \
+		-DCMAKE_INSTALL_SYSCONFDIR=/etc \
+		-DWITH_REENTRANT_STRSIGNAL=ON \
+		-DWITH_THREAD_SAFE_RES_QUERY=ON \
+		-DWITH_MANPAGE=ON \
+		-DWITH_SYSTEM_BOOST=ON \
+		-DWITH_SYSTEM_NPM=ON \
+		-DWITH_LTTNG=OFF \
+		-DWITH_RDMA=OFF \
+		-DWITH_SYSTEMD=OFF \
+		-DWITH_SPDK=OFF \
+		-DWITH_BABELTRACE=OFF \
+		-DWITH_RADOSGW_AMQP_ENDPOINT=OFF \
+		-DWITH_TESTS=OFF
+    mkdir -p build/src/pybind/mgr/dashboard/cypress
+	cmake --build build
+
+}
+
+package() {
+	# free up some space before install
+	rm -rf build/src/pybind/mgr/dashboard/cypress
+	rm -rf src/pybind/mgr/dashboard/frontend/node_modules
+
+	DESTDIR="$PKG_DEST" cmake --install build
+	# yarn creates an empty usr/local/bin
+	rm -rf "${pkgdir:?}"/usr/local
+
+	# fix /usr permission
+	chmod 755 "$PKG_DEST/usr"
+
+	# remove dashboard angular app source
+	rm -rf "$PKG_DEST"/usr/share/ceph/mgr/dashboard/frontend/src
+
+	# remove the upstream init file and put in openrc ones
+	rm -f "$PKG_DEST"/etc/init.d/ceph
+	install -D -m 755 "$BUILD_ROOT"/"ceph".initd "$PKG_DEST"/etc/init.d/ceph
+	install -D -m 644 "$BUILD_ROOT"/"ceph".confd "$PKG_DEST"/etc/conf.d/ceph
+
+	# move mount.* binaries to /sbin
+	mkdir -p "$PKG_DEST"/sbin
+	mv "$PKG_DEST"/usr/sbin/mount.* "$PKG_DEST"/sbin
+
+	install -m 644 -D src/etc-rbdmap "$PKG_DEST"/etc/ceph/rbdmap
+	install -m 644 -D src/logrotate.conf "$PKG_DEST"/etc/logrotate.d/ceph
+	install -m 644 -D etc/sysctl/90-ceph-osd.conf "$PKG_DEST"/etc/sysctl.d/90-ceph-osd.conf
+
+	# udev rules
+	install -m 644 -D udev/50-rbd.rules "$PKG_DEST"/etc/udev/rules.d/50-rbd.rules
+	# sudoers.d
+	install -m 600 -D sudoers.d/ceph-smartctl "$PKG_DEST"/etc/sudoers.d/ceph-smartctl
+
+	# delete systemd related stuff
+	rm "$PKG_DEST"/usr/sbin/ceph-volume-systemd
+
+	# move docs to docs
+	mkdir -p "$PKG_DEST"/usr/share/doc/ceph/dashboard
+	mv "$PKG_DEST"/usr/share/ceph/mgr/dashboard/*.rst "$PKG_DEST"/usr/share/doc/ceph/dashboard/
+	mv "$PKG_DEST"/usr/share/ceph/mgr/cephadm/HACKING.rst "$PKG_DEST"/usr/share/doc/ceph/cephadm-HACKING.rst
+}
+
+# TODO split this into other packages

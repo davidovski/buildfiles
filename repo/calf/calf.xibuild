@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="calf"
+DESC="Calf Studio Gear"
+
+MAKEDEPS="autoconf automake expat fluidsynth gtk2 jack libtool lv2"
+
+PKG_VER=0.90.3
+SOURCE="http://calf-studio-gear.org/files/calf-$PKG_VER.tar.gz"
+
+prepare() {
+	autoreconf -vif
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

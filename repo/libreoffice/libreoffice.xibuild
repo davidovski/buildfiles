@@ -1,0 +1,136 @@
+#!/bin/sh
+
+NAME="libreoffice"
+DESC="LibreOffice - Meta package for the full office suite"
+
+MAKEDEPS="apache-ant apr autoconf automake bison bluez boost box2d clucene cppunit cups doxygen findutils flex freetype2 glew glm glu gperf gpgme gst-plugins-base gstreamer gtk3 harfbuzz hunspell hyphen icu junit kconfig lcms2 libabw libcdr libepubgen libetonyek libexecinfo libexttextcat libfreehand libjpeg-turbo libmspub libmwaw libnumbertext libodfgen liborcus libpagemaker libqxp libstaroffice libvisio libwpd libwpg libwps libxml2 libxrandr libxrender libxslt libzmf mdds mythes neon nss libldap openssl perl perl-archive-zip poppler python qt5-qtbase redland sed tar ucpp unixodbc vigra xmlsec xz zip zxing-cpp adoptopenjdk11"
+
+PKG_VER=7.2.6.2
+
+addsrcurl="https://dev-www.libreoffice.org/src"
+case $PKG_VER in
+*.*.*.*) v=${PKG_VER%.*};;
+*.*.*) v=$PKG_VER;;
+esac
+
+SOURCE="https://download.documentfoundation.org/libreoffice/src/$v/libreoffice-$PKG_VER.tar.xz"
+ADDITIONAL="
+	https://download.documentfoundation.org/libreoffice/src/$v/libreoffice-dictionaries-$PKG_VER.tar.xz
+	https://download.documentfoundation.org/libreoffice/src/$v/libreoffice-translations-$PKG_VER.tar.xz
+	$addsrcurl/17410483b5b5f267aa18b7e00b65e6e0-hsqldb_1_8_0.zip
+	$addsrcurl/3404ab6b1792ae5f16bbd603bd1e1d03-libformula-1.1.7.zip
+	$addsrcurl/35c94d2df8893241173de1d16b6034c0-swingExSrc.zip
+	$addsrcurl/39bb3fcea1514f1369fcfc87542390fd-sacjava-1.3.zip
+	$addsrcurl/3bdf40c0d199af31923e900d082ca2dd-libfonts-1.1.6.zip
+	$addsrcurl/798b2ffdc8bcfe7bca2cf92b62caf685-rhino1_5R5.zip
+	$addsrcurl/8ce2fcd72becf06c41f7201d15373ed9-librepository-1.1.6.zip
+	$addsrcurl/97b2d4dba862397f446b217e2b623e71-libloader-1.1.6.zip
+	$addsrcurl/ace6ab49184e329db254e454a010f56d-libxml-1.1.7.zip
+	$addsrcurl/ba2930200c9f019c2d93a8c88c651a0f-flow-engine-0.9.4.zip
+	$addsrcurl/beeca87be45ec87d241ddd0e1bad80c1-bsh-2.0b6-src.zip
+	$addsrcurl/d8bd5eed178db6e2b18eeed243f85aa8-flute-1.1.6.zip
+	$addsrcurl/db60e4fde8dd6d6807523deb71ee34dc-liblayout-0.2.10.zip
+	$addsrcurl/eeb2c7ddf0d302fba4bfc6e97eac9624-libbase-1.1.6.zip
+	$addsrcurl/f94d9870737518e3b597f9265f4e9803-libserializer-1.1.6.zip
+	$addsrcurl/commons-logging-1.2-src.tar.gz
+	$addsrcurl/dtoa-20180411.tgz
+	$addsrcurl/lxml-4.1.1.tgz
+	$addsrcurl/pdfium-4500.tar.bz2
+	$addsrcurl/skia-m90-45c57e116ee0ce214bdf78405a4762722e4507d9.tar.xz
+	$addsrcurl/QR-Code-generator-1.4.0.tar.gz
+	$addsrcurl/libcmis-0.5.2.tar.xz
+	https://dev-www.libreoffice.org/extern/185d60944ea767075d27247c3162b3bc-unowinreg.dll
+	https://dev-www.libreoffice.org/extern/f543e6e2d7275557a839a164941c0a86e5f2c3f2a0042bfc434c88c6dde9e140-opens___.ttf
+
+autoconf-boost-macros.patch
+disable-liborcus-unittest.patch
+fix-execinfo.patch
+linux-musl.patch
+musl-libintl.patch
+musl-stacksize.patch
+pld-skia-patches.patch
+poppler-22.03.patch
+remove-backtrace.patch
+skia-freetype2.11.diff
+"
+
+unpack() {
+	mkdir -p "$BUILD_ROOT"
+	for u in libreoffice-*.tar.xz; do
+        unxz -c "$s" | tar -C "$BUILD_ROOT" -x
+	done
+}
+
+prepare() {
+    unpack 
+	mv "$BUILD_ROOT/skia-freetype2.11.diff" external/skia/"skia-freetype2.11.patch"
+
+    apply_patches
+	NOCONFIGURE=1 ./autogen.sh
+}
+
+build() {
+	export CFLAGS="$CFLAGS -O2"
+	export CPPFLAGS="$CPPFLAGS -O2"
+	export CXXFLAGS="$CXXFLAGS -O2"
+
+	# boost-1.59
+	export CPPFLAGS="$CPPFLAGS -DBOOST_ERROR_CODE_HEADER_ONLY -DBOOST_SYSTEM_NO_DEPRECATED"
+
+		export JAVA_HOME=/usr/lib/jvm/adoptopenjdk11
+    java_conf="
+    "
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--disable-online-update \
+		--disable-fetch-external \
+		--disable-dependency-tracking \
+		--enable-release-build \
+		--enable-split-app-modules \
+		--enable-python=system \
+		--with-tls=nss \
+		--with-system-libs \
+		--with-system-dicts \
+		--with-system-ucpp \
+		--with-external-dict-dir=/usr/share/hunspell \
+		--with-external-hyph-dir=/usr/share/hyphen \
+		--with-external-tar="$BUILD_ROOT" \
+		--without-system-jars \
+		--without-system-libcmis \
+		--without-junit \
+		--without-fonts \
+		--without-system-sane \
+		--without-myspell-dicts \
+		--disable-firebird-sdbc \
+		--disable-coinmp \
+		--disable-lpsolve \
+		--enable-gtk3 \
+		--enable-odk \
+		--enable-skia \
+		--enable-gtk3-kde5 \
+		--enable-kf5 \
+		--enable-qt5 \
+        --with-jdk-home=$JAVA_HOME \
+        --with-ant-home=/usr/share/java/apache-ant \
+        --with-java
+
+	make build-nocheck
+}
+
+package() {
+	make DESTDIR="$PKG_DEST"/../all distro-pack-install
+}
+
+libreoffice_split() {
+	local i
+	grep "^[^% ]" $BUILD_ROOT/file-lists/${1}_list.txt | sort -u | while IFS= read -r i; do
+		[ "$i" ] || continue
+		dirname="$(dirname $i)"
+		[ -d "$PKG_DEST/$dirname" ] || install -dm755 "$PKG_DEST/$dirname"
+		add_from_main $i
+	done
+}

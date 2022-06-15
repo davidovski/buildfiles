@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="apache-ant"
+DESC="A java-based build tool"
+
+MAKEDEPS="adoptopenjdk11"
+
+PKG_VER=1.10.12
+SOURCE="https://downloads.apache.org/ant/binaries/apache-ant-$PKG_VER-bin.tar.xz"
+
+anthome="/usr/share/java/apache-ant"
+build() {
+	cat > apache-ant.sh <<-EOF
+	ANT_HOME="$anthome"
+	export ANT_HOME
+	EOF
+}
+
+package() {
+	local destdir="$PKG_DEST/$anthome"
+
+	install -dm755 "$destdir"/bin
+	rm bin/*.bat bin/*.cmd
+	install -m755 bin/* "$destdir"/bin
+
+	install -dm755 "$PKG_DEST"/usr/bin
+	ln -sf $anthome/bin/ant "$PKG_DEST"/usr/bin/ant
+
+	cp -r etc "$destdir"/
+
+	install -dm755 "$destdir"/lib
+	install -m644 lib/*.jar "$destdir"/lib
+
+	ln -sf ../../junit.jar "$destdir"/lib/junit.jar
+
+	local file; for file in LICENSE NOTICE; do
+		install -m644 -D $file "$PKG_DEST"/usr/share/licenses/apache-ant/$file
+	done
+
+	install -m644 -D apache-ant.sh "$PKG_DEST"/etc/profile.d/apache-ant.sh
+}
+

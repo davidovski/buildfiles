@@ -5,6 +5,7 @@ DEPS="%deps%"
 
 PKG_VER=%version%
 SOURCE=%url%
+MAKEDEPS="python"
 DESC="%desc%"
 
 build() {

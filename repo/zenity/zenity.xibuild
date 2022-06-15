@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="zenity"
+DESC="Display dialog boxes from the command line and shell scripts"
+
+MAKEDEPS="gtk2 gtk3 intltool libxml2 libnotify itstool"
+
+PKG_VER=3.32.0
+SOURCE="https://download.gnome.org/sources/zenity/${PKG_VER%.*}/zenity-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

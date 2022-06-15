@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="libmspub"
+DESC="Import filter and tools for MS Publisher files"
+
+MAKEDEPS="boost librevenge zlib icu libwpd libwpg doxygen"
+
+PKG_VER=0.1.4
+SOURCE="https://dev-www.libreoffice.org/src/libmspub/libmspub-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+musl.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

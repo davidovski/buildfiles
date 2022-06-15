@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DEPS="libreoffice-common"
+DESC="LibreOffice - SDK"
+
+splitname="sdk"
+
+package () {
+    libreoffice_split $splitname
+}

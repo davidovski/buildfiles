@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="gomuks"
+DESC="terminal-based Matrix client written in Go"
+
+MAKEDEPS="go"
+
+PKG_VER=0.2.4
+SOURCE="https://github.com/tulir/gomuks/archive/v$PKG_VER.tar.gz"
+
+build() {
+	go build
+}
+
+package() {
+	install -Dm755 gomuks "$PKG_DEST/usr/bin/gomuks"
+	install -Dm644 README.md "$PKG_DEST/usr/share/doc/gomuks/README.md"
+}
+

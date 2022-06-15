@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="libetonyek"
+DESC="Import filter and tools for Apple Keynote presentations"
+
+MAKEDEPS=" glm boost librevenge libxml2 zlib liblangtag gperf doxygen mdds"
+
+PKG_VER=0.1.10
+SOURCE="https://dev-www.libreoffice.org/src/libetonyek/libetonyek-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--disable-werror \
+		--with-mdds=1.5 \
+		--disable-static
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

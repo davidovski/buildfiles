@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-importlib-python-metadata python-pre-python-commit python-pytest python-pytest-python-benchmark"
+
+PKG_VER=1.0.0
+SOURCE=https://files.pythonhosted.org/packages/source/p/pluggy/pluggy-$PKG_VER.tar.gz
+DESC="plugin and hook calling mechanisms for python"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

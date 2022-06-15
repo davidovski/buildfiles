@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DEPS="libreoffice-common"
+DESC="LibreOffice - Connector for postgresql database"
+
+splitname="postgresql"
+
+package () {
+    libreoffice_split $splitname
+}

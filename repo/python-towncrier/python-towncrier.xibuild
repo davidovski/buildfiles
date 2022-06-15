@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python python-incremental"
+DEPS="python-click python-click-python-default-python-group python-incremental python-jinja2 python-setuptools python-toml python-tomli python-packaging"
+
+PKG_VER=21.9.0
+SOURCE=https://files.pythonhosted.org/packages/source/t/towncrier/towncrier-$PKG_VER.tar.gz
+DESC="Building newsfiles for your project."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

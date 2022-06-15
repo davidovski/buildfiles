@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="qt5-qtscript"
+DESC="Qt5 - QtScript component"
+
+MAKEDEPS="qt5-qtbase linux-headers"
+
+PKG_VER=5.15.3_git20210316
+_commit="5cec94b2c1503f106f4ef4778d016410ebb86211"
+SOURCE="https://invent.kde.org/qt/qt/qtscript/-/archive/$_commit/qtscript-$_commit.tar.gz"
+
+ADDITIONAL="
+qtscript-everywhere-src-5.10.1-sgidefs.patch
+qtscript-s390x.patch
+"
+
+prepare() {
+    apply_patches
+	mkdir .git
+}
+
+build() {
+	qmake-qt5
+	make
+}
+
+package() {
+	make INSTALL_ROOT="$PKG_DEST" install
+
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtscript
+}
+

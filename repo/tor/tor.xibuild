@@ -44,3 +44,8 @@ package() {
 		"$PKG_DEST"/etc/conf.d/"tor"
 }
 
+
+postinstall () {
+    useradd -r -m -U -d /var/lib/tor -s /sbin/nologin -g tor tor
+    return 0
+}

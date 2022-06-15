@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="mdds"
+DESC="Multi-dimensional data index algorithm"
+
+MAKEDEPS=" boost"
+
+PKG_VER=1.7.0
+SOURCE="https://kohei.us/files/mdds/src/mdds-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -d 755 "$PKG_DEST"/usr/lib
+	mv "$PKG_DEST"/usr/share/pkgconfig "$PKG_DEST"/usr/lib/
+}
+

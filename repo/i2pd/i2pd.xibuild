@@ -41,6 +41,6 @@ package () {
 }
 
 postinstall () {
-    adduser -S -D -H -h /var/lib/i2p -s /sbin/nologin -g tor tor 2>/dev/null
+    useradd -r -m -U -d /var/lib/i2pd -s /sbin/nologin i2pd
     return 0
 }

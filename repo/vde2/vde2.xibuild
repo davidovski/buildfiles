@@ -1,0 +1,41 @@
+#!/bin/sh
+
+NAME="vde2"
+DESC="VDE: Virtual Distributed Ethernet. User mode networking for QEMU, UML, etc."
+
+MAKEDEPS="linux-headers openssl libpcap python"
+
+PKG_VER=2.3.2
+SOURCE="https://downloads.sourceforge.net/project/vde/vde2/$PKG_VER/vde2-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+inline.patch
+musl-build-fix.patch
+vde2.post-down
+vde2.pre-install
+vde2.pre-up
+vde_cryptcab-compile-against-openssl-1.1.0.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc
+	make -C src/common
+	make -j1 -C src/lib
+	make
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make -j1 DESTDIR="$PKG_DEST" install
+
+	install -Dm755 "$BUILD_ROOT"/vde2.pre-up \
+		"$PKG_DEST"/etc/network/if-pre-up.d/vde2
+	install -Dm755 "$BUILD_ROOT"/vde2.post-down \
+		"$PKG_DEST"/etc/network/if-post-down.d/vde2
+}

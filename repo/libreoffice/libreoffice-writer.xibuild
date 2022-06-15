@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DEPS="libreoffice-common"
+DESC="LibreOffice - Word Processor"
+
+splitname="writer"
+
+package () {
+    libreoffice_split $splitname
+    add_from_main usr/lib/libreoffice/share/xdg/$splitname.desktop
+}

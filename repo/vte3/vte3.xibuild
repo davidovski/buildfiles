@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="vte3"
+DESC="Virtual Terminal Emulator library"
+
+MAKEDEPS="bash gnutls gobject-introspection gperf gtk3 gtk2 icu intltool libxml2 linux-headers meson ncurses pango pcre2 vala"
+
+PKG_VER=0.68.0
+SOURCE="https://gitlab.gnome.org/GNOME/vte/-/archive/$PKG_VER/vte-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-W_EXITCODE.patch
+syscall.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	meson --prefix=/usr \
+		-Ddocs=false \
+		-D_systemd=false \
+        . output 
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

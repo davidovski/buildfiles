@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="spice"
+DESC="Implements the SPICE protocol"
+
+MAKEDEPS="meson spice-protocol glib gdk-pixbuf pixman openssl libjpeg-turbo zlib opus gstreamer gst-plugins-base orc lz4 libsasl python-six python-pyparsing"
+
+PKG_VER=0.15.0
+SOURCE="https://www.spice-space.org/download/releases/spice-server/spice-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+failing-tests.patch
+fix-build.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+    ./configure --prefix=/usr --sysconfdir=/etc \
+        --localstatedir=/var --libdir=/usr/lib
+    make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install 
+}

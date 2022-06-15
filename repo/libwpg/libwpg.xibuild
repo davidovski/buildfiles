@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="libwpg"
+DESC="Import filter and tools for WordPerfect Graphics"
+
+MAKEDEPS=" doxygen librevenge libwpd"
+
+PKG_VER=0.3.3
+SOURCE="https://downloads.sourceforge.net/project/libwpg/libwpg/libwpg-$PKG_VER/libwpg-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+
+tools() {
+	mkdir -p "$PKG_DEST"/usr
+	mv "$PKG_DEST"/usr/bin "$PKG_DEST"/usr
+}
+

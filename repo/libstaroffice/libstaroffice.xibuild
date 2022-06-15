@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="libstaroffice"
+DESC="Import filter for StarOffice documents"
+
+MAKEDEPS="zlib boost librevenge doxygen"
+
+PKG_VER=0.0.7
+SOURCE="https://github.com/fosnola/libstaroffice/releases/download/$PKG_VER/libstaroffice-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+fix-maybe-uninitialized.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

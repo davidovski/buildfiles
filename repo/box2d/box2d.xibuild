@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="box2d"
+DESC="2D Physics Engine for Games"
+
+MAKEDEPS="cmake doxygen libx11 libxcursor libxinerama libxrandr ninja"
+
+PKG_VER=2.4.1
+SOURCE="https://github.com/erincatto/box2d/archive/v$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-GNinja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=ON \
+		-DBOX2D_BUILD_DOCS=ON \
+		-DBOX2D_BUILD_TESTBED=OFF \
+		-DBOX2D_BUILD_UNIT_TESTS=ON
+	cmake --build build
+}
+
+check() {
+	echo "Running unit_test"
+	build/bin/unit_test
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

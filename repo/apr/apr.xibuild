@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="apr"
+DESC="The Apache Portable Runtime"
+
+MAKEDEPS="util-linux"
+
+PKG_VER=1.7.0
+SOURCE="https://www.apache.org/dist/apr/apr-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+apr-1.6.2-dont-test-dlclose.patch
+semtimedop-s390x.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--datadir=/usr/share \
+		--enable-nonportable-atomics \
+		--with-devrandom=/dev/urandom
+	make
+}
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

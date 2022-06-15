@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="vigra"
+DESC="An image processing and analysis library"
+
+MAKEDEPS=" tiff libjpeg-turbo libpng boost cmake doxygen"
+
+PKG_VER=1.11.1
+SOURCE="https://github.com/ukoethe/vigra"
+
+build() {
+	cmake . \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DDOCINSTALL=share/doc
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+
+	mkdir -p "$PKG_DEST"/usr/lib/cmake
+	mv "$PKG_DEST"/usr/lib/vigra "$PKG_DEST"/usr/lib/cmake
+}
+

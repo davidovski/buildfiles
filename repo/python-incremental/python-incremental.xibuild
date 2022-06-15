@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-click python-twisted"
+
+PKG_VER=21.3.0
+SOURCE=https://files.pythonhosted.org/packages/source/i/incremental/incremental-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A small library that versions your Python projects."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

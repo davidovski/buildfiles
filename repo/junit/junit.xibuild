@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="junit"
+DESC="A programmer-oriented testing framework for Java"
+
+MAKEDEPS=""
+
+PKG_VER=4.13.2
+SOURCE="https://search.maven.org/remotecontent?filepath=junit/junit/$PKG_VER/junit-$PKG_VER.jar"
+
+package() {
+	local _javadir=/usr/share/java
+	install -dm755 "$PKG_DEST"$_javadir
+	install -m644 "$BUILD_ROOT"/junit-$PKG_VER.jar "$PKG_DEST"$_javadir
+	cd "$PKG_DEST"$_javadir
+	ln -s junit-$PKG_VER.jar junit.jar
+}
+

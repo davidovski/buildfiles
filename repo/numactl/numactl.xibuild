@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="numactl"
+DESC="Simple NUMA policy support"
+
+MAKEDEPS="autoconf automake libtool linux-headers"
+
+PKG_VER=2.0.14
+SOURCE="https://github.com/numactl/numactl/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+musl.patch
+"
+
+prepare() {
+    apply_patches
+
+	./autogen.sh
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	rm -r "$PKG_DEST"/usr/share/man/man2
+}

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="font-dejavu"
+DESC="Font family based on the Bitstream Vera Fonts with a wider range of characters"
+
+MAKEDEPS="font-util"
+
+PKG_VER=2.37
+SOURCE="https://downloads.sourceforge.net/project/dejavu/dejavu/$PKG_VER/dejavu-fonts-ttf-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+45-dejavu.conf
+90-tt-dejavu.conf
+"
+
+package() {
+	mkdir -p "$PKG_DEST"/usr/share/fonts/ttf-dejavu \
+		"$PKG_DEST"/etc/fonts/conf.avail \
+		"$PKG_DEST"/etc/fonts/conf.d
+
+	install -m644 "$BUILD_ROOT"/dejavu-fonts-ttf-$PKG_VER/ttf/*.ttf \
+		"$BUILD_ROOT"/dejavu-lgc-fonts-ttf-$PKG_VER/ttf/*.ttf \
+		"$PKG_DEST"/usr/share/fonts/ttf-dejavu
+
+	install -m644 "$BUILD_ROOT"/dejavu-fonts-ttf-$PKG_VER/fontconfig/*.conf \
+		"$BUILD_ROOT"/dejavu-lgc-fonts-ttf-$PKG_VER/fontconfig/*.conf \
+		"$PKG_DEST"/etc/fonts/conf.avail
+
+	cd "$PKG_DEST"/etc/fonts/conf.d
+	for j in "$BUILD_ROOT"/*.conf; do
+		install -m644 "$j" "$PKG_DEST"/etc/fonts/conf.avail/
+		ln -sf /etc/fonts/conf.avail/${j##*/}
+	done
+}
+

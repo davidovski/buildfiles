@@ -1,0 +1,41 @@
+#!/bin/sh
+
+NAME="btrfs-progs"
+DESC="BTRFS filesystem utilities"
+
+MAKEDEPS="linux-headers acl asciidoc attr autoconf automake e2fsprogs libtool lzo python util-linux xmlto zlib zstd eudev"
+
+PKG_VER=5.16.2
+SOURCE="https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v$PKG_VER.tar.xz"
+
+prepare() {
+	./autogen.sh
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+        --disable-documentation \
+		--disable-backtrace
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install install_python
+
+	mkdir -p "$PKG_DEST"/usr/share/doc/btrfs-progs
+	install -m644 README.md CHANGES \
+		"$PKG_DEST"/usr/share/doc/btrfs-progs
+
+	mkdir "$PKG_DEST"/sbin
+	local i; for i in btrfs btrfsck fsck.btrfs mkfs.btrfs; do
+		mv "$PKG_DEST"/usr/bin/$i "$PKG_DEST"/sbin/
+	done
+	mv "$PKG_DEST"/usr/bin "$PKG_DEST"/usr/sbin
+
+	install -Dm644 btrfs-completion \
+		"$PKG_DEST"/usr/share/bash-completion/completions/btrfs
+}

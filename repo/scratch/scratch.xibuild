@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="scratch"
+DESC="Create and share your own interactive stories, games, music and art"
+
+MAKEDEPS="make pango glib cairo"
+DEPS="squeak-vm"
+
+PKG_VER=1.4.0.7
+SOURCE="https://download.scratch.mit.edu/scratch-$PKG_VER.src.tar.gz"
+
+build() {
+	make build
+}
+
+package() {
+	install -Dm755 src/scratch "$PKG_DEST"/usr/bin/scratch
+	install -Dm644 Scratch.image "$PKG_DEST"/usr/lib/scratch/Scratch.image
+	install -m644 Scratch.ini "$PKG_DEST"/usr/lib/scratch/Scratch.ini
+	install -Dm644 src/scratch.desktop "$PKG_DEST"/usr/share/applications/scratch.desktop
+	install -Dm644 src/man/scratch.1.gz "$PKG_DEST"/usr/share/man/man1/scratch.1.gz
+	install -Dm644 src/scratch.xml "$PKG_DEST"/usr/share/mime/packages/scratch.xml
+	install -D -m644 src/icons/128x128/scratch.png "$PKG_DEST"/usr/share/icons/hicolor/128x128/apps/scratch.png
+
+	mv Help/ locale/ Media/ Projects/ README Plugins/ "$PKG_DEST/usr/lib/scratch/"
+}
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-filelock python-packaging python-pluggy python-py python-six python-toml python-virtualenv python-colorama python-importlib-python-metadata python-pygments-python-github-python-lexers python-sphinx python-sphinxcontrib-python-autoprogram python-towncrier python-flaky python-freezegun python-pytest python-pytest-python-cov python-pytest-python-mock python-pytest-python-randomly python-psutil python-pathlib2"
+
+PKG_VER=3.25.0
+SOURCE=https://files.pythonhosted.org/packages/source/t/tox/tox-$PKG_VER.tar.gz
+DESC="tox is a generic virtualenv management and test command line tool"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

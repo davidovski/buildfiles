@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="libwpd"
+DESC="Import filter and tools for WordPerfect Documents"
+
+MAKEDEPS=" librevenge doxygen"
+
+PKG_VER=0.10.3
+SOURCE="https://downloads.sourceforge.net/project/libwpd/libwpd/libwpd-$PKG_VER/libwpd-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+libwpd-gcc11.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

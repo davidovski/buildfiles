@@ -1,0 +1,8 @@
+#!/bin/sh
+
+DESC="Server library for SPICE"
+
+package () {
+	add_from_main "usr/lib/*server.so.*"
+}
+

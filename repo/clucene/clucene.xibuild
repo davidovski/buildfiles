@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="clucene"
+DESC="A C++ port of Lucene"
+
+MAKEDEPS="cmake zlib boost ninja"
+
+PKG_VER=2.3.3.4
+SOURCE="https://downloads.sourceforge.net/clucene/clucene-core-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+clucene-core-2.3.3.4-install_contribs_lib.patch
+clucene-core-2.3.3.4-pkgconfig.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DBUILD_CONTRIBS_LIB=ON \
+		-DLIB_DESTINATION=/usr/lib \
+		-DLUCENE_SYS_INCLUDES=/usr/lib \
+		.
+	cmake --build build
+}
+
+check() {
+	cd build
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest
+    cd $BUILD_ROOT
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+	rm -r "$PKG_DEST"/usr/lib/CLuceneConfig.cmake
+}

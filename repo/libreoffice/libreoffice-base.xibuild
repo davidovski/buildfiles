@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DEPS="libreoffice-common"
+DESC="LibreOffice - Database frontend"
+
+splitname="base"
+
+package () {
+    libreoffice_split $splitname
+    add_from_main usr/lib/libreoffice/share/xdg/$splitname.desktop
+}

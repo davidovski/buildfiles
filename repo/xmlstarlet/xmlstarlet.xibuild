@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="xmlstarlet"
+DESC="A set of tools to transform, query, validate, and edit XML documents"
+
+MAKEDEPS="ghostscript libxml2 libxslt"
+
+PKG_VER=1.6.1
+SOURCE="https://sourceforge.net/projects/xmlstar/files/xmlstarlet/$PKG_VER/xmlstarlet-$PKG_VER.tar.gz/download"
+
+build() {
+	LIBXSLT_PREFIX=/usr \
+	LIBXML_PREFIX=/usr \
+	./configure \
+			--prefix=/usr \
+			--enable-build-docs
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	ln -s xml $PKG_DEST/usr/bin/xmlstarlet
+	install -Dm0644 Copyright $PKG_DEST/usr/share/licenses/xmlstarlet/COPYING
+}
+

@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-python-python-dateutil"
+
+PKG_VER=1.2.1
+SOURCE=https://files.pythonhosted.org/packages/source/f/freezegun/freezegun-$PKG_VER.tar.gz
+DESC="Let your Python tests travel through time"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

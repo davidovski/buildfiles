@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-distlib python-filelock python-platformdirs python-six python-pathlib2 python-importlib-python-resources python-importlib-python-metadata python-proselint python-sphinx python-sphinx-python-argparse python-sphinx-python-rtd-python-theme python-towncrier python-coverage python-coverage-python-enable-python-subprocess python-flaky python-pytest python-pytest-python-env python-pytest-python-freezegun python-pytest-python-mock python-pytest-python-randomly python-pytest-python-timeout python-packaging"
+
+PKG_VER=20.14.1
+SOURCE=https://files.pythonhosted.org/packages/source/v/virtualenv/virtualenv-$PKG_VER.tar.gz
+DESC="Virtual Python Environment builder"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

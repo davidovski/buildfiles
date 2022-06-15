@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libmwaw"
+DESC="Import filter and tools for old Mac documents"
+
+MAKEDEPS="librevenge zlib doxygen"
+
+PKG_VER=0.3.21
+SOURCE="https://downloads.sourceforge.net/project/libmwaw/libmwaw/libmwaw-$PKG_VER/libmwaw-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

@@ -1,0 +1,40 @@
+#!/bin/sh
+
+NAME="xfsprogs"
+DESC="XFS filesystem utilities"
+
+MAKEDEPS="attr bash gzip inih linux-headers python userspace-rcu util-linux"
+
+PKG_VER=5.15.0
+SOURCE="https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-mmap.patch
+missing-signal.h.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	export DEBUG=-DNDEBUG
+	export OPTIMIZER="$CFLAGS"
+	./configure \
+		--prefix=/usr \
+		--sbindir=/sbin \
+		--libexecdir=/usr/lib \
+		--enable-gettext=no
+	make SHELL=/bin/bash
+}
+
+package() {
+	make -j1 DIST_ROOT="$PKG_DEST" install install-dev
+	find "$PKG_DEST" -name *.la -delete
+	mv "$PKG_DEST"/sbin "$PKG_DEST"/usr
+	mkdir -p "$PKG_DEST"/sbin
+	for i in mkfs.xfs fsck.xfs xfs_repair; do
+		mv "$PKG_DEST"/usr/sbin/$i "$PKG_DEST"/sbin/
+	done
+	chown -R root:root "$PKG_DEST"/*
+}

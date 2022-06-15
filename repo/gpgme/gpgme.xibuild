@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="gpgme"
+DESC="gnupg made easy"
+
+MAKEDEPS="python swig libgpg-error libassuan qt5-qtbase gnupg"
+
+PKG_VER=1.17.1
+SOURCE="https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+0003-python310.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--enable-languages="cl cpp qt" \
+		--enable-static \
+        --disable-gpg-test \
+        --disable-g13-test \
+        --disable-gpgsm-test \
+        --disable-gpgconf-test 
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

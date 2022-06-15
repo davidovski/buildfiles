@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="libnumbertext"
+DESC="Number to number name and money text conversion library"
+
+MAKEDEPS=""
+
+PKG_VER=1.0.7
+SOURCE="https://github.com/Numbertext/libnumbertext/releases/download/$PKG_VER/libnumbertext-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--disable-static \
+		--disable-werror
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

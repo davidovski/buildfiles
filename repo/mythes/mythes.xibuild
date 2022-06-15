@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="mythes"
+DESC="A simple thesaurus"
+
+MAKEDEPS=" perl hunspell"
+
+PKG_VER=1.2.4
+SOURCE="https://downloads.sourceforge.net/hunspell/mythes-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--disable-dependency-tracking \
+		--enable-fast-install
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+}

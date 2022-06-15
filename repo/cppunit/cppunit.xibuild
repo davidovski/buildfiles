@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="cppunit"
+DESC="C++ unit testing framework"
+
+MAKEDEPS=""
+
+PKG_VER=1.15.1
+SOURCE="https://dev-www.libreoffice.org/src/cppunit-$PKG_VER.tar.gz"
+
+build() {
+	LIBS="-ldl" ./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

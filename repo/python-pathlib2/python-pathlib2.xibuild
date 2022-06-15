@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-six python-scandir python-typing"
+
+PKG_VER=2.3.7.post1
+SOURCE=https://files.pythonhosted.org/packages/source/p/pathlib2/pathlib2-$PKG_VER.tar.gz
+DESC="Object-oriented filesystem paths"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

@@ -11,9 +11,11 @@ build () {
     make defconfig
     make xargs
     make find
+    make fmt
 }
 
 package () {
     install -Dm755 find $PKG_DEST/usr/bin/find
+    install -Dm755 fmt $PKG_DEST/usr/bin/fmt
     install -Dm755 xargs $PKG_DEST/usr/bin/xargs
 }

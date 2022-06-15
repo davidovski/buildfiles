@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="vym"
+DESC="View Your Mind (VYM) is a cross-platform concept mapping software"
+
+MAKEDEPS=" qtchooser qt5-qtscript qt5-qtsvg"
+
+PKG_VER=2.8.8
+SOURCE="https://sourceforge.net/projects/vym/files/$PKG_VER/vym-$PKG_VER.tar.bz2/download"
+
+build() {
+	qmake PREFIX=/usr/share
+}
+
+package() {
+	# Install files
+	make INSTALL_ROOT=$PKG_DEST install
+}
+

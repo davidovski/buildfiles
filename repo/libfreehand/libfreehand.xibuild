@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="libfreehand"
+DESC="Import filter and tools for Adobe FreeHand documents"
+
+MAKEDEPS="libxml2 lcms2 icu gperf perl doxygen librevenge zlib"
+
+PKG_VER=0.1.2
+SOURCE="https://dev-www.libreoffice.org/src/libfreehand/libfreehand-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+fix-build.patch
+parentheses-gcc8-fix.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	export CXXFLAGS="$CXXFLAGS -Wno-error=deprecated-copy"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

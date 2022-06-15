@@ -1,0 +1,16 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="%deps%"
+
+PKG_VER=0.10.2
+SOURCE=https://files.pythonhosted.org/packages/source/t/toml/toml-$PKG_VER.tar.gz
+DESC="Python Library for Tom's Obvious, Minimal Language"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

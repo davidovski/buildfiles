@@ -15,8 +15,8 @@ additional=$(ls $pkgbuild | grep -v ^APKBUILD$)
 
 . $apkbuild
 
+name=${2:-$pkgname}
 
-name=$pkgname
 name=$(echo $pkgname | sed 's/py3-/python-/' )
 
 version=$pkgver

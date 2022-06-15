@@ -1,0 +1,10 @@
+#!/bin/sh
+
+DEPS="libreoffice-common"
+DESC="LibreOffice - Common  Files"
+
+splitname="common"
+
+package () {
+    libreoffice_split $splitname
+}

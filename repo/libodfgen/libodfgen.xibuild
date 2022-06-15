@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="libodfgen"
+DESC="Import filter and tools for Open Document Format"
+
+MAKEDEPS="boost librevenge libxml2 pkg-config doxygen"
+
+PKG_VER=0.1.8
+SOURCE="https://sourceforge.net/projects/libwpd/files/libodfgen/libodfgen-$PKG_VER/libodfgen-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--enable-fast-install
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

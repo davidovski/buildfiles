@@ -45,7 +45,7 @@ build () {
 		SYSLDFLAGS="$LDFLAGS" \
 		LIB_LIBS="-lpthread -lm -ldl" \
         RPATH="/usr/lib" \
-        V=${PKG_VER%.*} alpine_all
+        V=${PKG_VER%.*} 
 }
 
 package () {
@@ -55,7 +55,6 @@ package () {
 		INSTALL_TOP="$PKG_DEST/usr" \
 		INSTALL_INC="$PKG_DEST/usr/include" \
 		INSTALL_LIB="$PKG_DEST/usr/lib" \
-		alpine_install
 
     install -D -m 644 etc/lua.pc "$PKG_DEST"/usr/lib/pkgconfig/lua5.1.pc
 	install -D -m 644 doc/lua.1 "$PKG_DEST"/usr/share/man/man1/lua5.1.1
@@ -64,14 +63,6 @@ package () {
 	mkdir -p "$PKG_DEST"/usr/share/doc/lua5-1/
 	install -m644 doc/*.html doc/*.css doc/logo.gif doc/cover.png \
 		"$PKG_DEST"/usr/share/doc/lua5-1/
-
-	# Create symlinks without version suffix.
-	ln -s lua5.1 "$PKG_DEST"/usr/bin/lua
-	ln -s luac5.1 "$PKG_DEST"/usr/bin/luac
-	ln -s lua5.1.pc "$PKG_DEST"/usr/lib/pkgconfig/lua.pc
-	ln -s lua5.1.1 "$PKG_DEST"/usr/share/man/man1/lua.1
-	ln -s luac5.1.1 "$PKG_DEST"/usr/share/man/man1/luac.1
-
 
     install -m644 -D etc/lua.pc $PKG_DEST/usr/lib/pkgconfig/lua5.1.pc
 }

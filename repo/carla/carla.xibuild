@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="carla"
+DESC="Fully-featured audio plugin host"
+
+MAKEDEPS="alsa-lib file fluidsynth liblo libsndfile libx11 linux-headers pulseaudio qt5-qtbase qt5-qtsvg"
+
+PKG_VER=2.4.3
+SOURCE="https://github.com/falkTX/Carla/archive/refs/tags/v$PKG_VER.tar.gz"
+
+build() {
+	make features
+	make
+}
+
+package() {
+	make install PREFIX=/usr DESTDIR="$PKG_DEST"
+}
+

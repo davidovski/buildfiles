@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="yarn"
+DESC="Fast, reliable, and secure dependency management for Node.js"
+
+MAKEDEPS=""
+
+PKG_VER=1.22.18
+SOURCE="https://yarnpkg.com/downloads/$PKG_VER/yarn-v$PKG_VER.tar.gz"
+
+package() {
+	local destdir="usr/share/node_modules/yarn"
+
+	mkdir -p "$PKG_DEST"/$destdir
+	cp -R "$BUILD_ROOT"/* "$PKG_DEST"/$destdir/
+
+	# Remove windows specific files.
+	rm "$PKG_DEST"/$destdir/bin/*.cmd
+
+	mkdir -p "$PKG_DEST"/usr/bin
+	ln -s /$destdir/bin/yarn "$PKG_DEST"/usr/bin/yarn
+	ln -s /$destdir/bin/yarn "$PKG_DEST"/usr/bin/yarnpkg
+}
+

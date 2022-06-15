@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="virglrenderer"
+DESC="A virtual 3D GPU library, that allows the guest operating system to use the host GPU to accelerate 3D rendering"
+
+MAKEDEPS="meson file libdrm mesa libepoxy python check"
+
+PKG_VER=0.9.1
+SOURCE="https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/virglrenderer-$PKG_VER/virglrenderer-virglrenderer-$PKG_VER.tar.gz"
+
+build() {
+	meson --prefix=/usr \
+		-Dtests=true \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}

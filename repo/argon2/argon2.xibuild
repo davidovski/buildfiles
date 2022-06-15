@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="argon2"
+DESC="The password hash Argon2, winner of PHC"
+
+MAKEDEPS=""
+
+PKG_VER=20190702
+SOURCE="https://github.com/P-H-C/phc-winner-argon2/archive/$PKG_VER.tar.gz"
+
+build() {
+	make OPTTARGET=none ARGON2_VERSION=$PKG_VER
+}
+
+check() {
+	make OPTTARGET=none test
+}
+
+package() {
+	make OPTTARGET=none LIBRARY_REL=lib DESTDIR="$PKG_DEST" install
+}
+

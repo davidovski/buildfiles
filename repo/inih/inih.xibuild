@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="inih"
+DESC="Simple .INI file parser for embedded systems"
+
+MAKEDEPS=" meson"
+
+PKG_VER=55
+SOURCE="https://github.com/benhoyt/inih/archive/r$PKG_VER.tar.gz"
+
+prepare() {
+	sed -i "s|@PKGVER@|$PKG_VER|" meson.build
+}
+
+build() {
+	meson --prefix=/usr \
+		-Ddefault_library=both \
+		-Ddistro_install=true \
+		-Dwith_INIReader=true \
+		-Dmulti-line_entries=true \
+		-Dutf-8_bom=true \
+		-Dinline_comments=true \
+		-Duse_heap=false \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

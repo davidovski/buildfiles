@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="qtchooser"
+DESC="Wrap the other Qt tools by searching for different instances of Qt on the system"
+
+MAKEDEPS=""
+
+PKG_VER=66
+SOURCE="https://download.qt.io/official_releases/qtchooser/qtchooser-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+qt5.conf
+qt6.conf
+"
+
+prepare () {
+    sed -i "s/install -m 644 -p/install -m 644/g" Makefile
+    sed -i "s/install -m 755 -p/install -m 755/g" src/qtchooser/Makefile
+}
+
+build() {
+	bindir=/usr/lib/qtchooser/ make
+}
+
+package() {
+	INSTALL_ROOT="$PKG_DEST" make install
+
+	install -d "$PKG_DEST"/etc/xdg/qtchooser
+	install -m644 "$BUILD_ROOT"/qt5.conf \
+		"$PKG_DEST"/etc/xdg/qtchooser/
+	install -m644 "$BUILD_ROOT"/qt6.conf \
+		"$PKG_DEST"/etc/xdg/qtchooser/
+
+	# Set the default Qt
+	ln -s /etc/xdg/qtchooser/qt5.conf \
+		"$PKG_DEST"/etc/xdg/qtchooser/default.conf
+}

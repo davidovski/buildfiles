@@ -1,12 +1,12 @@
 #!/bin/sh
 
 NAME="python-tomli"
-DESC="Lil' TOML parser"
+DESC="A lil' TOML parser"
 
-MAKEDEPS="python-installer"
+MAKEDEPS="python python-installer"
 
 PKG_VER=2.0.1
-SOURCE="https://files.pythonhosted.org/packages/source/t/tomli/tomli-$PKG_VER.tar.gz"
+SOURCE=https://files.pythonhosted.org/packages/source/t/tomli/tomli-$PKG_VER.tar.gz
 ADDITIONAL="https://files.pythonhosted.org/packages/py3/t/tomli/tomli-$PKG_VER-py3-none-any.whl"
 
 build() {

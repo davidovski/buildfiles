@@ -8,12 +8,15 @@ SOURCE=https://cdn.kernel.org/pub/linux/utils/util-linux/v$(echo $PKG_VER | cut 
 DESC="System Utilities for Linux"
 
 build () {
-    ./configure ADJTIME_PATH=/var/lib/hwclock/adjtime   \
-            --bindir=/usr/bin    \
-            --libdir=/usr/lib    \
-            --docdir=/usr/share/doc/util-linux-$PKG_VER\
-            --disable-static     \
-            --runstatedir=/run
+    ./configure \
+		--prefix=/usr \
+		--disable-silent-rules \
+		--enable-newgrp \
+		--disable-uuidd \
+		--disable-nls \
+		--disable-tls \
+		--disable-chfn-chsh \
+		--with-vendordir=/usr/lib 
     make
 }
 

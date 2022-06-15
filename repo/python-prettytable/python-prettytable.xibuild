@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-wcwidth python-importlib-python-metadata python-pytest python-pytest-python-cov python-pytest-python-lazy-python-fixture"
+
+PKG_VER=3.3.0
+SOURCE=https://files.pythonhosted.org/packages/source/p/prettytable/prettytable-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A simple Python library for easily displaying tabular data in a visually appealing ASCII table format"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

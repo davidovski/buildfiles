@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="perl-json"
+DESC="Perl module implementing a JSON encoder/decoder"
+
+MAKEDEPS=""
+
+PKG_VER=4.05
+SOURCE="https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/JSON-$PKG_VER.tar.gz"
+
+build() {
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" -name perllocal.pod -delete
+	find "$PKG_DEST" -name .packlist -delete
+}
+

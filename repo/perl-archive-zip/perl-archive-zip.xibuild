@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="perl-archive-zip"
+DESC="Provide a perl interface to ZIP archive files."
+
+MAKEDEPS="perl"
+
+PKG_VER=1.68
+SOURCE="https://cpan.metacpan.org/authors/id/P/PH/PHRED/Archive-Zip-$PKG_VER.tar.gz"
+
+prepare() {
+	default_prepare
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+}
+
+build() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

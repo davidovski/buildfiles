@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="cython"
+DESC="Cython is an optimising static compiler for both the Python & the extended Cython programming languages."
+
+MAKEDEPS="python"
+
+PKG_VER=0.29.24
+SOURCE="https://github.com/cython/cython/archive/$PKG_VER.tar.gz"
+
+ADDITIONAL="
+cython-test-fix.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+
+	install -Dm 644 LICENSE.txt "$PKG_DEST/usr/share/licenses/cython/license"
+	install -Dm 644 README.rst "$PKG_DEST/usr/share/doc/cython/readme.rst"
+}
+

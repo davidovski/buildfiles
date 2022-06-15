@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="hyphen"
+DESC="Library for high quality hyphenation and justification"
+
+MAKEDEPS="perl"
+
+PKG_VER=2.8.8
+SOURCE="https://downloads.sourceforge.net/hunspell/hyphen-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--disable-dependency-tracking \
+		--enable-fast-install
+	make
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+}

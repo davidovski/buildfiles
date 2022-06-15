@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="font-liberation"
+DESC="Fonts to replace commonly used Microsoft Windows fonts"
+
+MAKEDEPS=""
+
+PKG_VER=2.1.5
+SOURCE="https://github.com/liberationfonts/liberation-fonts/files/7261482/liberation-fonts-ttf-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+30-liberation-mono.conf
+30-liberation-sans.conf
+30-liberation-serif.conf
+45-liberation.conf
+90-liberation.conf
+"
+
+package() {
+	install -D -m644 ./*.ttf -t "$PKG_DEST"/usr/share/fonts/liberation/
+
+	mkdir -p "$PKG_DEST"/etc/fonts/conf.d
+
+	local i; for i in "$BUILD_ROOT"/*.conf; do
+		install -D -m644 "$i" -t "$PKG_DEST"/etc/fonts/conf.avail/
+		ln -s ../conf.avail/${i##*/} "$PKG_DEST"/etc/fonts/conf.d/${i##*/}
+	done
+}
+
+

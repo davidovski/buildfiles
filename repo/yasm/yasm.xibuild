@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="yasm"
+DESC="A rewrite of NASM to allow for multiple syntax supported (NASM, TASM, GAS, etc.)"
+
+MAKEDEPS=""
+
+PKG_VER=1.3.0
+SOURCE="http://www.tortall.net/projects/yasm/releases/yasm-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+74184586228af6c362f970c84fce58da3fcbdec8.patch
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr
+	make
+}
+
+check() {
+	make -j1 check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -Dm644 COPYING "$PKG_DEST"/usr/share/licenses/yasm/COPYING
+}
+

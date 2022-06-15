@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libexttextcat"
+DESC="An N-Gram-Based Text Categorization library"
+
+MAKEDEPS=""
+
+PKG_VER=3.4.6
+SOURCE="https://dev-www.libreoffice.org/src/libexttextcat/libexttextcat-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

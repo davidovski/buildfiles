@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="%deps%"
+
+PKG_VER=1.6.0
+SOURCE=https://files.pythonhosted.org/packages/source/n/nodeenv/nodeenv-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Node.js virtual environment builder"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

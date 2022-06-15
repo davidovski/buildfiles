@@ -1,0 +1,17 @@
+#!/bin/sh
+
+DESC="Device mapper userspace library and tools from LVM2"
+DEPS="lvm2"
+
+package () {
+	install -Dm755 "$BUILD_ROOT"/dmeventd.initd "$PKG_DEST"/etc/init.d/dmeventd
+
+	add_from_main sbin/dmeventd 
+	add_from_main "usr/lib/libdevmapper.a"
+	add_from_main "lib/libdevmapper-event.so.*"
+	add_from_main "sbin/dm*"
+	add_from_main "usr/sbin/dm*"
+	add_from_main "lib/libdevmapper.so.*"
+	rm -f "$PKG_DEST"/usr/sbin/dmstats
+
+}

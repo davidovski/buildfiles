@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="xmlsec"
+DESC="C based implementation for XML Signature Syntax and Processing and XML Encryption Syntax and Processing"
+
+MAKEDEPS=" libxml2 libxslt openssl nss autoconf automake libtool"
+
+PKG_VER=1.2.33
+SOURCE="https://github.com/lsh123/xmlsec"
+
+prepare() {
+	autoreconf -fi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--enable-pkgconfig \
+		--with-openssl=/usr \
+		--without-gnutls \
+		--without-gcrypt \
+		--with-default-crypto=openssl
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

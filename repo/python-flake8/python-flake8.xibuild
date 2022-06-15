@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-mccabe python-pycodestyle python-pyflakes python-importlib-python-metadata"
+
+PKG_VER=4.0.1
+SOURCE=https://files.pythonhosted.org/packages/source/f/flake8/flake8-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="the modular source code checker: pep8 pyflakes and co"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

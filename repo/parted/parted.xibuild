@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="parted"
+DESC="Utility to create, destroy, resize, check and copy partitions"
+
+MAKEDEPS="readline ncurses lvm2 bash util-linux"
+
+PKG_VER=3.4
+SOURCE="https://ftp.gnu.org/gnu/parted/parted-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+fix-includes.patch
+fix-libintl-header-s390x.patch
+make-tests.patch
+parted-include-sysmacros.patch
+skip-duplicate-bsd-test-on-s390x.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-debug \
+		--disable-nls \
+		--disable-static \
+		--enable-shared
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	rm -rf "$PKG_DEST"/usr/lib/charset.alias
+	rmdir -p "$PKG_DEST"/usr/lib 2>/dev/null || true
+}

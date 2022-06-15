@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="hunspell"
+DESC="Spell checker and morphological analyzer library and program"
+
+MAKEDEPS="gettext ncurses readline autoconf automake libtool"
+
+PKG_VER=1.7.0
+SOURCE="https://github.com/hunspell/hunspell/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+CVE-2019-16707.patch
+"
+
+prepare() {
+    apply_patches
+	autoreconf -vif
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--with-ui \
+		--with-readline \
+		--disable-static \
+		--without-included-gettext
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
+}
+

@@ -17,10 +17,13 @@ if [ "$(curl -s -o /dev/null -w "%{http_code}" $json_url)" != 200 ] ; then
 fi
 
 json=$(curl -SsL $json_url)
-version=$(echo $json | jq -r '.info.version')
-desc=$(echo $json | jq -r '.info.summary')
-url=$(echo $json | jq -r '.urls[] | select((.version="1.0.3")) | .url' | grep -v "whl" | sed "s/$version/\$PKG_VER/g")
-deps=$(echo $json | jq -r '.info.requires_dist | .[]' | cut -d' ' -f1 | tr '\n' ' ')
+version=$(printf "%s" "$json" | jq -r '.info.version')
+desc=$(printf "%s" "$json" | jq -r '.info.summary')
+#url=$(printf "%s" "$json" | jq -r '.urls[] | select((.version="1.0.3")) | .url' | grep -v "whl" | sed "s/$version/\$PKG_VER/g")
+
+url="https://files.pythonhosted.org/packages/source/${name%${name#?}}/$name/$name-\$PKG_VER.tar.gz"
+
+deps=$(printf "%s" "$json" | jq -r '.info.requires_dist | .[]' | cut -d' ' -f1 | tr '\n' ' ')
 if [ ${#deps} != 0 ]; then
     package_deps=$(echo $deps | sed 's/\(\w*\)/python-\1/g')
     echo $package_deps
@@ -31,8 +34,7 @@ echo DESC: $desc
 echo SOURCE: $url
 echo DEPS: $package_deps
 
-file=repo/python-$name.xibuild
-
+file=repo/python-$name/python-$name.xibuild
 inp=templates/pypi.xibuild
 if [ -f $file ]; then
     inp=$file
@@ -52,6 +54,7 @@ if [ ${#deps} != 0 ]; then
     sed -i "s/^DEPS=.*/DEPS=\"$package_deps\"/g" $tmp
 fi
 
+mkdir -p repo/python-$name
 mv $tmp $file
 
 printf "${GREEN}Written to $file${RESET}\n"

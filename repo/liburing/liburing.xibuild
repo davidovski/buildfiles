@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="liburing"
+DESC="Linux kernel io_uring access library"
+
+MAKEDEPS="linux-headers"
+
+PKG_VER=2.1
+SOURCE="https://git.kernel.dk/cgit/liburing/snapshot/liburing-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+
