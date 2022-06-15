@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="libbsd"
+DESC="commonly-used BSD functions not implemented by all libcs"
+
+MAKEDEPS="libmd"
+
+PKG_VER=0.11.6
+SOURCE="https://libbsd.freedesktop.org/releases/libbsd-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+disable-fpurge-test.patch
+"
+
+prepare() {
+    apply_patches
+
+	./autogen
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

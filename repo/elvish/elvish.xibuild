@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="elvish"
+DESC="A friendly and expressive shell for Linux, macOS and BSDs"
+
+MAKEDEPS=" go"
+
+PKG_VER=0.15.0
+SOURCE="https://github.com/elves/elvish/archive/v$PKG_VER.tar.gz"
+
+build() {
+    mkdir gopath
+	export GOPATH="$BUILD_ROOT/gopath"
+	go build -o bin/elvish
+}
+
+package() {
+	install -Dm755 bin/elvish "$PKG_DEST"/usr/bin
+}
+

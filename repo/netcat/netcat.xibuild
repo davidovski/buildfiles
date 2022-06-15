@@ -1,0 +1,44 @@
+#!/bin/sh
+
+NAME="netcat"
+DESC="The TCP/IP swiss army knife. OpenBSD variant."
+
+MAKEDEPS=" libbsd"
+
+PKG_VER=1.130
+SOURCE="https://deb.debian.org/debian/pool/main/n/netcat-openbsd/netcat-openbsd_$PKG_VER.orig.tar.gz"
+
+ADDITIONAL="
+0001-port-to-linux-with-libsd.patch
+0002-connect-timeout.patch
+0003-get-sev-by-name.patch
+0004-send-crlf.patch
+0005-quit-timer.patch
+0006-udp-scan-timeout.patch
+0007-verbose-numeric-port.patch
+0008-dccp-support.patch
+0009-serialized-handling-multiple-clients.patch
+0010-misc-failures-and-features.patch
+base64.c
+"
+
+prepare() {
+	cd "$BUILD_ROOT"
+	cp "$BUILD_ROOT"/base64.c .
+    apply_patches
+	sed -i Makefile -e "/SRCS=/s;\(.*\);& base64.c;"
+}
+
+build() {
+	cd "$BUILD_ROOT"
+	make CFLAGS="$CFLAGS -DDEBIAN_VERSION=\"\\\"$PKG_VER\\\"\""
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	install -d $PKG_DEST/usr/bin/
+	install -d $PKG_DEST/usr/share/man/man1/
+	install nc $PKG_DEST/usr/bin/nc
+	install nc.1 $PKG_DEST/usr/share/man/man1/nc.1
+}
+
