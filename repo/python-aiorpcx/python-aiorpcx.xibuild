@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-websockets"
+
+PKG_VER=0.22.1
+SOURCE=https://files.pythonhosted.org/packages/source/a/aiorpcx/aiorpcx-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Generic async RPC implementation, including JSON-RPC"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

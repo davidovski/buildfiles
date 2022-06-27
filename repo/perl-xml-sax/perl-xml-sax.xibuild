@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="perl-xml-sax"
+DESC="Simple API for XML"
+
+MAKEDEPS=""
+DEPS="perl-xml-sax-base"
+
+PKG_VER=1.02
+SOURCE="https://cpan.metacpan.org/authors/id/G/GR/GRANTM/XML-SAX-$PKG_VER.tar.gz"
+
+build() {
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+package() {
+	PERLLIB=blib/lib make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+
+postinstall () {
+    LC_ALL=C perl -MXML::SAX -e \
+        "XML::SAX->add_parser(q(XML::SAX::PurePerl))->save_parsers()" 2>&1 >/dev/null
+}

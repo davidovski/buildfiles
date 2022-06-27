@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-coverage[python-toml]python- python-hypothesis python-pympler python-pytest python-six python-mypy python-pytest-python-mypy-python-plugins python-zope.python-interface python-furo python-sphinx python-sphinx-python-notfound-python-page python-pre-python-commit python-cloudpickle python-furo python-sphinx python-zope.python-interface python-sphinx-python-notfound-python-page python-coverage[python-toml]python- python-hypothesis python-pympler python-pytest python-six python-mypy python-pytest-python-mypy-python-plugins python-zope.python-interface python-cloudpickle python-coverage[python-toml]python- python-hypothesis python-pympler python-pytest python-six python-mypy python-pytest-python-mypy-python-plugins python-cloudpickle"
+
+PKG_VER=21.4.0
+SOURCE=https://files.pythonhosted.org/packages/source/a/attrs/attrs-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Classes Without Boilerplate"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

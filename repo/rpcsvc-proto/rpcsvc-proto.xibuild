@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="rpcsvc-proto"
+DESC="rpcsvc protocol definitions from glibc"
+
+MAKEDEPS="intltool"
+
+PKG_VER=1.4.3
+SOURCE="https://github.com/thkukuk/rpcsvc-proto/releases/download/v$PKG_VER/rpcsvc-proto-$PKG_VER.tar.xz"
+
+build() {
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

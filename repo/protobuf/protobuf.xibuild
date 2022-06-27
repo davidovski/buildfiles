@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="protobuf"
+DESC="Library for extensible, efficient structure packing"
+
+MAKEDEPS="zlib autoconf automake libtool"
+
+PKG_VER=3.18.1
+SOURCE="https://github.com/google/protobuf/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+ruby-fix-cflags.patch
+skip-failing-tests.patch
+trim-rakefile.patch
+"
+
+prepare() {
+	apply_patches
+
+	./autogen.sh
+
+	# symlink tests to the test directory
+	rm -rf third_party/googletest
+}
+
+build() {
+	CXXFLAGS="$CXXFLAGS -fno-delete-null-pointer-checks -Wno-error" \
+		./configure --prefix=/usr \
+			--sysconfdir=/etc \
+			--mandir=/usr/share/man \
+			--infodir=/usr/share/info \
+			--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

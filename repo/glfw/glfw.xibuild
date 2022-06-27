@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="glfw"
+DESC="Multi-platform library for OpenGL and Vulkan application development"
+
+MAKEDEPS="libxinerama linux-headers mesa cmake ninja libx11 libxcursor libxrandr libxi"
+
+PKG_VER=3.3.7
+SOURCE="https://github.com/glfw/glfw/releases/download/$PKG_VER/glfw-$PKG_VER.zip"
+
+build() {
+	cmake -G Ninja -B build \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=ON
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=3.14.1
+SOURCE=https://files.pythonhosted.org/packages/source/p/pycryptodomex/pycryptodomex-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Cryptographic library for Python"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

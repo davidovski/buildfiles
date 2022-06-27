@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="poetry"
+DESC="Python dependency management and packaging system"
+
+MAKEDEPS="python-poetry-core python-build python-installer python-pyrsistent python-lark python-tomlkit"
+
+PKG_VER=1.1.13
+SOURCE="https://github.com/sdispater/poetry/archive/$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-packaging-tags.patch
+"
+
+prepare() {
+	apply_patches
+	git init
+}
+
+build() {
+	python3 -m build --no-isolation --skip-dependency-check --wheel
+}
+
+package() {
+	python3 -m installer -d "$PKG_DEST" --compile-bytecode 0 \
+		dist/poetry-$PKG_VER-py2.py3-none-any.whl
+
+	# remove conflicts with files owned by py3-poetry-core (direct dependency of poetry)
+	# see: https://github.com/python-poetry/poetry/issues/2800
+	local sitedir=$(python3 -c "import site; print(site.getsitepackages()[0])")
+	rm "$PKG_DEST/$sitedir"/poetry/__init__.py \
+		"$PKG_DEST/$sitedir"/poetry/__pycache__/__init__.cpython-*.pyc \
+		"$PKG_DEST/$sitedir"/poetry/json/schemas/poetry-schema.json
+}
+

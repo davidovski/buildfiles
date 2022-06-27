@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="python-poetry-core"
+DESC="PEP 517 build backend implementation for Poetry"
+
+MAKEDEPS="python-pep517 python-build python-installer "
+
+PKG_VER=1.0.8
+SOURCE="https://github.com/python-poetry/poetry-core/archive/$PKG_VER.tar.gz"
+
+build() {
+	# poetry-core excludes files specified in .gitignore
+	# fixed by setting GIT_DIR away from the aports tree's top-level directory
+	GIT_DIR="$PWD" python3 -m build --no-isolation --skip-dependency-check --wheel
+}
+
+package() {
+	python3 -m installer -d "$PKG_DEST" \
+		dist/poetry_core-$PKG_VER-py2.py3-none-any.whl
+
+	# remove vendored versions of installed modules
+	local sitedir=$(python3 -c "import site; print(site.getsitepackages()[0])")
+	rm -r "$PKG_DEST/$sitedir"/poetry/core/_vendor
+
+	install -Dm644 poetry/core/json/schemas/poetry-schema.json \
+		"$PKG_DEST/$sitedir"/poetry/core/json/schemas/poetry-schema.json
+	install -Dm644 poetry/core/spdx/data/licenses.json \
+		"$PKG_DEST/$sitedir"/poetry/core/spdx/data/licenses.json
+}
+

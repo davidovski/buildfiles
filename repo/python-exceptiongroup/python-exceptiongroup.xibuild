@@ -1,0 +1,26 @@
+#!/bin/sh
+
+MAKEDEPS="python python-build python-flit-core python-installer python-wheel"
+DEPS="python-pytest"
+
+PKG_VER=1.0.0rc8
+SOURCE=https://github.com/agronholm/exceptiongroup/archive/refs/tags/$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Backport of PEP 654 (exception groups)"
+ADDITIONAL="
+use-flit-core.patch
+"
+
+prepare () {
+    apply_patches
+    sed -i "s/%VERSION%/$PKG_VER/" src/exceptiongroup/__init__.py
+}
+
+build() {
+    	python3 -m build --no-isolation --wheel
+}
+
+package () {
+    python3 -m installer -d "$PKG_DEST" \
+		dist/exceptiongroup-$PKG_VER-py3-none-any.whl
+}

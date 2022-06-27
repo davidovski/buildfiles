@@ -1,0 +1,54 @@
+#!/bin/sh
+
+NAME="libvirt"
+DESC="A virtualization API for several hypervisor and container systems"
+
+MAKEDEPS="augeas libsasl device-mapper e2fsprogs gnutls libcap-ng libgpg-error netcf libnl libxml2 libxslt libtasn1 lvm2 lxc libgcrypt parted perl pkg-config eudev zlib yajl libpcap curl libpciaccess polkit readline linux-headers jansson libtirpc perl-xml-xpath fuse util-linux bash-completion bridge-utils dmidecode dnsmasq iptables pm-utils netcat rpcsvc-proto python-docutils meson ninja"
+
+PKG_VER=8.2.0
+SOURCE="https://libvirt.org/sources/libvirt-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+libvirt-6.0.0-fix_paths_in_libvirt-guests_sh.patch
+libvirt-guests.confd
+libvirt-guests.initd
+libvirt.confd
+libvirt.initd
+libvirt.post-install
+musl-fix-includes.patch
+stderr-fix.patch
+virtlockd.initd
+virtlogd.initd
+"
+
+build() {
+	export ac_cv_path_QEMU_BRIDGE_HELPER="/usr/lib/qemu/qemu-bridge-helper"
+	meson --prefix=/usr \
+		--libexec=/usr/lib/libvirt \
+		. output
+
+	meson configure output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" ninja -C output install
+	install -Dm755 $BUILD_ROOT/libvirt.initd $PKG_DEST/etc/init.d/libvirtd
+	install -Dm644 $BUILD_ROOT/libvirt.confd $PKG_DEST/etc/conf.d/libvirtd
+	install -Dm755 $BUILD_ROOT/libvirt-guests.initd $PKG_DEST/etc/init.d/libvirt-guests
+	install -Dm644 $BUILD_ROOT/libvirt-guests.confd $PKG_DEST/etc/conf.d/libvirt-guests
+
+	install -Dm755 $BUILD_ROOT/virtlogd.initd $PKG_DEST/etc/init.d/virtlogd
+	install -Dm755 $BUILD_ROOT/virtlockd.initd $PKG_DEST/etc/init.d/virtlockd
+
+	install -d "$PKG_DEST"/lib/modules-load.d
+	echo "tun" > "$PKG_DEST"/lib/modules-load.d/libvirt.conf
+
+	rm -rf "$PKG_DEST"/etc/sysconfig
+	rm -rf "$PKG_DEST"/usr/lib/charset.alias
+	rmdir -p "$PKG_DEST"/usr/lib 2>/dev/null || true
+}

@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=12.11.0
+SOURCE=https://pypi.python.org/packages/source/P/PyQt5-sip/PyQt5_sip-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="The sip module support for PyQt5"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

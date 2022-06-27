@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-attrs python-charset-python-normalizer python-multidict python-async-python-timeout python-yarl python-frozenlist python-aiosignal python-idna-python-ssl python-asynctest python-typing-python-extensions python-aiodns python-Brotli python-cchardet"
+
+PKG_VER=3.8.1
+SOURCE=https://files.pythonhosted.org/packages/source/a/aiohttp/aiohttp-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Async http client/server framework (asyncio)"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

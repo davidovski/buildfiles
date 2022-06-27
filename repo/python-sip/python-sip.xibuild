@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-packaging python-ply python-setuptools python-toml"
+
+PKG_VER=6.6.2
+SOURCE=https://files.pythonhosted.org/packages/source/s/sip/sip-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A Python bindings generator for C/C++ libraries"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

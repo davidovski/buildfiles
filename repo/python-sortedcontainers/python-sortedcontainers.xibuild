@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=2.4.0
+SOURCE=https://files.pythonhosted.org/packages/source/s/sortedcontainers/sortedcontainers-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Sorted Containers -- Sorted List, Sorted Dict, Sorted Set"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

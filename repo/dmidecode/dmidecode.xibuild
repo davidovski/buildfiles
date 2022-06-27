@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="dmidecode"
+DESC="A utility for reporting system hardware as described by BIOS"
+
+MAKEDEPS=""
+
+PKG_VER=3.3
+SOURCE="https://download.savannah.gnu.org/releases/dmidecode/dmidecode-$PKG_VER.tar.xz"
+
+prepare() {
+	apply_patches
+	sed -e '/^PROGRAMS !=/d' -e 's/-O2/-Os/' -i Makefile
+}
+
+build() {
+	make prefix=/usr
+}
+
+package() {
+	make prefix=/usr DESTDIR="$PKG_DEST" install
+}
+

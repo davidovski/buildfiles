@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-six python-gmpy python-gmpy2"
+
+PKG_VER=0.17.0
+SOURCE=https://files.pythonhosted.org/packages/source/e/ecdsa/ecdsa-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="ECDSA cryptographic signature library (pure python)"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

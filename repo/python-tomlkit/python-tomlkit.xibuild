@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=0.11.0
+SOURCE=https://files.pythonhosted.org/packages/source/t/tomlkit/tomlkit-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Style preserving TOML library"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="perl-xml-namespacesupport"
+DESC="Generic namespace helpers (ported from SAX2)"
+
+MAKEDEPS=""
+
+PKG_VER=1.12
+SOURCE="https://cpan.metacpan.org/authors/id/P/PE/PERIGRIN/XML-NamespaceSupport-$PKG_VER.tar.gz"
+
+build() {
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

@@ -1,0 +1,52 @@
+#!/bin/sh
+
+NAME="tcsh"
+DESC="extended C-shell"
+
+MAKEDEPS="ncurses"
+
+PKG_VER=6.24.00
+SOURCE="https://github.com/tcsh-org/tcsh/archive/TCSH6_21_00.tar.gz"
+
+ADDITIONAL="
+001-sysmalloc.patch
+6974bc35a5cda6eab748e364bd76a860ca66968b.patch
+csh.cshrc
+csh.login
+tcsh.post-install
+"
+
+prepare() {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--bindir=/bin \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--disable-rpath
+	make
+}
+
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -Dm0644 "$BUILD_ROOT/csh.cshrc" "$PKG_DEST/etc/csh.cshrc"
+	install -Dm0644 "$BUILD_ROOT/csh.login" "$PKG_DEST/etc/csh.login"
+	ln -s tcsh "$PKG_DEST/bin/csh"
+	ln -s tcsh.1 "$PKG_DEST/usr/share/man/man1/csh.1"
+	rm -rf "$PKG_DEST"/usr/share/locale
+}
+
+postinstall () {
+    if [ -f /etc/shells ] || grep -vq "tcsh" /etc/shells; then
+        echo "/bin/tcsh" >> /etc/shells
+    fi
+
+    if [ -f /etc/shells ] || grep -vq "csh" /etc/shells; then
+        echo "/bin/csh" >> /etc/shells
+    fi
+}

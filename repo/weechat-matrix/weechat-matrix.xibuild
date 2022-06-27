@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="weechat-matrix"
+DESC="WeeChat Matrix protocol script"
+
+MAKEDEPS="poetry python-build python-importlib-metadata python-installer python-poetry-core python-wheel python-webcolors python-hypothesis python-atomicwrites python-nio python-exceptiongroup python-sortedcontainers"
+DEPS="python-build python-importlib-metadata python-poetry-core python-openssl python-logbook python-future python-nio python-webcolors python-matrix-nio python-atomicwrites"
+
+SOURCE="https://github.com/poljar/weechat-matrix.git"
+
+build() {
+    sed -i 's_#!/usr/bin/env -S python3 -u_#!/usr/bin/env python3 -u_g' contrib/matrix_sso_helper.py contrib/matrix_upload.py
+	GIT_DIR=. python3 -m build --skip-dependency-check --no-isolation --wheel .
+}
+
+package() {
+	python3 -m installer --destdir="$PKG_DEST" dist/*.whl
+	install -Dm755 main.py "$PKG_DEST/usr/share/weechat/python/weechat-matrix.py"
+
+	for _script in matrix_decrypt matrix_sso_helper matrix_upload
+	do
+		install -Dm755 "contrib/$_script.py" "$PKG_DEST/usr/bin/$_script"
+	done
+}
+
+postinstall () {
+cat <<EOF
+*
+* To load this script, execute the following command in WeeChat:
+* /script load weechat-matrix.py
+* To load it automatically during WeeChat startup, use:
+* $ mkdir -p ~/.local/share/weechat/python/autoload
+* $ ln -s /usr/share/weechat/python/weechat-matrix.py -t ~/.local/share/weechat/python/autoload
+*
+EOF
+
+exit 0
+}

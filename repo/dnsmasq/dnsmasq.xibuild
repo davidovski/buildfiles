@@ -1,0 +1,64 @@
+#!/bin/sh
+
+NAME="dnsmasq"
+DESC="A lightweight DNS, DHCP, RA, TFTP and PXE server"
+
+MAKEDEPS="linux-headers nettle"
+
+PKG_VER=2.86
+SOURCE="https://www.thekelleys.org.uk/dnsmasq/dnsmasq-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+0000-fix-heap-overflow-in-dns-replies.patch
+0001-Retry-on-interrupted-error-in-tftp.patch
+0002-Add-safety-checks-to-places-pointed-by-Coverity.patch
+0003-Small-safeguard-to-unexpected-data.patch
+0004-Fix-bunch-of-warnings-in-auth.c.patch
+0005-Fix-few-coverity-warnings-in-lease-tools.patch
+0006-Fix-coverity-formats-issues-in-blockdata.patch
+0007-Retry-dhcp6-ping-on-interrupts.patch
+0008-Fix-coverity-warnings-on-dbus.patch
+0009-Address-coverity-issues-detected-in-util.c.patch
+0010-Fix-coverity-detected-issues-in-option.c.patch
+0011-Fix-coverity-detected-issue-in-radv.c.patch
+0012-Fix-coverity-detected-issues-in-cache.c.patch
+0013-Fix-coverity-issues-detected-in-domain-match.c.patch
+0014-Fix-coverity-detected-issues-in-dnsmasq.c.patch
+0015-Fix-coverity-issues-in-dnssec.c.patch
+0020-Fix-crash-after-re-reading-empty-resolv.conf.patch
+CVE-2022-0934.patch
+config.h.patch
+dnsmasq-dnssec.pre-install
+dnsmasq-dnssec.pre-upgrade
+dnsmasq.conf.patch
+dnsmasq.confd
+dnsmasq.initd
+dnsmasq.pre-install
+dnsmasq.pre-upgrade
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	make CFLAGS="$CFLAGS" COPTS="-DHAVE_DNSSEC" all
+	mv src/dnsmasq src/dnsmasq~dnssec
+
+	make CFLAGS="$CFLAGS" clean all
+}
+
+# dnsmasq doesn't provide any test suite (shame on them!), so just check that
+# the binary isn't totally broken...
+check() {
+	./src/dnsmasq --help >/dev/null
+}
+
+package() {
+	provider_priority=100  # highest (other provider is dnsmasq-dnssec)
+
+	make PREFIX=/usr DESTDIR="$PKG_DEST" install
+
+	install -D -m755 "$BUILD_ROOT"/dnsmasq.initd "$PKG_DEST"/etc/init.d/dnsmasq
+	install -D -m644 "$BUILD_ROOT"/dnsmasq.confd "$PKG_DEST"/etc/conf.d/dnsmasq
+}

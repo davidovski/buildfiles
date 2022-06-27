@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="libnftnl"
+DESC="Netfilter library providing interface to the nf_tables subsystem"
+
+MAKEDEPS=" bash jansson libmnl"
+
+PKG_VER=1.2.1
+SOURCE="https://netfilter.org/projects/libnftnl/files/libnftnl-$PKG_VER.tar.bz2"
+
+build() {
+	cd "$BUILD_ROOT"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--enable-static
+	make
+}
+
+check() {
+	cd "$BUILD_ROOT"/tests
+	make check
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make DESTDIR="$PKG_DEST" install
+}
+

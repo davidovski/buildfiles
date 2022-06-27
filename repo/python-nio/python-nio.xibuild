@@ -1,0 +1,20 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+PKG_VER=3.4.2
+SOURCE=https://files.pythonhosted.org/packages/source/n/nio/nio-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A framework for building blocks and modules for the nio Platform"
+
+prepare () {
+    find -name "*.py" | xargs sed -i 's/from collections import Iterable/from collections.abc import Iterable/g' 
+}
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

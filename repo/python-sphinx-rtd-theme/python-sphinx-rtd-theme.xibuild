@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-sphinx python-docutils python-transifex-python-client python-sphinxcontrib-python-httpdomain python-bump2version"
+
+PKG_VER=1.0.0
+SOURCE=https://files.pythonhosted.org/packages/source/s/sphinx_rtd_theme/sphinx_rtd_theme-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Read the Docs theme for Sphinx"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

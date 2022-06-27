@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="bridge-utils"
+DESC="Tools for configuring the Linux kernel 802.1d Ethernet Bridge"
+
+MAKEDEPS="autoconf linux-headers"
+
+PKG_VER=1.7.1
+SOURCE="https://git.kernel.org/pub/scm/network/bridge/bridge-utils.git/snapshot/bridge-utils-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-PATH_MAX-on-ppc64le.patch
+"
+
+prepare() {
+    apply_patches
+	autoconf
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man \
+		--libdir=/usr/lib \
+		--includedir=/usr/include
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+}
+

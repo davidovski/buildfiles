@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="perl-path-tiny"
+DESC="File path utility"
+
+MAKEDEPS=""
+
+PKG_VER=0.122
+SOURCE="https://cpan.metacpan.org/authors/id/D/DA/DAGOLDEN/Path-Tiny-$PKG_VER.tar.gz"
+
+build() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	PERL_MM_USE_DEFAULT=1 perl -I. Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	export CFLAGS=$(perl -MConfig -E 'say $Config{ccflags}')
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

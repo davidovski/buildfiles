@@ -1,0 +1,39 @@
+#!/bin/sh
+
+NAME="docbook2x"
+DESC="DocBook converter to UNIX manpage and GNU Texinfo format"
+
+MAKEDEPS="autoconf automake perl-xml-sax"
+
+PKG_VER=0.8.8
+SOURCE="https://downloads.sourceforge.net/docbook2x/docbook2X-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+01_fix_static_datadir_evaluation.patch
+02_fix_418703_dont_use_abbreviated_sfnet_address.patch
+03_fix_420153_filename_whitespace_handling.patch
+04_fix_442782_preprocessor_declaration_syntax.patch
+05_fix_439214_error_on_missing_refentry.patch
+06_fix_man_typo.patch
+"
+
+prepare() {
+    apply_patches
+	autoreconf --install
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var \
+		--program-transform-name 's/docbook2/docbook2x-/' \
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install || return 1
+}
+

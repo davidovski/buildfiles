@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-olefile python-sphinx python-sphinx-python-copybutton python-sphinx-python-issues python-sphinx-python-removed-python-in python-sphinx-python-rtd-python-theme python-sphinxext-python-opengraph python-check-python-manifest python-coverage python-defusedxml python-markdown2 python-olefile python-packaging python-pyroma python-pytest python-pytest-python-cov python-pytest-python-timeout"
+
+PKG_VER=9.1.1
+SOURCE=https://files.pythonhosted.org/packages/source/p/pillow/pillow-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Python Imaging Library (Fork)"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

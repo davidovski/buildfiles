@@ -1,0 +1,19 @@
+#!/bin/sh
+NAME="python-importlib-metadata"
+DESC="Read metadata from Python packages"
+
+MAKEDEPS="python-build python-installer python-toml python-wheel"
+
+PKG_VER=4.11.3
+SOURCE="https://pypi.python.org/packages/source/i/importlib_metadata/importlib_metadata-$PKG_VER.tar.gz"
+
+build() {
+	python3 -m build --no-isolation --skip-dependency-check --wheel
+}
+
+package() {
+	python3 -m installer \
+		-d "$PKG_DEST" \
+		dist/importlib_metadata-0.0.0-py3-none-any.whl
+}
+

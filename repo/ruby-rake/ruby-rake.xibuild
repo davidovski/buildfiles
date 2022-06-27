@@ -1,0 +1,34 @@
+#!/bin/sh
+
+NAME="ruby-rake"
+DESC="A Ruby task runner, inspired by make"
+
+MAKEDEPS=""
+
+PKG_VER=13.0.6
+SOURCE="https://github.com/ruby/rake/archive/v$PKG_VER/rake-$PKG_VER.tar.gz"
+
+build() {
+	gem build rake.gemspec
+}
+
+package() {
+	local gemdir="$PKG_DEST/$(ruby -e 'puts Gem.default_dir')"
+
+	gem install \
+		--local \
+		--install-dir "$gemdir" \
+		--bindir "$PKG_DEST/usr/bin" \
+		--ignore-dependencies \
+		--document ri \
+		--verbose \
+        rake
+
+	# Remove unnessecary files
+	cd "$gemdir"
+	rm -rf build_info cache extensions plugins
+
+	cd gems/rake-*
+	rm -rf doc *.rdoc MIT-LICENSE
+}
+

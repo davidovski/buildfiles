@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=1.1.0
+SOURCE=https://files.pythonhosted.org/packages/source/i/idna-ssl/idna-ssl-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Patch ssl.match_hostname for Unicode(idna) domains support"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

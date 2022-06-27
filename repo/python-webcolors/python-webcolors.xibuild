@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-pygments"
+
+PKG_VER=1.12
+SOURCE=https://files.pythonhosted.org/packages/source/w/webcolors/webcolors-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A library for working with color names and color values formats defined by HTML and CSS."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

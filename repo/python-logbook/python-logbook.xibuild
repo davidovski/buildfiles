@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="python-logbook"
+DESC="Logging replacement for Python"
+
+MAKEDEPS="python cython"
+
+PKG_VER=1.5.3
+SOURCE="https://github.com/getlogbook/logbook/archive/$PKG_VER.tar.gz"
+
+build() {
+	cython logbook/_speedups.pyx
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}
+

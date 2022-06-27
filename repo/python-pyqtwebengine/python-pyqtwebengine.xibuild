@@ -1,0 +1,26 @@
+#!/bin/sh
+
+MAKEDEPS="python python-toml qt5-qtwebengine"
+DEPS="python"
+
+PKG_VER=5.15.5
+SOURCE="https://pypi.python.org/packages/source/P/PyQtWebEngine/PyQtWebEngine-$PKG_VER.tar.gz"
+MAKEDEPS="python"
+DESC="Python bindings for the Qt WebEngine framework"
+
+build() {
+	sip-build \
+		--no-make \
+		--qmake /usr/lib/qt5/bin/qmake \
+		--api-dir /usr/share/qt5/qsci/api/python
+	make -C build
+}
+
+
+check() {
+	make -C build check
+}
+
+package () {
+    make DESTDIR="$PKG_VER" INSTALL_ROOT="$PKG_VER" -C build install -j1
+}

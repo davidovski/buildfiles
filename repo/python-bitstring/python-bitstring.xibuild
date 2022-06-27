@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=3.1.9
+SOURCE=https://files.pythonhosted.org/packages/source/b/bitstring/bitstring-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Simple construction, analysis and modification of binary data."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

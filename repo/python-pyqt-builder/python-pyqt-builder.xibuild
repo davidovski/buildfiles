@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-packaging python-sip"
+
+PKG_VER=1.13.0
+SOURCE=https://pypi.python.org/packages/source/P/PyQt-builder/PyQt-builder-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="The PEP 517 compliant PyQt build system"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

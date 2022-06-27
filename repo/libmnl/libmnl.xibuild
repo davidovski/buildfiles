@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="libmnl"
+DESC="Library for minimalistic netlink"
+
+MAKEDEPS=" linux-headers musl-legacy-compat"
+
+PKG_VER=1.0.5
+SOURCE="https://www.netfilter.org/projects/libmnl/files/libmnl-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+musl-fix-headers.patch
+"
+
+prepare () {    
+    apply_patches
+    sed -i 's/--no-dereference --preserve=links,mode,timestamps/-p/g'  doxygen/Makefile.in
+}
+
+
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-static \
+        --without-doxygen
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

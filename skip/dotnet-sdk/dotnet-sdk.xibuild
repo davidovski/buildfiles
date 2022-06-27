@@ -1,0 +1,17 @@
+#!/bin/sh
+
+NAME="dotnet-sdk"
+DESC="Core functionality needed to create .NET Core projects"
+
+MAKEDEPS="make "
+
+PKG_VER=6.0.301
+SOURCE="https://github.com/dotnet/sdk/archive/refs/tags/v$PKG_VER.tar.gz"
+
+build () {
+    ./build.sh
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+}

@@ -1,0 +1,89 @@
+#!/bin/sh
+
+NAME="npm"
+DESC="The package manager for JavaScript"
+
+MAKEDEPS=""
+
+PKG_VER=8.6.0
+SOURCE="https://registry.npmjs.org/npm/-/npm-$PKG_VER.tgz"
+
+ADDITIONAL="
+dont-check-for-last-version.patch
+npmrc
+"
+
+prepare() {
+    export SRC_ROOT=npm-$PKG_VER
+    tar xf npm-$PKG_VER.tgz
+    cd $SRC_ROOT
+    apply_patches
+
+	# Remove bunch of unnecessary files to reduce size of the package.
+
+	# Wrapper scripts written in Bash and CMD.
+	rm bin/npm bin/npx bin/*.cmd bin/node-gyp-bin/*.cmd
+	rm README.md
+	# HTML docs
+	rm -rf docs
+
+	cd node_modules
+
+	find . -type f \( \
+		-name '.*' -o \
+		-name '*.cmd' -o \
+		-name '*.bat' -o \
+		-name '*.map' -o \
+		-name '*.md' -o \
+		\( -name '*.ts' -a ! -name '*.d.ts' \) -o \
+		-name 'AUTHORS*' -o \
+		-name 'LICENSE*' -o \
+		-name 'license' -o \
+		-name 'Makefile' -o \
+		-name 'README*' -o \
+		-name 'readme.markdown' \) -delete
+	rm -rf ./*/.git* ./*/doc ./*/docs ./*/examples ./*/scripts ./*/test
+	rm -rf ./node-gyp/gyp/.git*
+
+	# No files should be executable here, except node-gyp.
+	find . -type f -executable ! -name 'node-gyp*' -exec chmod -x {} \;
+
+	cd ../man
+
+	# XXX: Workaround for https://github.com/npm/cli/issues/780.
+	local f name sec title
+	for f in man5/folders.5 man5/install.5 man7/*.7; do
+		sec=${f##*.}
+		name=$(basename $f .$sec)
+		title=$(echo "$name" | tr '[a-z]' '[A-Z]')
+
+		sed -Ei "s/^\.TH \"$title\"/.TH \"NPM-$title\"/" "$f"
+		mv "$f" "${f%/*}/npm-$name.$sec"
+	done
+}
+
+package() {
+	local destdir="$PKG_DEST/usr/lib/node_modules/npm"
+
+	mkdir -p "$destdir"
+	cp -r "$SRC_ROOT"/* "$destdir"/
+	cp "$SRCBUILD_ROOT"/npmrc "$destdir"/
+
+	cd "$PKG_DEST"
+
+	mkdir -p usr/bin
+	ln -s ../lib/node_modules/npm/bin/npm-cli.js usr/bin/npm
+	ln -s ../lib/node_modules/npm/bin/npx-cli.js usr/bin/npx
+	ln -s ../lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js usr/bin/node-gyp
+
+	mkdir -p usr/share
+	mv "$destdir"/man usr/share/
+	ln -s ../../../share/man "$destdir"/man
+
+	mkdir -p usr/share/licenses/npm
+	mv "$destdir"/LICENSE usr/share/licenses/npm/
+
+	install -D -m644 "$destdir"/lib/utils/completion.sh \
+		"$PKG_DEST"/usr/share/bash-completion/completions/npm
+}
+

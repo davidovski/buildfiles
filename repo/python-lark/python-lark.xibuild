@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-atomicwrites python-js2py python-regex"
+
+PKG_VER=1.1.2
+SOURCE=https://files.pythonhosted.org/packages/source/l/lark/lark-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="a modern parsing library"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

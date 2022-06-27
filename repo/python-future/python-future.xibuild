@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=0.18.2
+SOURCE=https://files.pythonhosted.org/packages/source/f/future/future-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Clean single-source support for Python 3 and 2"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

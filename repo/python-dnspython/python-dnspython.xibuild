@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-cryptography python-curio python-h2 python-httpx python-idna python-requests python-requests-python-toolbelt python-sniffio python-trio python-wmi"
+
+PKG_VER=2.2.1
+SOURCE=https://files.pythonhosted.org/packages/source/d/dnspython/dnspython-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="DNS toolkit"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

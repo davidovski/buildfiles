@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="python-openssl"
+DESC="Python3 wrapper module around the OpenSSL library"
+
+MAKEDEPS=""
+
+PKG_VER=21.0.0
+SOURCE="https://files.pythonhosted.org/packages/source/p/pyOpenSSL/pyOpenSSL-$PKG_VER.tar.gz"
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}
+

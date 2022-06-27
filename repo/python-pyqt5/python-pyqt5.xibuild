@@ -1,0 +1,23 @@
+#!/bin/sh
+
+MAKEDEPS="python python-sip"
+DEPS="pyqt5-sip"
+
+PKG_VER=5.15.7
+SOURCE=https://pypi.python.org/packages/source/P/PyQt5/PyQt5-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Python bindings for the Qt cross platform application toolkit"
+
+build() {
+    sip-build \
+		--confirm-license \
+		--qmake /usr/lib/qt5/bin/qmake \
+		--api-dir /usr/share/qt5/qsci/api/python \
+		--no-make
+	make -C build
+}
+
+
+package () {
+    	make DESTDIR="$PKG_DEST" INSTALL_ROOT="$PKG_DEST" -C build install -j1
+}

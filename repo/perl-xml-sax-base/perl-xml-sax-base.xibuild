@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="perl-xml-sax-base"
+DESC="Base class SAX Drivers and Filters"
+
+MAKEDEPS=""
+
+PKG_VER=1.09
+SOURCE="https://cpan.metacpan.org/authors/id/G/GR/GRANTM/XML-SAX-Base-$PKG_VER.tar.gz"
+
+build() {
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" \( -name perllocal.pod -o -name .packlist \) -delete
+}
+

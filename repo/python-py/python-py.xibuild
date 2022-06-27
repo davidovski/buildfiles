@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=1.11.0
+SOURCE=https://files.pythonhosted.org/packages/source/p/py/py-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="library with cross-python path, ini-parsing, io, code, log facilities"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

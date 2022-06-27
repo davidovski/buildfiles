@@ -1,0 +1,59 @@
+#!/bin/sh
+
+NAME="iptables"
+DESC="Linux kernel firewall, NAT and packet mangling tools"
+
+MAKEDEPS=" linux-headers libnftnl bison flex autoconf automake"
+
+PKG_VER=1.8.7
+SOURCE="https://www.netfilter.org/projects/iptables/files/iptables-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+ebtables.confd
+ebtables.initd
+ip6tables.confd
+iptables.confd
+iptables.initd
+use-sh-iptables-apply.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man \
+		--sbindir=/sbin \
+		--sysconfdir=/etc \
+		--without-kernel \
+		--enable-devel \
+		--enable-libipq \
+		--enable-shared
+
+	# do not use rpath
+	sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+	sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+	make
+}
+
+package() {
+	make -j1 install DESTDIR="$PKG_DEST"
+
+	mkdir -p "$PKG_DEST"/usr/include/libiptc \
+		"$PKG_DEST"/usr/lib \
+		"$PKG_DEST"/var/lib/iptables \
+		"$PKG_DEST"/etc/iptables
+
+	install -m644 include/iptables.h include/ip6tables.h \
+		"$PKG_DEST"/usr/include/
+	install include/libiptc/*.h "$PKG_DEST"/usr/include/libiptc/
+
+	install -D -m755 "$BUILD_ROOT"/iptables.initd "$PKG_DEST"/etc/init.d/iptables
+	install -D -m644 "$BUILD_ROOT"/iptables.confd "$PKG_DEST"/etc/conf.d/iptables
+	install -D -m755 "$BUILD_ROOT"/ebtables.initd "$PKG_DEST"/etc/init.d/ebtables
+	install -D -m644 "$BUILD_ROOT"/ebtables.confd "$PKG_DEST"/etc/conf.d/ebtables
+}

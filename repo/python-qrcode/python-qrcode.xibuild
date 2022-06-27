@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=7.3.1
+SOURCE=https://files.pythonhosted.org/packages/source/q/qrcode/qrcode-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="QR Code image generator"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

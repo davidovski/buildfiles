@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="raylib"
+DESC="a simple and easy to use game development library"
+
+MAKEDEPS="cmake glfw"
+
+PKG_VER=4.0.0
+SOURCE="https://github.com/raysan5/raylib/archive/refs/tags/$PKG_VER.tar.gz"
+
+build() {
+	cmake -B build \
+		-DBUILD_EXAMPLES=Off \
+		-DBUILD_SHARED_LIBS=True \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DUSE_EXTERNAL_GLFW=ON \
+		$CMAKE_CROSSOPTS .
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

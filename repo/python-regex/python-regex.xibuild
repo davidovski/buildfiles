@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=2022.6.2
+SOURCE=https://files.pythonhosted.org/packages/source/r/regex/regex-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Alternative regular expression module, to replace re."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

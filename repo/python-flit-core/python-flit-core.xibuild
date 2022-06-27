@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="python-flit-core"
+DESC="simple packaging tool for simple packages (core)"
+
+MAKEDEPS="python-installer python-testpath"
+
+PKG_VER=3.7.1
+SOURCE="https://files.pythonhosted.org/packages/source/f/flit/flit-$PKG_VER.tar.gz"
+
+build() {
+    cd flit_core
+	python3 build_dists.py
+}
+
+check() {
+	python3 -m pytest
+}
+
+package() {
+	python3 -m installer -d "$PKG_DEST" \
+		dist/flit_core-$PKG_VER-py3-none-any.whl
+
+	# remove installed tests
+	rm -r "$PKG_DEST"/usr/lib/python3*/site-packages/flit_core/tests
+}
+

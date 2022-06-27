@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-cryptography python-sphinx python-sphinx-python-rtd-python-theme python-flaky python-pretend python-pytest"
+
+PKG_VER=22.0.0
+SOURCE=https://files.pythonhosted.org/packages/source/p/pyopenssl/pyopenssl-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Python wrapper module around the OpenSSL library"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

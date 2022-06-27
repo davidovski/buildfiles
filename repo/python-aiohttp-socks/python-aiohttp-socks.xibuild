@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+DEPS="python-aiohttp python-attrs python-python-python-socks[python-asyncio]python-"
+
+PKG_VER=0.7.1
+SOURCE=https://files.pythonhosted.org/packages/source/a/aiohttp-socks/aiohttp-socks-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Proxy connector for aiohttp"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

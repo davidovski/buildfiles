@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="lf"
+DESC="Terminal filemanager written in Go with vim-style keybindings"
+
+MAKEDEPS="go"
+
+PKG_VER=26
+SOURCE="https://github.com/gokcehan/lf/archive/r$PKG_VER.tar.gz"
+
+build() {
+	go build -v -o bin/lf
+}
+
+check() {
+	go test ./...
+}
+
+package() {
+	install -Dm0755 bin/lf "$PKG_DEST"/usr/bin
+
+	# Manpages
+	install -Dm0644 lf.1 "$PKG_DEST"/usr/share/man/man1/lf.1
+
+	# .desktop file for menus
+	install -Dm0644 lf.desktop "$PKG_DEST"/usr/share/applications
+
+	# Shell completions
+	install -Dm0644 etc/lf.bash "$PKG_DEST"/usr/share/bash-completion/completions/lf
+	install -Dm0644 etc/lf.zsh "$PKG_DEST"/usr/share/zsh/site-functions/_lf
+	install -Dm0644 etc/lf.fish "$PKG_DEST"/usr/share/fish/completions
+}
+

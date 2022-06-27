@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="lxc"
+DESC="Userspace interface for the Linux kernel containment features"
+
+MAKEDEPS="libcap libseccomp pam linux-headers musl-legacy-compat docbook2x automake autoconf libtool perl-xml-namespacesupport"
+
+PKG_VER=4.0.12
+SOURCE="https://linuxcontainers.org/downloads/lxc/lxc-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+lxc.confd
+lxc.initd
+"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-apparmor \
+		--enable-pam \
+		--with-distro=xi \
+		--disable-werror \
+		--enable-doc
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	install -Dm755 "$BUILD_ROOT"/lxc.initd "$PKG_DEST"/etc/init.d/lxc
+	install -Dm644 "$BUILD_ROOT"/lxc.confd "$PKG_DEST"/etc/conf.d/lxc
+	install -d "$PKG_DEST"/var/lib/lxc
+
+	# Remove useless config for SysVinit.
+	rm -r "$PKG_DEST"/etc/default
+}

@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="libsecp256k1"
+DESC="Optimized C library for EC operations on curve secp256k1"
+MAKEDEPS=" autoconf automake libtool"
+
+SOURCE="https://github.com/bitcoin-core/secp256k1.git"
+
+prepare() {
+	./autogen.sh
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-static \
+		--enable-module-ecdh \
+		--enable-module-recovery
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

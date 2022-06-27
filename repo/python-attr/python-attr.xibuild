@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=0.3.1
+SOURCE=https://files.pythonhosted.org/packages/source/a/attr/attr-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Simple decorator to set attributes of target function or class in a DRY way."
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

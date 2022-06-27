@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="python-testpath"
+DESC="test utilities for working with files and commands"
+
+MAKEDEPS=" python-build python-installer python-wheel"
+
+PKG_VER=0.6.0
+SOURCE="https://files.pythonhosted.org/packages/source/t/testpath/testpath-$PKG_VER.tar.gz"
+
+build() {
+	python3 -m build --no-isolation --wheel
+}
+
+check() {
+	pytest
+}
+
+package() {
+	python3 -m installer -d "$PKG_DEST" \
+		dist/testpath-$PKG_VER-py3-none-any.whl
+}
+

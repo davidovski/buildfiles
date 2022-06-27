@@ -1,0 +1,75 @@
+#!/bin/sh
+
+NAME="qt5-qtwebengine"
+DESC="Qt5 - QtWebEngine components"
+
+MAKEDEPS="ffmpeg glib gst-plugins-base gstreamer icu libxcomposite libxext libxkbcommon libxkbfile libxrender libxslt mesa ninja alsa-lib bison musl-legacy-compat flex fontconfig gperf gzip harfbuzz jsoncpp libevent libjpeg-turbo libpng libsrtp libvpx libwebp libxcursor libxi libxml2 libxrandr libxslt libxtst linux-headers nodejs nss opus pcre protobuf pulseaudio sndio qt5-qtbase qt5-qtdeclarative qt5-qtwebchannel re2 ruby snappy sqlite3 yasm zlib python"
+
+PKG_VER=5.15.3_git20220407
+_commit="56260bb605a74fabdfc74cef3bf890394af88b3d"
+_chromium_commit="d13d0924c4e18ecc4b79adf0fec142ee9a9eaa14"
+# commit of catapult version with python3 support
+_catapult_commit="5eedfe23148a234211ba477f76fc2ea2e8529189"
+SOURCE="https://invent.kde.org/qt/qt/qtwebengine/-/archive/$_commit.tar.gz"
+
+ADDITIONAL="
+	https://invent.kde.org/qt/qt/qtwebengine-chromium/-/archive/$_chromium_commit.tar.gz
+	https://dev.alpinelinux.org/archive/qt5-qtwebengine/catapult-$_catapult_commit.tar.gz
+0001-pretend-to-stay-at-5.15.3.patch
+0010-chromium-musl-Match-syscalls-to-match-musl.patch
+default-pthread-stacksize.patch
+ffmpeg5.patch
+fix-chromium-build.patch
+musl-hacks.patch
+musl-sandbox.patch
+nasm.patch
+qt-chromium-python3.patch
+qt-musl-crashpad.patch
+qt-musl-dispatch_to_musl.patch
+qt-musl-elf-arm.patch
+qt-musl-execinfo.patch
+qt-musl-mallinfo.patch
+qt-musl-off_t.patch
+qt-musl-pread-pwrite.patch
+qt-musl-pvalloc.patch
+qt-musl-resolve.patch
+qt-musl-siginfo_t.patch
+qt-musl-stackstart.patch
+qt-musl-sysreg-for__WORDSIZE.patch
+qt-musl-thread-stacksize.patch
+qt-musl-tid-caching.patch
+remove-glibc-check.patch
+sndio.patch
+support-python3.patch
+"
+
+prepare() {
+    tar xf *.tar.gz
+	rmdir "$BUILD_ROOT/src/3rdparty"
+	mv "$BUILD_ROOT/qtwebengine-chromium-$_chromium_commit" "$BUILD_ROOT/src/3rdparty"
+	mkdir "$BUILD_ROOT"/.git "$BUILD_ROOT/src/3rdparty/chromium/.git"
+
+	# update vendored catapult version to python3 compatible version.
+	rm -r "$BUILD_ROOT/src/3rdparty/chromium/third_party/catapult"
+	mv "$BUILD_ROOT"/catapult "$BUILD_ROOT/src/3rdparty/chromium/third_party/catapult"
+
+	apply_patches
+}
+
+build() {
+	qmake-qt5 QMAKE_EXTRA_ARGS+="-webengine-sndio -system-ffmpeg -system-opus -system-webp -proprietary-codecs" CONFIG+=force_debug_info
+	make
+}
+
+package() {
+	make install INSTALL_ROOT="$PKG_DEST"
+	sed -i -e 's:-L/home[^ ]\+::g' "$PKG_DEST"/usr/lib/pkgconfig/*.pc
+
+	# Drop QMAKE_PRL_BUILD_DIR because reference the build dir
+	find "$PKG_DEST/usr/lib" -type f -name '*.prl' \
+		-exec sed -i -e '/^QMAKE_PRL_BUILD_DIR/d' {} \;
+
+	install -d "$PKG_DEST"/usr/share/licenses
+	ln -s /usr/share/licenses/qt5-base "$PKG_DEST"/usr/share/licenses/qt5-qtwebengine
+}
+
