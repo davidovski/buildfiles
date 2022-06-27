@@ -1,22 +1,44 @@
 #!/bin/sh
 
-MAKEDEPS="make"
-DEPS="libogg libvorbis"
-
+NAME="libtheora"
 DESC="An open video codec developed by the Xiph.org"
 
+MAKEDEPS=" libvorbis libogg autoconf automake libtool linux-headers"
+
 PKG_VER=1.1.1
-SOURCE=https://downloads.xiph.org/releases/theora/libtheora-$PKG_VER.tar.xz
- 
-prepare () {
+SOURCE="http://downloads.xiph.org/releases/theora/libtheora-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+automake.patch
+enc.patch
+fix-mmx.patch
+fix-timeb.patch
+libtheora-flags.patch
+"
+
+prepare() {
+    apply_patches
     sed -i 's/png_\(sizeof\)/\1/g' examples/png2theora.c
+
+	libtoolize --force
+	aclocal -I m4
+	autoconf --force
+	automake --force --add-missing
 }
 
-build () {
-    ./configure --prefix=/usr --disable-static &&
-    make
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-shared \
+		--enable-static
+	make -j 1 -C lib
+	make
 }
 
-package () {
-    make DESTDIR=$PKG_DEST install
+check() {
+	make check
+}
+
+package() {
+	make -j1 DESTDIR="$PKG_DEST" install
 }

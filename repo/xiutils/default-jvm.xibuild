@@ -3,5 +3,5 @@
 DESC="helperscript to select which jvm to use by default"
 
 package () {
-    make DESTDIR=$PKG_DEST install-default-jvm
+    add_from_main usr/bin/default-jvm
 }

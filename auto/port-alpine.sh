@@ -15,7 +15,7 @@ additional=$(ls $pkgbuild | grep -v ^APKBUILD$)
 
 . $apkbuild
 
-name=${2:-$pkgname}
+[ ! -z "$2" ] && name=${2}
 
 name=$(echo $pkgname | sed 's/py3-/python-/' )
 
@@ -78,8 +78,9 @@ sed -i "s/\$srcdir/\$BUILD_ROOT/g" $buildfile
 sed -i "s/\$builddir/\$BUILD_ROOT/g" $buildfile
 sed -i "s/^sha512sums=.*$//g" $buildfile
 # ignore build and host options for configure; we arent cross compiling
-sed -i "s/^\w*--build=//g" $buildfile
-sed -i "s/^\w*--host=//g" $buildfile
+sed -i "s/^\s*--build=.*$//g" $buildfile
+sed -i "s/^\s*--host=.*$//g" $buildfile
+sed -i "s/default_prepare/apply_patches/g" $buildfile
 
 sed -i 's/abuild-meson/meson --prefix=\/usr \\\n/' $buildfile
 

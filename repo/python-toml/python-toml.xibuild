@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="%deps%"
+
 
 PKG_VER=0.10.2
 SOURCE=https://files.pythonhosted.org/packages/source/t/toml/toml-$PKG_VER.tar.gz

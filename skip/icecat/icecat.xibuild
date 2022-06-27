@@ -3,84 +3,17 @@
 NAME="icecat"
 DESC="GNU IceCat web browser"
 
-MAKEDEPS="make rust cbindgen"
+MAKEDEPS="make rust cbindgen gnupg mercurial perl-file-rename python-jsonschema"
 DEPS="nodejs alsa-lib atk cairo dbus ffmpeg fontconfig freetype2 gdk-pixbuf glib gtk3 icu libevent libffi libpng libvpx libwebp libx11 libxcb libxcomposite libxdamage libxext libxfixes libxrandr musl nspr nss pango pixman zlib dbus-glib"
 
 PKG_VER=91.9.0
-commit_hash=d7d3e9a33d2b3b78a6e08060684580c72c0d6e93
-
-
-SOURCE="https://git.savannah.gnu.org/cgit/gnuzilla.git/snapshot/gnuzilla-$commit_hash.tar.gz"
+SOURCE="git://git.savannah.gnu.org/gnuzilla.git"
 ADDITIONAL="
 icecat.desktop
-stab.h
 "
 
-#prepare () {
-
-    #sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/audio_thread_priority/.cargo-checksum.json
-    #sed -i 's/\("files":{\)[^}]*/\1/' third_party/rust/target-lexicon-0.9.0/.cargo-checksum.json
-#}
-
 build () {
-    mkdir -p objdir
-    cd objdir
-    export SHELL=/bin/sh
-	export USE_SHORT_LIBNAME=1
-	export MACH_USE_SYSTEM_PYTHON=1
-	export MOZBUILD_STATE_PATH=$BUILD_ROOT/mozbuild
-	# disable desktop notifications
-	export MOZ_NOSPAM=1
-	# Find our triplet JSON
-	export RUST_TARGET="x86_64-unknown-linux-musl"
-	# Build with Clang, takes less RAM
-	export CC="clang"
-	export CXX="clang++"
-
-	export LDFLAGS="$LDFLAGS -Wl,-rpath,/usr/lib/icecat"
-    ../mach configure \
-        --without-wasm-sandboxed-libraries \
-		--prefix=/usr \
-        --disable-elf-hack \
-        --enable-rust-simd \
-        --enable-sandbox \
-		--disable-cargo-incremental \
-		--disable-crashreporter \
-		--disable-install-strip \
-		--disable-jemalloc \
-		--disable-minify \
-		--disable-profiling \
-		--disable-strip \
-		--disable-tests \
-		--disable-updater \
-		--enable-alsa \
-		--enable-dbus \
-		--enable-default-toolkit=cairo-gtk3-wayland \
-		--enable-dom-streams \
-		--enable-ffmpeg \
-		--enable-hardening \
-		--enable-necko-wifi \
-		--enable-official-branding \
-		--enable-optimize="$CFLAGS -O2" \
-		--enable-pulseaudio \
-		--enable-release \
-		--enable-system-ffi \
-		--enable-system-pixman \
-		--with-distribution-id=xilinux \
-		--with-libclang-path=/usr/lib \
-		--with-system-ffi \
-		--with-system-icu \
-		--with-system-jpeg \
-		--with-system-libevent \
-		--with-system-libvpx \
-		--with-system-nspr \
-		--with-system-nss \
-		--with-system-pixman \
-		--with-system-png \
-		--with-system-webp \
-		--with-system-zlib \
-		--with-unsigned-addon-scopes=app,system  &&
-	../mach build
+    ./makeicecat
 }
 
 package () {
@@ -117,7 +50,7 @@ package () {
 	// Disable default browser checking.
 	pref("browser.shell.checkDefaultBrowser", false);
 
-	// Don't disable our bundled extensions in the application directory
+	// Don't disable our bundled extensionsn the application directory
 	pref("extensions.autoDisableScopes", 11);
 	pref("extensions.shownSelectionUI", true);
 	EOF

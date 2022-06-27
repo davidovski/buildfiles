@@ -26,7 +26,8 @@ build () {
 		--openssl-use-def-ca-store \
 		--with-icu-default-data-dir=$(icu-config --icudatadir) \
 		--with-intl=small-icu \
-		--without-corepack
+		--without-corepack \
+        --without-npm
     make
 }
 

@@ -3,7 +3,7 @@
 NAME="qemu"
 DESC="QEMU is a generic machine emulator and virtualizer"
 
-MAKEDEPS=" meson bash alsa-lib bison curl flex glib glib gnutls gtk3 libaio libcap libcap-ng libjpeg-turbo libnfs libpng libseccomp libssh2 liburing libusb libxml2 linux-headers lzo ncurses numactl perl pulseaudio python python-sphinx sdl2 snappy spice texinfo usbredir util-linux vde2 virglrenderer vte3 xfsprogs zlib zlib zstd zstd ceph"
+MAKEDEPS=" meson bash alsa-lib bison curl flex glib glib gnutls gtk3 libaio libcap libcap-ng libjpeg-turbo libnfs libpng libseccomp libssh2 liburing libusb libxml2 linux-headers lzo ncurses numactl perl pulseaudio python python-sphinx sdl2 snappy spice spice-server texinfo usbredir util-linux vde2 virglrenderer vte3 xfsprogs zlib zlib zstd zstd python-sphinx-rtd-theme"
 
 PKG_VER=7.0.0
 SOURCE="https://wiki.qemu-project.org/download/qemu-$PKG_VER.tar.xz"
@@ -20,9 +20,6 @@ mips-softfloat.patch
 musl-initialise-msghdr.patch
 qemu-guest-agent.confd
 qemu-guest-agent.initd
-qemu.post-install
-qemu.pre-install
-qemu.pre-upgrade
 xattr_size_max.patch
 "
 
@@ -30,72 +27,33 @@ prepare () {
     apply_patches
 } 
 
-compile_common() {
-	CFLAGS="$CFLAGS -O2" "$BUILD_ROOT"/configure \
-		--prefix=/usr \
-		--localstatedir=/var \
-		--sysconfdir=/etc \
-		--libexecdir=/usr/lib/qemu \
-		--python=/usr/bin/python \
-		--disable-glusterfs \
-		--disable-debug-info \
-		--disable-bsd-user \
-		--disable-werror \
-		--disable-xen \
-		--enable-kvm \
-		--enable-seccomp \
-		--cc="${CC:-gcc}" \
-		"$@"
-	make ARFLAGS="rc"
-}
-
 build() {
 	mkdir -p "$BUILD_ROOT"/build
 	cd "$BUILD_ROOT"/build
-	CFLAGS="$CFLAGS -O2" "$BUILD_ROOT"/configure \
-		--prefix=/usr \
-		--localstatedir=/var \
-		--sysconfdir=/etc \
-		--libexecdir=/usr/lib/qemu \
-		--python=/usr/bin/python \
-		--disable-glusterfs \
-		--disable-debug-info \
-		--disable-bsd-user \
-		--disable-werror \
-		--disable-xen \
-		--enable-kvm \
-		--enable-seccomp \
-		--cc="${CC:-gcc}" \
-		--disable-linux-user \
-		--audio-drv-list=oss,alsa,sdl,pa \
-		--enable-cap-ng \
-		--enable-curl \
-		--enable-curses \
-		--enable-docs \
-		--enable-gtk \
-		--enable-guest-agent \
-		--enable-libnfs \
-		--enable-libssh \
-		--enable-linux-aio \
-		--enable-lzo \
-		--enable-modules \
-		--enable-numa \
-		--enable-pie \
-		--enable-sdl \
-		--enable-snappy \
-		--enable-spice \
-		--enable-tpm \
-		--enable-usb-redir \
-		--enable-vde \
-		--enable-vhost-net \
-		--enable-virglrenderer \
-		--enable-virtfs \
-		--enable-vnc \
-		--enable-vnc-jpeg \
-		--enable-vnc-png \
-		--enable-zstd \
-        --enable-rbd \
-		--tls-priority=@QEMU,SYSTEM
+    CFLAGS="$CFLAGS -O2" "$BUILD_ROOT"/configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --libexecdir=/usr/libexec \
+        --localstatedir=/var \
+        --disable-glusterfs \
+        --disable-xen \
+        --enable-docs \
+        --enable-kvm \
+        --enable-libusb \
+        --enable-pie \
+        --enable-snappy \
+        --enable-tpm \
+        --enable-usb-redir \
+        --enable-vhost-net \
+        --enable-virtfs \
+        --enable-vnc-png\
+        --audio-drv-list=alsa,sdl,jack,pa \
+        --enable-opengl \
+        --enable-pa \
+        --enable-sdl \
+        --enable-spice \
+        --enable-virglrenderer \
+        --enable-gtk 
 	make ARFLAGS="rc"
 }
 

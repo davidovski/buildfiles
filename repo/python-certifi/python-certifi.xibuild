@@ -3,8 +3,8 @@
 MAKEDEPS="python"
 DEPS=""
 
-PKG_VER=2021.10.8
-SOURCE=https://files.pythonhosted.org/packages/6c/ae/d26450834f0acc9e3d1f74508da6df1551ceab6c2ce0766a593362d6d57f/certifi-$PKG_VER.tar.gz
+PKG_VER=2022.6.15
+SOURCE=https://files.pythonhosted.org/packages/source/c/certifi/certifi-$PKG_VER.tar.gz
 DESC="Python package for providing Mozilla's CA Bundle."
 
 build() {

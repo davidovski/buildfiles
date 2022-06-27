@@ -46,6 +46,6 @@ package() {
 
 
 postinstall () {
-    useradd -r -m -U -d /var/lib/tor -s /sbin/nologin -g tor tor
+    useradd -r -m -U -d /var/lib/tor -s /sbin/nologin tor
     return 0
 }
