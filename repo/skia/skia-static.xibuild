@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DESC="$DESC - static libraries"
+
+build () {
+    gn gen out/Static --args="$common_args is_official_build=true"
+
+    ninja -C out/Static
+}
+
+package () {
+    for lib in out/Static/*.a; do 
+        install -Dm644 $lib $PKG_DEST/usr/lib/
+    done
+}

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="perl-text-csv"
+DESC="Manipulate comma-separated value strings"
+
+MAKEDEPS=""
+
+PKG_VER=2.01
+SOURCE="https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Text-CSV-$PKG_VER.tar.gz"
+
+build() {
+	PERL_MM_USE_DEFAULT=1 perl Makefile.PL INSTALLDIRS=vendor
+	make
+}
+
+check() {
+	make test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	find "$PKG_DEST" -name '.packlist' -delete
+	find "$PKG_DEST" -name '*.pod' -delete
+}
+

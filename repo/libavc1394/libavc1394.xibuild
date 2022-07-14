@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="libavc1394"
+DESC="Audio/Video Control library for IEEE-1394 devices"
+
+MAKEDEPS="libraw1394 libtool automake autoconf argp-standalone"
+
+PKG_VER=0.5.4
+SOURCE="https://downloads.sourceforge.net/libavc1394/libavc1394-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+argp.patch
+automake.patch
+"
+
+prepare() {
+	apply_patches
+	autoreconf -fi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

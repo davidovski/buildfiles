@@ -28,7 +28,7 @@ prepare () {
 } 
 
 build() {
-	mkdir -p "$BUILD_ROOT"/build
+	mkdir -p "$BUILD_ROOT"/build "$BUILD_ROOT"/build-static
 	cd "$BUILD_ROOT"/build
     CFLAGS="$CFLAGS -O2" "$BUILD_ROOT"/configure \
         --prefix=/usr \
@@ -53,8 +53,10 @@ build() {
         --enable-sdl \
         --enable-spice \
         --enable-virglrenderer \
-        --enable-gtk 
-	make ARFLAGS="rc"
+        --enable-gtk &&
+	make ARFLAGS="rc" || exit 1
+    cd ..
+
 }
 
 package() {

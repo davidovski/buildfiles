@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libmrss"
+DESC="mRSS is a C library for parsing, writing and creating RSS files or streams"
+
+MAKEDEPS=" automake autoconf libtool m4 curl libnxml doxygen"
+
+PKG_VER=0.19.2
+SOURCE="http://www.autistici.org/bakunin/libmrss/libmrss-$PKG_VER.tar.gz"
+
+build() {
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR=$PKG_DEST install
+}
+

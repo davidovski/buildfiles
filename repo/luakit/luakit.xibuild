@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="luakit"
+DESC="Fast, small, webkit based browser framework extensible by Lua"
+
+MAKEDEPS="webkit2gtk luajit"
+
+PKG_VER=2.3
+SOURCE="https://github.com/luakit/luakit/archive/$PKG_VER.tar.gz"
+
+build() {
+	make PREFIX=/usr USE_LUAJIT=1 DEVELOPMENT_PATHS=0
+}
+
+check() {
+	make run-tests
+}
+
+package() {
+	make PREFIX=/usr DESTDIR="$PKG_DEST" install
+	mkdir -p "$PKG_DEST"/usr/share/doc/"luakit"
+	mv "$PKG_DEST"/usr/share/"luakit"/doc/* "$PKG_DEST"/usr/share/doc/"luakit"
+	rmdir "$PKG_DEST"/usr/share/"luakit"/doc
+}
+

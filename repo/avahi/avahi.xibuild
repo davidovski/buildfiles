@@ -1,0 +1,60 @@
+#!/bin/sh
+
+NAME="avahi"
+DESC="multicast/unicast DNS-SD framework"
+
+MAKEDEPS="gdbm intltool gobject-introspection expat libdaemon glib dbus libcap gettext autoconf automake libtool libevent"
+
+PKG_VER=0.8
+SOURCE="https://github.com/lathiat/avahi/releases/download/v$PKG_VER/avahi-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+CVE-2021-3468.patch
+CVE-2021-36217.patch
+avahi.pre-install
+"
+
+prepare() {
+	apply_patches
+	autoreconf -vif
+}
+
+build() {
+	# we dont build autoipd since dhcpcd does same job
+	LDFLAGS="$LDFLAGS -lintl" \
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-autoipd \
+		--disable-qt3 \
+		--disable-qt4 \
+		--disable-qt5 \
+		--disable-gtk \
+		--disable-gtk3 \
+		--disable-mono \
+		--disable-monodoc \
+		--disable-doxygen-doc \
+		--disable-xmltoman \
+		--enable-compat-libdns_sd \
+		--enable-compat-howl \
+		--disable-python \
+		--with-dbus-sys=/usr/share/dbus-1/system.d \
+		--with-distro="gentoo"
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	install -d -o avahi -g avahi "$PKG_DEST"/var/run/avahi-daemon
+
+	ln -s avahi-compat-howl.pc "$PKG_DEST"/usr/lib/pkgconfig/howl.pc
+	ln -s avahi-compat-libdns_sd.pc "$PKG_DEST"/usr/lib/pkgconfig/libdns_sd.pc
+	ln -s avahi-compat-libdns_sd/dns_sd.h "$PKG_DEST"/usr/include/
+}
+

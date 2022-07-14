@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="sysfsutils"
+DESC="System Utilities Based on Sysfs"
+
+MAKEDEPS="autoconf automake libtool"
+
+PKG_VER=2.1.1
+SOURCE="https://github.com/linux-ras/sysfsutils/archive/v$PKG_VER.tar.gz"
+
+prepare() {
+	apply_patches
+	./autogen
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--mandir=/usr/share/man
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -Dm0644 COPYING -t "$PKG_DEST"/usr/share/licenses/"sysfsutils"
+}
+

@@ -1,0 +1,30 @@
+#!/bin/sh
+
+NAME="libosinfo"
+DESC="library for managing OS information for virtualization"
+
+MAKEDEPS=" meson glib libsoup libxml2 libxslt gobject-introspection vala perl"
+
+PKG_VER=1.10.0
+SOURCE="https://gitlab.com/libosinfo/libosinfo/-/archive/v$PKG_VER/libosinfo-v$PKG_VER.tar.gz"
+
+build() {
+	meson --prefix=/usr \
+		-Denable-gtk-doc=false \
+		-Denable-introspection=enabled \
+		-Denable-tests=true \
+		-Denable-vala=enabled \
+		-Dwith-pci-ids-path=/usr/share/hwdata/pci.ids \
+		-Dwith-usb-ids-path=/usr/share/hwdata/usb.ids \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

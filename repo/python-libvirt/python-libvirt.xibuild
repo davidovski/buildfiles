@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="python-libvirt"
+DESC="The libvirt virtualization API python binding"
+
+MAKEDEPS="python libvirt"
+
+PKG_VER=8.2.0
+SOURCE="https://libvirt.org/sources/python/libvirt-python-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+disable-screenshot-test.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	python3 setup.py build
+}
+
+package() {
+	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+}
+

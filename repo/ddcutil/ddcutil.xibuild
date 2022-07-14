@@ -3,12 +3,13 @@
 NAME="ddcutil"
 DESC="Query and change Linux monitor settings using DDC/CI and USB"
 
-MAKEDEPS="linux-headers autoconf automake libtool eudev libusb i2c-tools libxrandr glib kmod"
+MAKEDEPS=" linux-headers autoconf automake libtool eudev libusb i2c-tools libxrandr glib kmod"
 
 PKG_VER=1.2.2
 SOURCE="https://github.com/rockowitz/ddcutil/archive/v$PKG_VER.tar.gz"
 
 prepare() {
+	apply_patches
 	NOCONFIGURE=1 ./autogen.sh
 }
 

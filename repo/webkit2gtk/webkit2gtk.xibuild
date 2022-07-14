@@ -1,0 +1,59 @@
+#!/bin/sh
+
+NAME="webkit2gtk"
+DESC="Portable web rendering engine WebKit for GTK+"
+
+MAKEDEPS="bison cmake enchant2 flex geoclue gnutls gobject-introspection gperf gst-plugins-bad gst-plugins-base gstreamer gtk3 hyphen icu lcms2 libgcrypt libjpeg-turbo libmanette libnotify libpng libseccomp libsecret libsoup libwebp libwpe libwpebackend-fdo libxml2 libxslt libxt mesa openjpeg openjpeg-tools pango python ruby ninja sqlite woff2"
+
+PKG_VER=2.36.0
+SOURCE="https://webkitgtk.org/releases/webkitgtk-$PKG_VER.tar.xz"
+
+build() {
+	local _archopt=
+	case "$CARCH" in
+	x86)
+		# disable _FORTIFY_SOURCE to work around:
+		# cc1plus: out of memory allocating 65536 bytes after a total of 3131101184 bytes
+		CXXFLAGS="$CXXFLAGS -U_FORTIFY_SOURCE"
+		;;
+	armhf)
+		CXXFLAGS="$CXXFLAGS -U_FORTIFY_SOURCE"
+		_archopt="-DENABLE_JIT=OFF"
+		;;
+	ppc64le|s390x)
+		_archopt="-DENABLE_JIT=OFF"
+		;;
+	esac
+
+	# reduce memory usage on 32 bit
+	# https://bugs.webkit.org/show_bug.cgi?id=199272
+	export CXXFLAGS="$CXXFLAGS -g1"
+
+	# disable gold usage since it can't find pthreads with it enabled
+	cmake -B build -G Ninja \
+		-DPORT=GTK \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_SKIP_RPATH=ON \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DLIB_INSTALL_DIR=/usr/lib \
+		-DENABLE_GLES2=ON \
+		-DENABLE_GTKDOC=OFF \
+		-DENABLE_GEOLOCATION=ON \
+		-DENABLE_JOURNALD_LOG=OFF \
+		-DENABLE_SAMPLING_PROFILER=OFF \
+		-DENABLE_MINIBROWSER=ON \
+		-DUSE_WPE_RENDERER=ON \
+		-DUSE_WOFF2=ON \
+		-DUSE_SOUP2=ON \
+		$_archopt
+	cmake --build build
+}
+
+check() {
+	ninja -C build check
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

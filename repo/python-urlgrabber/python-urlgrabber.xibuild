@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=4.1.0
+SOURCE=https://files.pythonhosted.org/packages/source/u/urlgrabber/urlgrabber-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="A high-level cross-protocol url-grabber"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

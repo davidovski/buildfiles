@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="mpg123"
+DESC="Console-based MPEG Audio Player for Layers 1, 2 and 3"
+
+MAKEDEPS="libtool alsa-lib linux-headers"
+
+PKG_VER=1.29.3
+SOURCE="https://www.mpg123.org/download/mpg123-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--disable-dependency-tracking \
+		--with-pic \
+		--with-optimization=0 \
+		--with-cpu=i386_fpu \
+		--with-audio="alsa oss"
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	# Installation is not parallel friendly and will fail
+	# sometimes
+	make -j1 DESTDIR="$PKG_DEST" install
+}
+

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+NAME="a52dec"
+DESC="A free library for decoding ATSC A/52 streams."
+
+MAKEDEPS="autoconf automake libtool linux-headers"
+
+PKG_VER=0.7.4
+SOURCE="http://liba52.sourceforge.net/files/a52dec-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+a52dec-0.7.4-build.patch
+automake.patch
+fix-globals-test-x86-pie.patch
+"
+
+prepare() {
+	apply_patches
+	libtoolize --force && \
+    aclocal && autoconf && automake --add-missing
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-shared
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -m644 liba52/a52_internal.h "$PKG_DEST"/usr/include/a52dec/
+}
+

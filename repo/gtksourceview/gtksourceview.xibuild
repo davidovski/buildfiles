@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="gtksourceview"
+DESC="A text widget adding syntax highlighting and more to GNOME"
+
+MAKEDEPS="gtk3 libxml2 gobject-introspection automake autoconf libtool gtk2"
+
+PKG_VER=3.24.11
+SOURCE="https://download.gnome.org/sources/gtksourceview/${PKG_VER%.*}/gtksourceview-$PKG_VER.tar.xz"
+
+prepare() {
+	apply_patches
+	autoreconf -fi
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

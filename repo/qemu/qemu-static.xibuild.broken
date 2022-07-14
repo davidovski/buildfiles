@@ -1,0 +1,48 @@
+#!/bin/sh
+
+DESC="Static builds of qemu for chrooting"
+
+build () {
+    cd "$BUILD_ROOT"/build-static
+    CFLAGS="$CFLAGS -O2" "$BUILD_ROOT"/configure \
+        --prefix=/usr \
+        --sysconfdir=/etc \
+        --libexecdir=/usr/libexec \
+        --localstatedir=/var \
+        --disable-glusterfs \
+        --disable-xen \
+		--disable-glusterfs \
+		--disable-debug-info \
+		--disable-bsd-user \
+		--disable-werror \
+		--disable-xen \
+		--enable-kvm \
+		--enable-seccomp \
+        --enable-linux-user \
+		--disable-system \
+		--static \
+		--disable-docs \
+		--disable-sdl \
+		--disable-gtk \
+		--disable-spice \
+		--disable-tools \
+		--disable-guest-agent \
+		--disable-guest-agent-msi \
+		--disable-curses \
+		--disable-curl \
+		--disable-gnutls \
+		--disable-gcrypt \
+		--disable-nettle \
+		--disable-cap-ng \
+		--disable-brlapi \
+		--disable-mpath \
+		--disable-libnfs \
+		--disable-numa \
+		--disable-capstone && \
+	make ARFLAGS="rc" || exit 1
+}
+
+package () {
+	cd "$BUILD_ROOT"/build-static
+	make DESTDIR="$PKG_DEST" install
+}

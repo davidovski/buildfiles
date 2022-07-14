@@ -1,0 +1,94 @@
+#!/bin/sh
+
+NAME="vlc"
+DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
+
+MAKEDEPS="a52dec alsa-lib automake autoconf avahi bison libtool dav1d dbus faad2 ffmpeg4 flac flex freetype2 gtk3 libbluray libavc1394 libcddb libdc1394 libdvbpsi libdvdnav libdvdread libgcrypt libice libmad libmatroska libmpeg2 libnotify libogg libraw1394 librsvg libshout libsm libsrt libtheora libva libvdpau libvorbis libvpx libx11 libxext libxinerama libxml2 libxpm libxv live-media lua mesa ncurses opus pkgconfig qt5-qtbase qt5-qtsvg qt5-qtx11extras sdl2 speex speexdsp sysfsutils taglib eudev v4l-utils wayland-protocols x264 x265 xcb-util-renderutil xcb-util-keysyms xdg-utils samba gnutls pulseaudio"
+
+PKG_VER=3.0.17.3
+SOURCE="https://download.videolan.org/vlc/$PKG_VER/vlc-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+check-headless.patch
+dav1d-1.0.0.patch
+disable-sub-autodetect-fuzzy-1-test.patch
+fribidi_allow_deprecated.patch
+omxil-rpi-codecs.patch
+test-s390x.patch
+vlc-daemon.pre-install
+vlc-libs.trigger
+vlc-live-media-2021.patch
+vlc.confd
+vlc.initd
+"
+
+prepare() {
+	apply_patches
+	NOCONFIGURE=1 ./bootstrap
+}
+
+build() {
+	local _arch_opts=
+	export CFLAGS="$CFLAGS -D_GNU_SOURCE -fcommon"
+
+	case "$CARCH" in
+	arm*) _arch_opts="--enable-omxil --enable-omxil-vout --enable-rpi-omxil" ;;
+	esac
+
+	#LUA=lua5.2 \
+	#LUAC=luac5.2 \
+	BUILDCC="${CC:-gcc} -std=c99" \
+	./configure \
+		--prefix=/usr \
+		--disable-nls \
+		--disable-rpath \
+		--enable-a52 \
+		--enable-avcodec \
+		--enable-avformat \
+		--enable-bluray \
+		--enable-dav1d \
+		--enable-dbus \
+		--enable-dc1394 \
+		--enable-dvbpsi \
+		--enable-dvdread \
+		--enable-dvdnav \
+		--enable-faad \
+		--enable-flac \
+		--enable-libcddb \
+		--enable-libva \
+		--enable-live555 \
+		--enable-merge-ffmpeg \
+		--enable-ncurses \
+		--enable-realrtsp \
+		--enable-shout \
+		--enable-skins2 \
+		--enable-speex \
+		--enable-sout \
+		--enable-srt \
+		--enable-taglib \
+		--enable-theora \
+		--enable-v4l2 \
+		--enable-vdpau \
+		--enable-vlm \
+		--enable-vorbis \
+		--enable-wma-fixed \
+		--enable-x264 \
+		--enable-xvideo \
+		--enable-gnutls \
+		$_arch_opts
+
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	# delete cache as it's autocreated by trigger
+	rm -rf "$PKG_DEST"/usr/lib/vlc/plugins/plugins.dat
+	# delete unneeded mozilla and kde support files
+	rm -rf "$PKG_DEST"/usr/lib/mozilla
+	rm -rf "$PKG_DEST"/usr/share/kde4
+}
+
+check() {
+	make check
+}

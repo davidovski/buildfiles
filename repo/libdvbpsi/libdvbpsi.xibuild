@@ -1,0 +1,29 @@
+#!/bin/sh
+
+NAME="libdvbpsi"
+DESC="A library decoding and generating MPEG TS and DVB PSI tables"
+
+MAKEDEPS="musl"
+
+PKG_VER=1.3.3
+SOURCE="https://download.videolan.org/pub/libdvbpsi/$PKG_VER/libdvbpsi-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+fix-includes.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-release \
+		--disable-static
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

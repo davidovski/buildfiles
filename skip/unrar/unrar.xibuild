@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="unrar"
+DESC="RAR uncompression program"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=6.0.7
+SOURCE="https://www.rarlab.com/rar/unrarsrc-$PKG_VER.tar.gz"
+ADDITIONAL="makefile.patch"
+
+prepare () {
+    apply_patches
+    touch unrar
+}
+
+build () {
+    make CXX="${CXX:-g++}" STRIP=: -f makefile
+}
+
+package () {
+    make PREFIX=/usr DESTDIR=$PKG_DEST install
+
+    install -Dm644 license.txt \
+		"$PKG_DEST"/usr/share/licenses/unrar/license.txt
+}

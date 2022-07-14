@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="transmission-remote-gtk"
+DESC="GTK client for remote management of the Transmission BitTorrent client"
+
+MAKEDEPS="appstream-glib curl geoip gtk3 json-glib libmrss libnotify libproxy"
+
+PKG_VER=1.4.2
+SOURCE="https://github.com/transmission-remote-gtk/transmission-remote-gtk/releases/download/$PKG_VER/transmission-remote-gtk-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST" PREFIX="/usr"
+}
+

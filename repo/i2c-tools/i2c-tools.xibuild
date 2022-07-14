@@ -3,12 +3,14 @@
 NAME="i2c-tools"
 DESC="Tools for monitoring I2C devices"
 
-MAKEDEPS="linux-headers python"
+MAKEDEPS=" linux-headers python"
+DEPS="python"
 
 PKG_VER=4.3
 SOURCE="https://fossies.org/linux/misc/i2c-tools-$PKG_VER.tar.gz"
 
 prepare() {
+	apply_patches
 	sed -e "s|^DESTDIR.*|DESTDIR = \"$PKG_DEST\"|" \
 			-e "s|^prefix.*|prefix = /usr|" \
 		 	-e "s|^PREFIX.*|PREFIX = /usr|" \
@@ -18,14 +20,19 @@ prepare() {
 build() {
 	make
 
-	cd "$BUILD_ROOT"/py-smbus
+	cd py-smbus
 	CFLAGS="$CFLAGS -I$BUILD_ROOT/include" python3 setup.py build
+    cd ..
 }
 
 package() {
 	make install
 
-	cd "$BUILD_ROOT"/py-smbus
+	install -d "$PKG_DEST"/usr/lib
+	mv "$PKG_DEST"/usr/lib/python3* "$PKG_DEST"/usr/lib
+
+	cd py-smbus
 	python3 setup.py install --prefix=/usr --root="$PKG_DEST"
+
 }
 

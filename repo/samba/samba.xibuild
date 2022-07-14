@@ -1,0 +1,74 @@
+#!/bin/sh
+
+NAME="samba"
+DESC="Tools to access a server's filespace and printers via SMB"
+
+MAKEDEPS="acl bind cups dbus docbook-xsl e2fsprogs fuse gnutls iniparser jansson ldb libarchive libcap libtirpc liburing linux-pam musl-nscd ncurses openldap perl perl-parse-yapp popt python-tdb python-tevent python3 rpcgen subunit talloc tdb tevent zlib python-dnspython python-markdown tdb"
+
+PKG_VER=4.15.6
+SOURCE="
+	https://download.samba.org/pub/samba/stable/samba-$PKG_VER.tar.gz
+    "
+
+ADDITIONAL="
+add_missing___compar_fn_t.patch
+getpwent_r.patch
+missing-headers.patch
+musl_rm_unistd_incl.patch
+musl_uintptr.patch
+netapp.patch
+netdb-defines.patch
+pidl.patch
+samba-bgqd-include-signal-h.patch
+samba.confd
+samba.initd
+samba.logrotate
+winbind.post-install
+winbind.post-upgrade
+winbind.pre-install
+winbind.pre-upgrade
+"
+
+build() {
+	local _idmap_modules=idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2
+	local _pdb_modules=pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_samba4
+	local _auth_modules=auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,auth_samba4
+
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc/samba \
+		--with-configdir=/etc/samba \
+		--localstatedir=/var \
+		--libexecdir=/usr/lib \
+		--enable-fhs \
+		--with-lockdir=/var/cache/samba \
+		--with-piddir=/run/samba \
+		--with-logfilebase=/var/log/samba \
+		--with-pam \
+		--without-systemd \
+		--with-ads \
+		--with-shared-modules=$_idmap_modules,$_pdb_modules,$_auth_modules,vfs_io_uring \
+		--enable-cups \
+		--without-gettext \
+		--bundled-libraries=NONE,ntdb,roken,wind,hx509,asn1,heimbase,hcrypto,krb5,gssapi,heimntlm,hdb,kdc,cmocka \
+		--disable-rpath-install \
+		--without-gpgme
+	make -j"$(nproc)"
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+
+	install -d "$PKG_DEST"/var/log/samba \
+		"$PKG_DEST"/usr/share/doc/samba
+	install -dm755 "$PKG_DEST"/var/lib/samba/sysvol
+	install -Dm644 examples/smb.conf.default \
+		"$PKG_DEST"/etc/samba/smb.conf
+	install -m744 packaging/printing/smbprint \
+		"$PKG_DEST"/usr/bin/smbprint
+	install -Dm644 "$BUILD_ROOT"/samba.logrotate \
+		"$PKG_DEST"/etc/logrotate.d/samba
+
+	install -Dm755 "$BUILD_ROOT/samba.initd" "$PKG_DEST/etc/init.d/samba"
+	install -Dm644 "$BUILD_ROOT/samba.confd" "$PKG_DEST/etc/conf.d/samba"
+}

@@ -1,0 +1,8 @@
+#!/bin/sh
+DESC="Demo application for gtk-vnc"
+
+package () {
+	mkdir -p "$PKG_DEST"/usr/bin
+	mv output/examples/gvncviewer "$PKG_DEST"/usr/bin
+}
+

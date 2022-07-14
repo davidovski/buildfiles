@@ -1,0 +1,17 @@
+#!/bin/sh
+
+MAKEDEPS="python"
+
+
+PKG_VER=2.2.0
+SOURCE=https://files.pythonhosted.org/packages/source/i/ipaddr/ipaddr-$PKG_VER.tar.gz
+MAKEDEPS="python"
+DESC="Google's IP address manipulation library"
+
+build() {
+    python setup.py build
+}
+
+package () {
+    python setup.py install --root="$PKG_DEST" --optimize=1
+}

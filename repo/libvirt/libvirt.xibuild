@@ -4,6 +4,7 @@ NAME="libvirt"
 DESC="A virtualization API for several hypervisor and container systems"
 
 MAKEDEPS="augeas libsasl device-mapper e2fsprogs gnutls libcap-ng libgpg-error netcf libnl libxml2 libxslt libtasn1 lvm2 lxc libgcrypt parted perl pkg-config eudev zlib yajl libpcap curl libpciaccess polkit readline linux-headers jansson libtirpc perl-xml-xpath fuse util-linux bash-completion bridge-utils dmidecode dnsmasq iptables pm-utils netcat rpcsvc-proto python-docutils meson ninja"
+DEPS="dmidecode dnsmasq"
 
 PKG_VER=8.2.0
 SOURCE="https://libvirt.org/sources/libvirt-$PKG_VER.tar.xz"
@@ -51,4 +52,12 @@ package() {
 	rm -rf "$PKG_DEST"/etc/sysconfig
 	rm -rf "$PKG_DEST"/usr/lib/charset.alias
 	rmdir -p "$PKG_DEST"/usr/lib 2>/dev/null || true
+}
+
+postinstall () {
+    groupadd libvirt 2>/dev/null && {
+        sed -i 's/^#unix_sock_group/unix_sock_group/g'
+        sed -i 's/^#unix_sock_rw_perms/unix_sock_rw_perms/g'
+    }
+    exit 0
 }

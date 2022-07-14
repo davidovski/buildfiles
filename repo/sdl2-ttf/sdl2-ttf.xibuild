@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="sdl2-ttf"
+DESC="A library which allows you to use TrueType fonts in your SDL applications"
+
+MAKEDEPS="freetype2 mesa sdl2"
+
+PKG_VER=2.0.18
+SOURCE="https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+
+
+		--prefix=/usr \
+		--enable-static
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

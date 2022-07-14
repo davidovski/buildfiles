@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="libmikmod"
+DESC="module playing library"
+
+MAKEDEPS="alsa-lib"
+
+PKG_VER=3.3.11.1
+SOURCE="https://downloads.sourceforge.net/mikmod/libmikmod-$PKG_VER.tar.gz"
+
+build() {
+	# build fails with bash
+	export CONFIG_SHELL="/bin/sh"
+	./configure \
+		--prefix=/usr \
+		--enable-alsa
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

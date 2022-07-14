@@ -1,0 +1,31 @@
+#!/bin/sh
+
+NAME="woff2"
+DESC="Web Open Font Format 2 reference implementation"
+
+MAKEDEPS="brotli cmake"
+
+PKG_VER=1.0.2
+SOURCE="https://github.com/google/woff2/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+dont-set-rpath.patch
+install-executables.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	cmake . \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_SKIP_BUILD_RPATH=ON
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" PREFIX=/usr install
+}

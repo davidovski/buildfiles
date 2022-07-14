@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="libmpeg2"
+DESC="A library for decoding MPEG-1 and MPEG-2 video streams"
+
+MAKEDEPS="libx11 libice libsm libxext libxv"
+
+PKG_VER=0.5.1
+SOURCE="https://gentoo.osuosl.org/distfiles/libmpeg2-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+arm-private-symbols.patch
+arm-textrel.patch
+"
+
+prepare() {
+	apply_patches
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--with-pic \
+		--enable-shared \
+		--disable-static
+	make OPT_CFLAGS="$CFLAGS" \
+		MPEG2DEC_CFLAGS="$CFLAGS" \
+		LIBMPEG2_CFLAGS=""
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

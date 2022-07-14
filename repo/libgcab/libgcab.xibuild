@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="libgcab"
+DESC="A GObject library to create cabinet files"
+
+MAKEDEPS="meson gobject-introspection glib vala gtk2"
+
+PKG_VER=1.4
+SOURCE="https://download.gnome.org/sources/gcab/$PKG_VER/gcab-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+

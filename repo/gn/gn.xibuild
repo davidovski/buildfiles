@@ -1,0 +1,26 @@
+#!/bin/sh
+
+NAME="gn"
+DESC="Meta-build system that generates build files for Ninja"
+
+MAKEDEPS="python"
+
+SOURCE="https://gn.googlesource.com/gn.git"
+
+ADDITIONAL="
+python3.patch
+"
+
+build() {
+	./build/gen.py
+	ninja -C out
+}
+
+check() {
+	./out/gn_unittests
+}
+
+package() {
+	install -Dm755 out/gn "$PKG_DEST"/usr/bin/gn
+}
+

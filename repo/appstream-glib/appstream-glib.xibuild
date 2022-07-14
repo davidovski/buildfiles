@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="appstream-glib"
+DESC="Library for AppStream metadata"
+
+MAKEDEPS="meson glib libarchive libsoup json-glib gdk-pixbuf gtk3 freetype2 fontconfig yaml gperf libgcab gobject-introspection"
+
+PKG_VER=0.7.18
+SOURCE="https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+		-Ddep11=true \
+		-Dbuilder=true \
+		-Drpm=false \
+		-Dalpm=false \
+		-Dfonts=true \
+		-Dstemmer=false \
+		-Dman=true \
+		-Dgtk-doc=false \
+		-Dintrospection=true \
+		output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+check() {
+	meson test --no-rebuild -v -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+
+	# Remove installed tests
+	rm -rf "$PKG_DEST"/usr/share/installed-tests/appstream-glib
+}
+

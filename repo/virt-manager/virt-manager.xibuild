@@ -4,7 +4,7 @@ NAME="virt-manager"
 DESC="GUI for managing virtual machines"
 
 MAKEDEPS="intltool glib python-docutils"
-DEPS="libvirt"
+DEPS="libvirt libvirt-glib python-libvirt python-ipaddr python-urlgrabber libosinfo gtksourceview gtk-vnc"
 
 PKG_VER=3.2.0
 SOURCE="https://releases.pagure.org/virt-manager/virt-manager-$PKG_VER.tar.gz"
@@ -27,4 +27,8 @@ package() {
 	python3 setup.py --no-update-icon-cache --no-compile-schemas install --root "$PKG_DEST"
 	python3 -m compileall "$PKG_DEST/usr/share/virt-manager"
 	python3 -O -m compileall "$PKG_DEST/usr/share/virt-manager"
+}
+
+postinstall () {
+    glib-compile-schemas /usr/share/glib-2.0/schemas/
 }

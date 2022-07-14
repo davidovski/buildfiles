@@ -41,6 +41,7 @@ qt-musl-tid-caching.patch
 remove-glibc-check.patch
 sndio.patch
 support-python3.patch
+fix-strncpy-error.patch
 "
 
 prepare() {
@@ -57,7 +58,7 @@ prepare() {
 }
 
 build() {
-	qmake-qt5 QMAKE_EXTRA_ARGS+="-webengine-sndio -system-ffmpeg -system-opus -system-webp -proprietary-codecs" CONFIG+=force_debug_info
+	qmake-qt5 QMAKE_EXTRA_ARGS="-webengine-sndio -system-ffmpeg -system-opus -system-webp -proprietary-codecs" CONFIG=force_debug_info
 	make
 }
 

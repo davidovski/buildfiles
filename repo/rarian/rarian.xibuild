@@ -1,0 +1,35 @@
+#!/bin/sh
+
+NAME="rarian"
+DESC="Documentation meta-data library, designed as a replacement for Scrollkeeper."
+
+MAKEDEPS="libxslt"
+
+PKG_VER=0.8.1
+SOURCE="https://download.gnome.org/sources/rarian/0.8/rarian-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+user-segfault.patch
+"
+
+prepare() {
+	cd "$BUILD_ROOT"
+	apply_patches
+}
+
+build() {
+	cd "$BUILD_ROOT"
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--enable-scrollkeeper-compat \
+		--disable-static
+	make
+}
+
+package() {
+	cd "$BUILD_ROOT"
+	make -j1 DESTDIR="$PKG_DEST" install
+}
+

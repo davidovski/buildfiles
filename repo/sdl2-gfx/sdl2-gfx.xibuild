@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="sdl2-gfx"
+DESC="SDL2 graphics drawing primitives and other support functions"
+
+MAKEDEPS=" sdl2"
+
+PKG_VER=1.0.4
+SOURCE="http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-$PKG_VER.tar.gz"
+
+build() {
+	./configure --prefix=/usr --disable-mmx
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	mkdir -p "$PKG_DEST/usr/share/doc/sdl2-gfx"
+    for f in Docs/html/*; do 
+        install -Dm644 $f "$PKG_DEST/usr/share/doc/sdl2-gfx"
+    done
+}
+

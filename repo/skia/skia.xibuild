@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="skia"
+DESC="Skia is a complete 2D graphic library for drawing Text, Geometries, and Images."
+
+MAKEDEPS="gn "
+
+SOURCE="https://skia.googlesource.com/skia.git"
+
+prepare () {
+    python tools/git-sync-deps
+    export common_args="
+    skia_use_dng_sdk=false
+    "
+}
+
+build () {
+    # dng sdk fails to build
+    gn gen out/Shared --args="$common_args is_official_build=true is_component_build=true"
+
+    ninja -C out/Shared
+}
+
+package () {
+    for lib in out/Shared/*.so; do 
+        install -Dm644 $lib $PKG_DEST/usr/lib/
+    done
+}

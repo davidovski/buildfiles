@@ -1,0 +1,21 @@
+#!/bin/sh
+
+NAME="libvirt-glib"
+DESC="libvirt glib integration for events"
+
+MAKEDEPS="libvirt gobject-introspection libxml2 vala meson"
+
+PKG_VER=4.0.0
+SOURCE="https://libvirt.org/sources/glib/libvirt-glib-$PKG_VER.tar.xz"
+
+build() {
+	meson --prefix=/usr \
+         . output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+}
+
+
