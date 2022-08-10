@@ -4,7 +4,7 @@ MAKEDEPS="grep make dejagnu flex"
 DEPS="zstd musl binutils mpc mpfr gmp libstdc++ libgcc"
 
 
-PKG_VER=11.2.0
+PKG_VER=12.1.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
 
 ISL_VER=0.24
