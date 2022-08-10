@@ -1,0 +1,19 @@
+#!/bin/sh
+
+NAME="lolcat"
+DESC="High-performance implementation of lolcat"
+
+MAKEDEPS=""
+
+PKG_VER=1.2
+SOURCE="https://github.com/jaseg/lolcat/archive/v$PKG_VER.tar.gz"
+
+build() {
+	make
+}
+
+package() {
+	mkdir -p "$PKG_DEST/usr/bin"
+	make DESTDIR="$PKG_DEST/usr/bin" install
+}
+

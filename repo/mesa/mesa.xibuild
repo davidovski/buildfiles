@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja python-mako libvdpau llvm libxxf86vm libelf lm-sensors expat wayland-protocols"
+MAKEDEPS="meson ninja python-mako libvdpau llvm libxxf86vm libelf lm-sensors expat wayland-protocols llvm"
 DEPS="xorg-libs libdrm"
 
 PKG_VER=21.3.7

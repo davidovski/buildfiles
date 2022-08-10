@@ -1,0 +1,19 @@
+#!/bin/sh
+
+DESC="Open Virtual Machine Firmware (OVMF) BIOS"
+
+build () {
+    echo "skip"
+}
+
+package () {
+	for fw in "$BUILD_ROOT"/Build/*/"$RELEASE"_"$TOOLCHAIN"/FV/*.fd; do
+		install -D $fw "$PKG_DEST"/usr/share/OVMF/${fw##*/}
+	done
+
+	# dont ship memfd for now to save space
+	rm -f "$PKG_DEST"/usr/share/OVMF/MEMFD.fd
+
+	install -d "$PKG_DEST"/usr/share/ovmf
+	ln -sf ../OVMF/OVMF.fd "$PKG_DEST"/usr/share/ovmf/bios.bin
+}

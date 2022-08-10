@@ -1,0 +1,32 @@
+#!/bin/sh
+
+NAME="dino"
+DESC="Modern Jabber/XMPP client"
+
+MAKEDEPS=" cmake glib glib-networking gpgme gspell gst-libav gst-plugins-base gtk3 libgcrypt libgee libhandy1 libnice libqrencode libsignal-protocol-c libsoup libsrtp ninja sqlite vala webrtc-audio-processing"
+
+PKG_VER=0.3.0
+SOURCE="https://github.com/dino/dino/releases/download/v$PKG_VER/dino-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+mobile-ui.patch
+"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var \
+		--with-tests
+	make
+}
+
+check() {
+	build/xmpp-vala-test
+	build/signal-protocol-vala-test
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}

@@ -1,6 +1,8 @@
+#!/bin/sh
+
 DESC="xilinux Text User Interface tools"
 DEPS="sh ncurses stty"
 
 package () {
-    add_from_main usr/lib/xitui
+    add_from_main usr/lib/xitui.sh
 }

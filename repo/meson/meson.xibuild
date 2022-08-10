@@ -4,7 +4,7 @@ MAKEDEPS="python"
 DEPS="python ninja"
 
 PKG_VER=0.59
-SOURCE=https://github.com/mesonbuild/meson
+SOURCE=https://github.com/mesonbuild/meson.git
 BRANCH=$PKG_VER
 
 DESC="High productivity build system"

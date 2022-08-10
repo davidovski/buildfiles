@@ -21,10 +21,10 @@ check() {
 	cd build
 	# ApprovalTests is broken https://github.com/catchorg/Catch2/issues/1780
 	CTEST_OUTPUT_ON_FAILURE=TRUE ctest -E "ApprovalTests"
+    cd ..
 }
 
 package() {
-    cd $BUILD_ROOT
 	DESTDIR="$PKG_DEST" cmake --install build
 }
 

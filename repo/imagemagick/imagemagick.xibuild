@@ -5,9 +5,9 @@ DESC="Collection of tools and libraries for many image formats"
 
 MAKEDEPS="chrpath fontconfig freetype2 ghostscript lcms2 libheif libjpeg-turbo libpng libjxl libtool libwebp libx11 libxext libxml2 perl tiff zlib librsvg"
 
-PKG_VER=7.1.0.30
+PKG_VER=7.1.0-45
 version=${PKG_VER%.*}-${PKG_VER##*.}
-SOURCE="https://download.imagemagick.org/ImageMagick/download/releases/ImageMagick-$version.tar.xz"
+SOURCE="https://imagemagick.org/archive/ImageMagick-$PKG_VER.tar.xz"
 
 build() {
 

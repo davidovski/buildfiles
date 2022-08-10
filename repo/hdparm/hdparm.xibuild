@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="hdparm"
+DESC="Utility for manipulating IDE device parameters"
+
+MAKEDEPS=" linux-headers"
+
+PKG_VER=9.63
+SOURCE="https://downloads.sourceforge.net/sourceforge/hdparm/hdparm-$PKG_VER.tar.gz"
+
+prepare() {
+	apply_patches
+	sed -i '/^LDFLAGS/d' "$BUILD_ROOT"/Makefile
+}
+
+build() {
+	export CFLAGS="$CFLAGS -D_GNU_SOURCE"
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+	install -D -m755 contrib/idectl "$PKG_DEST"/sbin
+	install -D -m755 contrib/ultrabayd "$PKG_DEST"/sbin
+	install -D -m644 LICENSE.TXT "$PKG_DEST"/usr/share/licenses/hdparm/LICENSE.TXT
+}
+

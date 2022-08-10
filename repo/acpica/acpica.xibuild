@@ -1,0 +1,25 @@
+#!/bin/sh
+
+NAME="acpica"
+DESC="ACPI Component Architecture utilities"
+
+MAKEDEPS=" flex bison"
+
+PKG_VER=20210930
+SOURCE="https://acpica.org/sites/acpica/files/acpica-unix-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+disable-werror.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	make
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+}

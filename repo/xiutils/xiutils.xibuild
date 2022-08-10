@@ -3,11 +3,16 @@
 MAKEDEPS="make gcc"
 DEPS="musl sh"
 
-PKG_VER=1.7
+PKG_VER=1.8
 SOURCE=https://git.davidovski.xyz/xilinux/xiutils.git
 BRANCH="v$PKG_VER"
 
 DESC="Utilities required by various components of the xilinux system"
+
+prepare () {
+    mkdir -p dist
+    cp src/lib/colors.h dist/
+}
 
 build () {
     make

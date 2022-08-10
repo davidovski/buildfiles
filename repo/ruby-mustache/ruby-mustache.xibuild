@@ -1,0 +1,46 @@
+#!/bin/sh
+
+NAME="ruby-mustache"
+_gemname=mustache
+DESC="Logic-less Ruby templates"
+
+MAKEDEPS=""
+
+PKG_VER=1.1.1
+SOURCE="ruby-mustache-$PKG_VER.tar.gz::https://github.com/mustache/mustache/archive/v$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-test-race-condition.patch
+skip-simplecov.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	gem build $_gemname.gemspec
+}
+
+check() {
+	rake test
+}
+
+package() {
+	local gemdir="$PKG_DEST/$(ruby -e 'puts Gem.default_dir')"
+	local geminstdir="$gemdir/gems/$_gemname-$PKG_VER"
+
+	gem install --local \
+		--install-dir "$gemdir" \
+		--ignore-dependencies \
+		--no-document \
+		--verbose \
+		$_gemname
+
+	# Remove unnecessary files and rubbish...
+	cd "$gemdir"
+	rm -r cache build_info doc
+	cd "$geminstdir"
+	rm -r test man Rakefile *.md
+}
+

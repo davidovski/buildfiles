@@ -1,0 +1,33 @@
+#!/bin/sh
+
+NAME="spice-vdagent"
+DESC="Spice guest agent for Linux"
+
+MAKEDEPS="spice-protocol alsa-lib dbus glib libdrm libpciaccess libxfixes libxinerama libxrandr"
+
+PKG_VER=0.22.1
+SOURCE="https://spice-space.org/download/releases/spice-vdagent-$PKG_VER.tar.bz2"
+
+ADDITIONAL="
+spice-vdagentd.initd
+"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--localstatedir=/var \
+		--with-session-info=none
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make install DESTDIR="$PKG_DEST"
+	install -Dm0755 "$BUILD_ROOT"/spice-vdagentd.initd "$PKG_DEST"/etc/init.d/spice-vdagentd
+	install -dm 0755 "$PKG_DEST"/etc/modules-load.d/
+	printf 'uinput\n' >"$PKG_DEST"/etc/modules-load.d/spice-vdagent.conf
+}
+

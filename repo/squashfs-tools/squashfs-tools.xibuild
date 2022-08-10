@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="squashfs-tools"
+DESC="Tools for squashfs, a highly compressed read-only filesystem for Linux"
+
+MAKEDEPS="zlib xz lzo lz4 attr zstd"
+
+PKG_VER=4.5.1
+SOURCE="https://github.com/plougher/squashfs-tools/archive/$PKG_VER.tar.gz"
+
+ADDITIONAL="
+fix-compat.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	make -C squashfs-tools XZ_SUPPORT=1 LZO_SUPPORT=1 LZ4_SUPPORT=1 ZSTD_SUPPORT=1
+}
+
+package() {
+	mkdir -p "$PKG_DEST"/sbin
+	cp -a squashfs-tools/*squashfs "$PKG_DEST"/sbin
+}
+

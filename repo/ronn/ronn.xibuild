@@ -1,0 +1,53 @@
+#!/bin/sh
+
+NAME="ronn"
+DESC="Convert Markdown files to manpages"
+
+MAKEDEPS=""
+
+PKG_VER=0.9.1
+_gemname=ronn-ng
+SOURCE="https://github.com/apjanke/$_gemname/archive/v$PKG_VER/$_gemname-$PKG_VER.tar.gz"
+DEPS="ruby ruby-kramdown ruby-mustache ruby-nokogiri"
+
+ADDITIONAL="
+fix-ruby-3.1-compat.patch
+mustache-1.X.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	gem build $_gemname.gemspec
+}
+
+check() {
+	rake test
+}
+
+package() {
+	local gemdir="$PKG_DEST/$(ruby -e 'puts Gem.default_dir')"
+	local geminstdir="$gemdir/gems/$_gemname-$PKG_VER"
+
+	gem install --local \
+		--install-dir "$gemdir" \
+		--bindir "$PKG_DEST/usr/bin" \
+		--ignore-dependencies \
+		--no-document \
+		--verbose \
+		$_gemname
+
+	install -D -m 644 "$geminstdir"/man/ronn.1 \
+		"$PKG_DEST"/usr/share/man/man1/ronn.1
+	install -D -m 644 "$geminstdir"/man/ronn-format.7 \
+		"$PKG_DEST"/usr/share/man/man7/ronn-format.7
+
+	# Remove unnecessary files and rubbish...
+	cd "$gemdir"
+	rm -r cache build_info doc extensions plugins
+	cd "$geminstdir"
+	rm -r test man Rakefile [A-Z][A-Z][A-Z]*
+}
+

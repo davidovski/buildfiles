@@ -1,0 +1,84 @@
+#!/bin/sh
+
+NAME="edk2"
+DESC="EFI Development Kit II"
+
+MAKEDEPS=" bash python iasl nasm util-linux util-linux-misc"
+
+PKG_VER=0.0.202202
+_realver=edk2-stable${PKG_VER##*.}
+_sslver=1.1.1n
+_sfver=3e
+SOURCE="https://github.com/tianocore/edk2/archive/$_realver.tar.gz"
+
+ADDITIONAL="
+https://www.openssl.org/source/openssl-$_sslver.tar.gz
+http://www.jhauser.us/arithmetic/SoftFloat-$_sfver.zip
+0008-BaseTools-do-not-build-BrotliCompress-RH-only.patch
+0009-MdeModulePkg-remove-package-private-Brotli-include-p.patch
+build-hack.patch
+disable-werror.patch
+"
+
+TARGET_ARCH=X64
+PLATFORM=OvmfPkg/OvmfPkgX64.dsc
+
+TOOLCHAIN=GCC5
+RELEASE=RELEASE
+
+
+prepare() {
+	# unix line endings for the files to be patched
+	sed -e 's/\r$//' -i BaseTools/Source/C/VfrCompile/VfrUtilityLib.cpp \
+		BaseTools/Source/C/VolInfo/VolInfo.c
+	rm -rf CryptoPkg/Library/OpensslLib/openssl
+	ln -s "$BUILD_ROOT"/openssl-$_sslver CryptoPkg/Library/OpensslLib/openssl
+	rm -rf ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+	ln -s "$BUILD_ROOT"/SoftFloat-$_sfver \
+		ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
+	apply_patches
+}
+
+build() {
+	export WORKSPACE=$PWD
+	export PACKAGES_PATH=$PWD
+	export EDK_TOOLS_PATH=$PWD/BaseTools/
+	export PATH=$PWD/BaseTools/BinWrappers/PosixLike/:$PATH
+	# parallel build fails
+	unset MAKEFLAGS
+
+	bash -c ". edksetup.sh"
+	make -C BaseTools
+
+	msg "Building Plaform Files"
+	command build -b $RELEASE \
+		-a $TARGET_ARCH  \
+		-t $TOOLCHAIN \
+		-p $PLATFORM \
+		-n ${JOBS:-2}
+}
+
+package() {
+	mkdir -p "$PKG_DEST"/usr/bin \
+		"$PKG_DEST"/usr/share/edk2/Conf \
+		"$PKG_DEST"/usr/share/edk2/Scripts
+
+	install BaseTools/Source/C/bin/* BaseTools/BinWrappers/PosixLike/LzmaF86Compress \
+		"$PKG_DEST"/usr/bin
+	install BaseTools/BuildEnv "$PKG_DEST"/usr/share/edk2/
+	install BaseTools/Conf/*.template "$PKG_DEST"/usr/share/edk2/Conf
+	install BaseTools/Scripts/GccBase.lds "$PKG_DEST"/usr/share/edk2/Scripts
+
+	for i in $(find BaseTools/Source/Python -type d -maxdepth 1); do
+		local mod=${i##*/}
+		test -f "$i/$mod.py" || continue
+		cp -R BaseTools/Source/Python/"$mod" "$PKG_DEST"/usr/share/edk2/Python/
+		cat <<- EOF > "$PKG_DEST"/usr/bin/"$mod".py
+		#!/bin/sh
+		export PYTHONPATH=/usr/share/edk2/Python
+		exec $PYTHON_COMMAND /usr/share/edk2/Python/$mod/$mod.py "\$@"
+		EOF
+		chmod +x "$PKG_DEST"/usr/bin/"$mod".py
+	done
+}
+
