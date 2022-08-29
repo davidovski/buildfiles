@@ -3,7 +3,7 @@
 MAKEDEPS="make shmk"
 DEPS="openssl curl dash findutils diffutils sed xichroot grep base64 sort hbar parseconf xiutils"
 
-PKG_VER=1.7.3
+PKG_VER=1.7.4
 SOURCE=https://git.davidovski.xyz/xilinux/xipkg.git
 BRANCH="v$PKG_VER"
 

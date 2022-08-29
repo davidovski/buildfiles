@@ -1,0 +1,215 @@
+#!/bin/sh
+
+NAME="php8"
+DESC="The PHP8 language runtime engine"
+
+MAKEDEPS="autoconf pcre2 re2c apache2 argon2 aspell bison bzip2 curl enchant2 freetds freetype gdbm gettext gmp icu imap krb5 libedit libical libjpeg-turbo libpng libpq lmdb oniguruma libsodium libwebp libxml2 libxpm libxslt libzip net-snmp openldap sqlite tidyhtml unixodbc zlib"
+
+PKG_VER=8.0.17
+suffix=8
+SOURCE="https://php.net/distributions/php-$PKG_VER.tar.xz"
+
+ADDITIONAL="
+atomic-lsapi.patch
+disabled-tests.list
+fix-tests-devserver.patch
+includedir.patch
+install-pear.patch
+php8-fpm-version-suffix.patch
+php8-fpm.initd
+php8-fpm.logrotate
+php8-module.conf
+sharedir.patch
+xfail-openssl-1.1-test.patch
+"
+
+prepare() {
+	apply_patches
+
+	# https://bugs.php.net/63362 - Not needed but installed headers.
+	# Drop some Windows specific headers to avoid installation,
+	# before build to ensure they are really not needed.
+	rm -f TSRM/tsrm_win32.h \
+		TSRM/tsrm_config.w32.h \
+		Zend/zend_config.w32.h \
+		ext/mysqlnd/config-win.h \
+		ext/standard/winver.h
+
+	# Fix some bogus permissions.
+	find . -name '*.[ch]' -exec chmod 644 {} \;
+
+	# XXX: Delete failing tests.
+	sed -n '/^[^#]/p' "$BUILD_ROOT"/disabled-tests.list | while read -r item; do
+		rm -r $item  # do it in this way to apply globbing...
+	done
+
+	autoconf
+}
+
+# Notes:
+# * gd-jis-conv breaks any non-latin font rendering (vakartel).
+# * libxml cannot be build as shared.
+# * -D_LARGEFILE_SOURCE and -D_FILE_OFFSET_BITS=64 (https://www.php.net/manual/en/intro.filesystem.php andypost)
+# * -O2 optimize for apps usage (andypost)
+_build() {
+	export CFLAGS="$CFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+	export CXXFLAGS="$CXXFLAGS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64"
+
+	local without_pcre_jit
+	[ "$CARCH" = "s390x" ] && without_pcre_jit="--without-pcre-jit"
+
+	EXTENSION_DIR=$_extension_dir ./configure \
+
+
+		--prefix=/usr \
+		--program-suffix=$suffix \
+		--libdir=$_libdir \
+		--datadir=/usr/share/php8 \
+		--sysconfdir=/etc/php8 \
+		--localstatedir=/var \
+		--with-layout=GNU \
+		--with-pic \
+		--with-config-file-path=/etc/php8 \
+		--with-config-file-scan-dir=$_extension_confd \
+		--disable-short-tags \
+		\
+		--enable-bcmath=shared \
+		--with-bz2=shared \
+		--enable-calendar=shared \
+		--enable-ctype=shared \
+		--with-curl=shared \
+		--enable-dba=shared \
+			--with-dbmaker=shared \
+			--with-gdbm \
+			--with-lmdb \
+		--enable-dom=shared \
+		--with-enchant=shared \
+		--enable-exif=shared \
+		--with-ffi=shared \
+		--enable-fileinfo=shared \
+		--enable-ftp=shared \
+		--enable-gd=shared \
+			--with-freetype \
+			--with-jpeg \
+			--with-webp \
+			--with-xpm \
+			--disable-gd-jis-conv \
+		--with-gettext=shared \
+		--with-gmp=shared \
+		--with-iconv=shared \
+		--with-imap=shared \
+			--with-imap-ssl \
+		--enable-intl=shared \
+		--with-ldap=shared \
+			--with-ldap-sasl \
+		--with-libedit \
+		--with-libxml \
+		--enable-mbstring=shared \
+		--with-mysqli=shared,mysqlnd \
+			--with-mysql-sock=/run/mysqld/mysqld.sock \
+		--enable-mysqlnd=shared \
+		--enable-opcache=shared \
+		--with-openssl=shared  \
+			--with-kerberos \
+			--with-system-ciphers \
+		--with-password-argon2 \
+		--enable-pcntl=shared \
+		--with-external-pcre \
+			$without_pcre_jit \
+		--enable-pdo=shared \
+			--with-pdo-dblib=shared,/usr \
+			--with-pdo-mysql=shared,mysqlnd \
+			--with-pdo-odbc=shared,unixODBC,/usr \
+			--with-pdo-pgsql=shared \
+			--with-pdo-sqlite=shared \
+		--with-pgsql=shared \
+		--enable-phar=shared \
+		--enable-posix=shared \
+		--with-pspell=shared \
+		--without-readline \
+		--enable-session=shared \
+		--enable-shmop=shared \
+		--enable-simplexml=shared \
+		--with-snmp=shared \
+		--enable-soap=shared \
+		--with-sodium=shared \
+		--enable-sockets=shared \
+		--with-sqlite3=shared \
+		--enable-sysvmsg=shared \
+		--enable-sysvsem=shared \
+		--enable-sysvshm=shared \
+		--with-tidy=shared \
+		--enable-tokenizer=shared \
+		--with-unixODBC=shared,/usr \
+		--enable-xml=shared \
+		--enable-xmlreader=shared \
+		--enable-xmlwriter=shared \
+		--with-xsl=shared \
+		--with-zip=shared \
+		--with-zlib \
+		"$@"
+	make
+}
+
+build() {
+	# build phpcgi and apache2 SAPIs first
+	# because not fixed https://bugs.php.net/bug.php?id=52419
+	# apache2 module
+	_build --disable-phpdbg \
+		--disable-cli \
+		--with-apxs2
+	mv libs/libphp.so sapi/apache2handler/mod_php$suffix.so
+
+	_build --enable-phpdbg \
+		--with-pear=/usr/share/php8 \
+		--enable-fpm \
+        --enable-litespeed \
+		--enable-embed
+}
+
+check() {
+	# PHP is so stupid that it's not able to resolve dependencies
+	# between extensions and load them in correct order, so we must
+	# help it...
+	# opcache is Zend extension, it's handled specially in Makefile
+	local php_modules=$(_extensions_by_load_order \
+		| grep -vx opcache \
+		| xargs -n 1 printf "'$BUILD_ROOT/modules/%s.la' ")
+	sed -i "/^PHP_TEST_SHARED_EXTENSIONS/,/extension=/ \
+		s|in \$(PHP_MODULES)\"*|in $php_modules|" Makefile
+
+	# XXX: Few tests fail on the named platforms.
+	# Ignore it for now and continue build even on test failures.
+	local allow_fail='no'
+	case "$CARCH" in
+		x86 | s390x ) allow_fail='yes'
+	esac
+
+	TESTS="${TESTS:- --show-diff}" NO_INTERACTION=1 REPORT_EXIT_STATUS=1 \
+		SKIP_SLOW_TESTS=1 SKIP_ONLINE_TESTS=1 TEST_TIMEOUT=10 \
+		TZ='' LANG='' LC_ALL='' \
+		TRAVIS=true SKIP_IO_CAPTURE_TESTS=1 \
+		make test || [ "$allow_fail" = yes ]
+
+	echo 'NOTE: We have skipped quite a lot tests, see disabled-tests.list.'
+}
+
+package() {
+	make -j1 INSTALL_ROOT="$PKG_DEST" install
+
+	install -Dm644 php.ini-production "$PKG_DEST"/etc/php8/php.ini
+
+	local file; for file in pear peardev pecl; do
+		sed -i -e "s|/usr/bin/php|/usr/bin/php$suffix|g" \
+			-e "s|PHP=php|PHP=php$suffix|" \
+			"$PKG_DEST"/usr/bin/$file
+	done
+
+	find "$PKG_DEST" -name '.*' -print0 | xargs -0 rm -rf
+	rmdir "$PKG_DEST"/var/run
+
+	if [ "$_default_php" = yes ]; then
+		ln -s php$suffix "$PKG_DEST"/usr/bin/php
+	fi
+}
+

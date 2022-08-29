@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="audacity"
+DESC="Multitrack audio editor"
+
+MAKEDEPS="make bash	alsa-lib bash expat	flac jack lame libid3tag libmad	libogg	libsndfile libvorbis soundtouch soxr taglib wxgtk3 ffmpeg automake autoconf libtool"
+DEPS=""
+
+PKG_VER=2.3.2
+SOURCE="https://github.com/audacity/audacity/archive/Audacity-$PKG_VER.tar.gz"
+
+prepare () {
+    autoreconf -fi
+}
+
+build () {
+	WX_CONFIG=wx-config-gtk3 \
+	bash configure \
+		--prefix="/usr" \
+		--with-libsndfile="system" \
+		--with-ffmpeg="system" \
+		--with-expat="system" \
+		--with-lame="system" \
+		--with-libsoxr="system" \
+		--with-portaudio \
+		--with-portmidi \
+		--with-libflac \
+		--with-libid3tag \
+		--with-libsamplerate \
+		--with-sbsms \
+		--with-soundtouch \
+		--with-libtwolame \
+		--with-libvorbis \
+		--without-lv2 \
+        --enable-sse
+	make
+
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

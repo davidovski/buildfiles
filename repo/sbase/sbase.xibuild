@@ -3,10 +3,10 @@
 MAKEDEPS="make "
 DEPS="musl acl attr gmp ubase"
 
-SOURCE=https://git.suckless.org/sbase
+SOURCE=git://git.suckless.org/sbase
 ADDITIONAL="
-    https://gitea.linfan.moe/mirror/ataraxia/raw/commit/74914d05c701919fe6aa0d63e131df8c4df420fe/stuff/sbase/realpath.1
-    https://gitea.linfan.moe/mirror/ataraxia/raw/commit/74914d05c701919fe6aa0d63e131df8c4df420fe/stuff/sbase/realpath.c
+    realpath.1
+    realpath.c
 "
 
 DESC="sbase from suckless.org"
@@ -17,7 +17,6 @@ prepare () {
     sed -i "39i case 'o':" uname.c
     sed -i "40i sflag = 1;" uname.c
     sed -i "41i break;" uname.c
-
     sed -i '182i realpath\\' Makefile
 }
 

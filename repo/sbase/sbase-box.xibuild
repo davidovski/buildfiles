@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DESC="sbase coreutils statically linked into one executable"
+
+build () {
+    make CFLAGS="$CFLAGS -static" sbase-box
+}
+
+package () {
+    make DESTDIR="$PKG_DEST" sbase-box-install
+}

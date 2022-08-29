@@ -1,0 +1,36 @@
+#!/bin/sh
+
+NAME="openrgb"
+DESC="Open source RGB lighting control that doesn't depend on manufacturer software"
+
+MAKEDEPS="hidapi libusb mbedtls qt5-qtbase"
+
+PKG_VER=0.7
+SOURCE="https://gitlab.com/CalcProgrammer1/OpenRGB/-/archive/release_$PKG_VER/OpenRGB-release_$PKG_VER.tar.gz"
+
+ADDITIONAL="
+0001-fix-build.patch
+modules-load.conf
+openrgb.post-install
+"
+
+prepare () {
+#    apply_patches
+true
+}
+
+build() {
+	qmake-qt5 PREFIX=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	INSTALL_ROOT="$PKG_DEST" make install
+
+	install -Dm644 "$BUILD_ROOT"/modules-load.conf "$PKG_DEST"/usr/lib/modules-load.d/openrgb.conf
+}
+

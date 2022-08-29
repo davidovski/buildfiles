@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
+MAKEDEPS="make m4"
 DEPS="sh tar musl"
 
 PKG_VER=2.4.6

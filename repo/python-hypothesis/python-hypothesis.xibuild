@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-attrs python-sortedcontainers python-exceptiongroup python-black python-click python-django python-dpcontracts python-lark-python-parser python-libcst python-numpy python-pandas python-pytest python-python-python-dateutil python-pytz python-redis python-rich python-importlib-python-metadata python-backports.python-zoneinfo python-tzdata python-click python-black python-rich python-libcst python-python-python-dateutil python-django python-dpcontracts python-black python-lark-python-parser python-numpy python-pandas python-pytest python-pytz python-redis python-backports.python-zoneinfo python-tzdata"
+DEPS="python-sortedcontainers python-exceptiongroup python-black python-click python-django python-dpcontracts python-lark-python-parser python-libcst python-numpy python-pandas python-pytest python-python-python-dateutil python-pytz python-redis python-rich python-importlib-python-metadata python-backports.python-zoneinfo python-tzdata python-click python-black python-rich python-libcst python-python-python-dateutil python-django python-dpcontracts python-black python-lark-python-parser python-numpy python-pandas python-pytest python-pytz python-redis python-backports.python-zoneinfo python-tzdata"
 
 PKG_VER=6.47.4
 SOURCE=https://files.pythonhosted.org/packages/source/h/hypothesis/hypothesis-$PKG_VER.tar.gz

@@ -3,7 +3,7 @@
 MAKEDEPS="make sed"
 DEPS="gdbm musl bzip2 zlib tar"
 
-PKG_VER=5.34.0
+PKG_VER=5.36.0
 SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
 DESC="The Practical Extraction and Report Language"
 ADDITIONAL="

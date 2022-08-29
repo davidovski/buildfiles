@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="snes9x"
+DESC="Super NES Emulator"
+
+MAKEDEPS="meson glib sdl2 gtk3 libxrandr libepoxy wayland libxv portaudio alsa-lib libpng minizip zlib"
+
+PKG_VER=1.60
+SOURCE="https://github.com/snes9xgit/snes9x/archive/$PKG_VER.tar.gz"
+
+prepare () {
+    cd gtk
+}
+
+build() {
+	meson --prefix=/usr \
+		-Dopengl=true \
+		-Dgtk3=true \
+		-Dpulseaudio=false \
+	. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
+	ln -s snes9x-gtk "$PKG_DEST"/usr/bin/snes9x
+}
+

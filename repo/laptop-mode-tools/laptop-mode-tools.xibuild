@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="laptop-mode-tools"
+DESC="Power Savings tool for Linux"
+
+MAKEDEPS="make sh"
+DEPS=""
+
+PKG_VER=1.74
+SOURCE="https://github.com/rickysarraf/laptop-mode-tools/releases/download/$PKG_VER/laptop-mode-tools_$PKG_VER.tar.gz"
+
+ADDITIONAL="laptop-mode.initd"
+
+package () {
+    DESTDIR="${PKG_DEST}" \
+		INIT_D="none" \
+		MAN_D="/usr/share/man" \
+		PMU="disabled" \
+		sh ./install.sh
+
+    install -Dm755 laptop-mode.initd /etc/init.d/laptop-mode
+}
