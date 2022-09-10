@@ -1,0 +1,27 @@
+#!/bin/sh
+
+NAME="cmatrix"
+DESC="Terminal based 'The Matrix' like implementation"
+
+MAKEDEPS=" ncurses kbd autoconf automake"
+
+PKG_VER=2.0
+SOURCE="https://github.com/abishekvashok/cmatrix/archive/v$PKG_VER.tar.gz"
+
+prepare() {
+	autoreconf -i
+}
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

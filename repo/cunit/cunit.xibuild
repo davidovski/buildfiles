@@ -5,8 +5,9 @@ DESC="Automated testing framework for C"
 
 MAKEDEPS=" automake autoconf libtool bash"
 
-PKG_VER=2.1-3
-SOURCE="https://downloads.sourceforge.net/project/cunit/CUnit/$PKG_VER/CUnit-$PKG_VER.tar.bz2"
+PKG_VER=2.1.3
+version=${PKG_VER%.*}-${PKG_VER##*.}
+SOURCE="https://downloads.sourceforge.net/project/cunit/CUnit/$version/CUnit-$version.tar.bz2"
 
 ADDITIONAL="
 path-makefile.patch

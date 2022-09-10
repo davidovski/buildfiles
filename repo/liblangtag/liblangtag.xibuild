@@ -5,8 +5,7 @@ DESC="Interface library to access/deal with tags for identifying languages"
 
 MAKEDEPS="glib gobject-introspection libtool libxml2 gtk-doc"
 
-PKG_VER=0.6.3
-SOURCE="https://bitbucket.org/tagoh/liblangtag/downloads/liblangtag-$PKG_VER.tar.bz2"
+SOURCE="git://bitbucket.org/tagoh/liblangtag.git"
 
 build() {
 	./configure --prefix=/usr

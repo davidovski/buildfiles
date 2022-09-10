@@ -4,7 +4,7 @@ MAKEDEPS="make "
 DEPS="docbook-xml"
 
 PKG_VER=2.0.7
-SOURCE=http://files.itstool.org/itstool/itstool-2.0.7.tar.bz2
+SOURCE=http://files.itstool.org/itstool/itstool-$PKG_VER.tar.bz2
 DESC="Extract messages from XML files and output PO template files"
 
 build () {

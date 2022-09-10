@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="ext-dump"
+DESC="ext2 dump and restore utilities"
+
+MAKEDEPS="make "
+DEPS="musl "
+
+PKG_VER=0.4b47
+SOURCE="https://sourceforge.net/projects/dump/files/dump/$PKG_VER/dump-$PKG_VER.tar.gz/download"
+
+build () {
+    ./configure \
+        --prefix=/usr \
+        --bindir=/usr/bin \
+        --sysconfdir=/etc \
+        --disable-static
+    make
+}
+
+package () {
+    make DESTDIR=$PKG_DEST install
+}

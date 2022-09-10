@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="minicom"
+DESC="menu driven communications program for terminals"
+
+MAKEDEPS="ncurses gettext linux-headers"
+
+PKG_VER=2.8
+SOURCE="https://salsa.debian.org/minicom-team/minicom/-/archive/$PKG_VER/minicom-$PKG_VER.tar.gz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--infodir=/usr/share/info
+	make
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

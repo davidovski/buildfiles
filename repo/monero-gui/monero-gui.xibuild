@@ -7,7 +7,7 @@ MAKEDEPS="cmake monero git qt5-qtquickcontrols qt5-qtdeclarative qt5-qtbase qt5-
 DEPS="musl qt5-qtquickcontrols qt5-qtxmlpatterns "
 
 PKG_VER=musl
-SOURCE="https://github.com/monero-project/monero-gui"
+SOURCE="https://github.com/monero-project/monero-gui.git"
 ADDITIONAL="
 easylogging.patch
 monero-gui.desktop

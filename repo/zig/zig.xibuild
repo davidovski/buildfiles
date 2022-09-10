@@ -1,0 +1,52 @@
+#!/bin/sh
+
+NAME="zig"
+DESC="general-purpose programming language designed for robustness, optimality, and maintainability"
+
+MAKEDEPS=" cmake clang llvm lld libstdc++ zlib libxml2"
+
+PKG_VER=0.9.1
+SOURCE="https://github.com/ziglang/zig/archive/$PKG_VER.tar.gz"
+
+ADDITIONAL="
+llvm-include.patch
+"
+
+prepare () {
+    apply_patches
+}
+
+build() {
+	mkdir -p build
+	cd build
+	cmake \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
+		-DCMAKE_C_FLAGS="$CFLAGS" \
+		-DZIG_VERSION="$PKG_VER" \
+		..
+	make
+}
+
+#check() {
+#	./zig build test \
+#		-Dskip-release \
+#		-Dskip-release-small \
+#		-Dskip-release-fast \
+#		-Dskip-non-native \
+#		-Dskip-libc
+#}
+
+package() {
+    cd ..
+	make -C build DESTDIR="$PKG_DEST" install
+
+	# Documentation is generated as part of `./zig build test` in check().
+	# If this is no longer the case at some point it can be
+	# generated explicitly using `./zig build docs`.
+	### it is not built now ###
+	#install -Dm644 zig-cache/langref.html \
+	#	"$PKG_DEST"/usr/share/doc/zig/langref.html
+}
+
