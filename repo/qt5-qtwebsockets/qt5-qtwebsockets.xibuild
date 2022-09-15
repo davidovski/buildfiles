@@ -5,7 +5,7 @@ DESC="Provides WebSocket communication compliant with RFC 6455"
 
 MAKEDEPS=" qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201221
+PKG_VER=
 _commit="e7883bc64440b1ff4666272ac6eb710ee4bc221b"
 SOURCE="https://invent.kde.org/qt/qt/qtwebsockets/-/archive/$_commit/qtwebsockets-$_commit.tar.gz"
 

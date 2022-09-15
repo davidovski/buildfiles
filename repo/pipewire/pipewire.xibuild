@@ -5,7 +5,7 @@ DEPS="ffmpeg libva pulseaudio sdl2 v4l-utils"
 
 DESC="Low-latency audio/video router and processor"
 
-PKG_VER=0.3.47
+PKG_VER=0.3.58
 SOURCE=https://github.com/PipeWire/pipewire/archive/$PKG_VER/pipewire-$PKG_VER.tar.gz
 
 build () {

@@ -5,7 +5,7 @@ DESC="Super NES Emulator"
 
 MAKEDEPS="meson glib sdl2 gtk3 libxrandr libepoxy wayland libxv portaudio alsa-lib libpng minizip zlib"
 
-PKG_VER=1.60
+PKG_VER=1.61
 SOURCE="https://github.com/snes9xgit/snes9x/archive/$PKG_VER.tar.gz"
 
 prepare () {

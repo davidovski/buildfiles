@@ -5,7 +5,7 @@ DESC="Thunderbird email client"
 
 MAKEDEPS=" alsa-lib automake botan cargo cbindgen clang dbus-glib gettext gtk3 icu json-c libevent libffi libjpeg-turbo libnotify libogg libtheora libtool libvorbis libvpx libwebp libxcomposite libxt llvm m4 mesa nasm nodejs nspr nss pipewire pulseaudio python sed wireless-tools zip"
 
-PKG_VER=91.8.0
+PKG_VER=91.13.0
 SOURCE="https://ftp.mozilla.org/pub/thunderbird/releases/$PKG_VER/source/thunderbird-$PKG_VER.source.tar.xz"
 
 ADDITIONAL="

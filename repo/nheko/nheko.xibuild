@@ -6,7 +6,7 @@ DESC="Qt5-based client for Matrix protocol"
 MAKEDEPS=" asciidoctor cmake ninja boost lmdb lmdbxx tweeny qt5-qtbase qt5-qttools qt5-qtmultimedia qt5-qtsvg qt5-qtdeclarative qt5-qtquickcontrols2 qt5-qtkeychain zlib openssl olm nlohmann-json cmark spdlog mtxclient gst-plugins-base gst-plugins-bad xcb-util-wm gstreamer libevent fmt coeurl"
 DEPS="qt5-qtgraphicaleffects qt5-qtbase qt5-qtmultimedia qt5-qtkeychain qt5-qtsvg"
 
-PKG_VER=0.9.3
+PKG_VER=0.10.1
 SOURCE="https://github.com/Nheko-Reborn/nheko/archive/v$PKG_VER.tar.gz"
 
 ADDITIONAL="remove-fatal-secrets-error.patch"

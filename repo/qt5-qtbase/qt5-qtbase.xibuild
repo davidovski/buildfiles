@@ -5,7 +5,7 @@ DESC="Qt5 - QtBase components"
 
 MAKEDEPS="dbus fontconfig freetype2 glib libice libpng libsm libx11 libxext mesa openssl perl sqlite3 zlib at-spi2-atk bison cups eudev flex gawk gperf gtk2 hicolor-icon-theme icu libinput libjpeg-turbo libxi libxkbcommon libxrandr libxrender libxslt libxv mtdev pcre2 xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm"
 
-PKG_VER=5.15.3_git20220217
+PKG_VER=
 _commit="f36c2233fad0bfddf9350305a6bdc6de022d3635"
 SOURCE="https://invent.kde.org/qt/qt/qtbase/-/archive/$_commit/qtbase-$_commit.tar.gz"
 

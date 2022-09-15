@@ -3,7 +3,7 @@
 MAKEDEPS="meson ninja docbook-xml docbook-xsl python-docutils libxslt"
 DEPS="libpciaccess"
 
-PKG_VER=2.4.109
+PKG_VER=2.4.113
 SOURCE=https://dri.freedesktop.org/libdrm/libdrm-$PKG_VER.tar.xz
 
 DESC="Userspace interface to kernel DRM services"

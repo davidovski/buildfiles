@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="musl eudev"
 
-PKG_VER=1.0.25
+PKG_VER=1.0.26
 SOURCE=https://github.com/libusb/libusb/releases/download/v$PKG_VER/libusb-$PKG_VER.tar.bz2
 DESC="Library that provides generic access to USB devices"
 

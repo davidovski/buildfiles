@@ -6,7 +6,7 @@ DESC="Provides support for the Tag Image File Format or TIFF"
 MAKEDEPS=""
 DEPS="musl xz zlib zstd "
 
-PKG_VER=4.3.0
+PKG_VER=4.4.0
 SOURCE="https://gitlab.com/libtiff/libtiff/-/archive/v$PKG_VER/libtiff-v$PKG_VER.tar.gz"
 ADDITIONAL="CVE-2018-12900.patch "
 

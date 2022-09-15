@@ -5,7 +5,7 @@ DESC="Parse and evaluate XPath statements."
 
 MAKEDEPS="perl-path-tiny"
 
-PKG_VER=1.44
+PKG_VER=1.48
 SOURCE="https://cpan.metacpan.org/authors/id/M/MA/MANWAR/XML-XPath-$PKG_VER.tar.gz"
 
 build() {

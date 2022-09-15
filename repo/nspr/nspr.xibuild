@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=4.34
+PKG_VER=4.35
 
 SOURCE=https://archive.mozilla.org/pub/nspr/releases/v$PKG_VER/src/nspr-$PKG_VER.tar.gz
 DESC="Netscape Portable Runtime"

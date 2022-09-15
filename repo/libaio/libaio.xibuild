@@ -6,7 +6,7 @@ DESC="Asynchronous input/output library"
 MAKEDEPS="make "
 DEPS="musl "
 
-PKG_VER=0.3.112
+PKG_VER=0.3.113
 SOURCE="https://releases.pagure.org/libaio/libaio-$PKG_VER.tar.gz"
 ADDITIONAL="test.patch test-poll.patch libaio-optional-werror.patch libaio-errno.patch libaio-cppflags.patch gnudesignator.patch"
 

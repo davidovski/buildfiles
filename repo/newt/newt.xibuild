@@ -4,7 +4,7 @@ MAKEDEPS="make tcl python"
 DEPS="gmp libxcrypt popt slang python tcl"
 
 PKG_VER=0.52.21
-SOURCE=https://releases.pagure.org/newt/newt-0.52.21.tar.gz
+SOURCE=https://releases.pagure.org/newt/newt-$PKG_VER.tar.gz
 DESC="Not Erik's Windowing Toolkit - text mode windowing with slang"
 
 build () {
@@ -15,7 +15,7 @@ build () {
 
     ./configure --prefix=/usr           \
                 --with-gpm-support      \
-                --with-python=python3.10 &&
+                --with-python=python3 &&
     make
 }
 

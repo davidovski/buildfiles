@@ -5,7 +5,7 @@ DESC="GTK+ widget for SPICE clients"
 
 MAKEDEPS=" meson gstreamer gst-plugins-base spice-protocol json-glib gtk3 usbredir libusb asciidoc lz4 opus glib libsasl gobject-introspection vala libjpeg-turbo cairo zlib pixman openssl libx11 libepoxy libva python-six python-parsing perl acl polkit"
 
-PKG_VER=0.40
+PKG_VER=0.41
 SOURCE="https://www.spice-space.org/download/gtk/spice-gtk-$PKG_VER.tar.xz"
 
 ADDITIONAL="

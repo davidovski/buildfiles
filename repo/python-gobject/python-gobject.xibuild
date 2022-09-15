@@ -3,7 +3,7 @@
 MAKEDEPS="python python libffi"
 DEPS="python libffi cairo glib gobject-introspection musl"
 
-PKG_VER=3.42.0
+PKG_VER=3.42.2
 SOURCE=https://download.gnome.org/sources/pygobject/${PKG_VER%.*}/pygobject-$PKG_VER.tar.xz
 DESC="Python bindings for the GObject library"
 

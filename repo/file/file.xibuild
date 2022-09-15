@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl zlib xz bzip2"
 
-PKG_VER=5.40
+PKG_VER=5.43
 SOURCE=http://ftp.astron.com/pub/file/file-$PKG_VER.tar.gz
 DESC="A utility for determining the type of a given file or files"
 

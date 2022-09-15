@@ -5,7 +5,7 @@ DESC="Implementation of the olm and megolm cryptographic ratchets"
 
 MAKEDEPS="cmake python python-cffi"
 
-PKG_VER=3.2.10
+PKG_VER=3.2.12
 SOURCE="https://gitlab.matrix.org/matrix-org/olm/-/archive/$PKG_VER/olm-$PKG_VER.tar.gz"
 
 build() {

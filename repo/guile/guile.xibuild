@@ -4,7 +4,7 @@ MAKEDEPS="make "
 DEPS="gmp libtool ncurses texinfo libunistring gc libffi"
 
 
-PKG_VER=2.2.7
+PKG_VER=3.0.8
 SOURCE=https://ftp.gnu.org/gnu/guile/guile-$PKG_VER.tar.gz
 DESC="Portable, embeddable Scheme implementation written in C"
 

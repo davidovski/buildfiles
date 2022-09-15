@@ -8,7 +8,7 @@ DEPS="libxml2
 musl
 xkeyboardconfig"
 
-PKG_VER=1.4.0
+PKG_VER=1.4.1
 SOURCE="https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-$PKG_VER.tar.gz"
 
 build () {

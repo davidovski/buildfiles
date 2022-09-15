@@ -5,7 +5,7 @@ DESC="Qt5 - module with set of QtQuick controls"
 
 MAKEDEPS="qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201110
+PKG_VER=
 _commit="cf3f6d7fec824cdf01f9b329ab3b92b1c0e0a420"
 SOURCE="https://invent.kde.org/qt/qt/qtquickcontrols/-/archive/$_commit/qtquickcontrols-$_commit.tar.gz"
 

@@ -3,7 +3,7 @@
 MAKEDEPS="make perl libcap-ng"
 DEPS="musl sbase eudev"
 
-PKG_VER=1.9.4
+PKG_VER=1.9.9
 SOURCE=https://pcsclite.apdu.fr/files/pcsc-lite-$PKG_VER.tar.bz2
 DESC="Middleware to access a smart card using SCard API (PC/SC)"
 

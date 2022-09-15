@@ -5,7 +5,7 @@ DESC="library for audio time-stretching and pitch-shifting"
 
 MAKEDEPS="fftw ladspa libsamplerate libsndfile lv2 meson vamp-sdk"
 
-PKG_VER=2.0.2
+PKG_VER=3.0.0
 SOURCE="https://breakfastquay.com/files/releases/rubberband-$PKG_VER.tar.bz2"
 
 build() {

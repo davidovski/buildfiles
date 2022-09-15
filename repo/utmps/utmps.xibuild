@@ -3,7 +3,7 @@
 MAKEDEPS=""
 DEPS="skalibs"
 
-PKG_VER=0.1.1.0
+PKG_VER=0.1.2.0
 SOURCE=https://skarnet.org/software/utmps/utmps-$PKG_VER.tar.gz
 
 ADDITIONAL="

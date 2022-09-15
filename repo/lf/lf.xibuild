@@ -5,7 +5,7 @@ DESC="Terminal filemanager written in Go with vim-style keybindings"
 
 MAKEDEPS="go"
 
-PKG_VER=26
+PKG_VER=27
 SOURCE="https://github.com/gokcehan/lf/archive/r$PKG_VER.tar.gz"
 
 build() {

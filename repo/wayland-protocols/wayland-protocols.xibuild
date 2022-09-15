@@ -3,7 +3,7 @@
 MAKEDEPS="meson ninja"
 DEPS="wayland"
 
-PKG_VER=1.25
+PKG_VER=1.26
 SOURCE=https://wayland.freedesktop.org/releases/wayland-protocols-$PKG_VER.tar.xz
 
 DESC="Specifications of extended Wayland protocols"

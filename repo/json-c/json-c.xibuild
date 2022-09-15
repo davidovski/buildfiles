@@ -6,7 +6,7 @@ DESC="A JSON implementation in C"
 MAKEDEPS="cmake "
 DEPS="musl "
 
-PKG_VER=0.15
+PKG_VER=0.16
 SOURCE="https://s3.amazonaws.com/json-c_releases/releases/json-c-$PKG_VER.tar.gz"
 
 build () {

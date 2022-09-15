@@ -5,7 +5,7 @@ DESC="Client library for accessing NFS shares"
 
 MAKEDEPS="autoconf automake m4 libtool"
 
-PKG_VER=5.0.1
+PKG_VER=5.0.2
 SOURCE="https://github.com/sahlberg/libnfs/archive/libnfs-$PKG_VER.tar.gz"
 
 ADDITIONAL="

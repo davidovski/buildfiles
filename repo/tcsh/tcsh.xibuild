@@ -5,8 +5,8 @@ DESC="extended C-shell"
 
 MAKEDEPS="ncurses"
 
-PKG_VER=6.24.00
-SOURCE="https://github.com/tcsh-org/tcsh/archive/TCSH6_21_00.tar.gz"
+PKG_VER=6.24.01
+SOURCE="https://github.com/tcsh-org/tcsh/archive/TCSH$(echo $PKG_VER | sed 's/\./_/g').tar.gz"
 
 ADDITIONAL="
 001-sysmalloc.patch

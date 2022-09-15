@@ -5,7 +5,7 @@ DESC="PEP 517 build backend implementation for Poetry"
 
 MAKEDEPS="python-pep517 python-build python-installer "
 
-PKG_VER=1.0.8
+PKG_VER=1.1.0
 SOURCE="https://github.com/python-poetry/poetry-core/archive/$PKG_VER.tar.gz"
 
 build() {

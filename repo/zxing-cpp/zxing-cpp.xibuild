@@ -5,7 +5,7 @@ DESC="C++ port of ZXing"
 
 MAKEDEPS="cmake"
 
-PKG_VER=1.2.0
+PKG_VER=1.4.0
 SOURCE="https://github.com/nu-book/zxing-cpp/archive/v$PKG_VER/zxing-cpp-v$PKG_VER.tar.gz"
 
 build() {

@@ -5,7 +5,7 @@ DESC="GStreamer streaming media framework bad plug-ins"
 
 MAKEDEPS="alsa-lib aom bluez bzip2 curl faac faad2 flite glib glu gst-plugins-base gstreamer libass libdc1394 libmms libgudev libmodplug libsrtp libvdpau libwebp libnice libx11 mesa meson neon openssl opus orc-compiler orc spandsp tiff x265 wayland wayland-protocols gobject-introspection libusrsctp lcms2 pango chromaprint fdk-aac fluidsynth libde265 openal-soft openexr openjpeg libdvdnav libdvdread sbc libsndfile soundtouch libxkbcommon gtk3 rtmpdump vo-aacenc vo-amrwbenc librsvg libexif"
 
-PKG_VER=1.20.1
+PKG_VER=1.20.3
 SOURCE="https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-$PKG_VER.tar.xz"
 
 build() {

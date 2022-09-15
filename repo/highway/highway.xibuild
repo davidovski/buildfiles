@@ -5,7 +5,7 @@ DESC="Performance-portable, length-agnostic SIMD with runtime dispatch"
 
 MAKEDEPS=""
 
-PKG_VER=0.16.0
+PKG_VER=1.0.1
 SOURCE="https://github.com/google/highway/archive/$PKG_VER/highway-$PKG_VER.tar.gz"
 
 build() {

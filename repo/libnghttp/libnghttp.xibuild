@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=1.46.0
+PKG_VER=1.49.0
 
 SOURCE=https://github.com/nghttp2/nghttp2/releases/download/v$PKG_VER/nghttp2-$PKG_VER.tar.xz
 DESC="Framing layer of HTTP implemented as a C library"

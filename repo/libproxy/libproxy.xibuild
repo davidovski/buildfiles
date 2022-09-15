@@ -6,7 +6,7 @@ DESC="Library handling all the details of proxy configuration"
 MAKEDEPS="cmake "
 DEPS="musl libgcc libstdc++"
 
-PKG_VER=0.4.17
+PKG_VER=0.4.18
 SOURCE="https://github.com/libproxy/libproxy/archive/$PKG_VER.tar.gz"
 
 build () {

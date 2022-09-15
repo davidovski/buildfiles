@@ -5,7 +5,7 @@ DESC="GLib ICE implementation"
 
 MAKEDEPS="glib gnutls gstreamer gobject-introspection gtk2 meson"
 
-PKG_VER=0.1.18
+PKG_VER=0.1.19
 SOURCE="https://nice.freedesktop.org/releases/libnice-$PKG_VER.tar.gz"
 
 ADDITIONAL="

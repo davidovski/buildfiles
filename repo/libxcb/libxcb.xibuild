@@ -3,7 +3,7 @@
 MAKEDEPS="make doxygen libxslt"
 DEPS="libxau xcb-proto libxdmcp "
 
-PKG_VER=1.14
+PKG_VER=1.15
 SOURCE=https://xorg.freedesktop.org/archive/individual/lib/libxcb-$PKG_VER.tar.xz
 DESC="X11 client-side library"
 

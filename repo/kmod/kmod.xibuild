@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl zlib openssl xz zstd"
 
-PKG_VER=29
+PKG_VER=30
 SOURCE=https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-$PKG_VER.tar.xz
 DESC="Libraries and utilities for managing kernel modules"
 

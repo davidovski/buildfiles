@@ -5,7 +5,7 @@ DESC="Userspace interface for the Linux kernel containment features"
 
 MAKEDEPS="libcap libseccomp pam linux-headers musl-legacy-compat docbook2x automake autoconf libtool perl-xml-namespacesupport"
 
-PKG_VER=4.0.12
+PKG_VER=5.0.1
 SOURCE="https://linuxcontainers.org/downloads/lxc/lxc-$PKG_VER.tar.gz"
 
 ADDITIONAL="

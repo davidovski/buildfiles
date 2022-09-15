@@ -6,7 +6,7 @@ DESC="C++ wrapper for the GLib toolkit"
 MAKEDEPS="meson ninja "
 DEPS="glib libgcc libsigc++ musl"
 
-PKG_VER=2.66.2
+PKG_VER=2.66.4
 SOURCE="https://download.gnome.org/sources/glibmm/${PKG_VER%.*}/glibmm-$PKG_VER.tar.xz"
 
 build () {

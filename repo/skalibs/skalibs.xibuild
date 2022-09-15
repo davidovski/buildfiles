@@ -3,7 +3,7 @@
 MAKEDEPS=""
 DEPS="musl"
 
-PKG_VER=2.11.1.0
+PKG_VER=2.12.0.1
 SOURCE=https://skarnet.org/software/skalibs/skalibs-$PKG_VER.tar.gz
 
 DESC="General purpose libraries for skarnet.org software"

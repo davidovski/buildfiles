@@ -5,7 +5,7 @@ DESC="A multi-platform MPEG, VCD/DVD, and DivX player"
 
 MAKEDEPS="a52dec alsa-lib automake autoconf avahi bison libtool dav1d dbus faad2 ffmpeg4 flac flex freetype2 gtk3 libbluray libavc1394 libcddb libdc1394 libdvbpsi libdvdnav libdvdread libgcrypt libice libmad libmatroska libmpeg2 libnotify libogg libraw1394 librsvg libshout libsm libsrt libtheora libva libvdpau libvorbis libvpx libx11 libxext libxinerama libxml2 libxpm libxv live-media lua mesa ncurses opus pkgconfig qt5-qtbase qt5-qtsvg qt5-qtx11extras sdl2 speex speexdsp sysfsutils taglib eudev v4l-utils wayland-protocols x264 x265 xcb-util-renderutil xcb-util-keysyms xdg-utils samba gnutls pulseaudio"
 
-PKG_VER=3.0.17.3
+PKG_VER=3.0.17.4
 SOURCE="https://download.videolan.org/vlc/$PKG_VER/vlc-$PKG_VER.tar.xz"
 
 ADDITIONAL="

@@ -5,8 +5,9 @@ DEPS="musl"
 
 DESC="Freeware Advanced Audio Coder"
 
-PKG_VER=1_30
-SOURCE=https://github.com/knik0/faac/archive/$PKG_VER/faac-$PKG_VER.tar.gz
+PKG_VER=1.30
+version="$(echo $PKG_VER | sed 's/\./_/g')"
+SOURCE=https://github.com/knik0/faac/archive/$version/faac-$version.tar.gz
 
 build () {
     ./bootstrap                                &&

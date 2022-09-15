@@ -3,7 +3,7 @@
 MAKEDEPS="autoconf make"
 DEPS="libcap libnl ncurses lm-sensors "
 
-PKG_VER=3.1.2
+PKG_VER=3.2.1
 SOURCE=https://github.com/htop-dev/htop/releases/download/$PKG_VER/htop-$PKG_VER.tar.xz
 DESC="Interactive process viewer"
 

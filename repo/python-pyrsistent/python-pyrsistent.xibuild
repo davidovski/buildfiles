@@ -5,7 +5,7 @@ DESC="Persistent/Functional/Immutable data structures"
 
 MAKEDEPS="python"
 
-PKG_VER=0.18.0
+PKG_VER=0.19.0
 SOURCE="https://github.com/tobgu/pyrsistent/archive/v$PKG_VER.tar.gz"
 
 prepare() {

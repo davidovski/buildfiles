@@ -5,7 +5,7 @@ DESC="ODBC is an open specification to access Data Sources"
 
 MAKEDEPS=" readline"
 
-PKG_VER=2.3.9
+PKG_VER=2.3.11
 SOURCE="http://www.unixodbc.org/unixODBC-$PKG_VER.tar.gz"
 
 build() {

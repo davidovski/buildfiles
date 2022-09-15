@@ -5,7 +5,7 @@ DESC="Unbound is a validating, recursive, and caching DNS resolver"
 
 MAKEDEPS=" expat libevent openssl python swig linux-headers"
 
-PKG_VER=1.15.0
+PKG_VER=1.16.2
 SOURCE="https://unbound.net/downloads/unbound-$PKG_VER.tar.gz"
 
 ADDITIONAL="

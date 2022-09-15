@@ -6,7 +6,7 @@ DESC="I2P Router written in C++"
 MAKEDEPS="make "
 DEPS="boost sbase openssl musl "
 
-PKG_VER=2.41.0
+PKG_VER=2.43.0
 SOURCE="https://github.com/PurpleI2P/i2pd/archive/$PKG_VER/i2pd-$PKG_VER.tar.gz"
 ADDITIONAL="i2pd.initd i2pd.confd "
 

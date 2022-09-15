@@ -5,7 +5,7 @@ DESC="A text widget adding syntax highlighting and more to GNOME"
 
 MAKEDEPS="gtk3 libxml2 gobject-introspection automake autoconf libtool gtk2"
 
-PKG_VER=3.24.11
+PKG_VER=5.5.1
 SOURCE="https://download.gnome.org/sources/gtksourceview/${PKG_VER%.*}/gtksourceview-$PKG_VER.tar.xz"
 
 prepare() {

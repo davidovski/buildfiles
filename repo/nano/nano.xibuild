@@ -5,7 +5,7 @@ DESC="Enhanced clone of the Pico text editor"
 
 MAKEDEPS=" ncurses"
 
-PKG_VER=6.2
+PKG_VER=6.4
 SOURCE="https://www.nano-editor.org/dist/v${PKG_VER%%.*}/nano-$PKG_VER.tar.xz"
 build() {
 	./configure \

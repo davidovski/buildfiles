@@ -5,7 +5,7 @@ DESC="Netfilter library providing interface to the nf_tables subsystem"
 
 MAKEDEPS=" bash jansson libmnl"
 
-PKG_VER=1.2.1
+PKG_VER=1.2.3
 SOURCE="https://netfilter.org/projects/libnftnl/files/libnftnl-$PKG_VER.tar.bz2"
 
 build() {

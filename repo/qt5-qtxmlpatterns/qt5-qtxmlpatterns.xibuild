@@ -5,7 +5,7 @@ DESC="Qt5 - QtXmlPatterns component"
 
 MAKEDEPS=" qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201028
+PKG_VER=
 _commit="189e28d0aff1f3d7960228ba318b83e3cadac98c"
 SOURCE="https://invent.kde.org/qt/qt/qtxmlpatterns/-/archive/$_commit/qtxmlpatterns-$_commit.tar.gz"
 

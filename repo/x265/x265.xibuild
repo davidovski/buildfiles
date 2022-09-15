@@ -6,8 +6,8 @@ DESC="Open Source H265/HEVC video encoder"
 MAKEDEPS="cmake "
 DEPS="musl "
 
-PKG_VER=3.5
-SOURCE="https://bitbucket.org/multicoreware/x265_git/downloads/x265_$PKG_VER.tar.gz"
+#PKG_VER=3.5
+SOURCE="https://bitbucket.org/multicoreware/x265_git.git"
 
 build () {
     # CMAKE_BUILD_TYPE - Don't change to None! This is a video encoder,

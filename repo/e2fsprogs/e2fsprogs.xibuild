@@ -4,7 +4,7 @@ MAKEDEPS="make gzip"
 # TODO requires util-linux-libs
 DEPS="sh util-linux"
 
-PKG_VER=1.46.4
+PKG_VER=1.46.5
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v$PKG_VER/e2fsprogs-$PKG_VER.tar.xz
 DESC="Ext2/3/4 filesystem utils"
 

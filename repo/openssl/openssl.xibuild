@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=3.0.1
+PKG_VER=3.0.5
 SOURCE=https://github.com/openssl/openssl/archive/refs/tags/openssl-$PKG_VER.tar.gz
 DESC="The open source management tools and libraries for cryptography"
 

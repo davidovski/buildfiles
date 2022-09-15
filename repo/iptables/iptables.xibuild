@@ -5,7 +5,7 @@ DESC="Linux kernel firewall, NAT and packet mangling tools"
 
 MAKEDEPS=" linux-headers libnftnl bison flex autoconf automake"
 
-PKG_VER=1.8.7
+PKG_VER=1.8.8
 SOURCE="https://www.netfilter.org/projects/iptables/files/iptables-$PKG_VER.tar.bz2"
 
 ADDITIONAL="

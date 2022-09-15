@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=2.3.0
+PKG_VER=2.4.4
 SOURCE=https://github.com/troglobit/sysklogd/releases/download/v$PKG_VER/sysklogd-$PKG_VER.tar.gz
 ADDITIONAL="
 sysklogd.initd

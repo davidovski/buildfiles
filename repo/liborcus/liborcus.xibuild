@@ -5,7 +5,7 @@ DESC="Library for processing spreadsheet documents"
 
 MAKEDEPS="boost mdds libixion zlib"
 
-PKG_VER=0.16.1
+PKG_VER=0.17.2
 SOURCE="https://kohei.us/files/orcus/src/liborcus-$PKG_VER.tar.xz"
 
 ADDITIONAL="

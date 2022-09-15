@@ -5,7 +5,7 @@ DESC="Configuration system"
 
 MAKEDEPS="doxygen extra-cmake-modules graphviz qt5-qtdeclarative qt5-qttools ninja"
 
-PKG_VER=5.93.0
+PKG_VER=5.98.0
 SOURCE="https://download.kde.org/stable/frameworks/${PKG_VER%.*}/kconfig-$PKG_VER.tar.xz"
 
 build() {

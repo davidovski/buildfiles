@@ -5,7 +5,7 @@ DEPS="libxext graphviz"
 
 DESC="X.org amdgpu video driver"
 
-PKG_VER=1.4
+PKG_VER=1.5
 SOURCE=https://gitlab.freedesktop.org/vdpau/libvdpau/-/archive/$PKG_VER/libvdpau-$PKG_VER.tar.bz2
 
 build () {

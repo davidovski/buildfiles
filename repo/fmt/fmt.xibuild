@@ -5,7 +5,7 @@ DESC="Open-source formatting library for C++"
 
 MAKEDEPS="cmake doxygen python ninja"
 
-PKG_VER=8.1.1
+PKG_VER=9.1.0
 SOURCE="https://github.com/fmtlib/fmt/releases/download/$PKG_VER/fmt-$PKG_VER.zip"
 
 build() {

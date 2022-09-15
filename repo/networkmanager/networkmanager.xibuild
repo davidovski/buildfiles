@@ -3,7 +3,7 @@
 MAKEDEPS="grep meson ninja python intltool glib"
 DEPS="libndp curl wpa_supplicant newt nss polkit libpsl dbus gobject-introspection dhcp eudev intltool modemmanager nspr mobile-broadband-provider-info python-gobject"
 
-PKG_VER=1.39.2
+PKG_VER=1.41.2
 SOURCE=https://download.gnome.org/sources/NetworkManager/${PKG_VER%.*}/NetworkManager-$PKG_VER.tar.xz
 
 ADDITIONAL="

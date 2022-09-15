@@ -6,7 +6,7 @@ DESC="simple X display locker utility"
 MAKEDEPS="make "
 DEPS="libx11 "
 
-PKG_VER=master
+PKG_VER=
 SOURCE="https://git.suckless.org/slock"
 
 build () {

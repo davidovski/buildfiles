@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="intltool libluv libtermkey libuv libvterm luajit msgpack-c musl tree-sitter unibilium lua-lpeg lua-mpack" 
 
-PKG_VER=0.6.1
+PKG_VER=0.7.2
 SOURCE=https://github.com/neovim/neovim/archive/v$PKG_VER.tar.gz
 DESC="Vim-fork focused on extensibility and agility"
 

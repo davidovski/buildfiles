@@ -5,7 +5,7 @@ DESC="Fast C++ logging library"
 
 MAKEDEPS="cmake fmt"
 
-PKG_VER=1.9.2
+PKG_VER=1.10.0
 SOURCE="https://github.com/gabime/spdlog/archive/v$PKG_VER/spdlog-v$PKG_VER.tar.gz"
 
 build() {

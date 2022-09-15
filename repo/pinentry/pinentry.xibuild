@@ -5,7 +5,7 @@ DESC="Collection of simple PIN or passphrase entry dialogs which utilize the Ass
 
 MAKEDEPS=" ncurses libcap libgpg-error libassuan "
 
-PKG_VER=1.2.0
+PKG_VER=1.2.1
 SOURCE="https://gnupg.org/ftp/gcrypt/pinentry/pinentry-$PKG_VER.tar.bz2"
 
 prepare() {

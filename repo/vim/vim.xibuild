@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="acl musl libgcrypt pcre2 zlib"
 
-PKG_VER=8.2.4656
+PKG_VER=8.2.5172
 SOURCE=https://github.com/vim/vim/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="Vi Improved"
 

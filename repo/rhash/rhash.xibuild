@@ -3,7 +3,7 @@
 MAKEDEPS="make openssl"
 DEPS="musl"
 
-PKG_VER=1.4.2
+PKG_VER=1.4.3
 SOURCE=https://downloads.sourceforge.net/rhash/rhash-$PKG_VER-src.tar.gz
 DESC="Utility for calculation and verification of hash sums and magnet links"
 

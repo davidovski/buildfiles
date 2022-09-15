@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="sbase libcap libxcrypt readline"
 
-PKG_VER=2.37.2
+PKG_VER=2.37.4
 SOURCE=https://cdn.kernel.org/pub/linux/utils/util-linux/v$(echo $PKG_VER | cut -d. -f-2)/util-linux-$PKG_VER.tar.xz
 DESC="System Utilities for Linux"
 

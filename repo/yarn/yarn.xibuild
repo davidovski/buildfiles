@@ -5,7 +5,7 @@ DESC="Fast, reliable, and secure dependency management for Node.js"
 
 MAKEDEPS=""
 
-PKG_VER=1.22.18
+PKG_VER=1.22.19
 SOURCE="https://yarnpkg.com/downloads/$PKG_VER/yarn-v$PKG_VER.tar.gz"
 
 package() {

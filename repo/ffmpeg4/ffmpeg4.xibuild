@@ -6,7 +6,7 @@ DESC="Complete and free Internet live audio and video broadcasting solution for 
 MAKEDEPS="make "
 DEPS="alsa-lib aom gnutls libass bzip2 dav1d libdrm pulseaudio librist libsrt libtheora libva libvorbis libvpx libwebp libx11 libxcb musl opus sdl2 v4l-utils vidstab x264 x265 xvidcore zlib lame soxr"
 
-PKG_VER=4.4.1
+PKG_VER=4.4.2
 SOURCE="https://ffmpeg.org/releases/ffmpeg-$PKG_VER.tar.xz"
 ADDITIONAL="
 0001-ffbuild-libversion.sh-add-shebang.patch

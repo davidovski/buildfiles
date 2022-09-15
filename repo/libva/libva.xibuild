@@ -5,7 +5,7 @@ DEPS="libdrm libx11 mesa libxext libxfixes wayland"
 
 DESC="Video Acceleration API"
 
-PKG_VER=2.13.0
+PKG_VER=2.15.0
 SOURCE=https://github.com/intel/libva/releases/download/$PKG_VER/libva-$PKG_VER.tar.bz2
 
 build () {

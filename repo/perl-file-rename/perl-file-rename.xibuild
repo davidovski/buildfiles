@@ -5,7 +5,7 @@ DESC="Perl extension for renaming multiple files"
 
 MAKEDEPS=" perl-module-build"
 
-PKG_VER=1.30
+PKG_VER=1.31
 SOURCE="https://cpan.metacpan.org/authors/id/R/RM/RMBARKER/File-Rename-$PKG_VER.tar.gz"
 
 build() {

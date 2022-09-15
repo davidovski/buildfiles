@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl pam"
 
-PKG_VER=2.62
+PKG_VER=2.65
 SOURCE=https://git.kernel.org/pub/scm/libs/libcap/libcap.git/snapshot/libcap-$PKG_VER.tar.gz
 
 DESC="POSIX 1003.1e capabilities"

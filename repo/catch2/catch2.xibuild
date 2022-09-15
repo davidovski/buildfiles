@@ -5,7 +5,7 @@ DESC="A modern, C++-native, header-only, test framework for unit-tests"
 
 MAKEDEPS="cmake python"
 
-PKG_VER=2.13.8
+PKG_VER=2.13.9
 SOURCE="https://github.com/catchorg/Catch2/archive/v$PKG_VER/catch2-v$PKG_VER.tar.gz"
 
 build() {

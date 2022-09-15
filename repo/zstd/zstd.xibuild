@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl zlib xz lz4"
 
-PKG_VER=1.5.1
+PKG_VER=1.5.2
 SOURCE=https://github.com/facebook/zstd/releases/download/v$PKG_VER/zstd-$PKG_VER.tar.gz
 DESC="the Zstandard real-time compression algorithm"
 

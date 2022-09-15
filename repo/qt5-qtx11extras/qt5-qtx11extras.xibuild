@@ -5,7 +5,7 @@ DESC="Provides platform-specific APIs for X11"
 
 MAKEDEPS=" qt5-qtbase"
 
-PKG_VER=5.15.3_git20201027
+PKG_VER=
 _commit="3898f5484fd4864b047729bfeda9a1222f32364f"
 SOURCE="https://invent.kde.org/qt/qt/qtx11extras/-/archive/$_commit/qtx11extras-$_commit.tar.gz"
 

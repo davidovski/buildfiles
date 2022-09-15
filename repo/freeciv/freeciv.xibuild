@@ -5,7 +5,7 @@ DESC="Free and Open Source empire-building strategy game (meta package)"
 
 MAKEDEPS="curl readline gettext sdl2-mixer gzip pkg-config glib atk pango gdk-pixbuf gtk3 qtchooser qt5-qtbase gzip sdl2 sdl2-image sdl2-ttf sdl2-gfx sqlite3"
 
-PKG_VER=3.0.0
+PKG_VER=3.0.3
 SOURCE="https://downloads.sourceforge.net/sourceforge/freeciv/freeciv-$PKG_VER.tar.xz"
 
 build() {

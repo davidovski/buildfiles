@@ -6,7 +6,7 @@ DESC="Userspace setup tool for transparent encryption of block devices using the
 MAKEDEPS="make argon2 openssl"
 DEPS="util-linux musl popt device-mapper "
 
-PKG_VER=2.4.3
+PKG_VER=2.5.0
 SOURCE="https://www.kernel.org/pub/linux/utils/cryptsetup/v${PKG_VER%.*}/cryptsetup-$PKG_VER.tar.gz"
 ADDITIONAL="dmcrypt.initd dmcrypt.confd "
 

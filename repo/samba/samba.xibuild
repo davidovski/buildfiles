@@ -5,7 +5,7 @@ DESC="Tools to access a server's filespace and printers via SMB"
 
 MAKEDEPS="acl bind cups dbus docbook-xsl e2fsprogs fuse gnutls iniparser jansson ldb libarchive libcap libtirpc liburing linux-pam musl-nscd ncurses openldap perl perl-parse-yapp popt python-tdb python-tevent python3 rpcgen subunit talloc tdb tevent zlib python-dnspython python-markdown tdb"
 
-PKG_VER=4.15.6
+PKG_VER=4.17.0
 SOURCE="
 	https://download.samba.org/pub/samba/stable/samba-$PKG_VER.tar.gz
     "

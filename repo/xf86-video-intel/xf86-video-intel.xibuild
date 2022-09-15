@@ -7,7 +7,7 @@ DESC="X.org intel video driver"
 
 PKG_VER=2.99.917
 _pkgver=31486f40f8e8f8923ca0799aea84b58799754564
-SOURCE=https://github.com/freedesktop/xorg-xf86-video-intel/archive/$_pkgver.zip
+SOURCE=https://gitlab.freedesktop.org/xorg/driver/xf86-video-intel/-/archive/$PKG_VER/xf86-video-intel-$PKG_VER.tar.gz
 
 prepare () {
     autoreconf -vif

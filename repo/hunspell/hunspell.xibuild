@@ -5,7 +5,7 @@ DESC="Spell checker and morphological analyzer library and program"
 
 MAKEDEPS="gettext ncurses readline autoconf automake libtool"
 
-PKG_VER=1.7.0
+PKG_VER=1.7.1
 SOURCE="https://github.com/hunspell/hunspell/archive/v$PKG_VER.tar.gz"
 
 ADDITIONAL="

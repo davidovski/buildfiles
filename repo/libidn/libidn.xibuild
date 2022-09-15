@@ -3,7 +3,7 @@
 MAKEDEPS="make findutils"
 DEPS="musl libunistring"
 
-PKG_VER=2.3.2
+PKG_VER=2.3.3
 SOURCE=https://ftp.gnu.org/gnu/libidn/libidn2-$PKG_VER.tar.gz
 DESC="Free software implementation of IDNA2008, Punycode and TR46"
 

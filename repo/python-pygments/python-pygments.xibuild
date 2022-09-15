@@ -3,7 +3,7 @@
 MAKEDEPS="python "
 DEPS=""
 
-PKG_VER=2.11.2
+PKG_VER=2.13.0
 SOURCE=https://pypi.org/packages/source/P/Pygments/Pygments-$PKG_VER.tar.gz
 DESC="Python syntax highlighter"
 

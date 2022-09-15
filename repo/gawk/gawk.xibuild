@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="sh musl mpfr"
 
-PKG_VER=5.1.0
+PKG_VER=5.2.0
 SOURCE=https://ftp.gnu.org/gnu/gawk/gawk-$PKG_VER.tar.xz
 DESC="GNU's awk"
 

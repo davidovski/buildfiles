@@ -5,8 +5,9 @@ DEPS="which "
 
 DESC="Collection of userspace tools for hardware monitoring"
 
-PKG_VER=3-6-0
-SOURCE=https://github.com/lm-sensors/lm-sensors/archive/refs/tags/V$PKG_VER.tar.gz
+PKG_VER=3.6.0
+version="$(echo $PKG_VER | sed 's/\./-/g')"
+SOURCE=https://github.com/lm-sensors/lm-sensors/archive/refs/tags/V$version.tar.gz
 
 build () {
     make PREFIX=/usr        \

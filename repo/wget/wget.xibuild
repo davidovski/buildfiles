@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl gnutls libidn libpsl nettle util-linux pcre2 zlib cacerts"
 
-PKG_VER=1.21.2
+PKG_VER=1.21.3
 SOURCE=https://ftp.gnu.org/gnu/wget/wget-$PKG_VER.tar.gz
 DESC="A utility for transfering files with URL syntax"
 

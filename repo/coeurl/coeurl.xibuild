@@ -5,7 +5,7 @@ DESC="Asynchronous wrapper around libcurl"
 
 MAKEDEPS=" cmake curl libevent meson spdlog"
 
-PKG_VER=0.2.0
+PKG_VER=0.2.1
 SOURCE="https://nheko.im/nheko-reborn/coeurl/-/archive/v$PKG_VER/coeurl-v$PKG_VER.tar.bz2"
 
 build() {

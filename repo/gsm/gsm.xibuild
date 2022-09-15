@@ -5,7 +5,7 @@ DESC="Shared libraries for GSM speech compressor"
 
 MAKEDEPS=""
 
-PKG_VER=1.0.19
+PKG_VER=1.0.22
 SOURCE="http://www.quut.com/gsm/gsm-$PKG_VER.tar.gz"
 
 ADDITIONAL="

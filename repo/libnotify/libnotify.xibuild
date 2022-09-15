@@ -5,7 +5,7 @@ DESC="Desktop notification library"
 
 MAKEDEPS="meson gdk-pixbuf dbus gtk3 gobject-introspection"
 
-PKG_VER=0.7.9
+PKG_VER=0.8.1
 SOURCE="https://download.gnome.org/sources/libnotify/${PKG_VER%.*}/libnotify-$PKG_VER.tar.xz"
 
 build() {

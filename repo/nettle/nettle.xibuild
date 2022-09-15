@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="gmp"
 
-PKG_VER=3.7
+PKG_VER=3.8
 SOURCE=https://ftp.gnu.org/gnu/nettle/nettle-$PKG_VER.tar.gz
 DESC="A low-level cryptographic library"
 

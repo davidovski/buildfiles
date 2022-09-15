@@ -5,7 +5,7 @@ DESC="SDL2 graphics drawing primitives and other support functions"
 
 MAKEDEPS=" sdl2"
 
-PKG_VER=1.0.4
+PKG_VER=19.0.1
 SOURCE="http://www.ferzkopp.net/Software/SDL2_gfx/SDL2_gfx-$PKG_VER.tar.gz"
 
 build() {

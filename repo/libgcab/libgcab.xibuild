@@ -5,7 +5,7 @@ DESC="A GObject library to create cabinet files"
 
 MAKEDEPS="meson gobject-introspection glib vala gtk2"
 
-PKG_VER=1.4
+PKG_VER=1.5
 SOURCE="https://download.gnome.org/sources/gcab/$PKG_VER/gcab-$PKG_VER.tar.xz"
 
 build() {

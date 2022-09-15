@@ -5,7 +5,7 @@ DESC="gnupg made easy"
 
 MAKEDEPS="python swig libgpg-error libassuan qt5-qtbase gnupg"
 
-PKG_VER=1.17.1
+PKG_VER=1.18.0
 SOURCE="https://www.gnupg.org/ftp/gcrypt/gpgme/gpgme-$PKG_VER.tar.bz2"
 
 ADDITIONAL="

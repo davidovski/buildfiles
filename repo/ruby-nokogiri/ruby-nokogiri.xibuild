@@ -5,9 +5,9 @@ DESC="An HTML, XML, SAX, and Reader parser"
 
 MAKEDEPS="libxml2 libxslt ruby ruby-mini_portile2"
 
-_gemname=${pkgname#ruby-}
+_gemname=${NAME#ruby-}
 
-PKG_VER=1.13.4
+PKG_VER=1.13.8
 SOURCE="https://github.com/sparklemotion/$_gemname/archive/v$PKG_VER/$_gemname-$PKG_VER.tar.gz"
 
 ADDITIONAL="

@@ -4,10 +4,10 @@ NAME="ruby-mustache"
 _gemname=mustache
 DESC="Logic-less Ruby templates"
 
-MAKEDEPS=""
+MAKEDEPS="ruby"
 
 PKG_VER=1.1.1
-SOURCE="ruby-mustache-$PKG_VER.tar.gz::https://github.com/mustache/mustache/archive/v$PKG_VER.tar.gz"
+SOURCE="https://github.com/mustache/mustache/archive/v$PKG_VER.tar.gz"
 
 ADDITIONAL="
 fix-test-race-condition.patch

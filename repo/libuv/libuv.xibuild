@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=1.44.1
+PKG_VER=1.44.2
 SOURCE=https://dist.libuv.org/dist/v$PKG_VER/libuv-v$PKG_VER.tar.gz
 DESC="Cross-platform asychronous I/O"
 

@@ -5,7 +5,7 @@ DESC="Simple .INI file parser for embedded systems"
 
 MAKEDEPS=" meson"
 
-PKG_VER=55
+PKG_VER=56
 SOURCE="https://github.com/benhoyt/inih/archive/r$PKG_VER.tar.gz"
 
 prepare() {

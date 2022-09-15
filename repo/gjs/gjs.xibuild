@@ -5,7 +5,7 @@ DESC="GNOME javascript library"
 
 MAKEDEPS="dbus gobject-introspection js91 gtk3 cairo meson libffi"
 
-PKG_VER=1.72.0
+PKG_VER=1.72.2
 SOURCE="https://download.gnome.org/sources/gjs/${PKG_VER%.*}/gjs-$PKG_VER.tar.xz"
 
 build() {

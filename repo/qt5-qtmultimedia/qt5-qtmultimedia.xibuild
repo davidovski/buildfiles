@@ -5,7 +5,7 @@ DESC="Qt5 - Multimedia support"
 
 MAKEDEPS="alsa-lib gst-plugins-base libxv qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201130
+PKG_VER=
 _commit="bd29c87027637a013f2c5e3b549fcda84e4d7545"
 SOURCE="https://invent.kde.org/qt/qt/qtmultimedia/-/archive/$_commit/qtmultimedia-$_commit.tar.gz"
 

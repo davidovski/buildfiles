@@ -6,7 +6,7 @@ DESC="Modern interactive commandline shell"
 MAKEDEPS="cmake "
 DEPS="bc sbase pcre2-32 musl ncurses "
 
-PKG_VER=3.4.1
+PKG_VER=3.5.1
 SOURCE="https://github.com/fish-shell/fish-shell/releases/download/$PKG_VER/fish-$PKG_VER.tar.xz"
 
 build () {

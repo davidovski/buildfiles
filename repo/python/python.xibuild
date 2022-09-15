@@ -3,7 +3,7 @@
 MAKEDEPS="make autoconf automake autoconf-archive sqlite3"
 DEPS="bzip2 expat gdbm libffi libnsl libxcrypt openssl zlib grep"
 
-PKG_VER=3.10.2
+PKG_VER=3.10.7
 SOURCE=https://www.python.org/ftp/python/$PKG_VER/Python-$PKG_VER.tgz
 DESC="The Python development environment"
 

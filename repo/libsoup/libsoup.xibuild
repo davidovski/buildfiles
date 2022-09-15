@@ -5,7 +5,7 @@ DESC="Gnome HTTP client/server Library"
 
 MAKEDEPS=" libgcrypt libgpg-error zlib meson gobject-introspection vala libxml2 libpsl sqlite3 brotli"
 
-PKG_VER=2.74.1
+PKG_VER=3.0.8
 SOURCE="https://download.gnome.org/sources/libsoup/${PKG_VER%.*}/libsoup-$PKG_VER.tar.xz"
 
 build() {

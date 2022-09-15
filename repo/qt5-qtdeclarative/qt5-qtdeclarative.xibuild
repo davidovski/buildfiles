@@ -5,7 +5,7 @@ DESC="Qt5 - QtDeclarative component"
 
 MAKEDEPS=" python qt5-qtbase "
 
-PKG_VER=5.15.3_git20220209
+PKG_VER=
 _commit="29ee9a0e9f02ec74153a2cf09dc63722bc273544"
 SOURCE="https://invent.kde.org/qt/qt/qtdeclarative/-/archive/$_commit/qtdeclarative-$_commit.tar.gz"
 

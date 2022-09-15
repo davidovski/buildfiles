@@ -6,7 +6,7 @@ DESC="Noto font families for Latin, Cyrillic and Greek scripts"
 MAKEDEPS="make ruby"
 DEPS="fontconfig "
 
-PKG_VER=0_git20211101
+PKG_VER=
 BRANCH=364fb14e20f82887280f103f638ff6450dbfc525
 SOURCE="https://github.com/googlefonts/noto-fonts/archive/$BRANCH/noto-fonts-$BRANCH.tar.gz"
 ADDITIONAL="noto-meta.json noto-meta fontconfig.xml.erb 58-noto-math.xml "

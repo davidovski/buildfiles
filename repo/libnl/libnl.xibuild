@@ -3,7 +3,7 @@
 MAKEDEPS="make tar gzip"
 DEPS="musl"
 
-PKG_VER=3.5.0
+PKG_VER=3.7.0
 SOURCE=https://github.com/thom311/libnl/releases/download/libnl$(echo $PKG_VER | sed 's/\./_/g')/libnl-$PKG_VER.tar.gz
 ADDITIONAL="
     https://github.com/thom311/libnl/releases/download/libnl$(echo $PKG_VER | sed 's/\./_/g')/libnl-doc-$PKG_VER.tar.gz

@@ -6,7 +6,7 @@ DESC="Secure Reliable Transport (SRT)"
 MAKEDEPS="cmake "
 DEPS="openssl musl"
 
-PKG_VER=1.4.4
+PKG_VER=1.5.0
 SOURCE="https://github.com/Haivision/srt/archive/v$PKG_VER.tar.gz"
 ADDITIONAL="fix-cmake.patch "
 

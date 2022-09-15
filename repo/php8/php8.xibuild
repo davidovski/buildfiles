@@ -5,7 +5,7 @@ DESC="The PHP8 language runtime engine"
 
 MAKEDEPS="autoconf pcre2 re2c apache2 argon2 aspell bison bzip2 curl enchant2 freetds freetype gdbm gettext gmp icu imap krb5 libedit libical libjpeg-turbo libpng libpq lmdb oniguruma libsodium libwebp libxml2 libxpm libxslt libzip net-snmp openldap sqlite tidyhtml unixodbc zlib"
 
-PKG_VER=8.0.17
+PKG_VER=8.1.10
 suffix=8
 SOURCE="https://php.net/distributions/php-$PKG_VER.tar.xz"
 

@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="openssl zlib zstd libnghttp libpsl cacerts"
 
-PKG_VER=7.80.0
+PKG_VER=7.85.0
 SOURCE=https://curl.se/download/curl-$PKG_VER.tar.xz
 DESC="A utility for transfering files with URL syntax"
 

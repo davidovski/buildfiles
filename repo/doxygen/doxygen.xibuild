@@ -6,7 +6,7 @@ DESC="A documentation system for C++, C, Java, IDL and PHP"
 MAKEDEPS="cmake "
 DEPS="musl "
 
-PKG_VER=1.9.4
+PKG_VER=1.9.5
 SOURCE="https://doxygen.nl/files/doxygen-$PKG_VER.src.tar.gz"
 
 build () {

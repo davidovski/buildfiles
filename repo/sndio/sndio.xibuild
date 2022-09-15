@@ -5,7 +5,7 @@ DESC="Small audio and MIDI framework part of the OpenBSD project"
 
 MAKEDEPS="alsa-lib"
 
-PKG_VER=1.8.1
+PKG_VER=1.9.0
 SOURCE="https://sndio.org/sndio-$PKG_VER.tar.gz"
 
 ADDITIONAL="

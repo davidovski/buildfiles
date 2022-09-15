@@ -5,7 +5,7 @@ DESC="linkable library for Git"
 
 MAKEDEPS="http-parser"
 
-PKG_VER=1.4.3
+PKG_VER=1.5.0
 SOURCE="https://github.com/libgit2/libgit2/archive/v$PKG_VER.tar.gz"
 
 prepare() {

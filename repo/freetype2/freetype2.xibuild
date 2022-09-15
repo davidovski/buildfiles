@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="brotli libpng which"
 
-PKG_VER=2.11.1
+PKG_VER=2.12.1
 SOURCE=https://downloads.sourceforge.net/freetype/freetype-$PKG_VER.tar.xz
 DESC="Font rasterization library"
 

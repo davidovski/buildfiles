@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="libtasn1 readline zlib nettle libp11-kit libidn libunistring"
 
-PKG_VER=2.13
+PKG_VER=2.14
 SOURCE=https://ftp.gnu.org/gnu/libsigsegv/libsigsegv-$PKG_VER.tar.gz
 DESC="A library for handling page faults in user mode"
 

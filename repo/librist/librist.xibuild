@@ -6,7 +6,7 @@ DESC="Reliable Internet Stream Transport (RIST)"
 MAKEDEPS="meson ninja "
 DEPS="linux-headers jsoncpp musl "
 
-PKG_VER=0.2.6
+PKG_VER=0.2.7
 SOURCE="https://code.videolan.org/rist/librist/-/archive/v$PKG_VER/librist-v$PKG_VER.tar.gz"
 
 build () {

@@ -5,7 +5,7 @@ DESC="Multi-platform library for OpenGL and Vulkan application development"
 
 MAKEDEPS="libxinerama linux-headers mesa cmake ninja libx11 libxcursor libxrandr libxi"
 
-PKG_VER=3.3.7
+PKG_VER=3.3.8
 SOURCE="https://github.com/glfw/glfw/releases/download/$PKG_VER/glfw-$PKG_VER.zip"
 
 build() {

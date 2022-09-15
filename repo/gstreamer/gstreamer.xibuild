@@ -5,7 +5,7 @@ DESC="GStreamer streaming media framework"
 
 MAKEDEPS="libxml2 bison flex glib gobject-introspection libcap meson perl"
 
-PKG_VER=1.20.1
+PKG_VER=1.20.3
 SOURCE="https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-$PKG_VER.tar.xz"
 
 build() {

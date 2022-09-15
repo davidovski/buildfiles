@@ -5,7 +5,7 @@ DESC="JSON for Modern C++"
 
 MAKEDEPS=" cmake"
 
-PKG_VER=3.10.5
+PKG_VER=3.11.2
 SOURCE="https://github.com/nlohmann/json/archive/v$PKG_VER.tar.gz"
 
 build() {

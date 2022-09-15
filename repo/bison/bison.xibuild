@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl m4 sh"
 
-PKG_VER=3.8.1
+PKG_VER=3.8.2
 SOURCE=https://ftp.gnu.org/gnu/bison/bison-$PKG_VER.tar.xz
 DESC="The GNU general-purpose parser generator"
 

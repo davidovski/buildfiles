@@ -3,8 +3,8 @@
 MAKEDEPS="make "
 DEPS="bash"
 
-PKG_VER=3.7
-SOURCE=https://github.com/dylanaraps/neofetch
+PKG_VER=7.1.0
+SOURCE=https://github.com/dylanaraps/neofetch/archive/refs/tags/$PKG_VER.tar.gz
 DESC="A CLI system information tool written in BASH that supports displaying images."
 
 package () {

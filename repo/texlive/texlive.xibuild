@@ -5,8 +5,8 @@ DESC="Comprehensive TeX document production system"
 
 MAKEDEPS="cairo fontconfig freetype2 gd gmp graphite harfbuzz icu libpaper libpng libxaw libxmu motif mpfr pixman poppler zlib zziplib"
 
-PKG_VER=20210628.59744
-SOURCE="https://github.com/TeX-Live/texlive-source/archive/f398692b64d6462c35939ec9489694d0828edee5.tar.gz"
+PKG_VER=20220321
+SOURCE="https://mirror.ox.ac.uk/sites/ctan.org/systems/texlive/Source/texlive-$PKG_VER-source.tar.xz"
 
 prepare() {
     sed -i '/AC_SEARCH_LIBS/a KPSE_KPATHSEA_FLAGS' texk/bibtex-x/configure.ac

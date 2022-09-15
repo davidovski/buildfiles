@@ -6,7 +6,7 @@ DESC="library for layout and rendering of text"
 MAKEDEPS="meson ninja python-pygments git"
 DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl fribidi harfbuzz"
 
-PKG_VER=1.50.5
+PKG_VER=1.50.9
 SOURCE="https://download.gnome.org/sources/pango/${PKG_VER%.*}/pango-$PKG_VER.tar.xz"
 ADDITIONAL="disable-broken-test.patch "
 

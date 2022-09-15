@@ -1,0 +1,18 @@
+#!/bin/sh
+
+NAME="xdotool"
+DESC="Simulate keyboard/mouse input"
+
+MAKEDEPS=" libxtst libxinerama libxkbcommon libx11 perl"
+
+PKG_VER=3.20211022.1
+SOURCE="https://github.com/jordansissel/xdotool/archive/v$PKG_VER.tar.gz"
+
+build() {
+	make WITHOUT_RPATH_FIX=1
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" PREFIX=/usr INSTALLMAN=/usr/share/man install
+}
+

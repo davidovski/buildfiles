@@ -5,7 +5,7 @@ DESC="Message Digest functions from BSD systems"
 
 MAKEDEPS=""
 
-PKG_VER=1.0.3
+PKG_VER=1.0.4
 SOURCE="https://archive.hadrons.org/software/libmd/libmd-$PKG_VER.tar.xz"
 
 build() {

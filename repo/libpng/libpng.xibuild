@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS=""
 
-PKG_VER=1.6.37
+PKG_VER=1.6.38
 SOURCE=https://downloads.sourceforge.net/libpng/libpng-$PKG_VER.tar.xz
 DESC="A collection of routines used to create PNG images"
 ADDITIONAL="libpng-1.6.37-apng.patch"

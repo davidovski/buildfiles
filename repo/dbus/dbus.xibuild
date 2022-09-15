@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="elogind"
 
-PKG_VER=1.12.20
+PKG_VER=1.13.0
 SOURCE=https://dbus.freedesktop.org/releases/dbus/dbus-$PKG_VER.tar.gz
 
 ADDITIONAL="

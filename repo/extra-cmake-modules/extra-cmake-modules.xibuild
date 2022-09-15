@@ -5,7 +5,7 @@ DESC="Extra CMake modules"
 
 MAKEDEPS="python-sphinx ninja python-docutils python-pygments python-babel python-pytz python-jinja python-packaging python-imagesize "
 
-PKG_VER=5.93.0
+PKG_VER=5.98.0
 SOURCE="https://download.kde.org/stable/frameworks/${PKG_VER%.*}/extra-cmake-modules-$PKG_VER.tar.xz"
 
 build() {

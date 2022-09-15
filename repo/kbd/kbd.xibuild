@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl pam"
 
-PKG_VER=2.4.0
+PKG_VER=2.5.1
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/kbd/kbd-$PKG_VER.tar.xz
 DESC="Keytable files and keyboard utilities"
 

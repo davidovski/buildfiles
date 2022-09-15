@@ -5,7 +5,7 @@ DESC="Client API library for Matrix, built on top of Boost.Asio"
 
 MAKEDEPS="boost coeurl libsodium nlohmann-json olm openssl zlib cmake"
 
-PKG_VER=0.7.0
+PKG_VER=0.8.2
 SOURCE="https://github.com/nheko-reborn/mtxclient/archive/v$PKG_VER/mtxclient-v$PKG_VER.tar.gz"
 
 build() {

@@ -6,7 +6,7 @@ DESC="C++ wrappers for GTK+"
 MAKEDEPS="meson ninja "
 DEPS="atkmm cairomm gdk-pixbuf glib glibmm gtk3 libsigc++ musl pangomm "
 
-PKG_VER=3.24.5
+PKG_VER=4.0.2
 SOURCE="https://download.gnome.org/sources/gtkmm/${PKG_VER%.*}/gtkmm-$PKG_VER.tar.xz"
 
 build () {

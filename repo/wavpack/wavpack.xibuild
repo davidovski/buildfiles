@@ -6,7 +6,7 @@ DESC="Audio compression format with lossless, lossy, and hybrid compression mode
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=5.4.0
+PKG_VER=5.5.0
 SOURCE="http://www.wavpack.com/wavpack-$PKG_VER.tar.xz"
 
 build () {

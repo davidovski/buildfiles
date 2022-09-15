@@ -6,7 +6,7 @@ DESC="Web browser running in text mode only"
 MAKEDEPS="make "
 DEPS="bzip2 openssl libevent musl zlib zstd "
 
-PKG_VER=2.25
+PKG_VER=2.27
 SOURCE="http://links.twibright.com/download/links-$PKG_VER.tar.bz2"
 
 build () {

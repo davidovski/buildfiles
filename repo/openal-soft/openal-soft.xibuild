@@ -6,7 +6,7 @@ DESC="software implementation of OpenAL API"
 MAKEDEPS="cmake "
 DEPS="ffmpeg4 musl sdl2 "
 
-PKG_VER=1.22.0
+PKG_VER=1.22.2
 SOURCE="https://github.com/kcat/openal-soft/archive/$PKG_VER.tar.gz"
 
 build () {

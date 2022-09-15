@@ -5,7 +5,7 @@ DEPS="nasm which"
 
 DESC="VP8 and VP9 codec"
 
-PKG_VER=1.11.0
+PKG_VER=1.12.0
 SOURCE=https://github.com/webmproject/libvpx/archive/v$PKG_VER/libvpx-$PKG_VER.tar.gz
 
 prepare () {

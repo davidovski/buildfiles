@@ -5,8 +5,9 @@ DEPS="alsa-lib libsamplerate"
 
 DESC="ISO AAC audio decoder"
 
-PKG_VER=2_10_0
-SOURCE=https://github.com/knik0/faad2/archive/$PKG_VER/faad2-$PKG_VER.tar.gz
+PKG_VER=2.10.0
+version="$(echo $PKG_VER | sed 's/\./_/g')"
+SOURCE=https://github.com/knik0/faad2/archive/$version/faad2-$version.tar.gz
 
 build () {
     ./bootstrap                                &&

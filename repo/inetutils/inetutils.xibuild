@@ -3,7 +3,7 @@
 MAKEDEPS="make utmps"
 DEPS="pam libcap readline ncurses libxcrypt iana-etc net-tools"
 
-PKG_VER=2.2
+PKG_VER=2.3
 SOURCE=https://ftp.gnu.org/gnu/inetutils/inetutils-$PKG_VER.tar.xz
 DESC="A collection of common programs for basic networking"
 

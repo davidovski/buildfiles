@@ -3,7 +3,7 @@
 MAKEDEPS="make libpcap"
 DEPS="openssl libpcap"
 
-PKG_VER=1.8.1
+PKG_VER=1.8.3
 SOURCE=https://www.nlnetlabs.nl/downloads/ldns/ldns-$PKG_VER.tar.gz
 DESC="Free software implementation of IDNA2008, Punycode and TR46"
 

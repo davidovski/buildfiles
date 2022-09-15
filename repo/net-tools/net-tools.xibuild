@@ -3,7 +3,7 @@
 MAKEDEPS="make utmps "
 DEPS="pam libcap readline ncurses libxcrypt iana-etc "
 
-PKG_VER=2.10
+PKG_VER=2.1185
 SOURCE=https://github.com/ecki/net-tools
 ADDITIONAL="
 "

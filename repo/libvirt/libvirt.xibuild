@@ -6,7 +6,7 @@ DESC="A virtualization API for several hypervisor and container systems"
 MAKEDEPS="augeas libsasl device-mapper e2fsprogs gnutls libcap-ng libgpg-error netcf libnl libxml2 libxslt libtasn1 lvm2 lxc libgcrypt parted perl pkg-config eudev zlib yajl libpcap curl libpciaccess polkit readline linux-headers jansson libtirpc perl-xml-xpath fuse util-linux bash-completion bridge-utils dmidecode dnsmasq iptables pm-utils netcat rpcsvc-proto python-docutils meson ninja"
 DEPS="dmidecode dnsmasq"
 
-PKG_VER=8.2.0
+PKG_VER=8.7.0
 SOURCE="https://libvirt.org/sources/libvirt-$PKG_VER.tar.xz"
 
 ADDITIONAL="

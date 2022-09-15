@@ -5,7 +5,7 @@ DESC="Library for extensible, efficient structure packing"
 
 MAKEDEPS="zlib autoconf automake libtool"
 
-PKG_VER=3.18.1
+PKG_VER=3.21.6
 SOURCE="https://github.com/google/protobuf/archive/v$PKG_VER.tar.gz"
 
 ADDITIONAL="

@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="musl libgpg-error"
 
-PKG_VER=1.9.4
+PKG_VER=1.10.1
 SOURCE=https://www.gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-$PKG_VER.tar.bz2
 DESC="General purpose crypto library based on the code used in GnuPG"
 

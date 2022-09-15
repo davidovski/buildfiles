@@ -5,7 +5,7 @@ DESC="Python dependency management and packaging system"
 
 MAKEDEPS="python-poetry-core python-build python-installer python-pyrsistent python-lark python-tomlkit"
 
-PKG_VER=1.1.13
+PKG_VER=1.2.0
 SOURCE="https://github.com/sdispater/poetry/archive/$PKG_VER.tar.gz"
 
 ADDITIONAL="

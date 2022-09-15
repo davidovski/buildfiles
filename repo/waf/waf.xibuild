@@ -6,7 +6,7 @@ DESC="The meta build system"
 MAKEDEPS=""
 DEPS="python "
 
-PKG_VER=2.0.22
+PKG_VER=2.0.24
 SOURCE="https://waf.io/waf-$PKG_VER"
 
 package () {

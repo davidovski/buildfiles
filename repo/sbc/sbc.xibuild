@@ -5,7 +5,7 @@ DESC="Bluetooth Subband Codec (SBC) library"
 
 MAKEDEPS="libsndfile linux-headers flac libvorbis libogg opus"
 
-PKG_VER=1.5
+PKG_VER=2.0
 SOURCE="https://www.kernel.org/pub/linux/bluetooth/sbc-$PKG_VER.tar.xz"
 
 ADDITIONAL="

@@ -5,7 +5,7 @@ DESC="A virtual 3D GPU library, that allows the guest operating system to use th
 
 MAKEDEPS="meson file libdrm mesa libepoxy python check"
 
-PKG_VER=0.9.1
+PKG_VER=0.10.1
 SOURCE="https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/virglrenderer-$PKG_VER/virglrenderer-virglrenderer-$PKG_VER.tar.gz"
 
 build() {

@@ -5,7 +5,7 @@ DESC="Qt5 - QtScript component"
 
 MAKEDEPS="qt5-qtbase linux-headers"
 
-PKG_VER=5.15.3_git20210316
+PKG_VER=
 _commit="5cec94b2c1503f106f4ef4778d016410ebb86211"
 SOURCE="https://invent.kde.org/qt/qt/qtscript/-/archive/$_commit/qtscript-$_commit.tar.gz"
 

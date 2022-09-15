@@ -5,7 +5,7 @@ DESC="Library for AppStream metadata"
 
 MAKEDEPS="meson glib libarchive libsoup json-glib gdk-pixbuf gtk3 freetype2 fontconfig yaml gperf libgcab gobject-introspection"
 
-PKG_VER=0.7.18
+PKG_VER=0.8.1
 SOURCE="https://people.freedesktop.org/~hughsient/appstream-glib/releases/appstream-glib-$PKG_VER.tar.xz"
 
 build() {

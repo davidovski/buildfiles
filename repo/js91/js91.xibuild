@@ -5,7 +5,7 @@ DESC="Standalone Mozilla JavaScript engine (91 ESR)"
 
 MAKEDEPS="icu libffi nspr readline autoconf2-13 cargo clang linux-headers lld llvm perl python rust sed zlib"
 
-PKG_VER=91.8.0
+PKG_VER=91.13.0
 SOURCE="https://ftp.mozilla.org/pub/firefox/releases/${PKG_VER}esr/source/firefox-${PKG_VER}esr.source.tar.xz"
 
 ADDITIONAL="

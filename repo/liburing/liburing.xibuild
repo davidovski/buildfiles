@@ -5,7 +5,7 @@ DESC="Linux kernel io_uring access library"
 
 MAKEDEPS="linux-headers"
 
-PKG_VER=2.1
+PKG_VER=2.2
 SOURCE="https://git.kernel.dk/cgit/liburing/snapshot/liburing-$PKG_VER.tar.gz"
 
 build() {

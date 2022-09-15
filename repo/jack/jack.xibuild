@@ -5,7 +5,7 @@ DESC="The Jack Audio Connection Kit"
 
 MAKEDEPS="alsa-lib dbus expat libsamplerate libsndfile ncurses readline python linux-headers"
 
-PKG_VER=1.9.20
+PKG_VER=1.9.21
 SOURCE="https://github.com/jackaudio/jack2/archive/v$PKG_VER/jack2-v$PKG_VER.tar.gz"
 
 ADDITIONAL="

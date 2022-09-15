@@ -3,7 +3,7 @@
 MAKEDEPS="make ninja cmake libedit libffi libxml2 ncurses python-sphinx binutils lua python-six"
 DEPS="perl zlib libffi libedit ncurses"
 
-PKG_VER=13.0.1
+PKG_VER=15.0.0
 SOURCE="https://github.com/llvm/llvm-project/releases/download/llvmorg-$PKG_VER/llvm-project-$PKG_VER.src.tar.xz"
 DESC="Low Level Virtual Machine"
 

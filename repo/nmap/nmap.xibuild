@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="libpcap lua pcre2 liblinear"
 
-PKG_VER=7.92
+PKG_VER=7.93
 SOURCE=https://nmap.org/dist/nmap-$PKG_VER.tar.bz2
 DESC="Network exploration and security auditing utility"
 

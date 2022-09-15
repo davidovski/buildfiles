@@ -3,7 +3,7 @@
 MAKEDEPS="grep python make xmlto cmake"
 DEPS="curl perl openssl pcre2 grep shadow zlib openssh"
 
-PKG_VER=2.34.1
+PKG_VER=2.37.3
 SOURCE=https://www.kernel.org/pub/software/scm/git/git-$PKG_VER.tar.xz
 DESC="The free and open source, distributed version control system"
 

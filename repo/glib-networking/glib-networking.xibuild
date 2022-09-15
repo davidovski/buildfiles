@@ -6,7 +6,7 @@ DESC="Networking support for GLib"
 MAKEDEPS="meson ninja "
 DEPS="glib cacerts gnutls gsettings-desktop-schemas intltool musl libproxy"
 
-PKG_VER=2.72.0
+PKG_VER=2.72.2
 SOURCE="https://download.gnome.org/sources/glib-networking/${PKG_VER%.*}/glib-networking-$PKG_VER.tar.xz"
 
 build () {

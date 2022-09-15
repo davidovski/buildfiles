@@ -3,7 +3,7 @@
 MAKEDEPS="autoconf automake binutils elfutils gawk linux-headers"
 DEPS="libelf musl"
 
-PKG_VER=5.17
+PKG_VER=5.19
 SOURCE=https://github.com/strace/strace/releases/download/v$PKG_VER/strace-$PKG_VER.tar.xz
 ADDITIONAL="
 disable-fortify.patch

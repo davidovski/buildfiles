@@ -5,7 +5,7 @@ DESC="library for seamless integration of C++ +and QML applications with HTML/Ja
 
 MAKEDEPS="qt5-qtbase qt5-qtwebsockets qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201028
+PKG_VER=
 _commit="47be9a51b01d9fd9e7f6dca81e98d4eedcec6d38"
 SOURCE="https://invent.kde.org/qt/qt/qtwebchannel/-/archive/$_commit/qtwebchannel-$_commit.tar.gz"
 

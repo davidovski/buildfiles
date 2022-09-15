@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl libldap openssl pam zlib"
 
-PKG_VER=1.9.9
+PKG_VER=1.9.11
 SOURCE=https://www.sudo.ws/dist/sudo-$PKG_VER.tar.gz
 DESC="Give certain users the ability to run some commands as root"
 

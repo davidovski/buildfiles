@@ -5,7 +5,7 @@ DESC="A utility for reporting system hardware as described by BIOS"
 
 MAKEDEPS=""
 
-PKG_VER=3.3
+PKG_VER=3.4
 SOURCE="https://download.savannah.gnu.org/releases/dmidecode/dmidecode-$PKG_VER.tar.xz"
 
 prepare() {

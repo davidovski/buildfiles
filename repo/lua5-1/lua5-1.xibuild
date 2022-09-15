@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="readline"
 
-PKG_VER=5.1.5
+PKG_VER=5.4.4
 SOURCE=https://www.lua.org/ftp/lua-$PKG_VER.tar.gz
 
 #  use alpinelinux's makefile

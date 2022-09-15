@@ -5,7 +5,7 @@ DESC="HTTP and WebDAV client library with a C interface"
 
 MAKEDEPS="expat openssl zlib gzip xmlto autoconf automake libtool"
 
-PKG_VER=0.32.2
+PKG_VER=0.32.4
 SOURCE="https://github.com/notroj/neon/archive/$PKG_VER.tar.gz"
 
 prepare() {

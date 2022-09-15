@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl e2fsprogs libldap gdbm"
 
-PKG_VER=1.19.2
+PKG_VER=1.19.3
 SOURCE=http://kerberos.org/dist/krb5/${PKG_VER%.*}/krb5-${PKG_VER}.tar.gz
 
 ADDITIONAL="

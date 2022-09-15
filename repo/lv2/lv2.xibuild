@@ -5,8 +5,8 @@ DESC="extensible open standard for audio plugins"
 
 MAKEDEPS="python gtk2 libsndfile gcovr"
 
-PKG_VER=1.18.2
-SOURCE="http://lv2plug.in/spec/lv2-$PKG_VER.tar.bz2"
+PKG_VER=1.18.10
+SOURCE="https://gitlab.com/lv2/lv2/-/archive/v$PKG_VER/lv2-v$PKG_VER.tar.gz"
 
 build() {
 	python3 waf configure --prefix=/usr -T

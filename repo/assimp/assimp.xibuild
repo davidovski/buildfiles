@@ -5,7 +5,7 @@ DESC="Open Asset Import Library imports and exports 3D model formats."
 
 MAKEDEPS=" cmake ninja zlib"
 
-PKG_VER=5.2.3
+PKG_VER=5.2.5
 SOURCE="https://github.com/assimp/assimp/archive/v$PKG_VER/assimp-v$PKG_VER.tar.gz"
 
 prepare() {

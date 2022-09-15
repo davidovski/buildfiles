@@ -3,7 +3,7 @@
 MAKEDEPS="make patch"
 DEPS="musl"
 
-PKG_VER=37
+PKG_VER=38
 SOURCE=https://github.com/rhboot/efivar/releases/download/$PKG_VER/efivar-$PKG_VER.tar.bz2
 
 ADDITIONAL="

@@ -5,7 +5,7 @@ DESC="a healthy, byte-sized window manager"
 
 MAKEDEPS="libx11 libxft libxinerama"
 
-PKG_VER=0.1.9
+PKG_VER=0.1.11
 SOURCE="https://github.com/JLErvin/berry/archive/$PKG_VER.tar.gz"
 
 ADDITIONAL="

@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="skalibs"
 
-PKG_VER=2.8.2.0
+PKG_VER=2.9.0.1
 SOURCE=https://skarnet.org/software/execline/execline-$PKG_VER.tar.gz
 DESC="A non-interactive shell-like scripting language"
 

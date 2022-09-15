@@ -6,7 +6,7 @@ DESC="Text shaping library"
 MAKEDEPS="cairo meson ninja gtk-doc python-pygments gobject-introspection"
 DEPS="freetype2 glib graphite musl "
 
-PKG_VER=4.2.0
+PKG_VER=5.1.0
 SOURCE="https://github.com/harfbuzz/harfbuzz/archive/$PKG_VER.tar.gz"
 
 build () {

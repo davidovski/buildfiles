@@ -5,7 +5,7 @@ DESC="Portable web rendering engine WebKit for GTK+"
 
 MAKEDEPS="bison cmake enchant2 flex geoclue gnutls gobject-introspection gperf gst-plugins-bad gst-plugins-base gstreamer gtk3 hyphen icu lcms2 libgcrypt libjpeg-turbo libmanette libnotify libpng libseccomp libsecret libsoup libwebp libwpe libwpebackend-fdo libxml2 libxslt libxt mesa openjpeg openjpeg-tools pango python ruby ninja sqlite woff2"
 
-PKG_VER=2.36.0
+PKG_VER=2.36.7
 SOURCE="https://webkitgtk.org/releases/webkitgtk-$PKG_VER.tar.xz"
 
 build() {

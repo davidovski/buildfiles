@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="musl perl readline"
 
-PKG_VER=4.4.26
+PKG_VER=4.4.28
 SOURCE=https://github.com/besser82/libxcrypt/releases/download/v$PKG_VER/libxcrypt-$PKG_VER.tar.xz
 DESC="A modern library for one-way hashing of passwords"
 

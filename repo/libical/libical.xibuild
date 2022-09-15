@@ -5,7 +5,7 @@ DESC="Reference implementation of the iCalendar format"
 
 MAKEDEPS="perl cmake vala glib icu libxml2 gobject-introspection"
 
-PKG_VER=3.0.13
+PKG_VER=3.0.14
 SOURCE="https://github.com/libical/libical/releases/download/v$PKG_VER/libical-$PKG_VER.tar.gz"
 
 build() {

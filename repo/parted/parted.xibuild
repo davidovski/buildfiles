@@ -5,7 +5,7 @@ DESC="Utility to create, destroy, resize, check and copy partitions"
 
 MAKEDEPS="readline ncurses lvm2 bash util-linux"
 
-PKG_VER=3.4
+PKG_VER=3.5
 SOURCE="https://ftp.gnu.org/gnu/parted/parted-$PKG_VER.tar.xz"
 
 ADDITIONAL="

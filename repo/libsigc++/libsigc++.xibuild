@@ -6,7 +6,7 @@ DESC="type-safe Signal Framework for C++"
 MAKEDEPS="meson ninja "
 DEPS="musl "
 
-PKG_VER=2.10.6
+PKG_VER=3.0.4
 SOURCE="https://download.gnome.org/sources/libsigc++/${PKG_VER%.*}/libsigc++-$PKG_VER.tar.xz"
 
 build () {

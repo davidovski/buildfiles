@@ -5,7 +5,7 @@ DESC="Secure, private, untraceable cryptocurrency"
 
 MAKEDEPS=" boost cmake cppzmq hidapi libsodium miniupnpc openpgm openssl rapidjson readline unbound zeromq "
 
-PKG_VER=0.17.3.0
+PKG_VER=0.18.1.1
 _ver_randomx=ae8e98b681766f31d49ac562dd6974906156e07b
 _ver_supercop=633500ad8c8759995049ccd022107d1fa8a1bbc9
 SOURCE="https://github.com/monero-project/monero/archive/refs/tags/v$PKG_VER.tar.gz"

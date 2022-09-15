@@ -6,7 +6,7 @@ DESC="port of libtls from libressl to openssl"
 MAKEDEPS="make "
 DEPS="openssl cacerts "
 
-PKG_VER=3.5.1
+PKG_VER=3.5.2
 SOURCE="https://causal.agency/libretls/libretls-$PKG_VER.tar.gz"
 
 prepare () {

@@ -5,7 +5,7 @@ DEPS="musl libvdpau libx11 libva"
 
 DESC="VPAU driver with OpenGL backend"
 
-PKG_VER=0.4.0
+PKG_VER=0.4.2
 SOURCE=https://github.com/i-rinat/libvdpau-va-gl/archive/v$PKG_VER/libvdpau-va-gl-$PKG_VER.tar.gz
 
 build () {

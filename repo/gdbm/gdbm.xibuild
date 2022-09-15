@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl sh readline"
 
-PKG_VER=1.21
+PKG_VER=1.23
 SOURCE=https://ftp.gnu.org/gnu/gdbm/gdbm-$PKG_VER.tar.gz
 DESC="GNU database library"
 

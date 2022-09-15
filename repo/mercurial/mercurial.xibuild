@@ -5,7 +5,7 @@ DESC="Scalable distributed SCM tool"
 
 MAKEDEPS="python"
 
-PKG_VER=6.1.1
+PKG_VER=6.1.4
 SOURCE="https://www.mercurial-scm.org/release/mercurial-$PKG_VER.tar.gz"
 
 ADDITIONAL="

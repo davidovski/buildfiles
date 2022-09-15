@@ -6,7 +6,7 @@ DESC="Command-line program for manipulating the X selection"
 MAKEDEPS="make "
 DEPS="libx11 "
 
-PKG_VER=1.2.0_git20190821
+PKG_VER=
 git_rev=ef01f3c72a195dbce682184c842b81b17d7d7ad1
 SOURCE="https://github.com/kfish/xsel/archive/$git_rev/xsel-$git_rev.tar.gz"
 

@@ -6,7 +6,7 @@ DESC="Internet Wireless Daemon"
 MAKEDEPS="make "
 DEPS="dbus musl readline "
 
-PKG_VER=1.27
+PKG_VER=1.30
 SOURCE="https://mirrors.edge.kernel.org/pub/linux/network/wireless/iwd-$PKG_VER.tar.gz"
 ADDITIONAL="iwd.initd iwd.confd main.conf"
 

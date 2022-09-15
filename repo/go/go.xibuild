@@ -4,7 +4,7 @@
 MAKEDEPS="make gcc"
 DEPS=""
 
-PKG_VER=1.17.7
+PKG_VER=1.17.13
 SOURCE=https://go.dev/dl/go$PKG_VER.src.tar.gz
 
 BOOTSTRAP="go1.4-bootstrap-20171003"

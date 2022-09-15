@@ -5,7 +5,7 @@ DESC="The package manager for JavaScript"
 
 MAKEDEPS=""
 
-PKG_VER=8.6.0
+PKG_VER=8.19.2
 SOURCE="https://registry.npmjs.org/npm/-/npm-$PKG_VER.tgz"
 
 ADDITIONAL="

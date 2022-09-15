@@ -3,7 +3,7 @@
 MAKEDEPS="bison flex zlib bzip2 xz argp-standalone libtool musl-obstack"
 DEPS="musl zlib"
 
-PKG_VER=0.186
+PKG_VER=0.187
 SOURCE=https://sourceware.org/elfutils/ftp/$PKG_VER/elfutils-$PKG_VER.tar.bz2
 ADDITIONAL="
         error.h

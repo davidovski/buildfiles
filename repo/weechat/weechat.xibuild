@@ -5,7 +5,7 @@ DESC="A fast, light, extensible ncurses-based chat client"
 
 MAKEDEPS="asciidoctor cmake gettext ncurses gnutls libgcrypt curl aspell lua perl python ruby zlib zstd gnupg"
 
-PKG_VER=3.5
+PKG_VER=3.6
 SOURCE="https://www.weechat.org/files/src/weechat-$PKG_VER.tar.gz"
 
 build() {

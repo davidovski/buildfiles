@@ -3,7 +3,7 @@
 MAKEDEPS="python python-toml qt5-qtwebengine"
 DEPS="python"
 
-PKG_VER=5.15.5
+PKG_VER=5.15.6
 SOURCE="https://pypi.python.org/packages/source/P/PyQtWebEngine/PyQtWebEngine-$PKG_VER.tar.gz"
 MAKEDEPS="python"
 DESC="Python bindings for the Qt WebEngine framework"

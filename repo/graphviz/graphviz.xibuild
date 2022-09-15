@@ -3,8 +3,8 @@
 MAKEDEPS="make flex swig m4 libtool libxaw bison lua tcl autoconf automake bash"
 DEPS="cairo expat glib libx11 musl pango zlib"
 
-PKG_VER=2.50.0
-SOURCE=https://gitlab.com/graphviz/graphviz/-/archive/$PKG_VER/graphviz-$PKG_VER.tar.gz
+PKG_VER=6.0.1
+SOURCE=https://gitlab.com/api/v4/projects/4207231/packages/generic/graphviz-releases/$PKG_VER/graphviz-$PKG_VER.tar.gz
 DESC="Graph Visualization Tools"
 
 

@@ -5,7 +5,7 @@ DESC="Qt5 - QtWebEngine components"
 
 MAKEDEPS="ffmpeg glib gst-plugins-base gstreamer icu libxcomposite libxext libxkbcommon libxkbfile libxrender libxslt mesa ninja alsa-lib bison musl-legacy-compat flex fontconfig gperf gzip harfbuzz jsoncpp libevent libjpeg-turbo libpng libsrtp libvpx libwebp libxcursor libxi libxml2 libxrandr libxslt libxtst linux-headers nodejs nss opus pcre protobuf pulseaudio sndio qt5-qtbase qt5-qtdeclarative qt5-qtwebchannel re2 ruby snappy sqlite3 yasm zlib python"
 
-PKG_VER=5.15.3_git20220407
+PKG_VER=
 _commit="56260bb605a74fabdfc74cef3bf890394af88b3d"
 _chromium_commit="d13d0924c4e18ecc4b79adf0fec142ee9a9eaa14"
 # commit of catapult version with python3 support

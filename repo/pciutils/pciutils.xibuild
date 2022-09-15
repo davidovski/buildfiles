@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl kmod"
 
-PKG_VER=3.7.0
+PKG_VER=3.8.0
 SOURCE=https://www.kernel.org/pub/software/utils/pciutils/pciutils-$PKG_VER.tar.xz
 DESC="PCI bus configuration space access library and tools"
 

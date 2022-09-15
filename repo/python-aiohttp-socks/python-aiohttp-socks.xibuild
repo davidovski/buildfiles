@@ -1,10 +1,10 @@
 #!/bin/sh
 
 MAKEDEPS="python"
-DEPS="python-aiohttp python-attrs python-python-python-socks[python-asyncio]python-"
+DEPS="python-aiohttp python-attrs python-socks"
 
 PKG_VER=0.7.1
-SOURCE=https://files.pythonhosted.org/packages/source/a/aiohttp-socks/aiohttp-socks-$PKG_VER.tar.gz
+SOURCE=https://files.pythonhosted.org/packages/83/f0/5b9cbceb80591731fcbf26fd03a44063d405f1b584e5b66462b7c5d27fed/aiohttp_socks-$PKG_VER.tar.gz
 MAKEDEPS="python"
 DESC="Proxy connector for aiohttp"
 

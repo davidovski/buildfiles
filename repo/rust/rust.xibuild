@@ -3,7 +3,7 @@
 MAKEDEPS="cmake libclang clang llvm curl"
 DEPS="libssh2 openssl"
 
-PKG_VER=1.59.0
+PKG_VER=1.63.0
 SOURCE=https://static.rust-lang.org/dist/rustc-$PKG_VER-src.tar.gz
 DESC="Systems programming language focused on safety, speed and concurrency"
 

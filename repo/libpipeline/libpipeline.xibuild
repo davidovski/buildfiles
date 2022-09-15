@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=1.5.5
+PKG_VER=1.5.6
 SOURCE=http://download.savannah.nongnu.org/releases/libpipeline/libpipeline-$PKG_VER.tar.gz
 DESC="A library for manipulating pipelines of subprocesses in a flexible and convenient way"
 

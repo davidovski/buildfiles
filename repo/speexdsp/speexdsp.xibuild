@@ -5,7 +5,7 @@ DESC="A voice compression format (DSP)"
 
 MAKEDEPS="autoconf automake libtool"
 
-PKG_VER=1.2.0
+PKG_VER=1.2.1
 SOURCE="https://downloads.xiph.org/releases/speex/speexdsp-$PKG_VER.tar.gz"
 
 prepare() {

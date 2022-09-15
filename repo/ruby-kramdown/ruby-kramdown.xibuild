@@ -6,7 +6,7 @@ DESC="A fast, pure Ruby Markdown superset converter"
 
 MAKEDEPS=" ruby-rake"
 
-PKG_VER=2.3.2
+PKG_VER=2.3.634
 SOURCE="https://github.com/gettalong/kramdown"
 
 ADDITIONAL="

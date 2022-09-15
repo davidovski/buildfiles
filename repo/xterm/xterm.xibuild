@@ -6,7 +6,7 @@ DEPS="libxft libxaw ncurses luit xbitmaps libxkbfile"
 DESC="X Terminal Emulator"
 
 PKG_VER=371
-SOURCE=ftp://ftp.invisible-island.net/xterm/xterm-$PKG_VER.tgz
+SOURCE=https://invisible-island.net/archives/xterm/xterm-$PKG_VER.tgz
 ADDITIONAL="
     posix-ptys.patch
 "

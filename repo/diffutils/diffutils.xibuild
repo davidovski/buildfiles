@@ -3,7 +3,7 @@
 MAKEDEPS="make sort"
 DEPS="musl sh"
 
-PKG_VER=0.8.6
+PKG_VER=0.8.8
 SOURCE=http://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz
 DESC="Utility programs for creating patch files"
 

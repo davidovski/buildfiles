@@ -5,7 +5,7 @@ DESC="QEMU is a generic machine emulator and virtualizer"
 
 MAKEDEPS=" meson bash alsa-lib bison curl flex glib glib gnutls gtk3 libaio libcap libcap-ng libjpeg-turbo libnfs libpng libseccomp libssh2 liburing libusb libxml2 linux-headers lzo ncurses numactl perl pulseaudio python python-sphinx sdl2 snappy spice spice-server texinfo usbredir util-linux vde2 virglrenderer vte3 xfsprogs zlib zlib zstd zstd python-sphinx-rtd-theme"
 
-PKG_VER=7.0.0
+PKG_VER=7.1.0
 SOURCE="https://wiki.qemu-project.org/download/qemu-$PKG_VER.tar.xz"
 
 ADDITIONAL="

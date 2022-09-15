@@ -5,7 +5,7 @@ DEPS="curl file imlib2 libexif libxinerama libpng"
 
 DESC="Fast and light imlib2-based image viewer"
 
-PKG_VER=3.8
+PKG_VER=3.9
 SOURCE=https://feh.finalrewind.org/feh-$PKG_VER.tar.bz2
 
 prepare () {

@@ -6,7 +6,7 @@ DESC="Downhill racing game starring Tux"
 MAKEDEPS="make "
 DEPS="glu mesa musl sfml "
 
-PKG_VER=0.8.1
+PKG_VER=0.8.2
 SOURCE="https://downloads.sourceforge.net/extremetuxracer/etr-$PKG_VER.tar.xz"
 
 build () {

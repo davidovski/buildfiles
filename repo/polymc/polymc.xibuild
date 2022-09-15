@@ -5,7 +5,7 @@ DESC="Custom launcher for Minecraft"
 
 MAKEDEPS="cmake qt5-qtbase qt5-qttools adoptopenjdk11"
 
-PKG_VER=1.3.1
+PKG_VER=1.4.2
 SOURCE="https://github.com/PolyMC/PolyMC/releases/download/${PKG_VER}/PolyMC-${PKG_VER}.tar.gz"
 
 build () {

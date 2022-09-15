@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="gdbm zlib groff libpipeline less"
 
-PKG_VER=2.9.4
+PKG_VER=2.10.2
 SOURCE=http://download.savannah.nongnu.org/releases/man-db/man-db-$PKG_VER.tar.xz
 DESC="A utility for reading man pages"
 

@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="curl libarchive jsoncpp libuv rhash openssl"
 
-PKG_VER=3.22.1
+PKG_VER=3.24.2
 SOURCE=https://github.com/Kitware/CMake/releases/download/v$PKG_VER/cmake-$PKG_VER.tar.gz
 DESC="A cross-platform open-source make system"
 

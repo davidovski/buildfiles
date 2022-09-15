@@ -5,7 +5,7 @@ DESC="XFS filesystem utilities"
 
 MAKEDEPS="attr bash gzip inih linux-headers python userspace-rcu util-linux"
 
-PKG_VER=5.15.0
+PKG_VER=5.16.0
 SOURCE="https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-$PKG_VER.tar.gz"
 
 ADDITIONAL="

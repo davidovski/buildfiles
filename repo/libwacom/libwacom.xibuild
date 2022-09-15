@@ -5,7 +5,7 @@ DEPS="glib libgudev librsvg"
 
 DESC="Library to identify Wacom tablets and their features"
 
-PKG_VER=2.1.0
+PKG_VER=2.4.0
 SOURCE=https://github.com/linuxwacom/libwacom/releases/download/libwacom-$PKG_VER/libwacom-$PKG_VER.tar.xz
 
 build () {

@@ -3,7 +3,7 @@
 MAKEDEPS="make groff"
 DEPS="libidn libsasl"
 
-PKG_VER=2.6.0
+PKG_VER=2.6.3
 SOURCE=http://repository.linagora.org/OpenLDAP/openldap-release/openldap-$PKG_VER.tgz
 DESC="An open source implementation of the Lightweight Directory Access Protocol"
 

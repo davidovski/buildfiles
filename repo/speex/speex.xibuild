@@ -5,7 +5,7 @@ DESC="an audio compression format designed for speech"
 
 MAKEDEPS="libogg speexdsp"
 
-PKG_VER=1.2.0
+PKG_VER=1.2.1
 SOURCE="http://downloads.us.xiph.org/releases/speex/speex-$PKG_VER.tar.gz"
 
 build() {

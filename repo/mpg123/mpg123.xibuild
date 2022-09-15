@@ -5,7 +5,7 @@ DESC="Console-based MPEG Audio Player for Layers 1, 2 and 3"
 
 MAKEDEPS="libtool alsa-lib linux-headers"
 
-PKG_VER=1.29.3
+PKG_VER=1.30.2
 SOURCE="https://www.mpg123.org/download/mpg123-$PKG_VER.tar.bz2"
 
 build() {

@@ -5,7 +5,7 @@ DESC="Qt5 - QtTool components"
 
 MAKEDEPS=" clang qt5-qtbase"
 
-PKG_VER=5.15.3_git20201202
+PKG_VER=
 _commit="33693a928986006d79c1ee743733cde5966ac402"
 SOURCE="https://invent.kde.org/qt/qt/qttools/-/archive/$_commit/qttools-$_commit.tar.gz"
 

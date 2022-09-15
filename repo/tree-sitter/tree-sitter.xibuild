@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=0.20.6
+PKG_VER=0.20.7
 SOURCE=https://github.com/tree-sitter/tree-sitter/archive/v$PKG_VER/tree-sitter-$PKG_VER.tar.gz
 DESC="Incremental parsing system for programming tools"
 

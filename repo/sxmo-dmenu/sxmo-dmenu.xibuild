@@ -5,7 +5,7 @@ DESC="Dmenu fork for Sxmo UI; supports highlight, centering, volume-key navigati
 
 MAKEDEPS=" libx11 libxinerama libxft"
 
-PKG_VER=5.0.13
+PKG_VER=5.0.14
 SOURCE="https://git.sr.ht/~mil/sxmo-dmenu/archive/$PKG_VER.tar.gz"
 
 prepare() {

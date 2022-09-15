@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=243
+PKG_VER=245
 SOURCE=https://github.com/cjlin1/liblinear/archive/v$PKG_VER/liblinear-$PKG_VER.tar.gz
 DESC="A library for large linear classification"
 

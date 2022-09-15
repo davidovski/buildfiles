@@ -5,7 +5,7 @@ DEPS="musl"
 
 DESC="Wrapper library for evdev devices"
 
-PKG_VER=1.12.0
+PKG_VER=1.13.0
 SOURCE=https://www.freedesktop.org/software/libevdev/libevdev-$PKG_VER.tar.xz
 
 build () {

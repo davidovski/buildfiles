@@ -5,7 +5,7 @@ DESC="Tools for the Bluetooth protocol stack"
 
 MAKEDEPS="dbus libusb eudev json-c libical readline glib linux-headers autoconf automake libtool python-docutils"
 
-PKG_VER=5.64
+PKG_VER=5.65
 SOURCE="https://www.kernel.org/pub/linux/bluetooth/bluez-$PKG_VER.tar.xz"
 
 ADDITIONAL="

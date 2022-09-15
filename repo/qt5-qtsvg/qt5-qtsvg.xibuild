@@ -5,7 +5,7 @@ DESC="Qt5 - Support for rendering and displaying SVG"
 
 MAKEDEPS=" qt5-qtbase zlib"
 
-PKG_VER=5.15.3_git20200406
+PKG_VER=
 _commit="95990cbeebc0ab9959e2a925a93ad4897416bbb7"
 SOURCE="https://invent.kde.org/qt/qt/qtsvg/-/archive/$_commit/qtsvg-$_commit.tar.gz"
 

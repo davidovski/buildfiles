@@ -5,7 +5,7 @@ DESC="A Java project management and project comprehension tool."
 
 MAKEDEPS=""
 
-PKG_VER=3.8.5
+PKG_VER=3.8.6
 pkgname="maven-${PKG_VER%%.*}"
 
 SOURCE="https://archive.apache.org/dist/maven/maven-${PKG_VER%%.*}/$PKG_VER/binaries/apache-maven-$PKG_VER-bin.tar.gz"

@@ -6,7 +6,7 @@ DESC="GUI for managing virtual machines"
 MAKEDEPS="intltool glib python-docutils"
 DEPS="libvirt libvirt-glib python-libvirt python-ipaddr python-urlgrabber libosinfo gtksourceview gtk-vnc"
 
-PKG_VER=3.2.0
+PKG_VER=4.1.0
 SOURCE="https://releases.pagure.org/virt-manager/virt-manager-$PKG_VER.tar.gz"
 
 ADDITIONAL="

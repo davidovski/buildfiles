@@ -6,7 +6,7 @@ DESC="Crypto and TLS for C++11"
 MAKEDEPS="make boost bzip2 openssl sqlite3 xz zlib"
 DEPS="musl libstdc++ libgcc"
 
-PKG_VER=2.19.1
+PKG_VER=2.19.2
 SOURCE="https://botan.randombit.net/releases/Botan-$PKG_VER.tar.xz"
 
 build () {

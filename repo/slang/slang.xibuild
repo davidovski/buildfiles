@@ -3,7 +3,7 @@
 MAKEDEPS=""
 DEPS="pcre2"
 
-PKG_VER=2.3.2
+PKG_VER=2.3.3
 SOURCE=https://www.jedsoft.org/releases/slang/slang-$PKG_VER.tar.bz2
 DESC="S-Lang is a powerful interpreted language"
 

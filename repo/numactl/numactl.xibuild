@@ -5,7 +5,7 @@ DESC="Simple NUMA policy support"
 
 MAKEDEPS="autoconf automake libtool linux-headers"
 
-PKG_VER=2.0.14
+PKG_VER=2.0.15
 SOURCE="https://github.com/numactl/numactl/archive/v$PKG_VER.tar.gz"
 
 ADDITIONAL="

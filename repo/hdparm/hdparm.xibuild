@@ -5,7 +5,7 @@ DESC="Utility for manipulating IDE device parameters"
 
 MAKEDEPS=" linux-headers"
 
-PKG_VER=9.63
+PKG_VER=9.65
 SOURCE="https://downloads.sourceforge.net/sourceforge/hdparm/hdparm-$PKG_VER.tar.gz"
 
 prepare() {

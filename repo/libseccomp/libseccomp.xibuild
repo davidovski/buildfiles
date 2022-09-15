@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=2.5.3
+PKG_VER=2.5.4
 SOURCE=https://github.com/seccomp/libseccomp/releases/download/v$PKG_VER/libseccomp-$PKG_VER.tar.gz
 
 DESC="Enhanced seccomp library"

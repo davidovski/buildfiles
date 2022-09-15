@@ -3,7 +3,7 @@
 MAKEDEPS="meson ninja python-mako libvdpau llvm libxxf86vm libelf lm-sensors expat wayland-protocols llvm"
 DEPS="xorg-libs libdrm"
 
-PKG_VER=21.3.7
+PKG_VER=22.1.7
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
 ADDITIONAL="
     0001-radeonsi-On-Aarch64-force-persistent-buffers-to-GTT.patch

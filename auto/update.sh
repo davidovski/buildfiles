@@ -40,7 +40,6 @@ get_source () {
     name=$1
     ver=$2
 
-    cp repo/$name/$name.xibuild /tmp/xibuild
     sed "s/PKG_VER=.*/PKG_VER=$ver/" repo/$name/$name.xibuild > /tmp/xibuild
     . /tmp/xibuild
     echo "$SOURCE"
@@ -53,6 +52,9 @@ get_type () {
             ;;
         "")
             echo "none"
+            ;;
+        *pythonhosted.org*)
+            echo "pypi"
             ;;
         *)
             echo "archive"
@@ -105,10 +107,18 @@ new_ver () {
     done
 }
 
+save_ver () {
+    local name ver
+    name=$1
+    ver=$2
+
+    sed -i "s/PKG_VER=.*/PKG_VER=$ver/" repo/$name/$name.xibuild
+}
+
 for pkg in $(ls repo); do 
     printf "${LIGHT_BLUE}%s " "$pkg"
     case "$(get_type $pkg)" in
-        "git"|"none")
+        "git"|"none"|"pypi")
             printf "${LIGHT_WHITE}skipped"
             ;;
         *)
@@ -116,8 +126,10 @@ for pkg in $(ls repo); do
         new="$(new_ver $pkg)"
 
         [ "$cur" = "$new" ] && 
-            printf "${LIGHT_WHITE}%s ${CHECKMARK}" "$cur" || 
-            printf "${GREEN}%s > %s" "$cur" "$new"
+            printf "${LIGHT_WHITE}%s ${CHECKMARK}" "$cur" || {
+                printf "${GREEN}%s > %s" "$cur" "$new"
+                save_ver "$pkg" "$new"
+            }
     esac
     printf "\n"
 done

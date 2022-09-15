@@ -5,7 +5,7 @@ DEPS="libevdev mtdev libwacom"
 
 DESC="Input device management and event handling library"
 
-PKG_VER=1.19.3
+PKG_VER=1.19.4
 SOURCE=https://www.freedesktop.org/software/libinput/libinput-$PKG_VER.tar.xz
 
 build () {

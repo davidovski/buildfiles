@@ -5,7 +5,7 @@ DESC="A fast and lightweight key/value database library by Google"
 
 MAKEDEPS=" cmake snappy"
 
-PKG_VER=1.22
+PKG_VER=1.23
 SOURCE="https://github.com/google/leveldb/archive/$PKG_VER.tar.gz"
 
 build() {

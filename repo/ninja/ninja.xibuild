@@ -3,7 +3,7 @@
 MAKEDEPS="python"
 DEPS="musl"
 
-PKG_VER=1.10.2
+PKG_VER=1.11.1
 SOURCE=https://github.com/ninja-build/ninja/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="Small build system with a focus on speed"
 

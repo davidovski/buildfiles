@@ -3,7 +3,7 @@
 MAKEDEPS="make"
 DEPS="tiff giflib bzip2 freetype2 libxext libpng libid3tag libjpeg-turbo libwebp xz librsvg"
 
-PKG_VER=1.8.0
+PKG_VER=1.9.1
 SOURCE=https://downloads.sourceforge.net/enlightenment/imlib2-$PKG_VER.tar.xz
 DESC="Graphics library for fast file loading, saving, rendering and manipulation"
 

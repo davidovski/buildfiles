@@ -6,7 +6,7 @@ DESC="Libraries for working with WebP images"
 MAKEDEPS="make "
 DEPS="musl "
 
-PKG_VER=1.2.2
+PKG_VER=1.2.4
 SOURCE="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-$PKG_VER.tar.gz"
 
 prepare() {

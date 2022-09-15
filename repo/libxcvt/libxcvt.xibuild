@@ -3,7 +3,7 @@
 MAKEDEPS="meson ninja"
 DEPS="musl"
 
-PKG_VER=0.1.1
+PKG_VER=0.1.2
 SOURCE=https://www.x.org/pub/individual/lib/libxcvt-$PKG_VER.tar.xz
 
 DESC="library providing a standalone version of the X server implementation of the VESA CVT standard timing modelines generator"

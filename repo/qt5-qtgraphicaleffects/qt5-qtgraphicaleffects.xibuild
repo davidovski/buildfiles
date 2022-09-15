@@ -5,7 +5,7 @@ DESC="Qt5 - QtGraphicalEffects component"
 
 MAKEDEPS=" qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20201105
+PKG_VER=
 _commit="c36998dc1581167b12cc3de8e4ac68c2a5d9f76e"
 SOURCE="https://invent.kde.org/qt/qt/qtgraphicaleffects/-/archive/$_commit/qtgraphicaleffects-$_commit.tar.gz"
 

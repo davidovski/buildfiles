@@ -6,7 +6,7 @@ DESC="Accelerated baseline JPEG compression and decompression library"
 MAKEDEPS=""
 DEPS="musl "
 
-PKG_VER=2.1.3
+PKG_VER=2.1.4
 SOURCE="https://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-$PKG_VER.tar.gz"
 
 build () {

@@ -6,7 +6,7 @@ DESC="An asynchronous API library for interfacing MPD in the C, C++ & Objective 
 MAKEDEPS="meson ninja "
 DEPS="musl"
 
-PKG_VER=2.19
+PKG_VER=2.20
 SOURCE="https://www.musicpd.org/download/libmpdclient/${PKG_VER%.*}/libmpdclient-$PKG_VER.tar.xz"
 
 build () {

@@ -3,7 +3,7 @@
 MAKEDEPS="make m4"
 DEPS="sh tar musl"
 
-PKG_VER=2.4.6
+PKG_VER=2.4.7
 SOURCE=https://ftpmirror.gnu.org/libtool/libtool-$PKG_VER.tar.gz
 DESC="A generic library support script"
 

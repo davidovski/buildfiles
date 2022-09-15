@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="zlib"
 
-PKG_VER=8.6.11
+PKG_VER=8.6.12
 SOURCE=https://github.com/tcltk/tcl/archive/refs/tags/core-$( echo $PKG_VER  | sed "s|\.|-|g").tar.gz
 DESC="the Tool Command language, a robust general purpose scripting language"
 

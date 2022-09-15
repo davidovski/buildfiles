@@ -6,7 +6,7 @@ DESC="Protocol definitions and daemon for D-Bus at-spi"
 MAKEDEPS="meson ninja "
 DEPS="dbus glib intltool libx11 libxi libxtst musl "
 
-PKG_VER=2.44.0
+PKG_VER=2.44.1
 SOURCE="https://download.gnome.org/sources/at-spi2-core/${PKG_VER%.*}/at-spi2-core-$PKG_VER.tar.xz"
 
 build () {

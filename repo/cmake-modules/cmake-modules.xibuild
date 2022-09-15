@@ -3,7 +3,7 @@
 MAKEDEPS="cmake python-sphinx"
 DEPS="cmake"
 
-PKG_VER=5.91.0
+PKG_VER=5.98.0
 SOURCE=https://download.kde.org/stable/frameworks/${PKG_VER%.*}/extra-cmake-modules-$PKG_VER.tar.xz
 DESC="Extra CMake modules"
 

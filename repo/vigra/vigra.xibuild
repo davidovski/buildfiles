@@ -5,7 +5,7 @@ DESC="An image processing and analysis library"
 
 MAKEDEPS=" tiff libjpeg-turbo libpng boost cmake doxygen"
 
-PKG_VER=1.11.1
+PKG_VER=1.11.267
 SOURCE="https://github.com/ukoethe/vigra"
 
 build() {

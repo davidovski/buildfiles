@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="musl"
 
-PKG_VER=1.2.11
+PKG_VER=1.2.12
 SOURCE=https://github.com/madler/zlib/archive/refs/tags/v$PKG_VER.tar.gz
 DESC="compression and decompression routines used by some programs"
 

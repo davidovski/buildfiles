@@ -3,7 +3,7 @@
 MAKEDEPS="make autoconf libtool"
 DEPS="acl bzip2 expat lz4 openssl xz zlib zstd"
 
-PKG_VER=3.5.2
+PKG_VER=3.6.1
 SOURCE=https://github.com/libarchive/libarchive/releases/download/v$PKG_VER/libarchive-$PKG_VER.tar.xz
 
 DESC="A library that provides a single interface for reading and writing various compression formats"

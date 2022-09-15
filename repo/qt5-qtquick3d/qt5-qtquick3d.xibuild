@@ -5,7 +5,7 @@ DESC="Qt module and API for defining 3D content in Qt Quick"
 
 MAKEDEPS=" assimp qt5-qtbase qt5-qtdeclarative"
 
-PKG_VER=5.15.3_git20210104
+PKG_VER=
 _commit="68b30bb23e34426e7d6a4c243a42ae57dfe45c6b"
 SOURCE="https://invent.kde.org/qt/qt/qtquick3d/-/archive/$_commit/qtquick3d-$_commit.tar.gz"
 

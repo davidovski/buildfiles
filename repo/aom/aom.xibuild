@@ -6,7 +6,7 @@ DESC="Alliance for Open Media (AOM) AV1 codec SDK"
 MAKEDEPS="cmake "
 DEPS="musl "
 
-PKG_VER=3.3.0
+PKG_VER=3.4.0
 SOURCE="https://aomedia.googlesource.com/aom/+archive/v$PKG_VER.tar.gz"
 ADDITIONAL="fix-stack-size-e53da0b.patch "
 

@@ -6,7 +6,6 @@ DESC="xclock cat mode"
 MAKEDEPS="make"
 DEPS="libx11 motif"
 
-PKG_VER=master
 SOURCE="https://github.com/BarkyTheDog/catclock"
 
 build () {

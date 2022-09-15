@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="readline"
 
-PKG_VER=5.2.1
+PKG_VER=6.0.3
 SOURCE=https://github.com/gavinhoward/bc/releases/download/$PKG_VER/bc-$PKG_VER.tar.xz
 DESC="An arbitrary precision numeric processing language"
 

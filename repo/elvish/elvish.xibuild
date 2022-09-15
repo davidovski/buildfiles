@@ -5,7 +5,7 @@ DESC="A friendly and expressive shell for Linux, macOS and BSDs"
 
 MAKEDEPS=" go"
 
-PKG_VER=0.15.0
+PKG_VER=0.18.0
 SOURCE="https://github.com/elves/elvish/archive/v$PKG_VER.tar.gz"
 
 build() {

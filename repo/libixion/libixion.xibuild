@@ -5,7 +5,7 @@ DESC="A general purpose formula parser & interpreter"
 
 MAKEDEPS=" boost mdds"
 
-PKG_VER=0.16.1
+PKG_VER=0.17.0
 SOURCE="https://kohei.us/files/ixion/src/libixion-$PKG_VER.tar.xz"
 
 ADDITIONAL="

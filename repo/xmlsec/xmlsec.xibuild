@@ -5,8 +5,8 @@ DESC="C based implementation for XML Signature Syntax and Processing and XML Enc
 
 MAKEDEPS=" libxml2 libxslt openssl nss autoconf automake libtool"
 
-PKG_VER=1.2.33
-SOURCE="https://github.com/lsh123/xmlsec"
+PKG_VER=1.2.34
+SOURCE="https://github.com/lsh123/xmlsec/archive/refs/tags/xmlsec-$(echo $PKG_VER | sed 's/\./_/g').tar.gz"
 
 prepare() {
 	autoreconf -fi

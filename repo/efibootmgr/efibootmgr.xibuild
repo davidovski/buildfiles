@@ -3,7 +3,7 @@
 MAKEDEPS="make "
 DEPS="efivar popt"
 
-PKG_VER=17
+PKG_VER=18
 SOURCE=https://github.com/rhboot/efibootmgr/archive/$PKG_VER/efibootmgr-$PKG_VER.tar.gz
 DESC="Tools and libraries to manipulate EFI variables"
 
