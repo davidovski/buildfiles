@@ -3,7 +3,7 @@
 MAKEDEPS="make dejagnu bzip2 xz zlib zstd patch"
 DEPS="musl zlib libelf"
 
-PKG_VER=2.39
+PKG_VER=2.38
 SOURCE=https://ftp.gnu.org/gnu/binutils/binutils-$PKG_VER.tar.xz
 
 ADDITIONAL="

@@ -4,13 +4,13 @@ MAKEDEPS="make autoconf automake gettext libtirpc libtool"
 DEPS="intltool libtirpc musl"
 
 PKG_VER=2.0.0
-SOURCE=https://github.com/thkukuk/libnsl/archive/v$PKG_VER.tar.gz
+SOURCE=https://github.com/thkukuk/libnsl/releases/download/v$PKG_VER/libnsl-$PKG_VER.tar.xz
 
 DESC="Public client interface for NIS(YP) and NIS+ in a IPv6 ready version"
 
-prepare () {
-	autoreconf -vfi
-}
+#prepare () {
+	#autoreconf -vfi
+#}
 
 build () {
     ./configure --prefix=/usr     \

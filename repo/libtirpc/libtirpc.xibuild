@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make queue-standalone"
+MAKEDEPS="make queue-standalone libtool automake"
 DEPS="krb5"
 
 PKG_VER=1.3.3
@@ -11,15 +11,11 @@ ADDITIONAL="
 https://git.alpinelinux.org/aports/plain/main/libtirpc/soname-suffix.patch
 "
 
-prepare () {
-    apply_patches
-    autoreconf -fi
-}
-
 build () {
     ./configure --prefix=/usr                                   \
             --sysconfdir=/etc                               \
-            --disable-static                                
+            --disable-static                                \
+            --disable-gssapi
     make
 }
 

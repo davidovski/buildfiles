@@ -5,7 +5,7 @@ DESC="Anonymous network connectivity"
 
 MAKEDEPS=" libcap libseccomp libevent openssl cacerts zlib xz zstd"
 
-PKG_VER=0.4.6.12
+PKG_VER=0.4.7.9
 SOURCE="https://www.torproject.org/dist/tor-$PKG_VER.tar.gz"
 
 ADDITIONAL="

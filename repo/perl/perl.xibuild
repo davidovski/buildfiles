@@ -1,9 +1,9 @@
 #!/bin/sh
 
-MAKEDEPS="make sed"
+MAKEDEPS="make sed zlib bzip2"
 DEPS="gdbm musl bzip2 zlib tar"
 
-PKG_VER=5.37.3
+PKG_VER=5.36.0
 SOURCE=https://www.cpan.org/src/5.0/perl-$PKG_VER.tar.gz
 DESC="The Practical Extraction and Report Language"
 ADDITIONAL="
@@ -16,35 +16,37 @@ zlib-test.patch
 
 prepare () {
     apply_patches
-    export BUILD_ZLIB=False
+    export BUILD_ZLIB=0
     export BUILD_BZIP2=0
     export CF_OLD=$CFLAGS
     export CFLAGS="$CFLAGS -DNO_POSIX_2008_LOCALE"
     export CFLAGS="$CFLAGS -D_GNU_SOURCE"
 
     rm -rf cpan/Compress-Raw-Zlib/zlib-src
-    sed -i '/\(bzip2\|zlib\)-src/d' MANIFEST
+	rm -rf cpan/Compress-Raw-Bzip2/bzip2-src
+	sed -i '/\(bzip2\|zlib\)-src/d' MANIFEST
 
-    rm -rf cpan/Compress-Raw-Bzip2/bzip2-src
-    sed -i '/\(bzip2\|zzz\)-src/d' MANIFEST
+    sed	-e 's/less -R/less/g' \
+    -e 's/libswanted="\(.*\) nsl\(.*\)"/libswanted="\1\2"/g' \
+    -i ./Configure
 
+}
+
+build () {
     sh Configure -des -Dprefix=/usr                                \
                   -Dvendorprefix=/usr                          \
-                  -Dprivlib=/usr/lib/perl5/5.34/core_perl      \
-                  -Darchlib=/usr/lib/perl5/5.34/core_perl      \
-                  -Dsitelib=/usr/lib/perl5/5.34/site_perl      \
-                  -Dsitearch=/usr/lib/perl5/5.34/site_perl     \
-                  -Dvendorlib=/usr/lib/perl5/5.34/vendor_perl  \
-                  -Dvendorarch=/usr/lib/perl5/5.34/vendor_perl \
+                  -Dprivlib=/usr/lib/perl5/${PKG_VER%.*}/core_perl      \
+                  -Darchlib=/usr/lib/perl5/${PKG_VER%.*}/core_perl      \
+                  -Dsitelib=/usr/lib/perl5/${PKG_VER%.*}/site_perl      \
+                  -Dsitearch=/usr/lib/perl5/${PKG_VER%.*}/site_perl     \
+                  -Dvendorlib=/usr/lib/perl5/${PKG_VER%.*}/vendor_perl  \
+                  -Dvendorarch=/usr/lib/perl5/${PKG_VER%.*}/vendor_perl \
                   -Dman1dir=/usr/share/man/man1                \
                   -Dman3dir=/usr/share/man/man3                \
                   -Dpager="/usr/bin/less -isR"                 \
                   -Duseshrplib                                 \
                   -Dusethreads                                 \
                   -Dcccdlflags='-fPIC' -Dccdlflags='-rdynamic'
-}
-
-build () {
     make 
 }
 

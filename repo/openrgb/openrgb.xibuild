@@ -15,8 +15,7 @@ openrgb.post-install
 "
 
 prepare () {
-#    apply_patches
-true
+    apply_patches
 }
 
 build() {

@@ -1,10 +1,9 @@
 #!/bin/sh
 
-MAKEDEPS="grep make dejagnu flex"
-DEPS="zstd musl binutils mpc mpfr gmp libstdc++ libgcc"
+MAKEDEPS="grep make dejagnu flex zstd musl binutils mpc mpfr gmp"
+DEPS="libstdc++ libgcc"
 
-
-PKG_VER=12.2.0
+PKG_VER=11.2.0
 SOURCE=https://ftp.gnu.org/gnu/gcc/gcc-$PKG_VER/gcc-$PKG_VER.tar.xz
 
 ISL_VER=0.24
@@ -197,6 +196,4 @@ gcc -dumpspecs | sed -e 's@/tools@@g'                   \
     for p in gcov gcc-ar gcc gcc-ranlib c++ g++ gcc-nm lto-dump gcov-tools gcov-dump cpp; do
         ln -s $TRUPLE-$p $PKG_DEST/usr/bin/$p
     done
-
-
 }

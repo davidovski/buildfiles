@@ -1,7 +1,7 @@
 #!/bin/sh
 
-MAKEDEPS="python"
-DEPS="python-sphinxcontrib-applehelp python-sphinxcontrib-devhelp python-sphinxcontrib-htmlhelp python-sphinxcontrib-serializinghtml python-sphinxcontrib-qthelp python-Jinja2 python-docutils python-snowballstemmer python-babel python-alabaster python-imagesize python-requests python-packaging python-html5lib"
+MAKEDEPS="python python-setuptools"
+DEPS="python-sphinxcontrib-applehelp python-sphinxcontrib-devhelp python-sphinxcontrib-htmlhelp python-sphinxcontrib-serializinghtml python-sphinxcontrib-qthelp python-Jinja2 python-docutils python-snowballstemmer python-babel python-alabaster python-imagesize python-requests python-packaging python-html5lib python-setuptools"
 
 PKG_VER=4.4.0
 SOURCE=https://files.pythonhosted.org/packages/c9/08/c2932e66460cfbc8973928d276dc82ccde2d24b365055eeda9f0afc1951e/Sphinx-$PKG_VER.tar.gz

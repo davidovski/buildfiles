@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make gcc"
+MAKEDEPS="make gcc libunistring"
 DEPS="musl sh"
 
 PKG_VER=1.8

@@ -4,7 +4,7 @@ NAME="iwd"
 DESC="Internet Wireless Daemon"
 
 MAKEDEPS="make "
-DEPS="dbus musl readline "
+DEPS="dbus openresolv wpa_supplicant"
 
 PKG_VER=1.30
 SOURCE="https://mirrors.edge.kernel.org/pub/linux/network/wireless/iwd-$PKG_VER.tar.gz"

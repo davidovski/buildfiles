@@ -1,21 +1,42 @@
 #!/bin/sh
 
-MAKEDEPS="python"
-DEPS="python ninja"
+NAME="meson"
+DESC="Fast and user friendly build system"
 
-PKG_VER=0.59
-SOURCE=https://github.com/mesonbuild/meson.git
-BRANCH=$PKG_VER
+MAKEDEPS="python-setuptools"
 
-DESC="High productivity build system"
+PKG_VER=0.63.2
+SOURCE="https://github.com/mesonbuild/meson/releases/download/$PKG_VER/meson-$PKG_VER.tar.gz"
 
-build () {
-    python setup.py build
+ADDITIONAL="
+fix-ninja-output-test.patch
+skip-broken-tests.patch
+"
+
+prepare() {
+	apply_patches
+
+	# https://github.com/mesonbuild/meson/issues/10104
+	rm -r "$BUILD_ROOT/test cases/linuxlike/13 cmake dependency"
 }
 
-package () {
-    python setup.py install --root=$PKG_DEST
+build() {
+	python setup.py build
+}
 
-    install -Dm644 data/shell-completions/bash/meson $PKG_DEST/usr/share/bash-completion/completions/meson
-    install -Dm644 data/shell-completions/zsh/_meson $PKG_DEST/usr/share/zsh/site-functions/_meson
+check() {
+	MESON_CI_JOBNAME=thirdparty \
+		NINJA=samu \
+		NINJA_1_9_OR_NEWER=1 \
+		python3 run_tests.py
+}
+
+package() {
+	python setup.py install --prefix=/usr --root="$PKG_DEST"
+
+	install -Dm644 data/shell-completions/zsh/* -t "$PKG_DEST"/usr/share/zsh/site-functions
+	install -Dm644 data/shell-completions/bash/* -t "$PKG_DEST"/usr/share/bash-completion/completions
+
+	install -Dm0755 "$BUILD_ROOT"/meson --prefix=/usr \
+ -t "$PKG_DEST"/usr/bin
 }
