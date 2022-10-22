@@ -1,7 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="make "
-DEPS="perl-xml-parser"
+MAKEDEPS="make perl-xml-parser"
 
 PKG_VER=0.51.0
 SOURCE=https://launchpad.net/intltool/trunk/$PKG_VER/+download/intltool-$PKG_VER.tar.gz

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+NAME="libpthread-stubs"
+DESC="Pthread functions stubs for platforms missing them"
+
+MAKEDEPS=""
+
+PKG_VER=0.4
+SOURCE="https://xcb.freedesktop.org/dist/libpthread-stubs-$PKG_VER.tar.bz2"
+
+build() {
+	./configure \
+		--prefix=/usr
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+

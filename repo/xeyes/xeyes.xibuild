@@ -9,7 +9,7 @@ PKG_VER=1.2.0
 SOURCE=https://www.x.org/archive/individual/app/xeyes-$PKG_VER.tar.gz
 
 build () {
-    ./configure $XORG_CONFIG 
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static 
     make
 }
 

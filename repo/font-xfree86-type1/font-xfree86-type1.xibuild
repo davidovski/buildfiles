@@ -7,7 +7,7 @@ PKG_VER=1.0.4
 SOURCE=https://www.x.org/pub/individual/font/font-xfree86-type1-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
   make
 }
 
@@ -15,6 +15,6 @@ package () {
     make DESTDIR=$PKG_DEST install
 
     install -d -m755 $PKG_DEST/usr/share/fonts                               &&
-    ln -sf $XORG_PREFIX/share/fonts/X11/OTF $PKG_DEST/usr/share/fonts/X11-OTF &&
-    ln -sf $XORG_PREFIX/share/fonts/X11/TTF $PKG_DEST/usr/share/fonts/X11-TTF
+    ln -sf /usr/share/fonts/X11/OTF $PKG_DEST/usr/share/fonts/X11-OTF &&
+    ln -sf /usr/share/fonts/X11/TTF $PKG_DEST/usr/share/fonts/X11-TTF
 }

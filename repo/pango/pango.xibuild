@@ -3,28 +3,32 @@
 NAME="pango"
 DESC="library for layout and rendering of text"
 
-MAKEDEPS="meson ninja python-pygments git"
-DEPS="sbase cairo fontconfig freetype2 glib libx11 libxft libxrender musl fribidi harfbuzz"
+MAKEDEPS="cairo expat fontconfig fribidi glib gobject-introspection  harfbuzz help2man libxft meson"
 
-PKG_VER=1.50.9
+PKG_VER=1.50.10
 SOURCE="https://download.gnome.org/sources/pango/${PKG_VER%.*}/pango-$PKG_VER.tar.xz"
-ADDITIONAL="disable-broken-test.patch "
+
+ADDITIONAL="
+disable-broken-test.patch
+"
 
 prepare () {
     apply_patches
 }
 
-build () {
-    mkdir build &&
-    cd build    &&
-    meson --prefix=/usr \
-        -Dintrospection=enabled \
+build() {
+	meson --prefix=/usr \
+		-Db_lto=true \
+		-Dintrospection=enabled \
 		-Dgtk_doc=false \
-        ..
-
-    ninja
+		build
+	meson compile ${JOBS:+-j ${JOBS}} -C build
 }
 
-package () {
-    DESTDIR=$PKG_DEST ninja install
+#check() {
+	#meson test --no-rebuild --print-errorlogs -C build
+#}
+
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C build
 }

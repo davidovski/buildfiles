@@ -3,8 +3,7 @@
 NAME="gdk-pixbuf"
 DESC="GTK+ image loading library"
 
-MAKEDEPS="meson ninja gobject-introspection"
-DEPS="sbase glib shared-mime-info intltool libpng libjpeg-turbo tiff musl"
+MAKEDEPS="meson ninja gobject-introspection sbase glib shared-mime-info intltool libpng libjpeg-turbo tiff musl python-docutils"
 
 PKG_VER=2.42.9
 SOURCE="https://download.gnome.org/sources/gdk-pixbuf/${PKG_VER%.*}/gdk-pixbuf-$PKG_VER.tar.xz"

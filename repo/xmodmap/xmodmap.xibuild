@@ -7,7 +7,7 @@ PKG_VER=1.0.10
 SOURCE=https://www.x.org/pub/individual/app/xmodmap-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
   make
 }
 

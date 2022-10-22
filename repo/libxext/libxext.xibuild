@@ -7,7 +7,7 @@ PKG_VER=1.3.4
 SOURCE=https://www.x.org/pub/individual/lib/libXext-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libXext-$PKG_VER
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --docdir=/usr/share/doc/libXext-$PKG_VER
   make
 }
 

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+NAME="zynaddsubfx"
+DESC="fully featured open source software synthesizer"
+
+MAKEDEPS="cmake "
+DEPS="pkg-config zlib mxml ntk libx11 liblo fftw libxpm pulseaudio jack alsa-lib doxygen fltk "
+
+PKG_VER=3.0.5
+SOURCE="http://sourceforge.net/projects/zynaddsubfx/files/zynaddsubfx/$PKG_VER/zynaddsubfx-$PKG_VER.tar.bz2/download"
+
+build () {
+    cmake -B build \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
+		-DBUILD_SHARED_LIBS=True \
+        -DBUILD_STATIC_LIBS=OFF
+	cmake --build build
+}
+
+package () {
+	DESTDIR="$PKG_DEST" cmake --install build
+}

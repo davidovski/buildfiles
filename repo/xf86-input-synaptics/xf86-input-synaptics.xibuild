@@ -9,7 +9,7 @@ PKG_VER=1.9.1
 SOURCE=https://www.x.org/pub/individual/driver/xf86-input-synaptics-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

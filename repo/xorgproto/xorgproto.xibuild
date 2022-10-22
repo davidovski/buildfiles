@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MAKEDEPS="ninja meson asciidoc libxslt xmlto bash"
+MAKEDEPS="ninja meson asciidoc libxslt xmlto bash libxau"
 DEPS="xorg-util-macros"
 
 PKG_VER=2021.5
@@ -11,13 +11,13 @@ build () {
     mkdir build &&
     cd    build &&
 
-    meson --prefix=$XORG_PREFIX -Dlegacy=true .. &&
+    meson --prefix=/usr -Dlegacy=true .. &&
     ninja
 }
 
 package () {
     DESTDIR=$PKG_DEST ninja install &&
 
-    install -dm 755 $PKG_DEST$XORG_PREFIX/share/doc/xorgproto-$PKG_VER &&
-    install -m 644 ../[^m]*.txt ../PM_spec $PKG_DEST$XORG_PREFIX/share/doc/xorgproto-$PKG_VER
+    install -dm 755 $PKG_DEST/usr/share/doc/xorgproto-$PKG_VER &&
+    install -m 644 ../[^m]*.txt ../PM_spec $PKG_DEST/usr/share/doc/xorgproto-$PKG_VER
 }

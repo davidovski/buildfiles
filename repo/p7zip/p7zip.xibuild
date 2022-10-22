@@ -1,0 +1,42 @@
+#!/bin/sh
+
+NAME="p7zip"
+DESC="Command-line port of the 7zip compression utility"
+
+MAKEDEPS="bash nasm yasm"
+
+PKG_VER=17.04
+SOURCE="https://github.com/jinfeihan57/p7zip/archive/v$PKG_VER/p7zip-v$PKG_VER.tar.gz"
+
+prepare() {
+	local makefile="makefile.linux_any_cpu_gcc_4.X"
+	case "$CARCH" in
+		x86)    makefile="makefile.linux_x86_asm_gcc_4.X" ;;
+		x86_64) makefile="makefile.linux_amd64_asm" ;;
+	esac
+
+	ln -sf $makefile makefile.machine
+
+	sed -e "s,g++,${CXX:-g++}," -i makefile.machine
+	sed -e "s,gcc,${CC:-gcc}," -i makefile.machine
+}
+
+build() {
+	make all3 OPTFLAGS="$CXXFLAGS -O2"
+}
+
+check() {
+	make test
+}
+
+package() {
+	make install DEST_DIR="$PKG_DEST" DEST_HOME="/usr" \
+		DEST_MAN="/usr/share/man" \
+		DEST_SHARE_DOC="/usr/share/doc/p7zip"
+
+	install -Dm755 contrib/gzip-like_CLI_wrapper_for_7z/p7zip \
+		"$PKG_DEST"/usr/bin/p7zip
+	install -Dm644 contrib/gzip-like_CLI_wrapper_for_7z/man1/p7zip.1 \
+		"$PKG_DEST"/usr/share/man/man1/p7zip.1
+}
+

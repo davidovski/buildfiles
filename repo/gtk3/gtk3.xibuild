@@ -9,31 +9,20 @@ DEPS="atk at-spi2-atk sbase cairo gobject-introspection fontconfig fribidi gdk-p
 PKG_VER=3.24.34
 SOURCE="https://download.gnome.org/sources/gtk+/${PKG_VER%.*}/gtk+-$PKG_VER.tar.xz"
 
-
-prepare () {
-    # don't build demos
-    sed -e "s/^\(SRC_SUBDIRS =.*\)demos\(.*\)$/\1\2/" -i Makefile.am Makefile.in
-    aclocal -I m4
-    autoreconf
-    automake --add-missing
-}
-
 build () {
-    ./configure \
-        --prefix=/usr \
-        --sysconfdir=/etc \
-        --localstatedir=/var \
-        --with-xinput=yes \
-        --without-libjasper \
-        --with-included-loaders=png \
-        --with-gdktarget=x11 \
-        --enable-man 
-
-    make
+    mkdir build &&
+    cd build    &&
+    meson --prefix=/usr \
+    		-Db_lto=true \
+            -Dman=true \
+            -Dgtk_doc=false \
+            -Dbroadway_backend=true \
+            .. &&
+    ninja
 }
 
 package () {
-    make DESTDIR=$PKG_DEST install
+    DESTDIR=$PKG_DEST ninja install
 }
 
 postinstall () {

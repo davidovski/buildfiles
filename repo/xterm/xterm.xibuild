@@ -21,7 +21,7 @@ prepare () {
 
 build () {
     ./configure \
-        $XORG_CONFIG \
+        --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static \
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \

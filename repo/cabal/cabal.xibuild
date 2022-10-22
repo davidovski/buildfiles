@@ -1,0 +1,60 @@
+#!/bin/sh
+
+NAME="cabal"
+DESC="The Haskell Cabal"
+
+MAKEDEPS="ghc gmp libffi zlib cabal-bootstrap"
+
+PKG_VER=3.8.1.0
+SOURCE="https://hackage.haskell.org/package/cabal-install-$PKG_VER/cabal-install-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+cabal.project.freeze
+"
+
+cabal_update() {
+	cd $BUILD_ROOT
+	# Build a freeze file to make the build reproducible.
+	# This freeze file is stored in $source and thus tracked in Git.
+	HOME="$_cabal_home" cabal v2-update --allow-newer
+	(
+		cd "$BUILD_ROOT"
+		HOME="$_cabal_home" cabal v2-freeze \
+			--allow-newer --shadow-installed-packages
+		mv cabal.project.freeze "$startdir/"
+	)
+}
+
+prepare() {
+	apply_patches
+	ln -sf "$BUILD_ROOT/cabal.project.freeze" \
+		"$BUILD_ROOT/cabal.project.freeze"
+}
+
+build() {
+	HOME="$_cabal_home" cabal v2-update
+	HOME="$_cabal_home" cabal v2-build all \
+		--allow-newer \
+		--jobs=${JOBS:-1} \
+		--prefix=/usr \
+		--docdir=/usr/share/doc/cabal \
+		--sysconfdir=/etc
+}
+
+package() {
+	# With v2- cabal no longer wants us to separate v2-build and
+	# v2-install, however, we don't want to build everything in a
+	# fakeroot. We work around this by copying binaries build in the
+	# previous step manually.
+	#
+	# See https://github.com/haskell/cabal/issues/6919#issuecomment-761563498
+	HOME="$_cabal_home" cabal list-bin --allow-newer all:exes | \
+		xargs install -Dm755 -t "$PKG_DEST"/usr/bin
+
+	mkdir -p "$PKG_DEST"/usr/share/man/man1
+	HOME="$_cabal_home" cabal man --raw \
+		> "$PKG_DEST"/usr/share/man/man1/cabal.1
+
+	install -Dm644 LICENSE "$PKG_DEST/usr/share/licenses/cabal/LICENSE"
+}
+

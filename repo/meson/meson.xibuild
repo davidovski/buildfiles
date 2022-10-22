@@ -3,7 +3,7 @@
 NAME="meson"
 DESC="Fast and user friendly build system"
 
-MAKEDEPS="python-setuptools"
+MAKEDEPS="python-setuptools ninja"
 
 PKG_VER=0.63.2
 SOURCE="https://github.com/mesonbuild/meson/releases/download/$PKG_VER/meson-$PKG_VER.tar.gz"
@@ -24,19 +24,22 @@ build() {
 	python setup.py build
 }
 
-check() {
-	MESON_CI_JOBNAME=thirdparty \
-		NINJA=samu \
-		NINJA_1_9_OR_NEWER=1 \
-		python3 run_tests.py
-}
+#check() {
+	#MESON_CI_JOBNAME=thirdparty \
+		#NINJA_1_9_OR_NEWER=1 \
+		#python3 run_tests.py
+#}
 
 package() {
 	python setup.py install --prefix=/usr --root="$PKG_DEST"
 
-	install -Dm644 data/shell-completions/zsh/* -t "$PKG_DEST"/usr/share/zsh/site-functions
-	install -Dm644 data/shell-completions/bash/* -t "$PKG_DEST"/usr/share/bash-completion/completions
+    for f in data/shell-completions/zsh/*; do
+        install -Dm644 $f "$PKG_DEST"/usr/share/zsh/site-functions
+    done
 
-	install -Dm0755 "$BUILD_ROOT"/meson --prefix=/usr \
- -t "$PKG_DEST"/usr/bin
+    for f in data/shell-completions/bash/*; do 
+        install -Dm644 $f "$PKG_DEST"/usr/share/bash-completion/completions
+    done
+
+	install -Dm0755 "$BUILD_ROOT"/meson.py "$PKG_DEST"/usr/bin/meson
 }

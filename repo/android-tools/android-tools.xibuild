@@ -1,0 +1,22 @@
+#!/bin/sh
+
+NAME="android-tools"
+DESC="Android platform tools"
+
+MAKEDEPS="pcre2 linux-headers libusb gtest go perl cmake protobuf brotli zstd lz4 ninja"
+
+PKG_VER=31.0.3p2
+SOURCE="https://github.com/nmeum/android-tools/releases/download/$PKG_VER/android-tools-$PKG_VER.tar.xz"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DCMAKE_BUILD_TYPE=None
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$PKG_DEST" cmake --install build
+}
+

@@ -9,7 +9,7 @@ PKG_VER=21.0.0
 SOURCE=https://www.x.org/pub/individual/driver/xf86-video-amdgpu-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

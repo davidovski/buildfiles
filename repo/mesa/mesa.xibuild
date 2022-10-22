@@ -1,17 +1,14 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja python-mako libvdpau llvm libxxf86vm libelf lm-sensors expat wayland-protocols llvm"
+MAKEDEPS="meson ninja python-mako libvdpau llvm libxxf86vm libelf lm-sensors expat wayland-protocols llvm libxshmfence libdrm libxrandr"
 DEPS="xorg-libs libdrm"
 
 PKG_VER=22.1.7
 SOURCE=https://mesa.freedesktop.org/archive/mesa-$PKG_VER.tar.xz
 ADDITIONAL="
+    0001-freedreno-Enable-A619.patch
     0001-radeonsi-On-Aarch64-force-persistent-buffers-to-GTT.patch
-    add-use-elf-tls.patch
     disable-rgb10-by-default.patch
-    mesa-21.3.7-add_xdemos-1.patch
-    mesa-21.3.7-nouveau_fixes-1.patch
-    musl-fix-includes.patch
 "
 
 DESC="An implementation of the OpenGL specification"
@@ -20,16 +17,15 @@ prepare () {
     apply_patches
 
     export GALLIUM_DRV="crocus,i915,iris,nouveau,r600,radeonsi,svga,swrast,virgl"
-    export DRI_DRIVERS="i965,nouveau"
+    #export DRI_DRIVERS="i965,nouveau"
 }
 
 build () {
     mkdir build &&
     cd    build &&
 
-    meson --prefix=$XORG_PREFIX          \
+    meson --prefix=/usr          \
           --buildtype=release            \
-          -Ddri-drivers=$DRI_DRIVERS     \
           -Dgallium-drivers=$GALLIUM_DRV \
           -Dplatforms=x11,wayland        \
           -Dgallium-nine=false           \
@@ -43,6 +39,7 @@ build () {
           -Dvalgrind=disabled            \
           -Dlibunwind=disabled           \
           ..                             &&
+      #-Ddri-drivers=$DRI_DRIVERS     \
 
     unset GALLIUM_DRV DRI_DRIVERS &&
 

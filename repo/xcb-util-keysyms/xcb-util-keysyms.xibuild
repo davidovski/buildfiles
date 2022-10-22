@@ -9,7 +9,7 @@ SOURCE=https://xcb.freedesktop.org/dist/xcb-util-keysyms-$PKG_VER.tar.bz2
 DESC="Utility libraries for XC Binding, with standard x key constants"
 
 build () {
-    ./configure $XORG_CONFIG &&
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static &&
     make
 }
 

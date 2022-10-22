@@ -7,7 +7,7 @@ PKG_VER=1.2.1
 SOURCE=https://www.x.org/pub/individual/lib/libXres-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libXres-$PKG_VER
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --docdir=/usr/share/doc/libXres-$PKG_VER
   make
 }
 

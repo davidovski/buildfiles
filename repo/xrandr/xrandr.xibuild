@@ -7,11 +7,11 @@ PKG_VER=1.5.1
 SOURCE=https://www.x.org/pub/individual/app/xrandr-$PKG_VER.tar.xz
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
   make
 }
 
 package () {
     make DESTDIR=$PKG_DEST install
-    rm -f $PKG_DEST$XORG_PREFIX/bin/xkeystone
+    rm -f $PKG_DEST/usr/bin/xkeystone
 }

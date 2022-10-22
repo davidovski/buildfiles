@@ -9,7 +9,7 @@ SOURCE=https://www.x.org/pub/individual/data/xbitmaps-$PKG_VER.tar.bz2
 DESC="Bitmaps for xorg"
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
 }
 
 package () {

@@ -13,4 +13,9 @@ build() {
 
 package () {
     python setup.py install --root="$PKG_DEST" --optimize=1
+
+    for f in $PKG_DEST/usr/bin/*.py; do 
+        echo $f -> $(basename $f )
+        ln -s $(basename $f) ${f%.*}
+    done
 }

@@ -1,0 +1,65 @@
+#!/bin/sh
+
+NAME="pandoc"
+DESC="universal markup converter"
+
+MAKEDEPS=" ghc cabal zlib libffi"
+
+PKG_VER=2.19.1
+SOURCE="https://hackage.haskell.org/package/pandoc-$PKG_VER/pandoc-$PKG_VER.tar.gz"
+
+ADDITIONAL="
+cabal.config
+"
+
+cabal_update() {
+	echo "Freezing pandoc dependencies"
+
+	# Resolve deps and generate fresh cabal.config with version constraints.
+	cabal update
+	(
+		cd "$BUILD_ROOT"
+		cabal v1-freeze --shadow-installed-packages
+
+		# Add version tag at the first line.
+		sed -i "1i--$PKG_VER" "cabal.config"
+
+		mv "cabal.config" "$startdir/"
+	)
+}
+
+prepare() {
+	apply_patches
+
+	if [ "$(head -n 1 "$BUILD_ROOT/cabal.config")" != "--$PKG_VER" ]; then
+		die "Requirements file is outdated, run 'abuild cabal_update'"
+	fi
+
+	ln -sf "$BUILD_ROOT/cabal.config" "$BUILD_ROOT/cabal.project.freeze"
+}
+
+build() {
+	cabal update
+	cabal install --only-dependencies
+	cabal configure \
+		--prefix='/usr' \
+		--enable-tests \
+		--enable-split-sections \
+		--ghc-option="-split-sections" \
+		--flags="+embed_data_files -trypandoc +static"
+	cabal build --jobs=${JOBS:-1}
+}
+
+check() {
+	cabal test --jobs=${JOBS:-1}
+}
+
+package() {
+	_bindir="$PKG_DEST/usr/bin"
+	mkdir -p "$_bindir"
+	cabal install \
+		--installdir="$_bindir" \
+		--install-method=copy
+	install -Dm644 man/pandoc.1 "$PKG_DEST"/usr/share/man/man1/pandoc.1
+}
+

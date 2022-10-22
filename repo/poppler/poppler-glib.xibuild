@@ -2,7 +2,7 @@
 
 NAME="poppler-glib"
 DESC="Glib wrapper for poppler"
-DEPS="cairo freetype2 glib musl poppler"
+MAKEDEPS="cairo freetype2 glib musl poppler"
 
 package () {
     add_from_main "usr/lib/libpoppler-glib.so*" \

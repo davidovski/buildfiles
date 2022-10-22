@@ -1,6 +1,6 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja doxygen"
+MAKEDEPS="meson ninja doxygen mesa"
 DEPS="mesa"
 
 PKG_VER=1.5.9

@@ -1,36 +1,32 @@
 #!/bin/sh
 
-MAKEDEPS="meson ninja docbook-xsl docbook-dtd"
-DEPS="pcre libffi zlib musl libxslt gdbm"
+NAME="glib"
+DESC="Common C routines used by Gtk+ and other libs"
 
-PKG_VER=2.73.3
-SOURCE=https://download.gnome.org/sources/glib/$(echo $PKG_VER | cut -d. -f-2)/glib-$PKG_VER.tar.xz
-DESC="Low level core library"
+MAKEDEPS=" bzip2 docbook-xml docbook-xsl gettext libxml2 libxslt python pcre2 meson zlib libffi util-linux"
+
+PKG_VER=2.74.0
+SOURCE="https://download.gnome.org/sources/glib/${PKG_VER%.*}/glib-$PKG_VER.tar.xz"
+
 ADDITIONAL="
 0001-gquark-fix-initialization-with-c-constructors.patch
 deprecated-no-warn.patch
-musl-libintl.patch"
-
-prepare () {
+glib.trigger
+gparamspec.patch
+"
+ 
+prepare ()  {
     apply_patches
 }
 
-build () {
-    mkdir build &&
-    cd    build &&
-
-    meson --prefix=/usr       \
-          --buildtype=release \
-          -Dman=false          \
-          ..                  &&
-    ninja
+build() {
+	meson --prefix=/usr \
+		--default-library=both \
+		-Dman=true \
+		. output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
 }
-package () {
-    DESTDIR=$PKG_DEST ninja install
-    mkdir -p $PKG_DEST/usr/share/doc/glib-$PKG_VER &&
-    cp -r ../docs/reference/NEWS $PKG_DEST/usr/share/doc/glib-$PKG_VER
-    cp -r ../docs/reference/gio $PKG_DEST/usr/share/doc/glib-$PKG_VER
-    cp -r ../docs/reference/glib $PKG_DEST/usr/share/doc/glib-$PKG_VER
-    cp -r ../docs/reference/gobject $PKG_DEST/usr/share/doc/glib-$PKG_VER
 
+package() {
+	DESTDIR="$PKG_DEST" meson install --no-rebuild -C output
 }

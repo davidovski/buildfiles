@@ -9,7 +9,7 @@ SOURCE=https://xcb.freedesktop.org/dist/xcb-util-image-$PKG_VER.tar.bz2
 DESC="Utility libraries for XC Binding, with ports of Xlib's XImage"
 
 build () {
-    ./configure $XORG_CONFIG &&
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static &&
     make
 }
 

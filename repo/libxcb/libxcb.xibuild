@@ -1,21 +1,23 @@
 #!/bin/sh
 
-MAKEDEPS="make doxygen libxslt"
-DEPS="libxau xcb-proto libxdmcp "
-
-PKG_VER=1.15
-SOURCE=https://xorg.freedesktop.org/archive/individual/lib/libxcb-$PKG_VER.tar.xz
+NAME="libxcb"
 DESC="X11 client-side library"
 
-build () {
-    CFLAGS="${CFLAGS:--O2 -g} -Wno-error=format-extra-args" \
-    PYTHON=python3                \
-    ./configure $XORG_CONFIG      \
-                --without-doxygen \
-                --docdir='${datadir}'/doc/libxcb-$PKG_VER &&
-    make
+MAKEDEPS="libxau xcb-proto libpthread-stubs libxdmcp libxslt python"
+
+PKG_VER=1.14
+SOURCE="https://xorg.freedesktop.org/archive/individual/lib/libxcb-$PKG_VER.tar.xz"
+
+build() {
+	./configure \
+		--prefix=/usr \
+		--enable-xkb \
+		--enable-xinput \
+		--disable-xprint
+	make
 }
 
-package () {
-    make DESTDIR=$PKG_DEST install 
+package() {
+	make DESTDIR="$PKG_DEST" install
 }
+

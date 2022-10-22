@@ -1,13 +1,13 @@
 #!/bin/sh
 
-MAKEDEPS="make asciidoc xmlto lynx"
+MAKEDEPS="make asciidoc xmlto lynx xorgproto xtrans libxcb"
 DEPS="fontconfig libxcb elogind xtrans"
 
 PKG_VER=1.7.3.1
 SOURCE=https://www.x.org/pub/individual/lib/libX11-$PKG_VER.tar.xz
 
 build () {
-    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libX11-$PKG_VER
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --docdir=/usr/share/doc/libX11-$PKG_VER
   make
 }
 

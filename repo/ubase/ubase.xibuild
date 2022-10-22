@@ -3,12 +3,12 @@
 MAKEDEPS="make findutils sed"
 DEPS="musl utmps"
 
-SOURCE=https://git.suckless.org/ubase
+SOURCE=git://git.suckless.org/ubase
 
 DESC="ubase from suckless.org"
 
 prepare () {
-    /usr/bin/find -type 'f' -name '*.c' | xargs sed -i "s@#include <sys/types.h>@#include <sys/sysmacros.h>@g" 
+    /usr/bin/find -type 'f' -name '*.c' -exec sed -i "s@#include <sys/types.h>@#include <sys/sysmacros.h>@g" {} \;
 }
 
 build () {

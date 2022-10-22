@@ -9,7 +9,7 @@ SOURCE=https://www.x.org/pub/individual/data/xcursor-themes-$PKG_VER.tar.bz2
 DESC="Cursor themes for X.Org"
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

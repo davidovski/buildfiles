@@ -9,7 +9,7 @@ SOURCE=https://xcb.freedesktop.org/dist/xcb-util-wm-$PKG_VER.tar.bz2
 DESC="Utility libraries for XC Binding, with client and window-manager helpers"
 
 build () {
-    ./configure $XORG_CONFIG &&
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static &&
     make
 }
 

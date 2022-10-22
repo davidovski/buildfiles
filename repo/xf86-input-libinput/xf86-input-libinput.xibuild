@@ -9,7 +9,7 @@ PKG_VER=1.2.1
 SOURCE=https://www.x.org/pub/individual/driver/xf86-input-libinput-$PKG_VER.tar.xz
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

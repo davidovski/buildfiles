@@ -1,13 +1,13 @@
 #!/bin/sh
 
-MAKEDEPS="make asciidoc xmlto lynx"
+MAKEDEPS="make asciidoc xmlto lynx libxrender"
 DEPS="fontconfig libxcb elogind"
 
 PKG_VER=2.3.4
 SOURCE=https://www.x.org/pub/individual/lib/libXft-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libXft-$PKG_VER
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --docdir=/usr/share/doc/libXft-$PKG_VER
   make
 }
 

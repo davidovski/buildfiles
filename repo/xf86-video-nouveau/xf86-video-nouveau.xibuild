@@ -14,7 +14,7 @@ prepare () {
 }
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

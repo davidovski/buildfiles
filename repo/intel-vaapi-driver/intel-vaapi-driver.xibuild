@@ -9,7 +9,7 @@ PKG_VER=2.4.1
 SOURCE=https://github.com/intel/intel-vaapi-driver/releases/download/$PKG_VER/intel-vaapi-driver-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static
     make
 }
 

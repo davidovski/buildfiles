@@ -7,7 +7,7 @@ PKG_VER=1.2.0
 SOURCE=https://www.x.org/pub/individual/lib/libXcursor-$PKG_VER.tar.bz2
 
 build () {
-    ./configure $XORG_CONFIG --docdir=$XORG_PREFIX/share/doc/libXcursor-$PKG_VER
+    ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --docdir=/usr/share/doc/libXcursor-$PKG_VER
   make
 }
 
