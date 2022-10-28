@@ -3,21 +3,32 @@
 NAME="snes9x"
 DESC="Super NES Emulator"
 
-MAKEDEPS="meson glib sdl2 gtk3 libxrandr libepoxy wayland libxv portaudio alsa-lib libpng minizip zlib"
+MAKEDEPS=" alsa-lib glib gtk+3.0 gtkmm3 libepoxy libpng libxrandr libxv meson minizip portaudio sdl2 wayland zlib"
+
+glslang=bcf6a2430e99e8fc24f9f266e99316905e6d5134
+spirv=1458bae62ec67ea7d12c5a13b740e23ed4bb226c
 
 PKG_VER=1.61
 SOURCE="https://github.com/snes9xgit/snes9x/archive/$PKG_VER.tar.gz"
 
-prepare () {
+ADDITIONAL="https://github.com/KhronosGroup/glslang/archive/$glslang.tar.gz
+            https://github.com/KhronosGroup/SPIRV-Cross/archive/$spirv.tar.gz"
+
+prepare() {
+
+    tar xf $glslang.tar.gz
+    tar xf $spirv.tar.gz
     cd gtk
+
+    rm -r ../shaders/glslang ../shaders/SPIRV-Cross
+	ln -s ../glslang-$glslang ../shaders/glslang
+	ln -s ../SPIRV-Cross-$spirv ../shaders/SPIRV-Cross
 }
 
 build() {
 	meson --prefix=/usr \
-		-Dopengl=true \
-		-Dgtk3=true \
 		-Dpulseaudio=false \
-	. output
+		. output
 	meson compile ${JOBS:+-j ${JOBS}} -C output
 }
 

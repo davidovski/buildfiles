@@ -6,17 +6,44 @@ DESC="fully featured open source software synthesizer"
 MAKEDEPS="cmake "
 DEPS="pkg-config zlib mxml ntk libx11 liblo fftw libxpm pulseaudio jack alsa-lib doxygen fltk "
 
-PKG_VER=3.0.5
-SOURCE="http://sourceforge.net/projects/zynaddsubfx/files/zynaddsubfx/$PKG_VER/zynaddsubfx-$PKG_VER.tar.bz2/download"
+PKG_VER=3.0.6
+SOURCE="git://git.code.sf.net/p/zynaddsubfx/code/"
+ADDITIONAL="
+cmake-build-type-none.patch
+fix-bogus-strstr.patch
+fix-memset.patch
+"
+
+prepare () {
+    git submodule init
+    git submodule update
+    apply_patches
+
+    sed -e 's/COMMAND.*lv2-ttl-generator/COMMAND lv2-ttl-generator/g' -i \
+		src/Plugin/AlienWah/CMakeLists.txt \
+		src/Plugin/Chorus/CMakeLists.txt \
+		src/Plugin/Distortion/CMakeLists.txt \
+		src/Plugin/DynamicFilter/CMakeLists.txt \
+		src/Plugin/Echo/CMakeLists.txt \
+		src/Plugin/Phaser/CMakeLists.txt \
+		src/Plugin/Reverb/CMakeLists.txt \
+		src/Plugin/ZynAddSubFX/CMakeLists.txt
+
+    sed -i -e 's;gcc ;${CC} ;' \
+		-e 's;.fltk-config --cflags.;& ${CFLAGS};' \
+		-e 's;.fltk-config --ldflags.;& ${LDFLAGS};' \
+		ExternalPrograms/Spliter/Makefile \
+		ExternalPrograms/Controller/Makefile
+}
 
 build () {
     cmake -B build \
         -DCMAKE_INSTALL_PREFIX=/usr \
-		-DCMAKE_INSTALL_LIBDIR=/usr/lib \
-		-DBUILD_SHARED_LIBS=True \
-        -DBUILD_STATIC_LIBS=OFF
-	cmake --build build
+        -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+        -DGuiModule=ntk
+    cmake --build build
 }
+
 
 package () {
 	DESTDIR="$PKG_DEST" cmake --install build

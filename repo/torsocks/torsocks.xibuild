@@ -1,0 +1,28 @@
+#!/bin/sh
+
+NAME="torsocks"
+DESC="Wrapper to safely torify applications"
+
+MAKEDEPS=" autoconf automake libtool"
+
+PKG_VER=2.4.0
+SOURCE="https://gitlab.torproject.org/tpo/core/torsocks/-/archive/v$PKG_VER/torsocks-v$PKG_VER.tar.gz"
+
+build() {
+	./autogen.sh
+	./configure \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$PKG_DEST" install
+}
+
