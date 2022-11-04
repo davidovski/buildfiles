@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make perl libcap-ng"
-DEPS="musl sbase eudev"
+DEPS="musl toybox eudev"
 
 PKG_VER=1.9.9
 SOURCE=https://pcsclite.apdu.fr/files/pcsc-lite-$PKG_VER.tar.bz2

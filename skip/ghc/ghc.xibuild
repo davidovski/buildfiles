@@ -4,7 +4,7 @@ NAME="ghc"
 DESC="The Glasgow Haskell Compiler"
 
 MAKEDEPS="make "
-DEPS="sbase gcc gmp libffi llvm musl ncurses perl "
+DEPS="toybox gcc gmp libffi llvm musl ncurses perl "
 
 PKG_VER=9.0.1
 SOURCE="https://downloads.haskell.org/~ghc/$PKG_VER/ghc-$PKG_VER-src.tar.xz"

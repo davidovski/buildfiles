@@ -1,0 +1,37 @@
+#!/bin/sh
+
+NAME="toybox"
+DESC="A BSD-licensed alternative to busybox"
+
+MAKEDEPS="linux-headers"
+
+PKG_VER=0.8.8
+SOURCE="https://landley.net/toybox/downloads/toybox-$PKG_VER.tar.gz"
+ADDITIONAL="
+config
+"
+
+tools=" basename cat chgrp chown chmod cksum crc32 cmp comm cp mv install cpio cut date df dirname du echo env expand false file find getconf grep egrep fgrep head iconv id groups logname whoami kill killall5 link ln logger ls mkdir mkfifo nice nl nohup od paste patch printf ps top iotop pgrep pkill pwd renice rm rmdir sed sleep sort sort_float split strings tail tar tee test test_glue time touch true tty ulimit arch linux32 uname uniq unlink uudecode uuencode wc who xargs ascii unicode base32 fstype blockdev chroot count dos2unix unix2dos factor fmt hexedit printenv readlink realpath rev sha3sum shred stat tac nproc taskset timeout truncate usleep uuidgen w which wget md5sum sha1sum sha224sum sha256sum sha384sum sha512sum mknod mktemp seq sync "
+
+prepare () {
+    mv config .config
+}
+
+build() {
+    for tool in $tools; do
+        make $tool
+    done
+}
+
+check() {
+    for tool in $tools; do
+        make test_$tool
+    done
+}
+
+package() {
+    for tool in $tools; do
+        install -Dm755 $tool $PKG_DEST/usr/bin/$tool
+    done
+}
+

@@ -4,7 +4,7 @@ NAME="nodejs"
 DESC="JavaScript runtime built on V8 engine - LTS version"
 
 MAKEDEPS="make "
-DEPS="brotli sbase sort c-ares cacerts openssl musl libnghttp zlib "
+DEPS="brotli toybox sort c-ares cacerts openssl musl libnghttp zlib "
 
 PKG_VER=18.9.0
 SOURCE="https://nodejs.org/dist/v$PKG_VER/node-v$PKG_VER.tar.gz"

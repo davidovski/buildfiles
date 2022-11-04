@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="musl zlib sbase"
+DEPS="musl zlib toybox"
 
 PKG_VER=1.14.6
 SOURCE=https://mandoc.bsd.lv/snapshots/mandoc-$PKG_VER.tar.gz

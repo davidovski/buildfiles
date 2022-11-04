@@ -3,7 +3,7 @@
 NAME="font-opensans"
 DESC="Humanist Sans Serif Typeface"
 
-MAKEDEPS="sbase"
+MAKEDEPS="toybox"
 DEPS="fontconfig mkfontscale "
 
 SOURCE="https://github.com/googlefonts/opensans.git"

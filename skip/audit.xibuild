@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make swig"
-DEPS="sbase libcap-ng musl"
+DEPS="toybox libcap-ng musl"
 
 PKG_VER=3.0.6
 SOURCE=https://people.redhat.com/sgrubb/audit/audit-$PKG_VER.tar.gz

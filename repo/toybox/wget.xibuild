@@ -1,0 +1,7 @@
+#!/bin/sh
+
+DESC="A utility for transfering files with URL syntax"
+
+package () {
+    add_from_main usr/bin/wget
+}

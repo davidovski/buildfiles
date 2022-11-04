@@ -1,14 +1,14 @@
 #!/bin/sh
 
 MAKEDEPS="make asciidoc musl-fts"
-DEPS="bash sbase cpio findutils grep gzip kmod pkg-config procps-ng sed util-linux xz"
+DEPS="bash toybox cpio findutils grep gzip kmod pkg-config procps-ng sed util-linux xz"
 
 DESC="An initramfs infastructure aimin gto have as little possible hardcoded into the initramfs"
 
 PKG_VER=055
 SOURCE=https://mirrors.edge.kernel.org/pub/linux/utils/boot/dracut/dracut-$PKG_VER.tar.xz
 ADDITIONAL="
-    fix-sbase-coreutils.patch
+    fix-toybox-coreutils.patch
 "
 
 prepare () {

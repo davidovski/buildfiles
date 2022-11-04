@@ -4,7 +4,7 @@ NAME="polybar"
 DESC="fast and easy-to-use tool for creating status bars"
 
 MAKEDEPS="cmake "
-DEPS="alsa-lib sbase cairo fontconfig freetype2 jsoncpp curl libmpdclient pulseaudio libuv musl libxcb xcb-util-cursor xcb-util-wm "
+DEPS="alsa-lib toybox cairo fontconfig freetype2 jsoncpp curl libmpdclient pulseaudio libuv musl libxcb xcb-util-cursor xcb-util-wm "
 
 PKG_VER=3.6.3
 SOURCE="https://github.com/polybar/polybar/archive/$PKG_VER.tar.gz"

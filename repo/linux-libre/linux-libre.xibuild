@@ -1,13 +1,13 @@
 #!/bin/sh
 
 MAKEDEPS="make bc linux-headers cpio"
-DEPS="sbase kmod"
+DEPS="toybox kmod"
 
 PKG_VER=5.19.8
 #SOURCE=https://cdn.kernel.org/pub/linux/kernel/v${PKG_VER%%.*}.x/linux-$PKG_VER.tar.xz
 SOURCE=https://linux-libre.fsfla.org/pub/linux-libre/releases/${PKG_VER}-gnu/linux-libre-${PKG_VER}-gnu.tar.xz
 ADDITIONAL="
-    fix-sbase-coreutils.patch
+    fix-toybox-coreutils.patch
     config
 "
     #https://linux-libre.fsfla.org/pub/linux-libre/releases/$PKG_VER-gnu/deblob-${PKG_VER}

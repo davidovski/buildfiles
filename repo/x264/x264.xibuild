@@ -3,7 +3,7 @@
 NAME="x264"
 DESC="Free library for encoding H264/AVC video streams"
 
-MAKEDEPS="make libx11 perl nasm sbase bash"
+MAKEDEPS="make libx11 perl nasm toybox bash"
 DEPS="musl "
 
 PKG_VER=0.164.r3081.19856cc

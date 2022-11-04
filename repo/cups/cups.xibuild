@@ -4,7 +4,7 @@ NAME="cups"
 DESC="The CUPS Printing System"
 
 MAKEDEPS="make "
-DEPS="sbase dbus libusb musl openssl poppler "
+DEPS="toybox dbus libusb musl openssl poppler "
 
 PKG_VER=2.4.2
 SOURCE="https://github.com/OpenPrinting/cups/archive/v$PKG_VER.tar.gz"

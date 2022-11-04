@@ -17,7 +17,7 @@ ADDITIONAL="$bootstrapjdk_url
     build.patch
     fix-bootjdk-check.patch
     fix-musl.patch
-    fix-sbase-commands.patch
+    fix-toybox-commands.patch
 "
 
 java_home="/usr/lib/jvm/java-11-openjdk"

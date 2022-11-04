@@ -3,8 +3,7 @@
 NAME="zynaddsubfx"
 DESC="fully featured open source software synthesizer"
 
-MAKEDEPS="cmake "
-DEPS="pkg-config zlib mxml ntk libx11 liblo fftw libxpm pulseaudio jack alsa-lib doxygen fltk "
+MAKEDEPS="cmake pkg-config zlib mxml ntk libx11 liblo fftw libxpm pulseaudio jack alsa-lib doxygen fltk "
 
 PKG_VER=3.0.6
 SOURCE="git://git.code.sf.net/p/zynaddsubfx/code/"

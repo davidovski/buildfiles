@@ -4,7 +4,7 @@ NAME="gtk2"
 DESC="The GTK+ Toolkit (v2)"
 
 #MAKEDEPS="meson ninja libpng shared-mime-info atk glib cairo pango gdk-pixbuf"
-MAKEDEPS=" meson ninja atk at-spi2-atk sbase cairo gobject-introspection fontconfig fribidi gdk-pixbuf glib harfbuzz libepoxy intltool libx11 libxcomposite libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr musl pango shared-mime-info wayland libtool"
+MAKEDEPS=" meson ninja atk at-spi2-atk toybox cairo gobject-introspection fontconfig fribidi gdk-pixbuf glib harfbuzz libepoxy intltool libx11 libxcomposite libxcursor libxdamage libxext libxfixes libxi libxinerama libxkbcommon libxrandr musl pango shared-mime-info wayland libtool"
 
 PKG_VER=2.24.33
 SOURCE="https://download.gnome.org/sources/gtk+/${PKG_VER%.*}/gtk+-$PKG_VER.tar.xz"

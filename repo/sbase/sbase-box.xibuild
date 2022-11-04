@@ -1,11 +1,11 @@
 #!/bin/sh
 
-DESC="sbase coreutils statically linked into one executable"
+DESC="toybox coreutils statically linked into one executable"
 
 build () {
-    make CFLAGS="$CFLAGS -static" sbase-box
+    make CFLAGS="$CFLAGS -static" toybox-box
 }
 
 package () {
-    make DESTDIR="$PKG_DEST" sbase-box-install
+    make DESTDIR="$PKG_DEST" toybox-box-install
 }

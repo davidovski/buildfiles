@@ -4,7 +4,7 @@ NAME="shared-mime-info"
 DESC="Freedesktop.org Shared MIME Info"
 
 MAKEDEPS="meson ninja itstool xmlto libxml2 glib"
-DEPS="sbase glib libxml2 musl pkg-config "
+DEPS="toybox glib libxml2 musl pkg-config "
 
 PKG_VER=2.2
 SOURCE="https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/$PKG_VER/shared-mime-info-$PKG_VER.tar.gz"

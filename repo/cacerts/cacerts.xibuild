@@ -1,12 +1,12 @@
 #!/bin/sh
 
-MAKEDEPS="sbase bash sed"
+MAKEDEPS="toybox bash sed"
 DEPS="libnghttp libp11-kit"
 
 PKG_VER=1.7
 SOURCE=https://github.com/djlucas/make-ca/releases/download/v$PKG_VER/make-ca-$PKG_VER.tar.xz
 ADDITIONAL="
-    fix-sbase-coreutils.patch
+    fix-toybox-coreutils.patch
 "
 
 DESC="Root certificates needed by ssl built using make-ca"

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 MAKEDEPS="make "
-DEPS="ifupdown-ng sbase musl"
+DEPS="ifupdown-ng toybox musl"
 
 PKG_VER=0.44.10
 SOURCE=https://github.com/OpenRC/openrc/archive/refs/tags/$PKG_VER.zip
